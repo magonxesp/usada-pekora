@@ -9,7 +9,7 @@ bot = commands.Bot(command_prefix="peko!")
 
 def play_its_me_pekora(client: discord.VoiceClient):
     client.play(
-        discord.FFmpegPCMAudio(os.path.join(pekora.AUDIO_DIR, '')),
+        discord.FFmpegPCMAudio(os.path.join(pekora.AUDIO_DIR, 'Its_me_pekora.mp3')),
         after=lambda e: client.disconnect()
     )
 
