@@ -3,4 +3,4 @@ version: "3"
 services:
   pekora:
     build: .
-    #restart: always
+    restart: always
