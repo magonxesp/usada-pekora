@@ -1,2 +1,3 @@
 discord.py[voice]==1.4.1
 python-dotenv
+pydevd-pycharm~=202.7319.37

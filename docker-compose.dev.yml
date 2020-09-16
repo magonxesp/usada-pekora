@@ -3,6 +3,5 @@ version: "3"
 services:
   pekora:
     build: .
-    restart: always
     environment:
-      BOT_ENV: production
+      BOT_ENV: dev
