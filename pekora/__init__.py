@@ -3,6 +3,7 @@ import os
 
 
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+PACKAGE_DIR = os.path.realpath(os.path.dirname(__file__))
 AUDIO_DIR = os.path.join(ROOT, 'assets', 'audio')
 
 dotenv.load_dotenv(dotenv_path=os.path.join(ROOT, '.env'))
