@@ -4,7 +4,7 @@ pekora:
       compare: in
       text: "It’s a me, Pekora!"
       audio: "Its_me_pekora.mp3"
-    - input: "^(.*)(([HhJj]+)([Aa]+)+)(.*)$"
+    - input: "( +)(([HhJj]+)([Aa]+)){3,}( +)?|^(([HhJj]+)([Aa]+)){3,}$"
       compare: pattern
       text: "HA↗HA↘HA↗HA↘HA↗HA↘"
       audio: "hahahahaha.mp3"
