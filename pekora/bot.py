@@ -1,6 +1,8 @@
 from discord.ext import commands
 import discord
 import pekora.response
+import pekora.youtube
+import pekora
 
 
 COMMAND_PREFIX = "peko!"
@@ -22,3 +24,17 @@ async def on_message(message: discord.Message):
     processor.process_message()
     await processor.response_text()
     await processor.response_audio()
+
+
+@bot.command()
+async def live(context: commands.Context):
+    youtube = pekora.youtube.Youtube(pekora.GOOGLE_API_KEY)
+    video = youtube.get_streaming('UC1DCedRgGHBdm81E1llLhOQ')
+
+    if video:
+        await context.send("Estoy en directo: **{title}** - {url}".format(
+            title=video.get_title(),
+            url=video.get_url()
+        ))
+    else:
+        await context.send("Estoy offline")
