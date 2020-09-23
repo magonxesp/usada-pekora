@@ -10,6 +10,7 @@ dotenv.load_dotenv(dotenv_path=os.path.join(ROOT, '.env'))
 
 TOKEN = os.getenv('TOKEN')
 ENV = os.getenv('BOT_ENV')
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 if ENV == "dev" or ENV == "development":
     import pydevd_pycharm
