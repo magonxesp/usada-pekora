@@ -4,5 +4,7 @@ services:
   pekora:
     build: .
     restart: always
+    ports:
+    - 5000:5000
     environment:
       BOT_ENV: production

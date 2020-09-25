@@ -3,5 +3,7 @@ version: "3"
 services:
   pekora:
     build: .
+    ports:
+      - 5000:5000
     environment:
       BOT_ENV: dev
