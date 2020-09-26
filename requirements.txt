@@ -1,6 +1,7 @@
 discord.py[voice]==1.4.1
 python-dotenv~=0.14.0
-pydevd-pycharm~=202.7319.64
+pydevd-pycharm~=203.3645.40
 PyYAML~=5.3.1
 urllib3~=1.25.10
 quart
+pony~=0.7.13
