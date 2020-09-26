@@ -29,7 +29,7 @@ async def on_message(message: discord.Message):
 @bot.command()
 async def live(context: commands.Context):
     youtube = pekora.youtube.Youtube(pekora.GOOGLE_API_KEY)
-    video = youtube.get_streaming('UC1DCedRgGHBdm81E1llLhOQ')
+    video = youtube.get_streaming(pekora.CHANNEL_ID)
 
     if video:
         await context.send("Estoy en directo: **{title}** - {url}".format(
