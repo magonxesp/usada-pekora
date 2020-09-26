@@ -6,40 +6,38 @@ import xml.etree.ElementTree
 
 class YoutubeVideo:
 
+    def __init__(self):
+        pass
+
+    def get_url(self):
+        raise NotImplementedError
+
+    def get_thumbnail(self, size='default') -> str:
+        raise NotImplementedError
+
+    def get_channel_id(self) -> str:
+        raise NotImplementedError
+
+    def get_title(self) -> str:
+        raise NotImplementedError
+
+    def get_description(self) -> str:
+        raise NotImplementedError
+
+    def get_channel_title(self) -> str:
+        raise NotImplementedError
+
+    def get_type(self) -> str:
+        raise NotImplementedError
+
+    def get_publish_date(self) -> str:
+        raise NotImplementedError
+
+
+class YoutubeVideoSnippet(YoutubeVideo):
+
     def __init__(self, item: dict):
-        """
-        YoutubeVideo Constructor
-
-        :param item: The youtube video data
-        :type item: str
-
-        Example:
-        .. code-block:: python
-            video = YoutubeVideo({
-                'id': {
-                    'videoId': ''
-                },
-                'snippet': {
-                    'title': '',
-                    'description': '',
-                    'channelTitle': '',
-                    'liveBroadcastContent': '',
-                    'publishedAt': '',
-                    'channelId': '',
-                    'thumbnails': {
-                        'default': {
-                            'url': ''
-                        },
-                        'medium': {
-                            'url': ''
-                        },
-                        'high': {
-                            'url': ''
-                        }
-                    }
-                }
-            })
-        """
+        super().__init__()
         self._id: str = item['id']['videoId']
         self._snippet: dict = item['snippet']
 
@@ -76,6 +74,81 @@ class YoutubeVideo:
         return self._snippet['publishedAt']
 
 
+class YoutubeFeedVideoParseError(Exception):
+    pass
+
+
+class YoutubeFeedVideo(YoutubeVideo):
+
+    def __init__(self, xml_string: str):
+        super().__init__()
+        self._namespace_map = {
+            'atom': 'http://www.w3.org/2005/Atom',
+            'yt': 'http://www.youtube.com/xml/schemas/2015'
+        }
+
+        try:
+            self._root_elemnt = xml.etree.ElementTree.fromstring(xml_string)
+            self._entry = self._root_elemnt.find('atom:entry', namespaces=self._namespace_map)
+
+            if self._entry is None:
+                raise YoutubeFeedVideoParseError()
+        except xml.etree.ElementTree.ParseError:
+            raise YoutubeFeedVideoParseError()
+
+    def get_url(self):
+        video_id = self._entry.find('yt:videoId', namespaces=self._namespace_map)
+
+        if video_id is not None:
+            return 'https://www.youtube.com/watch?v={}'.format(video_id.text)
+
+        return ''
+
+    def get_thumbnail(self, size='default') -> str:
+        return ''
+
+    def get_channel_id(self) -> str:
+        channel_id = self._entry.find('yt:channelId', namespaces=self._namespace_map)
+
+        if channel_id is not None:
+            return channel_id.text
+
+        return ''
+
+    def get_title(self) -> str:
+        title = self._entry.find('atom:title', namespaces=self._namespace_map)
+
+        if title is not None:
+            return title.text
+
+        return ''
+
+    def get_description(self) -> str:
+        return ''
+
+    def get_channel_title(self) -> str:
+        author = self._entry.find('atom:author', namespaces=self._namespace_map)
+
+        if author is not None:
+            channel_title = author.find('atom:name', namespaces=self._namespace_map)
+
+            if channel_title is not None:
+                return channel_title.text
+
+        return ''
+
+    def get_type(self) -> str:
+        return 'video'
+
+    def get_publish_date(self) -> str:
+        published = self._entry.find('atom:published', namespaces=self._namespace_map)
+
+        if published is not None:
+            return published.text
+
+        return ''
+
+
 class Youtube:
 
     def __init__(self, api_key: str):
@@ -101,7 +174,7 @@ class Youtube:
                 response = json.loads(request.data.decode('utf-8'))
 
                 if response['pageInfo']['totalResults'] == 1:
-                    return YoutubeVideo(response['items'][0])
+                    return YoutubeVideoSnippet(response['items'][0])
         except urllib3.exceptions.HTTPError:
             pass
 
@@ -150,23 +223,3 @@ class YoutubePushNotification:
     def push(self, video: YoutubeVideo):
         """ Send the push notification to discord text channel """
         pass
-
-
-def parse_notification(notification_xml: str) -> YoutubeVideo:
-    root_elemnt = xml.etree.ElementTree.fromstring(notification_xml)
-    entry = root_elemnt.find('entry')
-
-    return YoutubeVideo({
-        'id': {
-            'videoId': entry.find('yt:videoId').text
-        },
-        'snippet': {
-            'title': entry.find('title').text,
-            'description': '',
-            'channelTitle': entry.find('author').find('name').text,
-            'liveBroadcastContent': 'video',
-            'publishedAt': entry.find('published').text,
-            'channelId': entry.find('yt:channelId').text
-        }
-    })
-
