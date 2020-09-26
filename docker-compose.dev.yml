@@ -4,6 +4,6 @@ services:
   pekora:
     build: .
     ports:
-      - 5000:5000
+      - 3000:3000
     environment:
       BOT_ENV: dev
