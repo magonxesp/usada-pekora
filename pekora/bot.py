@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 import pekora.response
 import pekora
-from pony.orm import db_session, select
+from pony.orm import db_session, select, commit
 from pekora.entitys import TextChannel
 from pekora.youtube import YoutubeVideo
 
@@ -42,29 +42,34 @@ async def live(context: commands.Context):
         await context.send("Estoy offline")
 
 
+@db_session
 def channel_exists(channel_id: str, guild_id: str):
     text_channel = select(t for t in TextChannel if t.channelId == channel_id and t.serverId == guild_id)
     return len(text_channel) > 0
 
 
+@db_session
 async def enable_feed(context: commands.Context):
     channel_id = str(context.channel.id)
     guild_id = str(context.guild.id)
 
     if channel_exists(channel_id, guild_id) is False:
-        with db_session:
-            try:
-                TextChannel(
-                    serverId=guild_id,
-                    channelId=channel_id
-                )
+        try:
+            TextChannel(
+                serverId=guild_id,
+                channelId=channel_id
+            )
 
-                await context.send("Notificaciones de youtube activadas")
-            except Exception as e:
-                await context.send("Error al activar las notificaciones de youtube")
-                pekora.LOGGER.warning(e)
+            message = "Notificaciones de youtube activadas"
+        except Exception as e:
+            message = "Error al activar las notificaciones de youtube"
+            pekora.LOGGER.warning(e)
+
+        commit()
+        await context.send(message)
 
 
+@db_session
 async def disable_feed(context: commands.Context):
     channel_id = str(context.channel.id)
     guild_id = str(context.guild.id)
@@ -73,10 +78,13 @@ async def disable_feed(context: commands.Context):
     if text_channel:
         try:
             text_channel.delete()
-            await context.send("Notificaciones de youtube desactivadas")
+            message = "Notificaciones de youtube desactivadas"
         except Exception as e:
-            await context.send("Error al desactivar las notificaciones de youtube")
+            message = "Error al desactivar las notificaciones de youtube"
             pekora.LOGGER.warning(e)
+
+        commit()
+        await context.send(message)
 
 
 @bot.command()
@@ -87,11 +95,13 @@ async def feed(context: commands.Context, arg: str):
         await disable_feed(context)
 
 
+@db_session
 async def send_youtube_notification(video: YoutubeVideo):
     text_channels = select(t for t in TextChannel)
 
     for text_channel in text_channels:
         text_channel = bot.get_channel(int(text_channel.channelId))
+        commit()
         await text_channel.send("Estoy en directo: **{title}** - {url}".format(
             title=video.get_title(),
             url=video.get_url()
