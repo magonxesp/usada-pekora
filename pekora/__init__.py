@@ -1,14 +1,23 @@
 import dotenv
 import os
-import pekora.youtube
+import logging
+import sys
 
 
+# global package constants
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 PACKAGE_DIR = os.path.realpath(os.path.dirname(__file__))
 AUDIO_DIR = os.path.join(ROOT, 'assets', 'audio')
 DB_DIR = os.path.join(ROOT, 'db')
 CHANNEL_ID = 'UC1DCedRgGHBdm81E1llLhOQ'
 
+# logger
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+LOGGER = logging.getLogger(__name__)
+handler = logging.StreamHandler(sys.stdout)
+LOGGER.addHandler(handler)
+
+# .env file variables
 dotenv.load_dotenv(dotenv_path=os.path.join(ROOT, '.env'))
 
 TOKEN = os.getenv('TOKEN')
@@ -25,5 +34,3 @@ if ENV == "dev" or ENV == "development":
         stdoutToServer=True,
         stderrToServer=True
     )
-
-channel_feed = pekora.youtube.YoutubePushNotification(CHANNEL_ID)

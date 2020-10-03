@@ -1,5 +1,5 @@
 from quart import Quart, request, Response
-import pekora.youtube
+from pekora.youtube import notifications_service
 import pekora
 import json
 
@@ -13,7 +13,7 @@ async def pekora_upload_notification():
 
     try:
         video = pekora.youtube.YoutubeFeedVideo(body.decode('utf-8'))
-        await pekora.channel_feed.push(video)
+        await notifications_service.push(video)
 
         return Response(
             response=json.dumps({"status": "ok"}),

@@ -206,10 +206,14 @@ class YoutubePushNotification:
                 }
             )
 
-            if response.status == 200 or response.status == 204:
-                return response.data.decode('utf-8')
-        except urllib3.exceptions.HTTPError:
-            pass
+            status = response.status
+            response_data = response.data.decode('utf-8')
+            pekora.LOGGER.info("[subscribe response] {}: {}".format(status, response_data))
+
+            if status == 200 or status == 204:
+                return response_data
+        except urllib3.exceptions.HTTPError as e:
+            pekora.LOGGER.warning(e)
 
         return None
 
@@ -224,3 +228,6 @@ class YoutubePushNotification:
     async def push(self, video: YoutubeVideo):
         """ Send the push notification to discord text channel """
         await pekora.bot.send_youtube_notification(video)
+
+
+notifications_service = YoutubePushNotification(pekora.CHANNEL_ID)

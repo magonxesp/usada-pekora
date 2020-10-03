@@ -1,10 +1,10 @@
 from discord.ext import commands
 import discord
 import pekora.response
-import pekora.youtube
 import pekora
 from pony.orm import db_session, select
 from pekora.entitys import TextChannel
+from pekora.youtube import YoutubeVideo
 
 
 COMMAND_PREFIX = "peko!"
@@ -62,7 +62,7 @@ async def enable_feed(context: commands.Context):
                 await context.send("Notificaciones de youtube activadas")
             except Exception as e:
                 await context.send("Error al activar las notificaciones de youtube")
-                print(e)
+                pekora.LOGGER.warning(e)
 
 
 async def disable_feed(context: commands.Context):
@@ -76,7 +76,7 @@ async def disable_feed(context: commands.Context):
             await context.send("Notificaciones de youtube desactivadas")
         except Exception as e:
             await context.send("Error al desactivar las notificaciones de youtube")
-            print(e)
+            pekora.LOGGER.warning(e)
 
 
 @bot.command()
@@ -87,7 +87,7 @@ async def feed(context: commands.Context, arg: str):
         await disable_feed(context)
 
 
-async def send_youtube_notification(video: pekora.youtube.YoutubeVideo):
+async def send_youtube_notification(video: YoutubeVideo):
     text_channels = select(t for t in TextChannel)
 
     for text_channel in text_channels:
