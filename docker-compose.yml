@@ -5,6 +5,6 @@ services:
     build: .
     restart: always
     ports:
-    - 5000:5000
+      - 3000:3000
     environment:
       BOT_ENV: production
