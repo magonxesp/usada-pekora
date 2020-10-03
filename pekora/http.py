@@ -13,7 +13,7 @@ async def pekora_upload_notification():
 
     try:
         video = pekora.youtube.YoutubeFeedVideo(body.decode('utf-8'))
-        pekora.channel_feed.push(video)
+        await pekora.channel_feed.push(video)
 
         return Response(
             response=json.dumps({"status": "ok"}),

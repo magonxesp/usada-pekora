@@ -2,6 +2,7 @@ from typing import Optional
 import urllib3
 import json
 import xml.etree.ElementTree
+import pekora.bot
 
 
 class YoutubeVideo:
@@ -220,6 +221,6 @@ class YoutubePushNotification:
         response = self._request(callback_url, 'subscribe')
         return response is not None
 
-    def push(self, video: YoutubeVideo):
+    async def push(self, video: YoutubeVideo):
         """ Send the push notification to discord text channel """
-        pass
+        await pekora.bot.send_youtube_notification(video)
