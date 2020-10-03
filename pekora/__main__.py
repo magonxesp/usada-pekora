@@ -17,6 +17,7 @@ def main():
         create_db=True
     )
 
+    pekora.entitys.db.generate_mapping(create_tables=True)
     notifications_service.subscribe(pekora.HTTP_BASE_URL + '/webhook/pekora/feed')
 
     main_loop = asyncio.get_event_loop()

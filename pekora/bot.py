@@ -48,8 +48,8 @@ def channel_exists(channel_id: str, guild_id: str):
 
 
 async def enable_feed(context: commands.Context):
-    channel_id = context.channel.id
-    guild_id = context.guild.id
+    channel_id = str(context.channel.id)
+    guild_id = str(context.guild.id)
 
     if channel_exists(channel_id, guild_id) is False:
         with db_session:
@@ -66,8 +66,8 @@ async def enable_feed(context: commands.Context):
 
 
 async def disable_feed(context: commands.Context):
-    channel_id = context.channel.id
-    guild_id = context.guild.id
+    channel_id = str(context.channel.id)
+    guild_id = str(context.guild.id)
     text_channel: TextChannel = select(t for t in TextChannel if t.channelId == channel_id and t.serverId == guild_id).first()
 
     if text_channel:
@@ -91,7 +91,7 @@ async def send_youtube_notification(video: YoutubeVideo):
     text_channels = select(t for t in TextChannel)
 
     for text_channel in text_channels:
-        text_channel = bot.get_channel(text_channel.channelId)
+        text_channel = bot.get_channel(int(text_channel.channelId))
         await text_channel.send("Estoy en directo: **{title}** - {url}".format(
             title=video.get_title(),
             url=video.get_url()
