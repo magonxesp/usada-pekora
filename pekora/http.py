@@ -10,22 +10,26 @@ http = Quart(__name__)
 @http.route('/webhook/pekora/feed', methods=['GET', 'POST'])
 async def pekora_upload_notification():
     body: bytes = await request.get_data()
+    body_str: str = body.decode('utf-8')
+    response_status = 200
+    response_body = ''
 
     try:
-        video = pekora.youtube.YoutubeFeedVideo(body.decode('utf-8'))
-        await notifications_service.push(video)
+        pekora.LOGGER.info("Youtube notification received: {}".format(body_str))
+        challenge = request.args.get('hub.challenge')
 
-        return Response(
-            response=json.dumps({"status": "ok"}),
-            status=200,
-            content_type='application/json'
-        )
+        if challenge:
+            response_body = challenge
+
+        if body_str != "":
+            video = pekora.youtube.YoutubeFeedVideo(body_str)
+            await notifications_service.push(video)
     except pekora.youtube.YoutubeFeedVideoParseError:
-        return Response(
-            response=json.dumps({
-                "status": "error",
-                "type": "YoutubeFeedVideoParseError"
-            }),
-            status=400,
-            content_type='application/json'
-        )
+        response_body = 'An error ocurred: YoutubeFeedVideoParseError'
+        response_status = 400
+
+    return Response(
+        response=response_body,
+        status=response_status,
+        content_type='text/plain'
+    )

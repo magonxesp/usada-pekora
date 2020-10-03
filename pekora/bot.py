@@ -5,6 +5,7 @@ import pekora
 from pony.orm import db_session, select, commit
 from pekora.entitys import TextChannel
 from pekora.youtube import YoutubeVideo
+from pekora.youtube import notifications_service
 
 
 COMMAND_PREFIX = "peko!"
@@ -54,6 +55,8 @@ async def enable_feed(context: commands.Context):
     guild_id = str(context.guild.id)
 
     if channel_exists(channel_id, guild_id) is False:
+        notifications_service.subscribe(pekora.HTTP_BASE_URL + '/webhook/pekora/feed')
+
         try:
             TextChannel(
                 serverId=guild_id,

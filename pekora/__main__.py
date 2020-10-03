@@ -3,7 +3,6 @@ import pekora.entitys
 import pekora
 from pekora.bot import bot
 from pekora.http import http
-from pekora.youtube import notifications_service
 import os
 
 
@@ -18,7 +17,6 @@ def main():
     )
 
     pekora.entitys.db.generate_mapping(create_tables=True)
-    notifications_service.subscribe(pekora.HTTP_BASE_URL + '/webhook/pekora/feed')
 
     main_loop = asyncio.get_event_loop()
     bot.loop = main_loop

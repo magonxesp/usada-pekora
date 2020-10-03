@@ -223,6 +223,7 @@ class YoutubePushNotification:
 
     def subscribe(self, callback_url: str):
         """ Subscribe to the channel feed """
+        pekora.LOGGER.info("Subscribe request callback url: {}".format(callback_url))
         response = self._request(callback_url, 'subscribe')
         return response is not None
 
