@@ -7,3 +7,5 @@ services:
       - 3000:3000
     environment:
       BOT_ENV: dev
+    volumes:
+    - ./db:/app/db
