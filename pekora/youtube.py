@@ -1,5 +1,6 @@
 from typing import Optional
 import urllib3
+from urllib import parse
 import json
 import xml.etree.ElementTree
 import pekora.bot
@@ -194,13 +195,13 @@ class YoutubePushNotification:
             response: urllib3.HTTPResponse = self._http.request(
                 'POST',
                 'https://pubsubhubbub.appspot.com/subscribe',
-                fields={
+                body=parse.urlencode({
                     'hub.mode': mode,
                     'hub.callback': callback_url,
                     'hub.lease_seconds': (60 * 60 * 24 * 365),
                     'hub.topic': self._topic_url,
                     'hub.verify': 'async'
-                },
+                }).encode(),
                 headers={
                     'Content-type': 'application/x-www-form-urlencoded'
                 }
