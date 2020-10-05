@@ -105,7 +105,7 @@ async def send_youtube_notification(video: YoutubeVideo):
     for text_channel in text_channels:
         text_channel = bot.get_channel(int(text_channel.channelId))
         commit()
-        await text_channel.send("Estoy en directo: **{title}** - {url}".format(
+        await text_channel.send("**{title}** {url}".format(
             title=video.get_title(),
             url=video.get_url()
         ))
