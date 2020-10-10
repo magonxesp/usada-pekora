@@ -101,7 +101,6 @@ async def feed(context: commands.Context, arg: str):
         await disable_feed(context)
 
 
-@db_session
 async def get_sended_video_notification(video_id: str) -> List[discord.Message]:
     messages = select(m for m in pekora.entitys.YoutubeNotification if m.video_id == video_id)
     messages_objects = []
