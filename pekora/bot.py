@@ -138,8 +138,8 @@ async def send_youtube_notification(video: YoutubeVideo):
             message: discord.Message = await channel.send(message_content)
 
             pekora.entitys.YoutubeNotification(
-                channel_id=channel.id,
-                message_id=message.id,
+                channel_id=str(channel.id),
+                message_id=str(message.id),
                 video_id=video.get_id(),
                 create_date=int(round(time.time() * 1000))
             )
