@@ -141,7 +141,7 @@ async def send_youtube_notification(video: YoutubeVideo):
                 channel_id=str(channel.id),
                 message_id=str(message.id),
                 video_id=video.get_id(),
-                create_date=int(round(time.time() * 1000))
+                create_date=str(int(round(time.time() * 1000)))
             )
 
             commit()
