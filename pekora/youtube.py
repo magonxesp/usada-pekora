@@ -11,6 +11,9 @@ class YoutubeVideo:
     def __init__(self):
         pass
 
+    def get_id(self) -> str:
+        raise NotImplementedError
+
     def get_url(self):
         raise NotImplementedError
 
@@ -42,6 +45,9 @@ class YoutubeVideoSnippet(YoutubeVideo):
         super().__init__()
         self._id: str = item['id']['videoId']
         self._snippet: dict = item['snippet']
+
+    def get_id(self) -> str:
+        return self._id
 
     def get_url(self):
         return 'https://www.youtube.com/watch?v={}'.format(self._id)
@@ -97,6 +103,14 @@ class YoutubeFeedVideo(YoutubeVideo):
                 raise YoutubeFeedVideoParseError()
         except xml.etree.ElementTree.ParseError:
             raise YoutubeFeedVideoParseError()
+
+    def get_id(self) -> str:
+        video_id = self._entry.find('yt:videoId', namespaces=self._namespace_map)
+
+        if video_id is not None:
+            return video_id.text
+
+        return ''
 
     def get_url(self):
         video_id = self._entry.find('yt:videoId', namespaces=self._namespace_map)
