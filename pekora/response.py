@@ -14,6 +14,8 @@ class MessageResponse:
 
     def __init__(self, message: discord.Message):
         self._message = message
+        self._response_text = ""
+        self._response_audio = ""
 
     async def _play_audio(self, author: discord.Member, audio_file_name: str):
         if author.voice:
@@ -43,7 +45,7 @@ class MessageResponse:
             return re.match(_input, message_text) is not None
 
     async def response_text(self):
-        if self._response_text:
+        if self._response_text != "":
             channel: discord.abc.Messageable = self._message.channel
             await channel.send(self._response_text)
 
