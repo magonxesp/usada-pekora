@@ -10,6 +10,6 @@ COPY requirements.txt requirements.txt
 # install app dependencies
 RUN pip install -r requirements.txt
 # copy all project files
-COPY . .
+COPY .. .
 # run app
 CMD ["python", "-m", "pekora"]

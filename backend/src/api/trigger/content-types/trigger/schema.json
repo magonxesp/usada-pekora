@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "triggers",
+  "info": {
+    "singularName": "trigger",
+    "pluralName": "triggers",
+    "displayName": "Trigger"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "input": {
+      "type": "string",
+      "required": true
+    },
+    "compare": {
+      "type": "enumeration",
+      "enum": [
+        "in",
+        "pattern"
+      ],
+      "required": true
+    },
+    "output_text": {
+      "type": "string"
+    },
+    "output_audio": {
+      "allowedTypes": [
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

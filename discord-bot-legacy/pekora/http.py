@@ -1,8 +1,6 @@
 from quart import Quart, request, Response
 from pekora.youtube import notifications_service
 import pekora
-import json
-
 
 http = Quart(__name__)
 
