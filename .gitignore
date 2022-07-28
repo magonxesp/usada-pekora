@@ -10,3 +10,4 @@ venv/
 .idea
 *.sqlite
 docker-compose.override.yml
+dist

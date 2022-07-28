@@ -6,8 +6,6 @@ services:
     build:
       context: backend
       dockerfile: Dockerfile
-    ports:
-      - "1337:1337"
     depends_on:
       - backend_database
     environment:
