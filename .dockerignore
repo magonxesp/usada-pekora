@@ -1,7 +1,10 @@
-/.env
+.env
 /.git
 /.gitignore
 /db
-/backend/node_modules
-/backend/dist
-/backend/.cache
+node_modules
+dist
+.cache
+build
+.gradle
+.idea

@@ -8,6 +8,8 @@ export default ({ env }) => ({
       user: env('DATABASE_USERNAME', 'pekora_backend_usr'),
       password: env('DATABASE_PASSWORD', 'pekora_backend_pw'),
       ssl: env.bool('DATABASE_SSL', false),
+      charset: 'utf8mb4',
+      collation: 'utf8mb4_unicode_ci'
     },
   },
 });

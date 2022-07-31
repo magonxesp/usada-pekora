@@ -15,13 +15,15 @@ services:
       DATABASE_USERNAME: pekora_backend_usr
       DATABASE_PASSWORD: pekora_backend_pw
 
-#  discord_bot:
-#    build:
-#      context: discord-bot
-#      dockerfile: Dockerfile
-#    restart: unless-stopped
-#    ports:
-#      - "3000:3000"
+  discord_bot:
+    build:
+      context: discord-bot
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      DISCORD_BOT_TOKEN: ""
+      BACKEND_BASE_URL: ""
+      BACKEND_TOKEN: ""
 
   backend_database:
     image: mysql:5.7.39

@@ -3,13 +3,11 @@
  */
 package es.magonxesp.pekorabot
 
-class App {
-    val greeting: String
-        get() {
-            return "Hello World!"
-        }
-}
+import es.magonxesp.pekorabot.discord.startDiscordBot
+import kotlin.concurrent.thread
 
 fun main() {
-    println(App().greeting)
+    thread(start = true) {
+        startDiscordBot()
+    }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "trigger",
     "pluralName": "triggers",
-    "displayName": "Trigger"
+    "displayName": "Trigger",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -13,7 +14,8 @@
   "attributes": {
     "input": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "compare": {
       "type": "enumeration",
@@ -24,14 +26,15 @@
       "required": true
     },
     "output_text": {
-      "type": "string"
+      "type": "text"
     },
     "output_audio": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     }
   }
 }
