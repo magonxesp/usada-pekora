@@ -27,6 +27,7 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
 }
 
 application {

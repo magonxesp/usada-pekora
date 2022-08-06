@@ -1,5 +1,6 @@
 package es.magonxesp.pekorabot.modules.trigger.infraestructure.persistence
 
+import es.magonxesp.pekorabot.modules.trigger.domain.TriggerMother
 import org.junit.Test
 import kotlin.test.assertTrue
 

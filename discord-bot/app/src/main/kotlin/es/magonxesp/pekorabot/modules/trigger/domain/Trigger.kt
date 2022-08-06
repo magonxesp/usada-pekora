@@ -3,6 +3,7 @@ package es.magonxesp.pekorabot.modules.trigger.domain
 import es.magonxesp.pekorabot.modules.shared.domain.AggregateRoot
 
 class Trigger(
+    val id: String,
     val input: String,
     val compare: TriggerCompare,
     val outputText: String?,
@@ -21,15 +22,19 @@ class Trigger(
                 return instance
             }
         }
+
+        override fun toString(): String = value
     }
 
     companion object {
         fun fromPrimitives(
+            id: String,
             input: String,
             compare: String,
             outputText: String?,
             outputSound: String?
         ) = Trigger(
+            id = id,
             input = input,
             compare = TriggerCompare.fromValue(compare),
             outputText = outputText,
