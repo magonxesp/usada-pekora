@@ -40,6 +40,10 @@
       "type": "string",
       "regex": "[0-9]+",
       "required": true
+    },
+    "is_test": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

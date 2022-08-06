@@ -1,6 +1,6 @@
 package es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.client
 
-import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.model.Collection
+import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.resources.Collection
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 

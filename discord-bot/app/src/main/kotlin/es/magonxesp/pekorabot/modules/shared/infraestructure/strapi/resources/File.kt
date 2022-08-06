@@ -1,5 +1,4 @@
-package es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.file
-
+package es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.resources
 
 import kotlinx.serialization.Serializable
 
