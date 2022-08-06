@@ -1,46 +1,45 @@
 package es.magonxesp.pekorabot.modules.trigger.infraestructure.persistence
 
-import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.apiResourceUrl
+import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.client.StrapiFilter
+import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.client.StrapiRequest
 import es.magonxesp.pekorabot.modules.trigger.domain.Trigger
+import es.magonxesp.pekorabot.modules.trigger.infraestructure.strapi.trigger.TriggerModel
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerRepository
-import es.magonxesp.pekorabot.modules.trigger.infraestructure.strapi.trigger.TriggerList
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.model.Collection
 
 
 class StrapiTriggerRepository : TriggerRepository {
 
-    private val jsonSerializer = Json {
-        ignoreUnknownKeys = true
+    private fun mapModelCollectionToAggregate(collection: Collection<TriggerModel>): Array<Trigger> = collection.data.map {
+        trigger ->
+        trigger.toAggregate()
+    }.toTypedArray()
+
+    override fun all(): Array<Trigger> = runBlocking {
+        val response = StrapiRequest("triggers").get(populate = arrayOf("output_audio"))
+
+        if (response != null) {
+            mapModelCollectionToAggregate(response.toModelCollection())
+        } else {
+            arrayOf()
+        }
     }
 
-    override fun all(): Array<Trigger> {
-        val client = HttpClient()
+    override fun findByDiscordServer(id: String) = runBlocking {
+        val response = StrapiRequest("triggers").get(
+            filters = arrayOf(StrapiFilter("discord_server_id", id)),
+            populate = arrayOf("output_audio")
+        )
 
-        val json = runBlocking {
-            val response = client.get(apiResourceUrl("triggers")) {
-                parameter("populate", "output_audio")
-                bearerAuth(System.getenv("BACKEND_TOKEN"))
-            }
-
-            if (response.status == HttpStatusCode.OK) {
-                response.body<String>()
-            } else {
-                null
-            }
-        } ?: return arrayOf()
-
-        val list = jsonSerializer.decodeFromString<TriggerList>(json)
-
-        return list.data.map {
-            trigger ->
-            trigger.toAggregate()
-        }.toTypedArray()
+        if (response != null) {
+            mapModelCollectionToAggregate(response.toModelCollection())
+        } else {
+            arrayOf()
+        }
     }
 
+    override fun save(trigger: Trigger) {
+
+    }
 }

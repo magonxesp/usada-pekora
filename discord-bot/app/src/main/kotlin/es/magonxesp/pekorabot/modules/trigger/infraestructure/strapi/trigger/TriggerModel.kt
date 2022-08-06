@@ -1,23 +1,14 @@
 package es.magonxesp.pekorabot.modules.trigger.infraestructure.strapi.trigger
 
-import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.file.FileList
+import es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.model.Model
 import kotlinx.serialization.Serializable
 import es.magonxesp.pekorabot.modules.trigger.domain.Trigger as TriggerAggregate
 
 @Serializable
-data class Trigger(
+data class TriggerModel (
     val id: Int,
     val attributes: TriggerAttributes
-) {
-
-    @Serializable
-    data class TriggerAttributes(
-        val input: String,
-        val compare: String,
-        val output_text: String?,
-        val output_audio: FileList?
-    )
-    
+): Model() {
     fun toAggregate(): TriggerAggregate = TriggerAggregate.fromPrimitives(
         input = attributes.input,
         compare = attributes.compare,

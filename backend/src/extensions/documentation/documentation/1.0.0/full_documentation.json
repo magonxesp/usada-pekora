@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-07-31T13:41:46.675Z"
+    "x-generation-date": "2022-08-06T11:40:51.344Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -96,7 +96,8 @@
           "data": {
             "required": [
               "input",
-              "compare"
+              "compare",
+              "discord_server_id"
             ],
             "type": "object",
             "properties": {
@@ -126,6 +127,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "discord_server_id": {
+                "type": "string"
               }
             }
           }
@@ -781,6 +785,9 @@
                           }
                         }
                       }
+                    },
+                    "discord_server_id": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -1753,6 +1760,9 @@
                         }
                       }
                     }
+                  },
+                  "discord_server_id": {
+                    "type": "string"
                   },
                   "createdAt": {
                     "type": "string",

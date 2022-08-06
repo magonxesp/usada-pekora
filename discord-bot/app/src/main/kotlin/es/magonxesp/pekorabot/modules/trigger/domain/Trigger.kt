@@ -1,11 +1,13 @@
 package es.magonxesp.pekorabot.modules.trigger.domain
 
+import es.magonxesp.pekorabot.modules.shared.domain.AggregateRoot
+
 class Trigger(
     val input: String,
     val compare: TriggerCompare,
     val outputText: String?,
     val outputSound: String?
-) {
+) : AggregateRoot() {
     enum class TriggerCompare(val value: String) {
         In("in"),
         Pattern("pattern");
