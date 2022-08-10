@@ -8,6 +8,9 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        setUrl("https://m2.dv8tion.net/releases")
+    }
 }
 
 dependencies {
@@ -15,6 +18,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("com.discord4j:discord4j-core:3.2.2")
+    implementation("com.discord4j:discord4j-voice:3.2.2")
     implementation("io.ktor:ktor-server-core:2.0.3")
     implementation("io.ktor:ktor-server-netty:2.0.3")
     implementation("io.ktor:ktor-client-core:2.0.3")
@@ -24,6 +28,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+    implementation("com.sedmelluq:lavaplayer:1.3.77")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
