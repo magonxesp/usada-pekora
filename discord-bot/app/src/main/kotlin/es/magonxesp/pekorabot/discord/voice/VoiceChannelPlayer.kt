@@ -10,6 +10,7 @@ import discord4j.core.spec.VoiceChannelJoinSpec
 import discord4j.voice.AudioProvider
 import es.magonxesp.pekorabot.discord.audio.AudioScheduler
 import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.runBlocking
 
 class VoiceChannelPlayer(
@@ -34,7 +35,7 @@ class VoiceChannelPlayer(
     }.build()
 
     private suspend fun disconnect() {
-        voiceChannel.sendDisconnectVoiceState().awaitSingle()
+        voiceChannel.sendDisconnectVoiceState().awaitSingleOrNull()
         joined = false
     }
 
