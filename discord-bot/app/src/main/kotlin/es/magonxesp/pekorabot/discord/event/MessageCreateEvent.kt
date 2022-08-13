@@ -1,7 +1,6 @@
 package es.magonxesp.pekorabot.discord.event
 
 import discord4j.core.event.domain.message.MessageCreateEvent
-import es.magonxesp.pekorabot.discord.voice.joinVoiceChannel
 import es.magonxesp.pekorabot.discord.voice.playAudio
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerException
 import es.magonxesp.pekorabot.triggerFinder
