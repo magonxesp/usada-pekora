@@ -26,7 +26,6 @@ suspend fun MessageCreateEvent.handleTrigger() {
         }
 
         if (trigger.outputSound != null) {
-            joinVoiceChannel()
             playAudio(trigger.outputSound)
         }
     } catch (exception: TriggerException.NotFound) {
