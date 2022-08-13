@@ -1,6 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id("org.springframework.boot") version "2.7.2"
+    id("io.spring.dependency-management") version "1.0.12.RELEASE"
     id("org.jetbrains.kotlin.jvm") version "1.7.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
     application
@@ -19,8 +21,8 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("com.discord4j:discord4j-core:3.2.2")
     implementation("com.discord4j:discord4j-voice:3.2.2")
-    implementation("io.ktor:ktor-server-core:2.0.3")
-    implementation("io.ktor:ktor-server-netty:2.0.3")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.ktor:ktor-client-core:2.0.3")
     implementation("io.ktor:ktor-client-cio:2.0.3")
     implementation("org.litote.kmongo:kmongo:4.6.1")
@@ -33,6 +35,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 application {
