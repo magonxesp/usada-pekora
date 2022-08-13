@@ -6,7 +6,6 @@ import es.magonxesp.pekorabot.discord.voice.playAudio
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerException
 import es.magonxesp.pekorabot.triggerFinder
 import kotlinx.coroutines.reactor.awaitSingle
-import reactor.kotlin.core.publisher.toMono
 import java.util.logging.Logger
 
 suspend fun MessageCreateEvent.handleTrigger() {
