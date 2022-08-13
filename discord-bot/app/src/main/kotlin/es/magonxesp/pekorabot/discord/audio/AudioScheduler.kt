@@ -1,4 +1,4 @@
-package es.magonxesp.pekorabot.discord.voice
+package es.magonxesp.pekorabot.discord.audio
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer

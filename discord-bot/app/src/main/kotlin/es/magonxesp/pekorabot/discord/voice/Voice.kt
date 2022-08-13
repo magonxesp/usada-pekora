@@ -1,40 +1,49 @@
 package es.magonxesp.pekorabot.discord.voice
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
-import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer
+import com.sedmelluq.discord.lavaplayer.player.event.AudioEvent
+import com.sedmelluq.discord.lavaplayer.player.event.TrackEndEvent
 import discord4j.core.event.domain.message.MessageCreateEvent
+import discord4j.core.`object`.entity.channel.VoiceChannel
 import discord4j.core.spec.VoiceChannelJoinSpec
-import discord4j.voice.AudioProvider
+import es.magonxesp.pekorabot.discord.audio.AudioScheduler
+import es.magonxesp.pekorabot.discord.audio.audioProviderInstance
+import es.magonxesp.pekorabot.discord.audio.playerManagerInstance
 import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.runBlocking
 
-
-fun playerManager(): AudioPlayerManager {
-    val playerManager = DefaultAudioPlayerManager()
-
-    playerManager.configuration.setFrameBufferFactory(::NonAllocatingAudioFrameBuffer)
-    AudioSourceManagers.registerRemoteSources(playerManager)
-    AudioSourceManagers.registerLocalSource(playerManager)
-
-    return playerManager
-}
-
-fun audioProviderInstance(): AudioProvider {
-    val player = playerManager().createPlayer()
-    return LavaPlayerAudioProvider(player)
-}
-
+private val playerManager = playerManagerInstance()
+private val player = playerManager.createPlayer()
+private val audioProvider = audioProviderInstance(player)
+private val audioScheduler = AudioScheduler(player)
+private lateinit var voiceChannel: VoiceChannel
+private lateinit var trackEndListener: (event: AudioEvent) -> Unit
 
 suspend fun MessageCreateEvent.joinVoiceChannel() {
     val voiceState = member.orElse(null)?.voiceState?.awaitSingle() ?: return
-
-    val channel = voiceState.channel.awaitSingle()
+    voiceChannel = voiceState.channel.awaitSingle()
     val spec = VoiceChannelJoinSpec.builder().apply {
-        provider(audioProviderInstance())
+        provider(audioProvider)
     }.build()
 
-    channel.join(spec).awaitSingle()
+    voiceChannel.join(spec).awaitSingle()
+}
 
-    TODO("Get the audio url and play on the joined channel")
+/**
+ * Play an audio file to the joined voice channel
+ *
+ * @param reference The url or path of an audio file
+ */
+fun playAudio(reference: String) {
+    playerManager.loadItem(reference, audioScheduler)
+    trackEndListener = {
+        runBlocking {
+            if (it is TrackEndEvent && it.track.identifier == reference) {
+                voiceChannel.sendDisconnectVoiceState().awaitSingle()
+            }
+        }
+
+        player.removeListener(trackEndListener)
+    }
+
+    player.addListener(trackEndListener)
 }

@@ -1,5 +1,7 @@
 package es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.client
 
+import es.magonxesp.pekorabot.backendBaseUrl
+import es.magonxesp.pekorabot.backendToken
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -17,11 +19,11 @@ class StrapiRequest(
         header("Accept", "application/json")
         header("Content-Type", "application/json")
 
-        bearerAuth(System.getenv("BACKEND_TOKEN"))
+        bearerAuth(backendToken)
     }
 
     private fun apiResourceUrl(url: String): String {
-        return "${System.getenv("BACKEND_BASE_URL")}/api/${url.removePrefix("/")}"
+        return "$backendBaseUrl/api/${url.removePrefix("/")}"
     }
 
     private suspend fun strapiResponse(response: HttpResponse): StrapiResponse? {

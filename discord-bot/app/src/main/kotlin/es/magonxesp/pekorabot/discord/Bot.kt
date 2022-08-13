@@ -1,10 +1,11 @@
 package es.magonxesp.pekorabot.discord
 
 import discord4j.core.DiscordClient
+import es.magonxesp.pekorabot.discordBotToken
 import kotlinx.coroutines.reactor.mono
 
 fun startDiscordBot() {
-    DiscordClient.create(System.getenv("DISCORD_BOT_TOKEN")).withGateway {
+    DiscordClient.create(discordBotToken).withGateway {
         mono {
             it.handleEvents()
         }
