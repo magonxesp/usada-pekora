@@ -25,7 +25,7 @@ class YoutubeFeedSubscribeSchedule {
     @Scheduled(cron = "0 0 * * * ?")
     fun subscribeSchedule() = subscribe()
 
-    fun subscribe() = runBlocking {
+    fun subscribe(): Unit = runBlocking {
         val response = HttpClient().post("https://pubsubhubbub.appspot.com/subscribe") {
             formData {
                 append("hub.mode", "subscribe")
