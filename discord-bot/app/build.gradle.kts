@@ -36,6 +36,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.mockk:mockk:1.12.7")
 }
 
 application {

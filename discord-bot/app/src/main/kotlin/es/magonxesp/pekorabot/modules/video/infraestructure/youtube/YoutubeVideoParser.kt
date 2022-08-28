@@ -1,19 +1,29 @@
 package es.magonxesp.pekorabot.modules.video.infraestructure.youtube
 
+import es.magonxesp.pekorabot.modules.video.domain.FeedParser
+import es.magonxesp.pekorabot.modules.video.domain.Video
+import es.magonxesp.pekorabot.modules.video.domain.VideoException
+import org.xml.sax.InputSource
+import org.xml.sax.SAXException
+import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 
-class YoutubeVideoParser {
+class YoutubeVideoParser: FeedParser {
 
-    fun parse(xml: String) {
-        val document = DocumentBuilderFactory.newDefaultInstance()
-            .apply {
-                isValidating = true
-                isIgnoringElementContentWhitespace = true
-            }
-            .newDocumentBuilder()
-            .parse("")
+    override fun parse(feed: String): Video {
+        try {
+            val document = DocumentBuilderFactory.newInstance()
+                .apply {
+                    isValidating = false
+                    isIgnoringElementContentWhitespace = true
+                }
+                .newDocumentBuilder()
+                .parse(InputSource(StringReader(feed)))
 
-        // document.
+            return YoutubeFeedDocument(document).toAggregate()
+        } catch (exception: SAXException) {
+            throw VideoException.FeedParse(exception.message)
+        }
     }
 
 }

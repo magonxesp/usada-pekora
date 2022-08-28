@@ -7,12 +7,8 @@ import java.util.logging.Logger
 
 class VideoFeedSubscriber(private val subscriber: ChannelSubscriber) {
 
-    fun subscribe() = runBlocking{
-        try {
-            subscriber.subscribe()
-        } catch (exception: VideoException.FeedSubscribe) {
-            Logger.getLogger(VideoFeedSubscriber::class.toString()).warning(exception.message)
-        }
+    fun subscribe() = runBlocking {
+        subscriber.subscribe()
     }
 
 }
