@@ -22,6 +22,7 @@ dependencies {
     implementation("com.discord4j:discord4j-core:3.2.2")
     implementation("com.discord4j:discord4j-voice:3.2.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.ktor:ktor-client-core:2.0.3")
     implementation("io.ktor:ktor-client-cio:2.0.3")
@@ -32,8 +33,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation(kotlin("test"))
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -57,4 +57,8 @@ tasks.withType<Jar> {
     }
 
     from(configurations.compileClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

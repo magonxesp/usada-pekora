@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 @RequestMapping("/webhook/youtube")
-class YoutubeFeedWebhook {
+class YoutubeFeedWebhookController {
 
     @PostMapping("/feed")
     fun postFeed(@RequestBody body: String) {
