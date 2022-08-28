@@ -13,12 +13,14 @@ import kotlin.concurrent.schedule
 @Component
 class YoutubeFeedSubscribeSchedule {
 
+    private val logger = Logger.getLogger(YoutubeFeedSubscribeSchedule::class.toString())
+
     @PostConstruct
     fun subscribePostConstruct() = Timer().schedule(5000) {
         try {
             videoFeedSubscriber().subscribe()
         } catch (exception: VideoException.FeedSubscribe) {
-            Logger.getLogger(YoutubeFeedSubscribeSchedule::class.toString()).warning(exception.message)
+            logger.warning(exception.message)
         }
     }
 
@@ -27,7 +29,7 @@ class YoutubeFeedSubscribeSchedule {
         try {
             videoFeedSubscriber().subscribe()
         } catch (exception: VideoException.FeedSubscribe) {
-            Logger.getLogger(YoutubeFeedSubscribeSchedule::class.toString()).warning(exception.message)
+            logger.warning(exception.message)
         }
     }
 
