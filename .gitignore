@@ -1,5 +1,7 @@
 .DS_Store
 .env
+.env.discord-bot
+!examples/env/.env.discord-bot
 venv/
 .vscode/*
 !.vscode/settings.json

@@ -20,6 +20,9 @@ services:
       context: discord-bot
       dockerfile: Dockerfile
     restart: unless-stopped
+    depends_on:
+      - backend
+      - discord_bot_database
     environment:
       DISCORD_BOT_TOKEN: ""
       BACKEND_BASE_URL: ""
@@ -36,5 +39,15 @@ services:
       MYSQL_PASSWORD: pekora_backend_pw
       MYSQL_ROOT_PASSWORD: root
 
+  discord_bot_database:
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - discord_bot_database:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
 volumes:
   backend_database:
+  discord_bot_database:

@@ -12,3 +12,7 @@ services:
   backend_database:
     ports:
       - "3306:3306"
+
+  discord_bot_database:
+    ports:
+      - "27017:27017"

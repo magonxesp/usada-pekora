@@ -1,7 +1,16 @@
 package es.magonxesp.pekorabot
 
-val backendBaseUrl = System.getenv("BACKEND_BASE_URL").removeSuffix("/")
-val backendToken = System.getenv("BACKEND_TOKEN")
-val discordBotToken = System.getenv("DISCORD_BOT_TOKEN")
-val httpBaseUrl = (System.getenv("HTTP_BASE_URL") ?: "http://localhost:8080").removeSuffix("/")
-val youtubeChannelId = System.getenv("YOUTUBE_CHANNEL_ID") ?: "UC1DCedRgGHBdm81E1llLhOQ"
+import io.github.cdimascio.dotenv.dotenv
+
+private val dotenv = dotenv {
+    filename = ".env.discord-bot"
+    ignoreIfMissing = true
+}
+
+val backendBaseUrl = dotenv.get("BACKEND_BASE_URL", "").removeSuffix("/")
+val backendToken = dotenv.get("BACKEND_TOKEN", "")
+val discordBotToken = dotenv.get("DISCORD_BOT_TOKEN", "")
+val httpBaseUrl = dotenv.get("HTTP_BASE_URL", "http://localhost:8080").removeSuffix("/")
+val youtubeChannelId = dotenv.get("YOUTUBE_CHANNEL_ID", "UC1DCedRgGHBdm81E1llLhOQ")
+val mongoConnectionUrl = dotenv.get("MONGODB_URL", "")
+val mongoDatabase = dotenv.get("MONGODB_DATABASE", "")
