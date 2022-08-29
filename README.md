@@ -40,14 +40,16 @@ $ npm run develop
 
 Create the ```.env``` file 
 ```sh
-$ cp .env.example .env
+# For run with gradle
+$ cp examples/env/.env.discord-bot discord-bot/app/.env.discord-bot
+
+# Or run without gradle (Or debug with intelliJ Kotlin and JUnit run configurations)
+$ cp examples/env/.env.discord-bot .env.discord-bot
 ```
-Set the discord bot token
+
+Set the discord bot token and the other secrets
 ```sh
-# .env file
-TOKEN=your_discord_bot_token
-GOOGLE_API_KEY=your_google_api_key # for the peko!live streaming status command
-HTTP_BASE_URL=http://example.com # domain for the http server (youtube feed webhook)
+$ vim .env.discord-bot
 ```
 
 ### Docker
@@ -65,8 +67,8 @@ $ docker-compose up -d --build
 **NOTE:** If you don't have the ```docker-compose.override.yml``` file the containers will run on production mode by default
 
 ## Commands
-* peko!live - Get if pekora is streaming now
+* peko!live - Get if pekora is streaming now (Deprecated)
 * peko!feed (on|off) - Enable or disable youtube notifications on the current channel
 
-## Pekora voice
+## Pekora voice (deprecated use the strapi backend)
 See the ```pekora/pekora.yml``` for the voice configuration.
