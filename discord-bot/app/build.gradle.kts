@@ -31,6 +31,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.10")
     implementation("com.sedmelluq:lavaplayer:1.3.77")
     implementation("io.github.cdimascio:dotenv-kotlin:6.3.1")
 
