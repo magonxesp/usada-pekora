@@ -84,6 +84,12 @@ For local development just copy the ```docker-compose.local.yml``` located in ``
 ```sh
 $ cp examples/docker/docker-compose.local.yml docker-compose.override.yml
 ```
+NOTE: for production deployment just copy the ```docker-compose.prod.yml```
+
+Set the services configuration environment variables.
+```sh
+$ cp examples/env/.env.docker .env
+```
 
 And then up all containers
 ```sh
@@ -93,7 +99,6 @@ $ docker-compose up -d --build
 **NOTE:** If you don't have the ```docker-compose.override.yml``` file the containers will run on production mode by default
 
 ## Commands
-* peko!live - Get if pekora is streaming now (Deprecated)
 * peko!feed (on|off) - Enable or disable youtube notifications on the current channel
 
 ## Pekora voice

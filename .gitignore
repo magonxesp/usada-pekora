@@ -1,7 +1,9 @@
 .DS_Store
 .env
-.env.discord-bot
+.env.*
 !examples/env/.env.discord-bot
+!examples/env/.env.backend
+!examples/env/.env.docker
 venv/
 .vscode/*
 !.vscode/settings.json
@@ -11,5 +13,5 @@ venv/
 *.code-workspace
 .idea
 *.sqlite
-docker-compose.override.yml
 dist
+/docker-compose.*.yml
