@@ -1,6 +1,19 @@
 package es.magonxesp.pekorabot.http.controller.webhook
 
+import es.magonxesp.pekorabot.DependencyInjectionEnabledTest
 import es.magonxesp.pekorabot.http.HttpApplication
+import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferences
+import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferencesMother
+import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferencesRepository
+import es.magonxesp.pekorabot.modules.video.domain.FeedParser
+import es.magonxesp.pekorabot.modules.video.domain.VideoException
+import es.magonxesp.pekorabot.modules.video.domain.VideoFeedNotifier
+import es.magonxesp.pekorabot.modules.video.domain.VideoMother
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.koin.core.module.Module
+import org.koin.dsl.module
 import kotlin.test.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -12,14 +25,126 @@ import java.util.Random
     classes = [HttpApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-class YoutubeFeedWebhookControllerTest {
+class YoutubeFeedWebhookControllerTest : DependencyInjectionEnabledTest() {
 
     @Autowired
     private lateinit var webClient: WebTestClient
+    private val notifier = mockk<VideoFeedNotifier>(relaxed = true)
+    private val parser = mockk<FeedParser>()
+    private val preferenceRepository = mockk<GuildPreferencesRepository>()
+
+    override fun testModules(): List<Module> = listOf(
+        module {
+            factory { notifier }
+            factory { parser }
+            factory { preferenceRepository }
+        }
+    )
 
     @Test
-    fun `should receive the feed xml`() {
+    fun `should notify the received feed xml`() {
+        val xml = """
+            <feed xmlns:yt="http://www.youtube.com/xml/schemas/2015"
+                     xmlns="http://www.w3.org/2005/Atom">
+              <link rel="hub" href="https://pubsubhubbub.appspot.com"/>
+              <link rel="self" href="https://www.youtube.com/xml/feeds/videos.xml?channel_id=UC1DCedRgGHBdm81E1llLhOQ"/>
+              <title>YouTube video feed</title>
+              <updated>2015-04-01T19:05:24.552394234+00:00</updated>
+              <entry>
+                <id>yt:video:H8FWadpDpmk</id>
+                <yt:videoId>H8FWadpDpmk</yt:videoId>
+                <yt:channelId>UC1DCedRgGHBdm81E1llLhOQ</yt:channelId>
+                <title>【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】</title>
+                <link rel="alternate" href="http://www.youtube.com/watch?v=H8FWadpDpmk"/>
+                <author>
+                 <name>Channel title</name>
+                 <uri>http://www.youtube.com/channel/UC1DCedRgGHBdm81E1llLhOQ</uri>
+                </author>
+                <published>2015-03-06T21:40:57+00:00</published>
+                <updated>2015-03-09T19:05:24.552394234+00:00</updated>
+              </entry>
+            </feed>
+        """
+
+        val video = VideoMother.create(
+            title = "【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】",
+            url = "http://www.youtube.com/watch?v=H8FWadpDpmk"
+        )
+
+        val target = Random().nextLong().toString() // discord channel id
+
+        every { parser.parse(xml) } returns video
+        every { preferenceRepository.findByPreference(GuildPreferences.GuildPreference.FeedChannelId) } returns arrayOf(GuildPreferencesMother.create(
+            preferences = mutableMapOf(GuildPreferences.GuildPreference.FeedChannelId to target)
+        ))
+
         webClient.post().uri("/webhook/youtube/feed")
+            .bodyValue(xml)
+            .exchange()
+            .expectStatus()
+            .isOk
+
+        verify { notifier.notify(video, target) }
+    }
+
+    @Test
+    fun `should not notify the received malformed feed xml`() {
+        val xml = ""
+        val video = VideoMother.create()
+        val target = Random().nextLong().toString() // discord channel id
+
+        every { parser.parse(xml) } throws VideoException.FeedParse()
+        every { preferenceRepository.findByPreference(GuildPreferences.GuildPreference.FeedChannelId) } returns arrayOf(GuildPreferencesMother.create(
+            preferences = mutableMapOf(GuildPreferences.GuildPreference.FeedChannelId to target)
+        ))
+
+        webClient.post().uri("/webhook/youtube/feed")
+            .bodyValue(xml)
+            .exchange()
+            .expectStatus()
+            .isBadRequest
+
+        verify(inverse = true) { notifier.notify(video, target) }
+    }
+
+    @Test
+    fun `should not notify by any service exception`() {
+        val xml = """
+            <feed xmlns:yt="http://www.youtube.com/xml/schemas/2015"
+                     xmlns="http://www.w3.org/2005/Atom">
+              <link rel="hub" href="https://pubsubhubbub.appspot.com"/>
+              <link rel="self" href="https://www.youtube.com/xml/feeds/videos.xml?channel_id=UC1DCedRgGHBdm81E1llLhOQ"/>
+              <title>YouTube video feed</title>
+              <updated>2015-04-01T19:05:24.552394234+00:00</updated>
+              <entry>
+                <id>yt:video:H8FWadpDpmk</id>
+                <yt:videoId>H8FWadpDpmk</yt:videoId>
+                <yt:channelId>UC1DCedRgGHBdm81E1llLhOQ</yt:channelId>
+                <title>【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】</title>
+                <link rel="alternate" href="http://www.youtube.com/watch?v=H8FWadpDpmk"/>
+                <author>
+                 <name>Channel title</name>
+                 <uri>http://www.youtube.com/channel/UC1DCedRgGHBdm81E1llLhOQ</uri>
+                </author>
+                <published>2015-03-06T21:40:57+00:00</published>
+                <updated>2015-03-09T19:05:24.552394234+00:00</updated>
+              </entry>
+            </feed>
+        """
+
+        val video = VideoMother.create(
+            title = "【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】",
+            url = "http://www.youtube.com/watch?v=H8FWadpDpmk"
+        )
+
+        every { parser.parse(xml) } returns video
+        every { preferenceRepository.findByPreference(GuildPreferences.GuildPreference.FeedChannelId) } throws Exception()
+
+        webClient.post().uri("/webhook/youtube/feed")
+            .bodyValue(xml)
+            .exchange()
+            .expectStatus()
+            .is5xxServerError
     }
 
     @Test

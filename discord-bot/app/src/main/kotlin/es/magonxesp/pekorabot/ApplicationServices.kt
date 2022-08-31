@@ -19,6 +19,7 @@ import es.magonxesp.pekorabot.modules.video.infraestructure.discord.DiscordTextC
 import es.magonxesp.pekorabot.modules.video.infraestructure.youtube.YoutubeFeedSubscriber
 import es.magonxesp.pekorabot.modules.video.infraestructure.youtube.YoutubeVideoParser
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -45,12 +46,14 @@ private val videoModule = module {
     factory { SendVideoFeed(get()) }
 }
 
-fun enableDependencyInjection() {
+fun enableDependencyInjection(extraModules: List<Module> = listOf()) {
     startKoin {
         modules(
-            triggerModule,
-            guildModule,
-            videoModule
+            listOf(
+                triggerModule,
+                guildModule,
+                videoModule
+            ).plus(extraModules)
         )
     }
 }

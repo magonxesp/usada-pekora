@@ -42,8 +42,6 @@ dependencies {
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.12.7")
-    testImplementation("io.insert-koin:koin-test:$koinVersion")
-    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 }
 
 application {

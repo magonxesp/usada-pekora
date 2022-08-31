@@ -6,6 +6,8 @@ import es.magonxesp.pekorabot.modules.video.application.SendVideoFeed
 import es.magonxesp.pekorabot.modules.video.application.VideoFeedParser
 import es.magonxesp.pekorabot.modules.video.domain.VideoException
 import org.koin.java.KoinJavaComponent.inject
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.ResponseStatus
 import java.util.*
 import java.util.logging.Logger
 
@@ -26,8 +29,7 @@ class YoutubeFeedWebhookController {
     private val parser: VideoFeedParser by inject(VideoFeedParser::class.java)
 
     @PostMapping("/feed")
-    @ResponseBody
-    fun postFeed(@RequestBody body: String) {
+    fun postFeed(@RequestBody body: String): ResponseEntity<String> {
         try {
             val subscribed = finder.findByPreference(GuildPreferences.GuildPreference.FeedChannelId)
             val video = parser.parse(body)
@@ -38,9 +40,16 @@ class YoutubeFeedWebhookController {
                     it.preferences[GuildPreferences.GuildPreference.FeedChannelId] as String
                 }.toTypedArray()
             )
-        } catch (exception: VideoException.FeedParse) {
+        } catch (exception: Exception) {
             logger.warning(exception.message)
+
+            return when (exception) {
+                is VideoException.FeedParse -> ResponseEntity.badRequest().body("")
+                else -> ResponseEntity.internalServerError().body("")
+            }
         }
+
+        return ResponseEntity.ok().body("")
     }
 
     @GetMapping("/feed", produces = ["text/plain; charset=UTF-8"])
