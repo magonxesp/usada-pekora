@@ -36,7 +36,7 @@ class FeedCommand : CommandHandler() {
     override suspend fun handle(message: Message, args: Map<String, Any?>) {
         val guildId = message.guildId.get().asString()
         val channel = message.channel.awaitSingle()
-        var feedChannelId: Long? = null
+        var feedChannelId: String? = null
         val status = args["status"] as String
 
         if (status !in arrayOf(ENABLE_STATUS, DISABLE_STATUS)) {
@@ -46,29 +46,29 @@ class FeedCommand : CommandHandler() {
 
         try {
             val preferences = finder.find(guildId)
-            feedChannelId = preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId] as Long?
+            feedChannelId = preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId]
         } catch (exception: GuildPreferencesException.NotFound) {
             logger.info(exception.message)
         }
 
-        if (feedChannelId == channel.id.asLong() && status == ENABLE_STATUS) {
+        if (feedChannelId == channel.id.asString() && status == ENABLE_STATUS) {
             channel.createMessage("Las notificaciones de youtube ya estan activadas para este canal").awaitSingle()
             return
         }
 
-        if (feedChannelId != channel.id.asLong() && status == ENABLE_STATUS) {
-            creator.create(guildId, GuildPreferences.GuildPreference.FeedChannelId, channel.id.asLong())
+        if (feedChannelId != channel.id.asString() && status == ENABLE_STATUS) {
+            creator.create(guildId, GuildPreferences.GuildPreference.FeedChannelId, channel.id.asString())
             channel.createMessage("Se han activado las notificaciones de youtube en este canal").awaitSingle()
             return
         }
 
-        if (feedChannelId == channel.id.asLong() && status == DISABLE_STATUS) {
+        if (feedChannelId == channel.id.asString() && status == DISABLE_STATUS) {
             deleter.delete(guildId, GuildPreferences.GuildPreference.FeedChannelId)
             channel.createMessage("Se han desactivado las notificaciones de youtube en este canal").awaitSingle()
             return
         }
 
-        if (feedChannelId != channel.id.asLong() && status == DISABLE_STATUS) {
+        if (feedChannelId != channel.id.asString() && status == DISABLE_STATUS) {
             channel.createMessage("Las notificaciones de youtube no estaban activadas para este canal").awaitSingle()
         }
     }

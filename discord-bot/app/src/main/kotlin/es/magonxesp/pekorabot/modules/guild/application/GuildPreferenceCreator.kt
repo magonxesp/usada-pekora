@@ -6,7 +6,7 @@ import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferencesRepository
 
 class GuildPreferenceCreator(private val repository: GuildPreferencesRepository) {
 
-    fun create(guildId: String, preference: GuildPreferences.GuildPreference, value: Any) {
+    fun create(guildId: String, preference: GuildPreferences.GuildPreference, value: String) {
         val preferences = try {
             repository.findByGuildId(guildId)
         } catch (exception: GuildPreferencesException.NotFound) {

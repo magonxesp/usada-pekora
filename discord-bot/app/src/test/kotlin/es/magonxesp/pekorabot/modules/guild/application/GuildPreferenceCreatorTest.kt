@@ -15,7 +15,7 @@ class GuildPreferenceCreatorTest {
     @Test
     fun `should create a guild preference does not exists`() {
         val preferences = GuildPreferencesMother.create()
-        preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong()
+        preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong().toString()
 
         val repository = mockk<GuildPreferencesRepository>(relaxed = true)
         val creator = GuildPreferenceCreator(repository)
@@ -35,7 +35,7 @@ class GuildPreferenceCreatorTest {
     @Test
     fun `should create a guild preference on existing guild preferences`() {
         val preferences = GuildPreferencesMother.create()
-        preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong()
+        preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong().toString()
 
         val repository = mockk<GuildPreferencesRepository>(relaxed = true)
         val creator = GuildPreferenceCreator(repository)

@@ -6,7 +6,7 @@ import org.bson.types.ObjectId
 class GuildPreferencesDocument(
     val _id: ObjectId? = null,
     var guildId: String? = null,
-    var preferences: MutableMap<GuildPreferences.GuildPreference, Any> = mutableMapOf()
+    var preferences: MutableMap<GuildPreferences.GuildPreference, String> = mutableMapOf()
 ) {
     companion object {
         fun fromAggregate(

@@ -48,7 +48,7 @@ class MongoDbGuildPreferencesTest : GuildModuleIntegrationTest() {
         val repository = MongoDbGuildPreferencesRepository()
 
         databaseTestGuildPreferences() {
-            it.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong()
+            it.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong().toString()
 
             repository.save(it)
             val existing = repository.findByGuildId(it.guildId)

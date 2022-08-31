@@ -7,7 +7,7 @@ class GuildPreferencesMother {
     companion object {
         fun create(
             guildId: String? = null,
-            preferences: MutableMap<GuildPreferences.GuildPreference, Any> = mutableMapOf()
+            preferences: MutableMap<GuildPreferences.GuildPreference, String> = mutableMapOf()
         ) = GuildPreferences(
             guildId = guildId ?: Random().nextLong().toString(),
             preferences = preferences
