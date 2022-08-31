@@ -14,3 +14,5 @@ val httpBaseUrl = dotenv.get("HTTP_BASE_URL", "http://localhost:8080").removeSuf
 val youtubeChannelId = dotenv.get("YOUTUBE_CHANNEL_ID", "UC1DCedRgGHBdm81E1llLhOQ")
 val mongoConnectionUrl = dotenv.get("MONGODB_URL", "")
 val mongoDatabase = dotenv.get("MONGODB_DATABASE", "")
+val redisHost = dotenv.get("REDIS_HOST")
+val redisPort = dotenv.get("REDIS_PORT", "6379").toInt()

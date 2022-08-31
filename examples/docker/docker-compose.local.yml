@@ -16,3 +16,7 @@ services:
   discord_bot_database:
     ports:
       - "27017:27017"
+
+  discord_bot_cache:
+    ports:
+      - "6379:6379"

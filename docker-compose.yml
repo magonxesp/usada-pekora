@@ -23,6 +23,7 @@ services:
     depends_on:
       - backend
       - discord_bot_database
+      - discord_bot_cache
     environment:
       DISCORD_BOT_TOKEN: ""
       BACKEND_BASE_URL: ""
@@ -40,13 +41,17 @@ services:
       MYSQL_ROOT_PASSWORD: root
 
   discord_bot_database:
-    image: mongo
+    image: mongo:4.2.22
     restart: unless-stopped
     volumes:
       - discord_bot_database:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+
+  discord_bot_cache:
+    image: redis:7.0.4
+    restart: unless-stopped
 
 volumes:
   backend_database:

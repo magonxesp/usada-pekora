@@ -5,6 +5,8 @@ import es.magonxesp.pekorabot.modules.guild.application.GuildPreferenceDeleter
 import es.magonxesp.pekorabot.modules.guild.application.GuildPreferencesFinder
 import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferencesRepository
 import es.magonxesp.pekorabot.modules.guild.infraestructure.persistence.MongoDbGuildPreferencesRepository
+import es.magonxesp.pekorabot.modules.shared.domain.KeyValueCacheStorage
+import es.magonxesp.pekorabot.modules.shared.infraestructure.cache.RedisKeyValueCacheStorage
 import es.magonxesp.pekorabot.modules.trigger.application.TriggerFinder
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerMatcher
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerRepository
@@ -23,6 +25,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
+private val sharedModule = module {
+    factory { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
+}
 
 private val triggerModule = module {
     factory { StrapiTriggerRepository() } bind TriggerRepository::class
@@ -38,7 +43,7 @@ private val guildModule = module {
 }
 
 private val videoModule = module {
-    factory { DiscordTextChannelVideoNotifier() } bind VideoFeedNotifier::class
+    factory { DiscordTextChannelVideoNotifier(get()) } bind VideoFeedNotifier::class
     factory { YoutubeVideoParser() } bind FeedParser::class
     factory { YoutubeFeedSubscriber() } bind ChannelSubscriber::class
     factory { VideoFeedParser(get()) }
@@ -50,6 +55,7 @@ fun enableDependencyInjection(extraModules: List<Module> = listOf()) {
     startKoin {
         modules(
             listOf(
+                sharedModule,
                 triggerModule,
                 guildModule,
                 videoModule

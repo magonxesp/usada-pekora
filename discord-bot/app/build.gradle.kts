@@ -37,6 +37,7 @@ dependencies {
     implementation("com.sedmelluq:lavaplayer:1.3.77")
     implementation("io.github.cdimascio:dotenv-kotlin:6.3.1")
     implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("redis.clients:jedis:4.2.0")
 
     testImplementation(kotlin("test"))
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
