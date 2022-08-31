@@ -16,6 +16,7 @@ class YoutubeVideoParser: FeedParser {
                 .apply {
                     isValidating = false
                     isIgnoringElementContentWhitespace = true
+                    isNamespaceAware = true
                 }
                 .newDocumentBuilder()
                 .parse(InputSource(StringReader(feed)))

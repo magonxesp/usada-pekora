@@ -9,6 +9,7 @@ import es.magonxesp.pekorabot.modules.video.domain.FeedParser
 import es.magonxesp.pekorabot.modules.video.domain.VideoException
 import es.magonxesp.pekorabot.modules.video.domain.VideoFeedNotifier
 import es.magonxesp.pekorabot.modules.video.domain.VideoMother
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.reactive.server.WebTestClient
 import java.util.Random
+import kotlin.test.BeforeTest
 
 
 @SpringBootTest(
@@ -29,17 +31,28 @@ class YoutubeFeedWebhookControllerTest : DependencyInjectionEnabledTest() {
 
     @Autowired
     private lateinit var webClient: WebTestClient
-    private val notifier = mockk<VideoFeedNotifier>(relaxed = true)
-    private val parser = mockk<FeedParser>()
-    private val preferenceRepository = mockk<GuildPreferencesRepository>()
+    private lateinit var notifier: VideoFeedNotifier
+    private lateinit var parser: FeedParser
+    private lateinit var preferenceRepository: GuildPreferencesRepository
 
-    override fun testModules(): List<Module> = listOf(
-        module {
-            factory { notifier }
-            factory { parser }
-            factory { preferenceRepository }
+    @BeforeTest
+    fun beforeTest() {
+        clearAllMocks()
+
+        notifier = mockk(relaxed = true)
+        parser = mockk()
+        preferenceRepository = mockk()
+
+        setupTestModules {
+            listOf(
+                module {
+                    factory { notifier }
+                    factory { parser }
+                    factory { preferenceRepository }
+                }
+            )
         }
-    )
+    }
 
     @Test
     fun `should notify the received feed xml`() {

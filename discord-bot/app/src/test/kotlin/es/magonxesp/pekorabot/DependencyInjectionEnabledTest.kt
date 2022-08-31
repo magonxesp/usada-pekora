@@ -1,14 +1,14 @@
 package es.magonxesp.pekorabot
 
+import org.koin.core.context.stopKoin
 import org.koin.core.module.Module
 import kotlin.test.BeforeTest
 
 abstract class DependencyInjectionEnabledTest {
+    protected fun setupTestModules(testServices: () -> List<Module>) {
+        val testModules = testServices()
 
-    @BeforeTest
-    fun beforeTest() {
-        enableDependencyInjection(testModules())
+        stopKoin()
+        enableDependencyInjection(testModules)
     }
-
-    open fun testModules(): List<Module> = listOf()
 }
