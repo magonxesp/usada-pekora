@@ -8,6 +8,8 @@ import es.magonxesp.pekorabot.http.startHttpServer
 import kotlin.concurrent.thread
 
 fun main() {
+    enableDependencyInjection()
+
     thread(start = true) {
         startDiscordBot()
     }

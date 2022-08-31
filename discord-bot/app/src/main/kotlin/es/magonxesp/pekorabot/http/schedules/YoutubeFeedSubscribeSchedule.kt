@@ -2,7 +2,7 @@ package es.magonxesp.pekorabot.http.schedules
 
 import es.magonxesp.pekorabot.modules.video.application.VideoFeedSubscriber
 import es.magonxesp.pekorabot.modules.video.domain.VideoException
-import es.magonxesp.pekorabot.videoFeedSubscriber
+import org.koin.java.KoinJavaComponent.inject
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.util.Timer
@@ -14,11 +14,12 @@ import kotlin.concurrent.schedule
 class YoutubeFeedSubscribeSchedule {
 
     private val logger = Logger.getLogger(YoutubeFeedSubscribeSchedule::class.toString())
+    private val subscriber: VideoFeedSubscriber by inject(VideoFeedSubscriber::class.java)
 
     @PostConstruct
     fun subscribePostConstruct() = Timer().schedule(5000) {
         try {
-            videoFeedSubscriber().subscribe()
+            subscriber.subscribe()
         } catch (exception: VideoException.FeedSubscribe) {
             logger.warning(exception.message)
         }
@@ -27,7 +28,7 @@ class YoutubeFeedSubscribeSchedule {
     @Scheduled(cron = "0 0 * * * ?")
     fun subscribeSchedule() {
         try {
-            videoFeedSubscriber().subscribe()
+            subscriber.subscribe()
         } catch (exception: VideoException.FeedSubscribe) {
             logger.warning(exception.message)
         }

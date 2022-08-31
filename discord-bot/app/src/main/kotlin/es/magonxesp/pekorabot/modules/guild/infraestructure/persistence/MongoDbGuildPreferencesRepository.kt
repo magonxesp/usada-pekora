@@ -23,6 +23,11 @@ class MongoDbGuildPreferencesRepository : GuildPreferencesRepository {
         throw GuildPreferencesException.NotFound("Guild preferences by guild id $guildId not found")
     }
 
+    override fun findByPreference(preference: GuildPreferences.GuildPreference): Array<GuildPreferences> {
+        val guildPreferences = collection.find(GuildPreferencesDocument::preferences.keyProjection(preference) exists true)
+        return guildPreferences.map { it.toAggregate() }.toList().toTypedArray()
+    }
+
     override fun save(guildPreferences: GuildPreferences) {
         val document = collection.findOne(GuildPreferencesDocument::guildId eq guildPreferences.guildId)
 

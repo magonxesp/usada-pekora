@@ -4,12 +4,13 @@ import discord4j.core.`object`.entity.Message
 import es.magonxesp.pekorabot.discord.shared.CommandHandler
 import es.magonxesp.pekorabot.discord.shared.annotation.Command
 import es.magonxesp.pekorabot.discord.shared.CommandArgument
-import es.magonxesp.pekorabot.guildPreferenceCreator
-import es.magonxesp.pekorabot.guildPreferenceDeleter
-import es.magonxesp.pekorabot.guildPreferenceFinder
+import es.magonxesp.pekorabot.modules.guild.application.GuildPreferenceCreator
+import es.magonxesp.pekorabot.modules.guild.application.GuildPreferenceDeleter
+import es.magonxesp.pekorabot.modules.guild.application.GuildPreferencesFinder
 import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferences
 import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferencesException
 import kotlinx.coroutines.reactor.awaitSingle
+import org.koin.java.KoinJavaComponent.inject
 import java.util.logging.Logger
 
 @Command(
@@ -19,6 +20,9 @@ import java.util.logging.Logger
 class FeedCommand : CommandHandler() {
 
     private val logger = Logger.getLogger(FeedCommand::class.toString())
+    private val creator: GuildPreferenceCreator by inject(GuildPreferenceCreator::class.java)
+    private val deleter: GuildPreferenceDeleter by inject(GuildPreferenceDeleter::class.java)
+    private val finder: GuildPreferencesFinder by inject(GuildPreferencesFinder::class.java)
 
     override val commandArguments: Array<CommandArgument<*>> = arrayOf(
         CommandArgument<String>(name = "status", type = String::class, required = true)
@@ -41,7 +45,7 @@ class FeedCommand : CommandHandler() {
         }
 
         try {
-            val preferences = guildPreferenceFinder().find(guildId)
+            val preferences = finder.find(guildId)
             feedChannelId = preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId] as Long?
         } catch (exception: GuildPreferencesException.NotFound) {
             logger.info(exception.message)
@@ -53,14 +57,14 @@ class FeedCommand : CommandHandler() {
         }
 
         if (feedChannelId != channel.id.asLong() && status == ENABLE_STATUS) {
-            guildPreferenceCreator().create(guildId, GuildPreferences.GuildPreference.FeedChannelId, channel.id.asLong())
-            channel.createMessage("Se han activado las notificaciones de youtube este canal").awaitSingle()
+            creator.create(guildId, GuildPreferences.GuildPreference.FeedChannelId, channel.id.asLong())
+            channel.createMessage("Se han activado las notificaciones de youtube en este canal").awaitSingle()
             return
         }
 
         if (feedChannelId == channel.id.asLong() && status == DISABLE_STATUS) {
-            guildPreferenceDeleter().delete(guildId, GuildPreferences.GuildPreference.FeedChannelId)
-            channel.createMessage("Se han desactivado las notificaciones de youtube este canal").awaitSingle()
+            deleter.delete(guildId, GuildPreferences.GuildPreference.FeedChannelId)
+            channel.createMessage("Se han desactivado las notificaciones de youtube en este canal").awaitSingle()
             return
         }
 
