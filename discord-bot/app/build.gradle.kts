@@ -5,7 +5,8 @@ val koinVersion = "3.2.0"
 plugins {
     id("org.springframework.boot") version "2.7.2"
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.spring") version "1.7.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
     application
 }
@@ -51,19 +52,6 @@ application {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "18"
-}
-
-tasks.withType<Jar> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    manifest {
-        attributes(
-            "Main-Class" to "es.magonxesp.pekorabot.AppKt",
-            "Class-Path" to configurations.compileClasspath.get().map { it.name }.joinToString(" ")
-        )
-    }
-
-    from(configurations.compileClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
 
 tasks.test {

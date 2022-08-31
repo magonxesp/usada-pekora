@@ -6,7 +6,6 @@ import es.magonxesp.pekorabot.modules.video.application.SendVideoFeed
 import es.magonxesp.pekorabot.modules.video.application.VideoFeedParser
 import es.magonxesp.pekorabot.modules.video.domain.VideoException
 import org.koin.java.KoinJavaComponent.inject
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

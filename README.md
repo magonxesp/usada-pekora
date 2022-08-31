@@ -18,7 +18,7 @@ Usada pekora discord bot HA↗HA↘HA↗HA↘HA↗HA↘
 Copy the ```.env.example``` file to ```.env```
 
 ```sh
-$ cp backend/.env.example backend/.env
+$ cp example/env/.env.backend backend/.env
 ```
 
 And replace all secrets and keys by a random base64 string.
@@ -38,18 +38,44 @@ $ npm run develop
 
 ### Discord bot
 
-Create the ```.env``` file 
+#### The .env file
+Copy the example env file to the discord-bot directory and set the secrets
+
+#### Env file for docker deployment
+```sh
+$ cp examples/env/.env.discord-bot discord-bot/.env
+```
+
+#### Env file for run natively without docker for debug purposes 
 ```sh
 # For run with gradle
 $ cp examples/env/.env.discord-bot discord-bot/app/.env.discord-bot
 
-# Or run without gradle (Or debug with intelliJ Kotlin and JUnit run configurations)
+# For run without gradle (Or debug with intelliJ Kotlin and JUnit run configurations)
 $ cp examples/env/.env.discord-bot .env.discord-bot
 ```
 
-Set the discord bot token and the other secrets
+#### Gradle
+
+Build
+
 ```sh
-$ vim .env.discord-bot
+$ cd discord-bot
+$ ./gradlew build
+```
+
+Test
+
+```sh
+$ ./gradlew test
+```
+
+Run
+
+```sh
+$ ./gradlew run
+# Or run with java
+$ java -jar build/libs/app.jar
 ```
 
 ### Docker
@@ -70,5 +96,5 @@ $ docker-compose up -d --build
 * peko!live - Get if pekora is streaming now (Deprecated)
 * peko!feed (on|off) - Enable or disable youtube notifications on the current channel
 
-## Pekora voice (deprecated use the strapi backend)
-See the ```pekora/pekora.yml``` for the voice configuration.
+## Pekora voice
+The sound triggers are configured in the Strapi Backoffice at the Trigger content type
