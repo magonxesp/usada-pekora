@@ -1,20 +1,17 @@
 package es.magonxesp.pekorabot.modules.user.infraestructure.persistence
 
+import es.magonxesp.pekorabot.modules.shared.infraestructure.persistence.MongoDbRepository
 import es.magonxesp.pekorabot.modules.user.domain.User
 import es.magonxesp.pekorabot.modules.user.domain.UserException
 import es.magonxesp.pekorabot.modules.user.domain.UserRepository
-import es.magonxesp.pekorabot.mongoConnectionUrl
-import es.magonxesp.pekorabot.mongoDatabase
 import org.litote.kmongo.*
 
-class MongoDbUserRepository : UserRepository {
-
-    private val client = KMongo.createClient(mongoConnectionUrl)
-    private val database = client.getDatabase(mongoDatabase)
-    private val collection = database.getCollection<User>()
+class MongoDbUserRepository : MongoDbRepository(), UserRepository {
 
     override fun find(id: String): User {
-        val user = collection.findOne(User::id eq id)
+        val user = oneQuery<User>("user") { collection ->
+            collection.findOne(User::id eq id)
+        }
 
         if (user != null) {
             return user
@@ -24,7 +21,9 @@ class MongoDbUserRepository : UserRepository {
     }
 
     override fun findByDiscordId(discordId: String): User {
-        val user = collection.findOne(User::discordId eq discordId)
+        val user = oneQuery<User>("user") { collection ->
+            collection.findOne(User::discordId eq discordId)
+        }
 
         if (user != null) {
             return user
@@ -34,15 +33,19 @@ class MongoDbUserRepository : UserRepository {
     }
 
     override fun save(user: User) {
-        if (collection.findOne(User::id eq user.id) != null) {
-            collection.updateOne(user)
-        } else {
-            collection.insertOne(user)
+        writeQuery<User>("user") { collection ->
+            if (collection.findOne(User::id eq user.id) != null) {
+                collection.updateOne(user)
+            } else {
+                collection.insertOne(user)
+            }
         }
     }
 
     override fun delete(user: User) {
-        collection.deleteOne(User::id eq user.id)
+        writeQuery<User>("user") { collection ->
+            collection.deleteOne(User::id eq user.id)
+        }
     }
 
 }
