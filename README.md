@@ -88,7 +88,10 @@ NOTE: for production deployment just copy the ```docker-compose.prod.yml```
 
 Set the services configuration environment variables.
 ```sh
-$ cp examples/env/.env.docker .env
+# MySQL database ans user configuration
+$ cp examples/env/.env.docker.mysql docker/.env.mysql
+# MongoDB root user configuration
+$ cp examples/env/.env.docker.mongodb docker/.env.mongodb
 ```
 
 And then up all containers
