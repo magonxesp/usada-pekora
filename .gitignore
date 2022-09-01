@@ -15,3 +15,4 @@ venv/
 *.sqlite
 dist
 /docker-compose.*.yml
+*.iml
