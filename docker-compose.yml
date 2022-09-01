@@ -25,7 +25,7 @@ services:
     volumes:
       - backend_database:/var/lib/mysql
     env_file:
-      - "./.env"
+      - "./docker/.env.mysql"
 
   discord_bot_database:
     image: mongo:4.2.22
@@ -33,7 +33,7 @@ services:
     volumes:
       - discord_bot_database:/data/db
     env_file:
-      - "./.env"
+      - "./docker/.env.mongodb"
 
   discord_bot_cache:
     image: redis:7.0.4

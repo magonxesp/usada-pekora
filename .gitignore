@@ -3,7 +3,8 @@
 .env.*
 !examples/env/.env.discord-bot
 !examples/env/.env.backend
-!examples/env/.env.docker
+!examples/env/.env.docker.mysql
+!examples/env/.env.docker.mongodb
 venv/
 .vscode/*
 !.vscode/settings.json
