@@ -8,34 +8,39 @@ import es.magonxesp.pekorabot.mongoConnectionUrl
 import es.magonxesp.pekorabot.mongoDatabase
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollectionOfName
+import kotlin.concurrent.thread
 
 abstract class MongoDbRepository {
+    
+    companion object {
+        private var client: MongoClient? = null
 
-    lateinit var client: MongoClient
+        fun connect(): MongoDatabase {
+            if (client == null) {
+                client = KMongo.createClient(mongoConnectionUrl)
 
-    fun connect(): MongoDatabase {
-        client = KMongo.createClient(mongoConnectionUrl)
-        return client.getDatabase(mongoDatabase)
+                Runtime.getRuntime().addShutdownHook(thread(start = false) {
+                    client!!.close()
+                    client = null
+                })
+            }
+
+            return client!!.getDatabase(mongoDatabase)
+        }
     }
 
     inline fun <reified T: Any> oneQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> T?): T? {
         val database = connect()
         val collection = database.getCollectionOfName<T>(name)
 
-        val result = collectionCallback(collection)
-
-        client.close()
-        return result
+        return collectionCallback(collection)
     }
 
     inline fun <reified T: Any> collectionQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> FindIterable<T>): FindIterable<T> {
         val database = connect()
         val collection = database.getCollectionOfName<T>(name)
 
-        val result = collectionCallback(collection)
-
-        client.close()
-        return result
+        return collectionCallback(collection)
     }
 
     inline fun <reified T: Any> writeQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> Unit) {
@@ -43,8 +48,6 @@ abstract class MongoDbRepository {
         val collection = database.getCollectionOfName<T>(name)
 
         collectionCallback(collection)
-
-        client.close()
     }
 
 }
