@@ -15,7 +15,7 @@
     "input": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "compare": {
       "type": "enumeration",
@@ -39,7 +39,10 @@
     "discord_server_id": {
       "type": "string",
       "regex": "[0-9]+",
-      "required": true
+      "required": false
+    },
+    "uuid": {
+      "type": "uid"
     }
   }
 }
