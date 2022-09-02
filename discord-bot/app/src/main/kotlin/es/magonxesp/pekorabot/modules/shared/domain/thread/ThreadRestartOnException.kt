@@ -11,6 +11,16 @@ class ThreadRestartOnException : UncaughtExceptionHandler {
         t?.apply {
             val exceptionClass = if (e != null) e::class.toString() else ""
             logger.warning("Restarting thread $name by throwing exception $exceptionClass with message: ${e?.message}")
+
+            if (isAlive) {
+                logger.info("Waiting for thread $name interrupt")
+                interrupt()
+            }
+
+            while (!isInterrupted) { continue }
+
+            logger.info("Thread $name interrupted, attempting to restart the thread")
+
             start()
         }
     }
