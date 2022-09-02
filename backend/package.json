@@ -14,7 +14,8 @@
     "@strapi/plugin-i18n": "4.3.0",
     "@strapi/plugin-users-permissions": "4.3.0",
     "@strapi/strapi": "4.3.0",
-    "mysql": "2.18.1"
+    "mysql": "2.18.1",
+    "uuid": "^8.3.2"
   },
   "author": {
     "name": "A Strapi developer"
@@ -26,5 +27,8 @@
     "node": ">=12.x.x <=16.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
+  }
 }
