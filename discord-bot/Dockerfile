@@ -9,6 +9,8 @@ RUN gradle clean build --no-daemon -x test
 
 FROM openjdk:18-alpine AS app
 
+RUN apk add --no-cache libstdc++
+
 COPY --from=build /build/app/build/libs/app.jar .
 
 EXPOSE 8080
