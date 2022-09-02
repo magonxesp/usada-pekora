@@ -1,5 +1,5 @@
 # Usada pekora
-Usada pekora discord bot HA↗HA↘HA↗HA↘HA↗HA↘
+Usada pekora discord bot, notify new videos from usada pekora youtube channel and reacts to text messages HA↗HA↘HA↗HA↘HA↗HA↘
 
 [Add pekora to discord server](https://discord.com/api/oauth2/authorize?client_id=755159995720532028&permissions=3668032&scope=bot)
 
