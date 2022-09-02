@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import java.util.*
+import java.util.logging.Level
 import java.util.logging.Logger
 
 @Controller
@@ -28,6 +29,8 @@ class YoutubeFeedWebhookController {
 
     @PostMapping("/feed")
     fun postFeed(@RequestBody body: String): ResponseEntity<String> {
+        logger.info("incoming Youtube feed notification: $body")
+
         try {
             val subscribed = finder.findByPreference(GuildPreferences.GuildPreference.FeedChannelId)
             val video = parser.parse(body)
@@ -39,7 +42,7 @@ class YoutubeFeedWebhookController {
                 }.toTypedArray()
             )
         } catch (exception: Exception) {
-            logger.warning(exception.message)
+            logger.log(Level.WARNING, exception.message, exception)
 
             return when (exception) {
                 is VideoException.FeedParse -> ResponseEntity.badRequest().body("")
