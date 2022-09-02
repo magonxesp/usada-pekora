@@ -13,7 +13,7 @@ class TriggerMother {
         ) = Trigger.fromPrimitives(
             id = id ?: Random.instance().random.nextUUID(),
             input = input ?: Random.instance().chiquito.expressions(),
-            compare = compare ?: Trigger.TriggerCompare.values().random() as String,
+            compare = compare ?: Trigger.TriggerCompare.values().random().toString(),
             outputText = outputText ?: Random.instance().chiquito.sentences(),
             outputSound = outputSound
         )
