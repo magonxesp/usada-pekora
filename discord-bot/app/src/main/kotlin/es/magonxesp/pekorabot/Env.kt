@@ -3,7 +3,7 @@ package es.magonxesp.pekorabot
 import io.github.cdimascio.dotenv.dotenv
 
 private val dotenv = dotenv {
-    filename = ".env.discord-bot"
+    filename = ".env.local"
     ignoreIfMissing = true
 }
 

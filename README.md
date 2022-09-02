@@ -49,10 +49,9 @@ $ cp examples/env/.env.discord-bot discord-bot/.env
 #### Env file for run natively without docker for debug purposes 
 ```sh
 # For run with gradle
-$ cp examples/env/.env.discord-bot discord-bot/app/.env.discord-bot
-
-# For run without gradle (Or debug with intelliJ Kotlin and JUnit run configurations)
-$ cp examples/env/.env.discord-bot .env.discord-bot
+$ cp examples/env/.env.discord-bot discord-bot/.env.local
+# For run with gradle we need add symlink to app directory
+$ ln -s ../.env.local discord-bot/app/.env.local
 ```
 
 #### Gradle
