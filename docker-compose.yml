@@ -15,7 +15,6 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
-      - backend
       - discord_bot_database
       - discord_bot_cache
 
