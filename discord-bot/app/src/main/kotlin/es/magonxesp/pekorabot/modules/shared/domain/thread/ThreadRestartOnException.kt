@@ -1,9 +1,11 @@
 package es.magonxesp.pekorabot.modules.shared.domain.thread
 
 import java.lang.Thread.UncaughtExceptionHandler
+import java.util.concurrent.Callable
 import java.util.logging.Logger
+import kotlin.concurrent.thread
 
-class ThreadRestartOnException : UncaughtExceptionHandler {
+class ThreadRestartOnException(val callable: () -> Unit) : UncaughtExceptionHandler {
 
     private val logger = Logger.getLogger(ThreadRestartOnException::class.toString())
 
@@ -19,9 +21,11 @@ class ThreadRestartOnException : UncaughtExceptionHandler {
 
             while (!isInterrupted) { continue }
 
-            logger.info("Thread $name interrupted, attempting to restart the thread")
+            logger.info("Thread $name interrupted, starting new thread")
 
-            start()
+            thread(start = true) { callable() }.apply {
+                uncaughtExceptionHandler = ThreadRestartOnException(callable)
+            }
         }
     }
 

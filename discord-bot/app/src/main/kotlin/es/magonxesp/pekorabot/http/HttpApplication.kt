@@ -11,10 +11,11 @@ import kotlin.concurrent.thread
 @SpringBootApplication(exclude = [MongoAutoConfiguration::class, MongoDataAutoConfiguration::class])
 open class HttpApplication
 
-fun startHttpServer() {
-    val thread = thread(start = true) {
-        runApplication<HttpApplication>()
-    }
+fun runSpringApplication() {
+    runApplication<HttpApplication>()
+}
 
-    thread.uncaughtExceptionHandler = ThreadRestartOnException()
+fun startHttpServer() {
+    val thread = thread(start = true, block = ::runSpringApplication)
+    thread.uncaughtExceptionHandler = ThreadRestartOnException(::runSpringApplication)
 }

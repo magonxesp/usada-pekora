@@ -8,14 +8,15 @@ import kotlin.concurrent.thread
 
 val discordClient: DiscordClient = DiscordClient.create(discordBotToken)
 
-fun startDiscordBot() {
-    val thread = thread(start = true) {
-        discordClient.withGateway {
-            mono {
-                it.handleEvents()
-            }
-        }.block()
-    }
+fun connectBot() {
+    discordClient.withGateway {
+        mono {
+            it.handleEvents()
+        }
+    }.block()
+}
 
-    thread.uncaughtExceptionHandler = ThreadRestartOnException()
+fun startDiscordBot() {
+    val thread = thread(start = true, block = ::connectBot)
+    thread.uncaughtExceptionHandler = ThreadRestartOnException(::connectBot)
 }
