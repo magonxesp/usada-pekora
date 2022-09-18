@@ -1,6 +1,6 @@
 package es.magonxesp.pekorabot.http
 
-import es.magonxesp.pekorabot.modules.shared.domain.thread.ThreadRestartOnException
+import es.magonxesp.pekorabot.modules.shared.domain.thread.ExitOnThreadUncaughtException
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
@@ -17,5 +17,5 @@ fun runSpringApplication() {
 
 fun startHttpServer() {
     val thread = thread(start = true, block = ::runSpringApplication)
-    thread.uncaughtExceptionHandler = ThreadRestartOnException(::runSpringApplication)
+    thread.uncaughtExceptionHandler = ExitOnThreadUncaughtException()
 }

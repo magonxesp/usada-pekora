@@ -6,6 +6,7 @@ import es.magonxesp.pekorabot.modules.trigger.application.TriggerFinder
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerException
 import kotlinx.coroutines.reactor.awaitSingle
 import org.koin.java.KoinJavaComponent.inject
+import java.util.logging.Level
 import java.util.logging.Logger
 
 
@@ -28,7 +29,7 @@ suspend fun MessageCreateEvent.handleTrigger(): Boolean {
 
         return true
     } catch (exception: TriggerException.NotFound) {
-        Logger.getLogger(MessageCreateEvent::class.toString()).warning("Trigger not found for input ${message.content}")
+        Logger.getLogger(MessageCreateEvent::class.toString()).log(Level.WARNING, "Trigger not found for input ${message.content}", exception)
     }
 
     return false

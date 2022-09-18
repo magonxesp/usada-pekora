@@ -6,6 +6,7 @@ import org.koin.java.KoinJavaComponent.inject
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.util.Timer
+import java.util.logging.Level
 import java.util.logging.Logger
 import javax.annotation.PostConstruct
 import kotlin.concurrent.schedule
@@ -21,7 +22,7 @@ class YoutubeFeedSubscribeSchedule {
         try {
             subscriber.subscribe()
         } catch (exception: VideoException.FeedSubscribe) {
-            logger.warning(exception.message)
+            logger.log(Level.WARNING, exception.message, exception)
         }
     }
 
@@ -30,7 +31,7 @@ class YoutubeFeedSubscribeSchedule {
         try {
             subscriber.subscribe()
         } catch (exception: VideoException.FeedSubscribe) {
-            logger.warning(exception.message)
+            logger.log(Level.WARNING, exception.message, exception)
         }
     }
 
