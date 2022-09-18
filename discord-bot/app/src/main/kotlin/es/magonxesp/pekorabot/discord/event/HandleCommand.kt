@@ -7,6 +7,7 @@ import es.magonxesp.pekorabot.discord.defaultCommandPrefix
 import es.magonxesp.pekorabot.discord.shared.CommandHandler
 import es.magonxesp.pekorabot.discord.shared.exception.CommandException
 import kotlinx.coroutines.reactor.awaitSingle
+import java.util.logging.Level
 import java.util.logging.Logger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
@@ -74,7 +75,7 @@ suspend fun MessageCreateEvent.handleCommand(): Boolean {
             val args = evaluateCommandArguments(commandInstance, commandInfo)
             commandInstance.handle(message = message, args = args)
         } catch (exception: Exception) {
-            logger.warning(exception.message)
+            logger.log(Level.WARNING, exception.message, exception)
             continue
         }
     }
