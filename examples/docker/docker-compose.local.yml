@@ -9,6 +9,10 @@ services:
     volumes:
       - ./backend:/app
 
+  frontend:
+    ports:
+      - "3000:3000"
+
   backend_database:
     ports:
       - "3306:3306"

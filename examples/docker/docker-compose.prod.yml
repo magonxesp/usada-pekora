@@ -7,6 +7,10 @@ services:
     env_file:
       - "./backend/.env"
 
+  frontend:
+    ports:
+      - "3000:3000"
+
   discord_bot:
     ports:
       - "8080:8080"
