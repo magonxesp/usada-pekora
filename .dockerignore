@@ -16,3 +16,5 @@ docker-compose.*.yml
 .editorconfig
 .strapi-updater.json
 /backend/public/uploads
+.nuxt
+.output
