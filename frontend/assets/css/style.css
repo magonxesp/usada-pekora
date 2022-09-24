@@ -5,3 +5,7 @@
 :root {
     --header-border-color: #a6b1ed;
 }
+
+img {
+    pointer-events: none;
+}
