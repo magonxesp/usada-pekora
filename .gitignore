@@ -3,6 +3,7 @@
 .env.*
 !examples/env/.env.discord-bot
 !examples/env/.env.backend
+!examples/env/.env.frontend
 !examples/env/.env.docker.mysql
 !examples/env/.env.docker.mongodb
 venv/
