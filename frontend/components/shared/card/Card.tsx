@@ -1,6 +1,6 @@
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 
-export function Card() {
+export default function Card() {
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">

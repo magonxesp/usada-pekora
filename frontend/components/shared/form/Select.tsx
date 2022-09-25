@@ -1,26 +1,37 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
+import { SelectOption } from '../../../modules/shared/form/select-option'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-
-interface Option {
-  label: string
-  value: any
-}
+import Image from 'next/future/image'
 
 interface ComponentProps {
-  options: Option[];
+  options: SelectOption[]
+  onChange?: (selected: SelectOption) => void
 }
 
-function Select(props: ComponentProps) {
-  const { options } = props
-  const [selected, setSelected] = useState(options.at(0))
+export default function Select(props: ComponentProps) {
+  const { options, onChange } = props
+  const [selectedOption, setSelectedOption] = useState(options[0])
+
+  const onChangeSelectedOption = (option: SelectOption) => {
+    setSelectedOption(option)
+
+    if (onChange) {
+      onChange(option)
+    }
+  }
 
   return (
-    <div className="fixed top-16 w-72">
-      <Listbox value={selected} onChange={setSelected}>
+    <div className="w-72">
+      <Listbox value={selectedOption} onChange={onChangeSelectedOption}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-            <span className="block truncate">{selected.label}</span>
+          <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-10 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+            {selectedOption.labelIcon ? (
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img src={selectedOption.labelIcon} className="h-5 w-5 rounded-full" alt={`Icon of ${selectedOption.label} option`} />
+              </span>
+            ) : null}
+            <span className="block truncate">{selectedOption.label}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon
                 className="h-5 w-5 text-gray-400"
@@ -37,25 +48,31 @@ function Select(props: ComponentProps) {
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {options.map((option, index) => (
                 <Listbox.Option
-                  key={personIdx}
+                  key={index}
+                  value={option}
+                  disabled={option.disabled}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
-                    }`
+                    `relative cursor-default select-none py-2  pr-10
+                    ${ option.labelIcon ? 'pl-10' : 'pl-4' }
+                    ${ active ? 'bg-primary' : 'text-gray-900'}`
                   }
-                  value={person}
                 >
                   {({ selected }) => (
                     <>
+                      {option.labelIcon ? (
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                          <img src={option.labelIcon} className="h-5 w-5 rounded-full" alt={`Icon of ${option.label} option`} />
+                        </span>
+                      ) : null}
                       <span
                         className={`block truncate ${
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >
-                        {person.name}
+                        {option.label}
                       </span>
                       {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-900">
                           <CheckIcon className="h-5 w-5" aria-hidden="true" />
                         </span>
                       ) : null}
@@ -71,11 +88,3 @@ function Select(props: ComponentProps) {
   )
 }
 
-Select.defaultProps = {
-  options: [{
-    label: 'Empty',
-    value: null
-  }]
-}
-
-export default Select

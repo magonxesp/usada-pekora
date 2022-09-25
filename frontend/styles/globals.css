@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+        --color-primary: #A5B4FC; /* Indigo 300 */
+    }
+}
+
 :root {
-    --header-border-color: #a6b1ed;
+    --header-border-color: var(--color-primary);
 }
 
 img {
