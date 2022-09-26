@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { SelectOption } from '../../../modules/shared/form/select-option'
+import { SelectOption } from '../../../modules/shared/domain/form/select-option'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/future/image'
 
