@@ -5,6 +5,10 @@ import { SelectOption } from '../modules/shared/domain/form/select-option'
 import { DiscordApiGuildRepository } from '../modules/guild/infraestructure/persistence/discord-api-guild-repository'
 import { GuildFinder } from '../modules/guild/application/guild-finder'
 import { useServerSession } from '../modules/shared/infraestructure/auth/session'
+import { useState } from 'react'
+import { TriggerFinder } from '../modules/trigger/application/trigger-finder'
+import { StrapiTriggerRepository } from '../modules/trigger/infraestructure/persistence/strapi-trigger-repository'
+import { Trigger } from '../modules/trigger/domain/trigger'
 
 
 export const getServerSideProps: GetServerSideProps = async (context): Promise<GetServerSidePropsResult<any>> => {
@@ -24,14 +28,22 @@ export const getServerSideProps: GetServerSideProps = async (context): Promise<G
   }
 }
 
-interface HomeProps {
-  guilds: SelectOption[]
-}
-
 const Home: NextPage = ({ guilds }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [triggers, setTriggers] = useState<Trigger[]>([])
+
   return (
     <div>
-      <Select options={guilds} />
+      <Select options={guilds} onChange={(option) => {
+        fetch(`/api/trigger/guild-triggers?id=${option.value}`)
+          .then(response => response.json())
+          .then(json => setTriggers(json as Trigger[]))
+      }} />
+      <h1>Triggers</h1>
+      {triggers.length > 0 ? triggers.map(trigger => (
+        <p>{trigger.input}</p>
+      )) : (
+        <p>Este servidor de discord no tiene triggers</p>
+      )}
       <Card />
     </div>
   )
