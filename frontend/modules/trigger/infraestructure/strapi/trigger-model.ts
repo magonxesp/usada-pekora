@@ -2,6 +2,7 @@ import { FileData, fileUrlToFileData } from '../../../shared/infraestructure/str
 import { Trigger, TriggerCompare } from '../../domain/trigger'
 
 export interface TriggerAttributes {
+  title: string
   uuid: string
   input: string
   compare: string
@@ -18,6 +19,7 @@ export interface TriggerModel {
 export function triggerAggregateToModel(trigger: Trigger): TriggerModel {
   return {
     attributes: {
+      title: trigger.title,
       uuid: trigger.uuid,
       compare: trigger.compare,
       input: trigger.input,
@@ -30,6 +32,7 @@ export function triggerAggregateToModel(trigger: Trigger): TriggerModel {
 
 export function triggerModelToAggregate(model: TriggerModel): Trigger {
   return {
+    title: model.attributes.title,
     uuid: model.attributes.uuid,
     compare: model.attributes.compare as TriggerCompare,
     discordServerId: model.attributes.discord_server_id,

@@ -5,6 +5,40 @@
 @layer base {
     :root {
         --color-primary: #A5B4FC; /* Indigo 300 */
+        --color-secondary: #c7d2fe; /* Indigo 200 */
+        --color-danger: #dc2626; /* Red 600 */
+
+        --color-primary-active: #6366F1; /* Indigo 500 */
+        --color-secondary-active: #818CF8; /* Indigo 400 */
+        --color-danger-active: #991B1B; /* Red 800 */
+    }
+
+    .heading-1 {
+        @apply text-2xl
+    }
+
+    .heading-2 {
+        @apply text-xl
+    }
+
+    .heading-3 {
+        @apply text-lg
+    }
+
+    .heading-1,
+    .heading-2,
+    .heading-3 {
+        @apply py-5
+    }
+
+    button {
+        @apply cursor-pointer
+    }
+
+    button.bg-primary,
+    button.bg-secondary,
+    button.bg-danger {
+        @apply text-white
     }
 }
 
@@ -15,3 +49,10 @@
 img {
     pointer-events: none;
 }
+
+button:active {
+    --color-primary: var(--color-primary-active);
+    --color-secondary: var(--color-secondary-active);
+    --color-danger: var(--color-danger-active);
+}
+

@@ -4,6 +4,7 @@ export enum TriggerCompare {
 }
 
 export interface Trigger {
+  title: string
   uuid: string
   input: string
   compare: TriggerCompare

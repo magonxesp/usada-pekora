@@ -7,6 +7,10 @@ import { GuildFinder } from '../modules/guild/application/guild-finder'
 import { serverSession } from '../modules/shared/infraestructure/auth/session'
 import { useState } from 'react'
 import { Trigger } from '../modules/trigger/domain/trigger'
+import TriggerList from '../components/domain/trigger/list/TriggerList'
+import EmptyState from '../components/shared/empty-state/EmptyState'
+import Button from '../components/shared/form/Button'
+import { Color } from '../modules/shared/domain/color/color'
 
 
 export const getServerSideProps: GetServerSideProps = async (context): Promise<GetServerSidePropsResult<any>> => {
@@ -36,13 +40,17 @@ const Home: NextPage = ({ guilds }: InferGetServerSidePropsType<typeof getServer
           .then(response => response.json())
           .then(json => setTriggers(json as Trigger[]))
       }} />
-      <h1>Triggers</h1>
-      {triggers.length > 0 ? triggers.map(trigger => (
-        <p key={trigger.uuid}>{trigger.input}</p>
-      )) : (
-        <p>Este servidor de discord no tiene triggers</p>
-      )}
-      <Card />
+      <div className="py-5">
+        <div className="flex justify-between items-center">
+          <h1 className="heading-1">Reacciones</h1>
+          <Button color="primary">Añadir</Button>
+        </div>
+        {triggers.length > 0 ? (
+          <TriggerList items={triggers} />
+        ) : (
+          <EmptyState />
+        )}
+      </div>
     </div>
   )
 }
