@@ -7,7 +7,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)'
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        danger: 'var(--color-danger)',
       }
     },
   },
