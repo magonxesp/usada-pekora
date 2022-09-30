@@ -3,6 +3,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { SelectOption } from '../../../modules/shared/domain/form/select-option'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/future/image'
+import Picture from '../image/Picture'
 
 interface ComponentProps {
   options: SelectOption[]
@@ -28,7 +29,11 @@ export default function Select(props: ComponentProps) {
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-10 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             {selectedOption.labelIcon ? (
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <img src={selectedOption.labelIcon} className="h-5 w-5 rounded-full" alt={`Icon of ${selectedOption.label} option`} />
+                <Picture
+                  src={selectedOption.labelIcon}
+                  className="h-5 w-5 rounded-full"
+                  alt={`Icon of ${selectedOption.label} option`}
+                />
               </span>
             ) : null}
             <span className="block truncate">{selectedOption.label}</span>
@@ -61,7 +66,11 @@ export default function Select(props: ComponentProps) {
                     <>
                       {option.labelIcon ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                          <img src={option.labelIcon} className="h-5 w-5 rounded-full" alt={`Icon of ${option.label} option`} />
+                          <Picture
+                            src={option.labelIcon}
+                            className="h-5 w-5 rounded-full"
+                            alt={`Icon of ${option.label} option`}
+                          />
                         </span>
                       ) : null}
                       <span

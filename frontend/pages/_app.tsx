@@ -1,11 +1,11 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Header } from '../components/app/header/Header'
+import Header from '../components/app/header/Header'
 import { SessionProvider } from 'next-auth/react'
 import { Session } from 'next-auth'
 
 interface AppRootProps {
-  session: Session
+  session: Session,
 }
 
 function MyApp({ Component, pageProps }: AppProps<AppRootProps>) {

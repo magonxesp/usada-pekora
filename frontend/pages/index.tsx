@@ -4,15 +4,13 @@ import Select from '../components/shared/form/Select'
 import { SelectOption } from '../modules/shared/domain/form/select-option'
 import { DiscordApiGuildRepository } from '../modules/guild/infraestructure/persistence/discord-api-guild-repository'
 import { GuildFinder } from '../modules/guild/application/guild-finder'
-import { useServerSession } from '../modules/shared/infraestructure/auth/session'
+import { serverSession } from '../modules/shared/infraestructure/auth/session'
 import { useState } from 'react'
-import { TriggerFinder } from '../modules/trigger/application/trigger-finder'
-import { StrapiTriggerRepository } from '../modules/trigger/infraestructure/persistence/strapi-trigger-repository'
 import { Trigger } from '../modules/trigger/domain/trigger'
 
 
 export const getServerSideProps: GetServerSideProps = async (context): Promise<GetServerSidePropsResult<any>> => {
-  const session = await useServerSession(context.req, context.res)
+  const session = await serverSession(context.req, context.res)
   // @ts-ignore
   const finder = new GuildFinder(new DiscordApiGuildRepository(session.accessToken))
   const guilds = await finder.userGuilds()
@@ -40,7 +38,7 @@ const Home: NextPage = ({ guilds }: InferGetServerSidePropsType<typeof getServer
       }} />
       <h1>Triggers</h1>
       {triggers.length > 0 ? triggers.map(trigger => (
-        <p>{trigger.input}</p>
+        <p key={trigger.uuid}>{trigger.input}</p>
       )) : (
         <p>Este servidor de discord no tiene triggers</p>
       )}

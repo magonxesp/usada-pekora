@@ -2,13 +2,6 @@
     border-bottom-color: var(--header-border-color);
 }
 
-.logo {
-    overflow: hidden;
-    height: inherit;
-}
-
-.logo img {
-    position: relative;
+.logo_img {
     top: -40%;
-    width: 70%;
 }
