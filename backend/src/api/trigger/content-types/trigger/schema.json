@@ -43,6 +43,10 @@
     },
     "uuid": {
       "type": "uid"
+    },
+    "title": {
+      "type": "string",
+      "required": true
     }
   }
 }
