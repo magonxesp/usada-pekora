@@ -29,7 +29,7 @@ suspend fun MessageCreateEvent.handleTrigger(): Boolean {
 
         return true
     } catch (exception: TriggerException.NotFound) {
-        Logger.getLogger(MessageCreateEvent::class.toString()).log(Level.WARNING, "Trigger not found for input ${message.content}", exception)
+        Logger.getLogger(MessageCreateEvent::class.toString()).log(Level.INFO, "Trigger not found for input ${message.content}", exception)
     }
 
     return false
