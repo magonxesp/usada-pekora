@@ -9,6 +9,6 @@ import es.magonxesp.pekorabot.http.startHttpServer
 fun main() {
     enableDependencyInjection()
 
-    //startDiscordBot()
+    startDiscordBot()
     startHttpServer()
 }
