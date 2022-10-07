@@ -6,7 +6,9 @@ import es.magonxesp.pekorabot.modules.guild.application.GuildPreferencesFinder
 import es.magonxesp.pekorabot.modules.guild.domain.GuildPreferencesRepository
 import es.magonxesp.pekorabot.modules.guild.infraestructure.persistence.MongoDbGuildPreferencesRepository
 import es.magonxesp.pekorabot.modules.shared.domain.KeyValueCacheStorage
+import es.magonxesp.pekorabot.modules.shared.domain.Logger
 import es.magonxesp.pekorabot.modules.shared.infraestructure.cache.RedisKeyValueCacheStorage
+import es.magonxesp.pekorabot.modules.shared.infraestructure.logger.Sfl4jLogger
 import es.magonxesp.pekorabot.modules.trigger.application.TriggerFinder
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerMatcher
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerRepository
@@ -27,6 +29,7 @@ import org.koin.dsl.module
 
 private val sharedModule = module {
     factory { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
+    factory { Sfl4jLogger() } bind Logger::class
 }
 
 private val triggerModule = module {
