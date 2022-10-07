@@ -39,6 +39,7 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-kotlin:6.3.1")
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("redis.clients:jedis:4.2.0")
+    implementation("io.prometheus:simpleclient:0.16.0")
 
     testImplementation(kotlin("test"))
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
