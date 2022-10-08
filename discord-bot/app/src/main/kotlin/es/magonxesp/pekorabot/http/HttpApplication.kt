@@ -5,10 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
 import org.springframework.boot.runApplication
+import org.springframework.metrics.export.prometheus.EnablePrometheusMetrics
 import kotlin.concurrent.thread
 
 
 @SpringBootApplication(exclude = [MongoAutoConfiguration::class, MongoDataAutoConfiguration::class])
+@EnablePrometheusMetrics
 open class HttpApplication
 
 fun runSpringApplication() {

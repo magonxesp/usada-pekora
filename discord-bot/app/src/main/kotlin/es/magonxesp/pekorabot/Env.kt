@@ -7,6 +7,7 @@ private val dotenv = dotenv {
     ignoreIfMissing = true
 }
 
+val appEnv = dotenv.get("APP_ENV", "develop")
 val backendBaseUrl = dotenv.get("BACKEND_BASE_URL", "").removeSuffix("/")
 val backendToken = dotenv.get("BACKEND_TOKEN", "")
 val discordBotToken = dotenv.get("DISCORD_BOT_TOKEN", "")

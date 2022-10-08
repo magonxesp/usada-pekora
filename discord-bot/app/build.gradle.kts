@@ -43,6 +43,7 @@ dependencies {
     implementation("ch.qos.logback.contrib:logback-jackson:0.1.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4")
     implementation("io.prometheus:simpleclient:0.16.0")
+    implementation("org.springframework.metrics:spring-metrics:latest.release")
 
     testImplementation(kotlin("test"))
     testImplementation("io.github.serpro69:kotlin-faker:1.11.0")

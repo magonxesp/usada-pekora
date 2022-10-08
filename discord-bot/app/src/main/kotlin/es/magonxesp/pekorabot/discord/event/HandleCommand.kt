@@ -6,6 +6,7 @@ import es.magonxesp.pekorabot.discord.commands
 import es.magonxesp.pekorabot.discord.defaultCommandPrefix
 import es.magonxesp.pekorabot.discord.shared.CommandHandler
 import es.magonxesp.pekorabot.discord.shared.exception.CommandException
+import es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus.registerCommandFired
 import kotlinx.coroutines.reactor.awaitSingle
 import java.util.logging.Level
 import java.util.logging.Logger
@@ -74,6 +75,7 @@ suspend fun MessageCreateEvent.handleCommand(): Boolean {
             val commandInfo = getCommandInfo(command)
             val args = evaluateCommandArguments(commandInstance, commandInfo)
             commandInstance.handle(message = message, args = args)
+            registerCommandFired()
         } catch (exception: Exception) {
             logger.log(Level.WARNING, exception.message, exception)
             continue

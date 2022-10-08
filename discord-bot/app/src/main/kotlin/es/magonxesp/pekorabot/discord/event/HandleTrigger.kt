@@ -2,6 +2,7 @@ package es.magonxesp.pekorabot.discord.event
 
 import discord4j.core.event.domain.message.MessageCreateEvent
 import es.magonxesp.pekorabot.discord.voice.playAudio
+import es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus.registerTriggerFired
 import es.magonxesp.pekorabot.modules.trigger.application.TriggerFinder
 import es.magonxesp.pekorabot.modules.trigger.domain.TriggerException
 import kotlinx.coroutines.reactor.awaitSingle
@@ -26,6 +27,8 @@ suspend fun MessageCreateEvent.handleTrigger(): Boolean {
         if (trigger.outputSound != null) {
             playAudio(trigger.outputSound)
         }
+
+        registerTriggerFired()
 
         return true
     } catch (exception: TriggerException.NotFound) {
