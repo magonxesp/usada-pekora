@@ -5,7 +5,7 @@ import org.koin.core.module.Module
 import kotlin.test.BeforeTest
 
 abstract class DependencyInjectionEnabledTest {
-    protected fun setupTestModules(testServices: () -> List<Module>) {
+    protected fun setupTestModules(testServices: () -> List<Module> = { listOf() }) {
         val testModules = testServices()
 
         stopKoin()

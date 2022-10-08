@@ -13,5 +13,6 @@ COPY --from=build /build/app/build/libs/app.jar .
 
 EXPOSE 8080
 EXPOSE 5005
+EXPOSE 9001
 
 CMD ["java", "-jar", "app.jar", "--add-opens java.base/jdk.internal.misc=ALL-UNNAMED", "-Dio.netty.tryReflectionSetAccessible=true"]

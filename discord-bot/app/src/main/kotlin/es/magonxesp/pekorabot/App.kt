@@ -5,9 +5,11 @@ package es.magonxesp.pekorabot
 
 import es.magonxesp.pekorabot.discord.startDiscordBot
 import es.magonxesp.pekorabot.http.startHttpServer
+import io.prometheus.client.hotspot.DefaultExports
 
 fun main() {
     enableDependencyInjection()
+    DefaultExports.initialize()
 
     startDiscordBot()
     startHttpServer()
