@@ -55,13 +55,6 @@ fun registerCommandFired() {
     commandFiredCount.labels(appEnv).inc()
 }
 
-fun registerGuildCount(guildId: String) {
-    val guilds = (cache.get("discord_guilds") ?: "").split(";").toMutableList()
-
-    if (guildId in guilds) {
-        guilds.add(guildId)
-    }
-
-    cache.set("discord_guilds", guilds.joinToString(";"))
-    guildCount.labels(appEnv).set(guilds.count().toDouble())
+fun registerGuildCount(count: Long) {
+    guildCount.labels(appEnv).set(count.toDouble())
 }
