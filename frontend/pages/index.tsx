@@ -1,5 +1,4 @@
 import type { GetServerSideProps, GetServerSidePropsResult, InferGetServerSidePropsType, NextPage } from 'next'
-import Card from '../components/shared/card/Card'
 import Select from '../components/shared/form/Select'
 import { SelectOption } from '../modules/shared/domain/form/select-option'
 import { DiscordApiGuildRepository } from '../modules/guild/infraestructure/persistence/discord-api-guild-repository'
@@ -10,7 +9,6 @@ import { Trigger } from '../modules/trigger/domain/trigger'
 import TriggerList from '../components/domain/trigger/list/TriggerList'
 import EmptyState from '../components/shared/empty-state/EmptyState'
 import Button from '../components/shared/form/Button'
-import { Color } from '../modules/shared/domain/color/color'
 
 
 export const getServerSideProps: GetServerSideProps = async (context): Promise<GetServerSidePropsResult<any>> => {
@@ -38,7 +36,7 @@ const Home: NextPage = ({ guilds }: InferGetServerSidePropsType<typeof getServer
       <Select options={guilds} onChange={(option) => {
         fetch(`/api/trigger/guild-triggers?id=${option.value}`)
           .then(response => response.json())
-          .then(json => setTriggers(json as Trigger[]))
+          .then(items => setTriggers(items.map((item: object) => Object.assign(new (Trigger as any)(), item))))
       }} />
       <div className="py-5">
         <div className="flex justify-between items-center">
