@@ -13,6 +13,9 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+  session: {
+    maxAge: 604800
+  },
   callbacks: {
     async session({ session, token, user }) {
       // @ts-ignore
