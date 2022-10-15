@@ -31,7 +31,7 @@ export function triggerAggregateToModel(trigger: Trigger): TriggerModel {
 }
 
 export function triggerModelToAggregate(model: TriggerModel): Trigger {
-  return {
+  return Trigger.fromObject({
     title: model.attributes.title,
     uuid: model.attributes.uuid,
     compare: model.attributes.compare as TriggerCompare,
@@ -39,5 +39,5 @@ export function triggerModelToAggregate(model: TriggerModel): Trigger {
     input: model.attributes.input,
     outputAudio: model.attributes.output_audio?.data.attributes.url,
     outputText: model.attributes.output_text
-  }
+  })
 }
