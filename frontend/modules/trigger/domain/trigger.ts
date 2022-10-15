@@ -1,8 +1,11 @@
-import { TriggerFeature } from './trigger-feature'
-
 export enum TriggerCompare {
   CONTAINS = 'in',
   PATTERN = 'pattern',
+}
+
+export enum TriggerFeature {
+  TEXT_RESPONSE,
+  AUDIO_RESPONSE,
 }
 
 export class Trigger {
@@ -25,22 +28,22 @@ export class Trigger {
     outputText?: string,
     outputAudio?: string,
     discordServerId: string
-  }) {
+  }): Trigger {
     return new Trigger(
       object.title,
       object.uuid,
       object.input,
       object.compare,
       object.discordServerId,
-      object.discordServerId,
+      object.outputText,
       object.outputAudio
     )
   }
 
-  features() {
+  features(): Array<TriggerFeature> {
     return [
       this.outputText && TriggerFeature.TEXT_RESPONSE,
       this.outputAudio && TriggerFeature.AUDIO_RESPONSE,
-    ].filter(feature => typeof feature !== 'undefined')
+    ].filter(feature => typeof feature !== 'undefined') as Array<TriggerFeature>
   }
 }

@@ -37,7 +37,7 @@ export function triggerModelToAggregate(model: TriggerModel): Trigger {
     compare: model.attributes.compare as TriggerCompare,
     discordServerId: model.attributes.discord_server_id,
     input: model.attributes.input,
-    outputAudio: model.attributes.output_audio?.data.attributes.url,
+    outputAudio: model.attributes.output_audio?.data?.attributes?.url,
     outputText: model.attributes.output_text
   })
 }
