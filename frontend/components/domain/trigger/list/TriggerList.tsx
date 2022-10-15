@@ -8,8 +8,8 @@ interface TriggerListProps {
 export default function TriggerList(props: TriggerListProps) {
   return (
     <div>
-      {props.items.map((trigger) => (
-        <TriggerCard key={trigger.uuid} trigger={trigger} />
+      {props.items.map((trigger, index) => (
+        <TriggerCard key={index} trigger={trigger} />
       ))}
     </div>
   )
