@@ -1,13 +1,13 @@
 import { GuildRepository } from '../../domain/guild-repository'
-import { RestClient } from '../../../shared/infraestructure/discord/client'
+import { DiscordRestClient } from '../../../shared/infraestructure/discord/client'
 import { Guild } from '../../domain/guild'
 
 export class DiscordApiGuildRepository implements GuildRepository {
 
-  private client: RestClient
+  private client: DiscordRestClient
 
   constructor(bearerToken: string) {
-    this.client = new RestClient(bearerToken)
+    this.client = new DiscordRestClient(bearerToken)
   }
 
   private mapGuildObject(object: any): Guild {
