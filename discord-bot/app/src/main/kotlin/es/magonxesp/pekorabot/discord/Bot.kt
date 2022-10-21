@@ -12,7 +12,8 @@ val discordClient: DiscordClient = DiscordClient.create(discordBotToken)
 
 fun connectBot() {
     discordClient.withGateway {
-        val dispatcher =  Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        val dispatcher = Executors.newFixedThreadPool(4)
+            .asCoroutineDispatcher()
 
         mono(dispatcher) {
             it.handleEvents()
