@@ -1,11 +1,9 @@
 package es.magonxesp.pekorabot.discord.event
 
 import discord4j.core.event.domain.message.MessageCreateEvent
-import es.magonxesp.pekorabot.modules.shared.domain.KeyValueCacheStorage
 import es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus.registerGuildCount
 import es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus.registerMessageRequest
 import es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus.registerProccesedMessageRequest
-import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingle
 import java.util.logging.Level
 import java.util.logging.Logger

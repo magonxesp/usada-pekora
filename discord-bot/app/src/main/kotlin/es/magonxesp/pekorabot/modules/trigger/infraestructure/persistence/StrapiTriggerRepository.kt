@@ -17,30 +17,30 @@ class StrapiTriggerRepository : TriggerRepository {
             trigger.toAggregate()
         }.toTypedArray()
 
-    override fun all(): Array<Trigger> = runBlocking {
+    override suspend  fun all(): Array<Trigger> {
         val response = StrapiRequest("triggers").get(populate = arrayOf("output_audio"))
 
         if (response != null) {
-            mapModelCollectionToAggregate(response.toModelCollection())
-        } else {
-            arrayOf()
+            return mapModelCollectionToAggregate(response.toModelCollection())
         }
+
+        return arrayOf()
     }
 
-    override fun findByDiscordServer(id: String) = runBlocking {
+    override suspend fun findByDiscordServer(id: String): Array<Trigger> {
         val response = StrapiRequest("triggers").get(
             filters = arrayOf(StrapiFilter("discord_server_id", id)),
             populate = arrayOf("output_audio")
         )
 
         if (response != null) {
-            mapModelCollectionToAggregate(response.toModelCollection())
-        } else {
-            arrayOf()
+            return mapModelCollectionToAggregate(response.toModelCollection())
         }
+
+        return arrayOf()
     }
 
-    override fun save(trigger: Trigger) {
+    override suspend fun save(trigger: Trigger) {
 
     }
 }

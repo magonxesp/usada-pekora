@@ -9,7 +9,7 @@ class TriggerFinder(
     private val repository: TriggerRepository,
     private val matcher: TriggerMatcher
 ) {
-    fun findByInput(input: String, discordServerId: String): Trigger {
+    suspend fun findByInput(input: String, discordServerId: String): Trigger {
         val triggers = repository.findByDiscordServer(discordServerId)
         return matcher.matchInput(input, triggers) ?: throw TriggerException.NotFound()
     }
