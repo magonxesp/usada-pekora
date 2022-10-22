@@ -24,7 +24,38 @@ export class StrapiTriggerRepository implements TriggerRepository {
     return trigger
   }
 
-  save(trigger: Trigger): void {
+  async save(trigger: Trigger): Promise<void> {
+    const client = new StrapiClient()
+    const collection = await client.request<TriggerModel>('GET', `/triggers?filters[uuid][$eq]=${trigger.uuid}`)
+    const existing = collection.data.shift()
+
+    const requestBody = {
+      data: {
+        input: trigger.input,
+        compare: trigger.compare,
+        output_text: trigger.outputText,
+        output_audio: trigger.outputAudio,
+        discord_server_id: trigger.discordServerId,
+        uuid: trigger.uuid,
+        title: trigger.title
+      }
+    }
+
+    if (existing) {
+      await client.request<TriggerModel>('PUT', `/triggers/${existing.id}`, JSON.stringify(requestBody))
+    } else {
+      await client.request<TriggerModel>('POST', '/triggers', JSON.stringify(requestBody))
+    }
+  }
+
+  async delete(trigger: Trigger): Promise<void> {
+    const client = new StrapiClient()
+    const collection = await client.request<TriggerModel>('GET', `/triggers?filters[uuid][$eq]=${trigger.uuid}`)
+    const existing = collection.data.shift()
+
+    if (existing) {
+      await client.request<TriggerModel>('DELETE', `/triggers/${existing.id}`)
+    }
   }
 
 }
