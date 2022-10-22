@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { SelectOption } from '../../../../modules/shared/domain/form/select-option'
 import { Guild } from '../../../../modules/guild/domain/guild'
 import { useDispatch } from 'react-redux'
-import { setTriggers } from '../../../../store/slices/trigger-slice'
+import { setTriggers } from '../../../../store/slices/app-slice'
 
 
 export default function UserGuildSelect() {

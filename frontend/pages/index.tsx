@@ -7,7 +7,7 @@ import { useAppSelector } from '../hooks'
 
 
 const Home: NextPage = () => {
-  const triggers = useAppSelector((state) => state.trigger.triggers)
+  const triggers = useAppSelector((state) => state.app.triggers)
 
   return (
     <div>

@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import discordReducer from './slices/discord-slice'
-import triggerReducer from './slices/trigger-slice'
+import appReducer from './slices/app-slice'
 
 const store = configureStore({
   reducer: {
-    discord: discordReducer,
-    trigger: triggerReducer
+    app: appReducer,
   },
 })
 
