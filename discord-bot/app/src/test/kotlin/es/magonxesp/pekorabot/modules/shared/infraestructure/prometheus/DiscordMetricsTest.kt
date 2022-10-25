@@ -3,7 +3,7 @@ package es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus
 import es.magonxesp.pekorabot.DependencyInjectionEnabledTest
 import kotlin.test.Test
 
-class DiscordMetrics : DependencyInjectionEnabledTest() {
+class DiscordMetricsTest : DependencyInjectionEnabledTest() {
 
     init {
         setupTestModules()
