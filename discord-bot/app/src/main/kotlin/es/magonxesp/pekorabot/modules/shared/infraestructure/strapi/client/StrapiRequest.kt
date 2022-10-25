@@ -2,18 +2,34 @@ package es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.client
 
 import es.magonxesp.pekorabot.backendBaseUrl
 import es.magonxesp.pekorabot.backendToken
+import es.magonxesp.pekorabot.modules.shared.infraestructure.persistence.MongoDbRepository
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import java.util.logging.Logger
+import kotlin.concurrent.thread
 
 
 class StrapiRequest(
     private val resourceUrl: String,
 ) {
-    private val client = HttpClient()
+    companion object {
+        private var client: HttpClient? = null
+
+        private fun getClient(): HttpClient {
+            if (client == null) {
+                client = HttpClient()
+
+                Runtime.getRuntime().addShutdownHook(thread(start = false) {
+                    client!!.close()
+                })
+            }
+
+            return client!!
+        }
+    }
 
     fun HttpRequestBuilder.configure() {
         header("Accept", "application/json")
@@ -38,7 +54,7 @@ class StrapiRequest(
     }
 
     suspend fun get(filters: Array<StrapiFilter>? = null, fields: Array<String>? = null, populate: Array<String>? = null): StrapiResponse?  {
-        val response = client.get(apiResourceUrl(resourceUrl)) {
+        val response = getClient().get(apiResourceUrl(resourceUrl)) {
             configure()
 
             url {
@@ -52,7 +68,7 @@ class StrapiRequest(
     }
 
     suspend fun post(body: String): StrapiResponse? {
-        val response = client.post(apiResourceUrl(resourceUrl)) {
+        val response = getClient().post(apiResourceUrl(resourceUrl)) {
             configure()
             setBody(body)
         }
