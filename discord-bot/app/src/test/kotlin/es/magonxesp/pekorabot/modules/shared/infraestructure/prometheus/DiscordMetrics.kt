@@ -32,7 +32,7 @@ class DiscordMetrics : DependencyInjectionEnabledTest() {
 
     @Test
     fun `should count the current discord guild using the bot`() {
-        registerGuildCount("367228812718")
+        registerGuildCount(4)
     }
 
 }
