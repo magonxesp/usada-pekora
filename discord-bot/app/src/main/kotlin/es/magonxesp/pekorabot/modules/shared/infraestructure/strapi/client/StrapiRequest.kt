@@ -2,7 +2,6 @@ package es.magonxesp.pekorabot.modules.shared.infraestructure.strapi.client
 
 import es.magonxesp.pekorabot.backendBaseUrl
 import es.magonxesp.pekorabot.backendToken
-import es.magonxesp.pekorabot.modules.shared.infraestructure.persistence.MongoDbRepository
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
