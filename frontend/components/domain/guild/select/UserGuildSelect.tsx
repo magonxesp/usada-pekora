@@ -1,4 +1,3 @@
-import { Trigger } from '../../../../modules/trigger/domain/trigger'
 import Select from '../../../shared/form/Select'
 import { useEffect, useState } from 'react'
 import { SelectOption } from '../../../../modules/shared/domain/form/select-option'
