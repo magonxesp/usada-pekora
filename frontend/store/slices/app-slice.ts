@@ -20,6 +20,7 @@ export const appSlice = createSlice({
   reducers: {
     setCurrentGuild(state, action: PayloadAction<string>) {
       state.selectedGuild = action.payload
+      sessionStorage.setItem("current_selected_guild", state.selectedGuild)
     },
     setTriggers(state, action: PayloadAction<Array<Trigger>>) {
       state.triggers = action.payload

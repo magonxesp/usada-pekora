@@ -4,10 +4,30 @@ import Button from '../components/shared/form/Button'
 import UserGuildSelect from '../components/domain/guild/select/UserGuildSelect'
 import { NextPage } from 'next'
 import { useAppSelector } from '../hooks'
+import { useEffect } from 'react'
+import { Trigger } from '../modules/trigger/domain/trigger'
+import { setCurrentGuild, setTriggers } from '../store/slices/app-slice'
+import { useDispatch } from 'react-redux'
 
 
 const Home: NextPage = () => {
+  const dispatch = useDispatch();
   const triggers = useAppSelector((state) => state.app.triggers)
+  const selectedGuild = useAppSelector((state) => state.app.selectedGuild)
+
+  useEffect(() => {
+    let guildId
+
+    if ((guildId = sessionStorage.getItem('current_selected_guild')) != null) {
+      dispatch(setCurrentGuild(guildId))
+    }
+  },[])
+
+  useEffect(() => {
+    fetch(`/api/trigger/guild-triggers?id=${selectedGuild}`)
+      .then(response => response.json())
+      .then(items => dispatch(setTriggers(items.map((item: object) => Object.assign(new (Trigger as any)(), item)))))
+  }, [selectedGuild])
 
   return (
     <div>
