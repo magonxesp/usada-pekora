@@ -3,7 +3,7 @@ package es.magonxesp.pekorabot.modules.shared.infraestructure.prometheus
 import io.prometheus.client.Counter
 import io.prometheus.client.Gauge
 
-val messagesCount = Counter.build()
+val messagesCount: Counter = Counter.build()
     .name("pekorabot_discord_message_total")
     .help("Total of the incoming discord messages")
     .register()
