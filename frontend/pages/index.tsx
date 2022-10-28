@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { useEffect } from 'react'
 import { setCurrentGuild } from '../store/slices/app-slice'
 import { useDispatch } from 'react-redux'
-import TriggersView from '../components/views/triggers/TriggersView'
+import TriggersView from '../components/views/triggers-view/TriggersView'
 
 
 const Home: NextPage = () => {
