@@ -6,6 +6,7 @@ import { Trigger } from '../../../modules/trigger/domain/trigger'
 import Button from '../../shared/form/Button'
 import TriggerList from '../../domain/trigger/list/TriggerList'
 import EmptyState from '../../shared/empty-state/EmptyState'
+import Link from 'next/link'
 
 export default function TriggersView() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function TriggersView() {
       .then(items => {
         clearTimeout(loadingAnimationTimeout)
         setLoading(false)
-        dispatch(setTriggers(items.map((item: object) => Object.assign(new (Trigger as any)(), item))))
+        dispatch(setTriggers(items.map((item: object) => Trigger.fromPrimitives(item as any))))
       })
   }, [selectedGuild])
 
@@ -29,7 +30,9 @@ export default function TriggersView() {
     <>
       <div className="flex justify-between items-center">
         <h1 className="heading-1">Reacciones</h1>
-        <Button color="primary">Añadir</Button>
+        <Link href="/trigger/new">
+          <Button color="primary">Añadir</Button>
+        </Link>
       </div>
       {!loading && triggers.length > 0 ? (
         <TriggerList items={triggers} />
