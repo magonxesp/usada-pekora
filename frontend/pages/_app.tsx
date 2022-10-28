@@ -15,10 +15,8 @@ function MyApp({ Component, pageProps }: AppProps<AppRootProps>) {
     <SessionProvider session={pageProps.session}>
       <Provider store={store}>
         <Header />
-        <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            <Component {...pageProps} />
-          </div>
+        <main className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <Component {...pageProps} />
         </main>
       </Provider>
     </SessionProvider>
