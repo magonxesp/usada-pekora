@@ -31,10 +31,10 @@ export function triggerAggregateToModel(trigger: Trigger): TriggerModel {
 }
 
 export function triggerModelToAggregate(model: TriggerModel): Trigger {
-  return Trigger.fromObject({
+  return Trigger.fromPrimitives({
     title: model.attributes.title,
     uuid: model.attributes.uuid,
-    compare: model.attributes.compare as TriggerCompare,
+    compare: model.attributes.compare,
     discordServerId: model.attributes.discord_server_id,
     input: model.attributes.input,
     outputAudio: model.attributes.output_audio?.data?.attributes?.url,

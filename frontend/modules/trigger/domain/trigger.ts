@@ -8,6 +8,16 @@ export enum TriggerFeature {
   AUDIO_RESPONSE,
 }
 
+export interface TriggerPrimitives {
+  title: string,
+  uuid: string,
+  input: string,
+  compare: string,
+  outputText?: string,
+  outputAudio?: string,
+  discordServerId: string
+}
+
 export class Trigger {
 
   constructor(
@@ -20,24 +30,40 @@ export class Trigger {
     public outputAudio?: string,
   ) {}
 
-  static fromObject(object: {
-    title: string,
-    uuid: string,
-    input: string,
-    compare: TriggerCompare,
-    outputText?: string,
-    outputAudio?: string,
-    discordServerId: string
-  }): Trigger {
+  static fromPrimitives(values: TriggerPrimitives): Trigger {
     return new Trigger(
-      object.title,
-      object.uuid,
-      object.input,
-      object.compare,
-      object.discordServerId,
-      object.outputText,
-      object.outputAudio
+      values.title,
+      values.uuid,
+      values.input,
+      values.compare as TriggerCompare,
+      values.discordServerId,
+      values.outputText,
+      values.outputAudio
     )
+  }
+
+  static empty(): Trigger {
+    return Trigger.fromPrimitives({
+      title: "",
+      uuid: "",
+      input: "",
+      compare: "",
+      outputText: "",
+      outputAudio: "",
+      discordServerId: ""
+    })
+  }
+
+  toPrimitives(): TriggerPrimitives {
+    return {
+      title: this.title,
+      uuid: this.uuid,
+      input: this.input,
+      compare: this.compare as string,
+      outputText: this.outputText,
+      outputAudio: this.outputAudio,
+      discordServerId: this.discordServerId
+    }
   }
 
   features(): Array<TriggerFeature> {
@@ -47,3 +73,5 @@ export class Trigger {
     ].filter(feature => typeof feature !== 'undefined') as Array<TriggerFeature>
   }
 }
+
+export const triggerCompareOptions = () => Object.entries(TriggerCompare)
