@@ -4,6 +4,7 @@ import style from './Header.module.css'
 import logo from './logo.png'
 import { useSession } from 'next-auth/react'
 import Picture from '../../shared/image/Picture'
+import Link from 'next/link'
 
 
 export default function Header() {
@@ -15,14 +16,16 @@ export default function Header() {
         <Disclosure as="div" className="bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-20 items-center justify-between">
-              <div className="flex-shrink-0 overflow-hidden h-20">
-                <Image
-                  src={logo}
-                  alt="The header logo"
-                  loading="eager"
-                  className={`w-9/12 relative ${style.logo_img}`}
-                />
-              </div>
+              <Link href="/">
+                <div className="flex-shrink-0 overflow-hidden h-20 cursor-pointer">
+                  <Image
+                    src={logo}
+                    alt="The header logo"
+                    loading="eager"
+                    className={`w-9/12 relative ${style.logo_img}`}
+                  />
+                </div>
+              </Link>
               {(session) ? (
                 <div className="flex-shrink-0 flex items-center">
                   <Picture
