@@ -25,7 +25,6 @@ export function Form({ initialFormData, onSubmit, children }: FormProps) {
   return (
     <form onSubmit={(event) => {
       event.preventDefault()
-
       onSubmit(formData)
     }}>
       {children((name, value) => setFormData({ name, value }))}
