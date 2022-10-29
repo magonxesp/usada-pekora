@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 import styles from './InputWrapper.module.css'
+import {
+  InputChangeEventHandler,
+  InputWrapperOnChangeEventHandler,
+} from '../../../../modules/shared/infraestructure/react/form/input'
 
-interface InputChangeEventHandler {
-  (event: ChangeEvent<HTMLInputElement|HTMLSelectElement>): void
-}
 
 interface InputWrapperProps {
   label: string
@@ -16,7 +17,7 @@ interface InputWrapperProps {
    * @param {string} name
    * @param {any} value
    */
-  onChange?: (name: string, value: any) => void
+  onChange?: InputWrapperOnChangeEventHandler
 
   /**
    * Validate the input value when onChange event is fired

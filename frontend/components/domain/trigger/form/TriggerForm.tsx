@@ -1,49 +1,75 @@
-import { Trigger, triggerCompareOptions, TriggerPrimitives } from '../../../../modules/trigger/domain/trigger'
-import { ChangeEvent, FormEvent, useReducer } from 'react'
+import { Trigger, triggerCompareOptions } from '../../../../modules/trigger/domain/trigger'
+import InputWrapper from '../../../shared/form/input-wrapper/InputWrapper'
+import Button from '../../../shared/form/Button'
+import { Form } from '../../../shared/form/Form'
 
 interface TriggerFormProps {
   trigger: Trigger,
   onSubmit?: (trigger: Trigger) => void
 }
 
-interface FormDataEvent {
-  name: string,
-  value: any
-}
-
-const formDataReducer = (state: TriggerPrimitives, event: FormDataEvent) => {
-  return {
-    ...state,
-    [event.name]: event.value
-  }
-}
-
 export default function TriggerForm({ trigger }: TriggerFormProps) {
-  const [formData, setFormData] = useReducer(formDataReducer, Trigger.empty().toPrimitives())
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
-    setFormData({
-      name: event.target.name,
-      value: event.target.value
-    })
-  }
-
-  const submitForm = (event: FormEvent) => {
-    event.preventDefault()
-    console.log(formData)
+  const submitForm = (data: object) => {
+    console.log(data)
   }
 
   return (
-    <form onSubmit={submitForm}>
-      <input type="text" value={trigger.title} onChange={handleInputChange} name="title" />
-      <input type="text" value={trigger.input} onChange={handleInputChange} name="input" />
-      <select name="compare" onChange={handleInputChange}>
-        {triggerCompareOptions().map(([name, value]) => (
-          <option value={value} selected={trigger.compare === value}>{name}</option>
-        ))}
-      </select>
-      <input type="text" value={trigger.outputText} onChange={handleInputChange} name="outputText" />
-      <button type="submit">Guardar</button>
-    </form>
+    <Form initialFormData={trigger.toPrimitives()} onSubmit={submitForm}>
+      {(inputChangeHandler) => (
+        <>
+          <InputWrapper
+            label="Titulo"
+            onChange={inputChangeHandler}
+            validate={(value) => {
+              if (!value) {
+                throw 'El titulo no puede estar vacio!'
+              }
+            }}
+          >
+            {(handler) => (
+              <input type="text" defaultValue={trigger.title} onChange={handler}  name="title" />
+            )}
+          </InputWrapper>
+
+          <InputWrapper
+            label="Input"
+            onChange={inputChangeHandler}
+            validate={(value) => {
+              if (!value) {
+                throw 'El input no puede estar vacio!'
+              }
+            }}
+          >
+            {(handler) => (
+              <input type="text" defaultValue={trigger.input} onChange={handler} name="input" />
+            )}
+          </InputWrapper>
+
+          <InputWrapper
+            label="Comparar con:"
+            onChange={inputChangeHandler}
+          >
+            {(handler) => (
+              <select name="compare" onChange={handler} defaultValue={trigger.compare}>
+                {triggerCompareOptions().map(([name, value]) => (
+                  <option value={value} key={value}>{name}</option>
+                ))}
+              </select>
+            )}
+          </InputWrapper>
+
+          <InputWrapper
+            label="Output text"
+            onChange={inputChangeHandler}
+          >
+            {(handler) => (
+              <input type="text" defaultValue={trigger.outputText} onChange={handler} name="outputText" />
+            )}
+          </InputWrapper>
+
+          <Button type="submit">Guardar</Button>
+        </>
+      )}
+    </Form>
   )
 }

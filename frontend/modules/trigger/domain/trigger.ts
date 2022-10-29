@@ -47,7 +47,7 @@ export class Trigger {
       title: "",
       uuid: "",
       input: "",
-      compare: "",
+      compare: TriggerCompare.CONTAINS,
       outputText: "",
       outputAudio: "",
       discordServerId: ""
