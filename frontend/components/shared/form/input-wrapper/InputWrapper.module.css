@@ -1,0 +1,19 @@
+.wrapper * {
+    display: block;
+}
+
+.wrapper input,
+.wrapper select {
+    border: 0.15em solid var(--color-primary);
+    border-radius: 0.20em;
+    padding: 0.3em;
+    width: 100%;
+}
+
+.wrapper *:focus {
+    outline: none;
+}
+
+.wrapper select {
+    background-color: transparent;
+}
