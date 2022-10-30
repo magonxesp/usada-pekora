@@ -1,33 +1,19 @@
-import { useReducer } from 'react'
-import { InputWrapperOnChangeEventHandler } from '../../../modules/shared/infraestructure/react/form/input'
-
-interface InputData {
-  name: string
-  value: any
-}
+import {FormEvent} from 'react'
 
 interface FormProps {
-  onSubmit: (data: object) => void
-  children: (inputValueHandler: InputWrapperOnChangeEventHandler) => JSX.Element,
-  initialFormData: object
+  onSubmit: () => void
+  children: JSX.Element
 }
 
-const formDataReducer = (state: object, event: InputData) => {
-  return {
-    ...state,
-    [event.name]: event.value
+export default function Form({ children, onSubmit }: FormProps) {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    onSubmit()
   }
-}
-
-export function Form({ initialFormData, onSubmit, children }: FormProps) {
-  const [formData, setFormData] = useReducer(formDataReducer, initialFormData)
 
   return (
-    <form onSubmit={(event) => {
-      event.preventDefault()
-      onSubmit(formData)
-    }}>
-      {children((name, value) => setFormData({ name, value }))}
+    <form onSubmit={handleFormSubmit}>
+      {children}
     </form>
   )
 }

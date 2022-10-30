@@ -1,63 +1,43 @@
-import React, { useState } from 'react'
+import { ReactElement } from 'react'
 import styles from './InputWrapper.module.css'
-import {
-  InputChangeEventHandler,
-  InputWrapperOnChangeEventHandler,
-} from '../../../../modules/shared/infraestructure/react/form/input'
-
 
 interface InputWrapperProps {
   label: string
-  children: (eventHandler: InputChangeEventHandler) => React.ReactElement
+  children: Array<JSX.Element>
   className?: string
-
-  /**
-   * onChange event
-   *
-   * @param {string} name
-   * @param {any} value
-   */
-  onChange?: InputWrapperOnChangeEventHandler
-
-  /**
-   * Validate the input value when onChange event is fired
-   *
-   * @param {string} value
-   *
-   * @throws {string}
-   *    Throws string with the error message in case the value is not valid
-   */
-  validate?: (value: any) => void
+  error?: string,
+  hasError?: boolean
 }
 
-export default function InputWrapper({ label, children, onChange, validate, className }: InputWrapperProps) {
-  const [error, setError] = useState('')
+interface InputProps {
+  children: JSX.Element
+}
 
-  const handleOnChange: InputChangeEventHandler = (event) => {
-    setError('')
+interface ErrorProps {
+  children: string
+}
 
-    if (typeof onChange !== 'undefined') {
-      onChange(event.target.name, event.target.value)
-    }
+function Input({ children }: InputProps) {
+  return (
+    <>{children}</>
+  )
+}
 
-    if (typeof validate !== 'undefined') {
-      try {
-        validate(event.target.value)
-      } catch (error) {
-        if (typeof error === 'string') {
-          setError(error)
-        }
-      }
-    }
-  }
+function Error({ children }: ErrorProps) {
+  return (
+    <span className="text-red-700">{children}</span>
+  )
+}
 
+export default function InputWrapper({ label, children, className }: InputWrapperProps) {
   return (
     <div className={`${styles.wrapper} space-y-2 ${className ?? ''}`}>
       <label>{label}</label>
-      <>
-        {children(handleOnChange)}
-      </>
-      <span className="text-red-700">{error}</span>
+      {children.filter((element) => element.type.name == 'Input')}
+      {children.filter((element) => element.type.name == 'Error')}
     </div>
   )
 }
+
+InputWrapper.Input = Input
+InputWrapper.Error = Error
