@@ -1,9 +1,8 @@
-import { ReactElement } from 'react'
 import styles from './InputWrapper.module.css'
 
 interface InputWrapperProps {
   label: string
-  children: Array<JSX.Element>
+  children: JSX.Element
   className?: string
   error?: string,
   hasError?: boolean
@@ -33,8 +32,7 @@ export default function InputWrapper({ label, children, className }: InputWrappe
   return (
     <div className={`${styles.wrapper} space-y-2 ${className ?? ''}`}>
       <label>{label}</label>
-      {children.filter((element) => element.type.name == 'Input')}
-      {children.filter((element) => element.type.name == 'Error')}
+      {children}
     </div>
   )
 }

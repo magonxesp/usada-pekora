@@ -1,6 +1,6 @@
 import Select from '../../../shared/form/Select'
 import { useEffect, useState } from 'react'
-import { SelectOption } from '../../../../modules/shared/domain/form/select-option'
+import { SelectOption } from '../../../../modules/shared/infraestructure/form/select-option'
 import { Guild } from '../../../../modules/guild/domain/guild'
 import { useDispatch } from 'react-redux'
 import { setCurrentGuild } from '../../../../store/slices/app-slice'
