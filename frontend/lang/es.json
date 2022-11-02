@@ -1,0 +1,18 @@
+{
+  "trigger.form.title.label": "Titulo",
+  "trigger.form.title.description": "El titulo sirve unicamente para identificar la reaccion en el listado de reacciones",
+  "trigger.form.title.required.error": "El titulo es obligatorio",
+  "trigger.form.compare.label": "Estrategia de evaluacion",
+  "trigger.form.compare.description": "Este es el metodo con el que se evaluara el mensaje al que Pekora reaccionara",
+  "trigger.form.input.label": "Mensaje a evaluar",
+  "trigger.form.input.description": "Parte o <a href=\"https://regex101.com/\">expresion regular</a> que desencadenara la reaccion",
+  "trigger.form.input.required.error": "El mensaje a evaluar es obligatorio",
+  "trigger.form.input.regex.error": "La expresion regular no es valida",
+  "trigger.form.output_text.label": "Mensage de respuesta",
+  "trigger.form.output_text.description": "Pekora respondera este mensaje de texto en el mismo canal de texto en el que has enviado un mensaje",
+  "trigger.form.output_audio.label": "Sonido de respuesta",
+  "trigger.form.output_audio.description": "Pekora se unira al canal de voz en el que estas y respondera con el sonido que hayas seleccionado",
+  "trigger.form.output_audio.file_type.error": "El archivo solo puede ser .mp3",
+  "trigger.form.output_audio.file_size.error": "El tamaño de archivo tiene que ser como maximo de 8MB",
+  "trigger.form.submit": "Guardar"
+}

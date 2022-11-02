@@ -5,6 +5,10 @@ const nextConfig = {
   images: {
     domains: ['cdn.discordapp.com'],
   },
+  i18n: {
+    locales: ['es'],
+    defaultLocale: 'es'
+  }
 }
 
 module.exports = nextConfig

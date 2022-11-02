@@ -4,6 +4,7 @@ import Button from '../../../shared/form/Button'
 import Form from '../../../shared/form/Form'
 import { ChangeEvent, useState } from 'react'
 import { FormErrors, Validator } from '../../../../modules/shared/infraestructure/form/validator'
+import { useIntl } from 'react-intl'
 
 interface TriggerFormProps {
   trigger: Trigger,
@@ -13,18 +14,19 @@ interface TriggerFormProps {
 export default function TriggerForm({ trigger }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
   const [formData, setFormData] = useState(Trigger.empty().toPrimitives())
+  const intl = useIntl()
 
   const validator = new Validator({
     title: {
       required: {
         validate: (value: string) => value != '',
-        errorMessage: 'El titulo es obligatorio'
+        errorMessage: intl.$t({ id: 'trigger.form.title.required.error' })
       }
     },
     input: {
       required: {
         validate: (value: string) => value != '',
-        errorMessage: 'El input es obligatorio'
+        errorMessage: intl.$t({ id: 'trigger.form.input.required.error' })
       },
       regex: {
         validate: (value: string) => {
@@ -40,8 +42,14 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
 
           return true
         },
-        errorMessage: 'El input no contiene una expresion regular valida',
+        errorMessage: intl.$t({ id: 'trigger.form.input.regex.error' }),
         skip: () => (formData.compare ?? '') != TriggerCompare.PATTERN
+      }
+    },
+    outputAudio: {
+      fileType: {
+        validate: (value: string) => true, // TODO: validate audio file type and size
+        errorMessage: intl.$t({ id: 'trigger.form.output_audio.file_type.error' })
       }
     }
   })
@@ -79,9 +87,9 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
   }
 
   return (
-    <Form onSubmit={submitForm}>
+    <Form onSubmit={submitForm} className="space-y-4">
       <>
-        <InputWrapper label="Titulo">
+        <InputWrapper label={intl.$t({ id: 'trigger.form.title.label' })}>
           <>
             <InputWrapper.Input>
               <input type="text" defaultValue={trigger.title} onChange={handleChangeEvent} name="title" />
@@ -92,34 +100,48 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
           </>
         </InputWrapper>
 
-        <InputWrapper label="Input">
-          <>
+        <div className="flex space-x-4">
+          <InputWrapper
+            label={intl.$t({ id: 'trigger.form.compare.label' })}
+            className="w-2/4"
+          >
             <InputWrapper.Input>
-              <input type="text" defaultValue={trigger.input} onChange={handleChangeEvent} name="input" />
+              <select name="compare" defaultValue={trigger.compare} onChange={handleChangeEvent} >
+                {triggerCompareOptions().map(([name, value]) => (
+                  <option value={value} key={value}>{name}</option>
+                ))}
+              </select>
             </InputWrapper.Input>
-            {(formErrors.input ?? []).map((error, index) => (
-              <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
-            ))}
-          </>
-        </InputWrapper>
+          </InputWrapper>
 
-        <InputWrapper label="Comparar con:">
-          <InputWrapper.Input>
-            <select name="compare" defaultValue={trigger.compare} onChange={handleChangeEvent} >
-              {triggerCompareOptions().map(([name, value]) => (
-                <option value={value} key={value}>{name}</option>
+          <InputWrapper
+            label={intl.$t({ id: 'trigger.form.input.label' })}
+            className="w-2/4"
+          >
+            <>
+              <InputWrapper.Input>
+                <input type="text" defaultValue={trigger.input} onChange={handleChangeEvent} name="input" />
+              </InputWrapper.Input>
+              {(formErrors.input ?? []).map((error, index) => (
+                <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
               ))}
-            </select>
-          </InputWrapper.Input>
-        </InputWrapper>
+            </>
+          </InputWrapper>
+        </div>
 
-        <InputWrapper label="Output text">
+        <InputWrapper label={intl.$t({ id: 'trigger.form.output_text.label' })}>
           <InputWrapper.Input>
             <input type="text" defaultValue={trigger.outputText} onChange={handleChangeEvent} name="outputText" />
           </InputWrapper.Input>
         </InputWrapper>
 
-        <Button type="submit">Guardar</Button>
+        <InputWrapper label={intl.$t({ id: 'trigger.form.output_audio.label' })}>
+          <InputWrapper.Input>
+            <input type="file" defaultValue={trigger.outputAudio} accept="audio/mpeg" onChange={handleChangeEvent} name="outputAudio" />
+          </InputWrapper.Input>
+        </InputWrapper>
+
+        <Button type="submit">{intl.$t({ id: 'trigger.form.submit' })}</Button>
       </>
     </Form>
   )
