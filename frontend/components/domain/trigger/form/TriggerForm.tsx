@@ -87,9 +87,12 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
   }
 
   return (
-    <Form onSubmit={submitForm} className="space-y-4">
+    <Form onSubmit={submitForm} className="space-y-2.5">
       <>
-        <InputWrapper label={intl.$t({ id: 'trigger.form.title.label' })}>
+        <InputWrapper
+          label={intl.$t({ id: 'trigger.form.title.label' })}
+          help={intl.$t({ id: 'trigger.form.title.description' })}
+        >
           <>
             <InputWrapper.Input>
               <input type="text" defaultValue={trigger.title} onChange={handleChangeEvent} name="title" />
@@ -103,12 +106,13 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
         <div className="flex space-x-4">
           <InputWrapper
             label={intl.$t({ id: 'trigger.form.compare.label' })}
+            help={intl.$t({ id: 'trigger.form.compare.description' })}
             className="w-2/4"
           >
             <InputWrapper.Input>
               <select name="compare" defaultValue={trigger.compare} onChange={handleChangeEvent} >
                 {triggerCompareOptions().map(([name, value]) => (
-                  <option value={value} key={value}>{name}</option>
+                  <option value={value} key={value}>{intl.$t({ id: `trigger.form.compare.option.${name.toLowerCase()}` })}</option>
                 ))}
               </select>
             </InputWrapper.Input>
@@ -116,6 +120,7 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
 
           <InputWrapper
             label={intl.$t({ id: 'trigger.form.input.label' })}
+            help={intl.$t({ id: 'trigger.form.input.description' })}
             className="w-2/4"
           >
             <>
@@ -129,13 +134,19 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
           </InputWrapper>
         </div>
 
-        <InputWrapper label={intl.$t({ id: 'trigger.form.output_text.label' })}>
+        <InputWrapper
+          label={intl.$t({ id: 'trigger.form.output_text.label' })}
+          help={intl.$t({ id: 'trigger.form.output_text.description' })}
+        >
           <InputWrapper.Input>
             <input type="text" defaultValue={trigger.outputText} onChange={handleChangeEvent} name="outputText" />
           </InputWrapper.Input>
         </InputWrapper>
 
-        <InputWrapper label={intl.$t({ id: 'trigger.form.output_audio.label' })}>
+        <InputWrapper
+          label={intl.$t({ id: 'trigger.form.output_audio.label' })}
+          help={intl.$t({ id: 'trigger.form.output_audio.description' })}
+        >
           <InputWrapper.Input>
             <input type="file" defaultValue={trigger.outputAudio} accept="audio/mpeg" onChange={handleChangeEvent} name="outputAudio" />
           </InputWrapper.Input>

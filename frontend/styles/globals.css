@@ -43,6 +43,14 @@
     .button.bg-danger{
         @apply text-white
     }
+
+    a {
+        @apply text-primary
+    }
+
+    a:hover {
+        @apply underline
+    }
 }
 
 :root {

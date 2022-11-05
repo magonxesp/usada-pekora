@@ -1,4 +1,6 @@
 import styles from './InputWrapper.module.css'
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
+import Tooltip from '../../tooltip/Tooltip'
 
 interface InputWrapperProps {
   label: string
@@ -6,6 +8,7 @@ interface InputWrapperProps {
   className?: string
   error?: string,
   hasError?: boolean
+  help?: string
 }
 
 interface InputProps {
@@ -24,14 +27,20 @@ function Input({ children }: InputProps) {
 
 function Error({ children }: ErrorProps) {
   return (
-    <span className="text-red-700">{children}</span>
+    <span className="text-sm text-red-700 flex">
+      <ExclamationCircleIcon className="w-4 mr-1" />
+      {children}
+    </span>
   )
 }
 
-export default function InputWrapper({ label, children, className }: InputWrapperProps) {
+export default function InputWrapper({ label, children, className, help }: InputWrapperProps) {
   return (
-    <div className={`${styles.wrapper} space-y-2 ${className ?? ''}`}>
-      <label>{label}</label>
+    <div className={`${styles.wrapper} space-y-1 ${className ?? ''}`}>
+      <label className="flex items-center">
+        {label}
+        {(help) ? <Tooltip className="w-4 ml-1" content={help} /> : ''}
+      </label>
       {children}
     </div>
   )

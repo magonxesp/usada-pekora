@@ -39,7 +39,7 @@ export default function UserGuildSelect() {
           onChange={(option) => dispatch(setCurrentGuild(option.value))} />
       ) : (
         <div role="status" className="animate-pulse">
-          <div className="w-72 h-5 bg-gray-200 rounded dark:bg-gray-600"></div>
+          <div className="w-72 h-9 bg-gray-200 rounded dark:bg-gray-600"></div>
         </div>
       )}
     </>
