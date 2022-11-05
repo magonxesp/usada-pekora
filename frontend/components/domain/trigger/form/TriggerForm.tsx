@@ -2,7 +2,7 @@ import { Trigger, TriggerCompare, triggerCompareOptions } from '../../../../modu
 import InputWrapper from '../../../shared/form/input-wrapper/InputWrapper'
 import Button from '../../../shared/form/Button'
 import Form from '../../../shared/form/Form'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, createRef, useState } from 'react'
 import { FormErrors, Validator } from '../../../../modules/shared/infraestructure/form/validator'
 import { useIntl } from 'react-intl'
 
@@ -11,10 +11,11 @@ interface TriggerFormProps {
   onSubmit?: (trigger: Trigger) => void
 }
 
-export default function TriggerForm({ trigger }: TriggerFormProps) {
+export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
   const [formData, setFormData] = useState(Trigger.empty().toPrimitives())
   const intl = useIntl()
+  const outputAudioRef = createRef<HTMLInputElement>()
 
   const validator = new Validator({
     title: {
@@ -48,7 +49,15 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
     },
     outputAudio: {
       fileType: {
-        validate: (value: string) => true, // TODO: validate audio file type and size
+        validate: () => {
+          const file = outputAudioRef.current?.files?.item(0)
+
+          if (!file) {
+            return true
+          }
+
+          return file.type == 'audio/mpeg'
+        },
         errorMessage: intl.$t({ id: 'trigger.form.output_audio.file_type.error' })
       }
     }
@@ -81,8 +90,11 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
     setFormErrors(validator.getErrors())
 
     if (Object.entries(formErrors).length > 0) {
-      console.log('Formulario con errores!')
       return
+    }
+
+    if (typeof onSubmit !== 'undefined') {
+      onSubmit(Trigger.fromPrimitives(formData))
     }
   }
 
@@ -147,9 +159,21 @@ export default function TriggerForm({ trigger }: TriggerFormProps) {
           label={intl.$t({ id: 'trigger.form.output_audio.label' })}
           help={intl.$t({ id: 'trigger.form.output_audio.description' })}
         >
-          <InputWrapper.Input>
-            <input type="file" defaultValue={trigger.outputAudio} accept="audio/mpeg" onChange={handleChangeEvent} name="outputAudio" />
-          </InputWrapper.Input>
+          <>
+            <InputWrapper.Input>
+              <input
+                type="file"
+                defaultValue={trigger.outputAudio}
+                accept="audio/mpeg"
+                onChange={handleChangeEvent}
+                name="outputAudio"
+                ref={outputAudioRef}
+              />
+            </InputWrapper.Input>
+            {(formErrors.outputAudio ?? []).map((error, index) => (
+              <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
+            ))}
+          </>
         </InputWrapper>
 
         <Button type="submit">{intl.$t({ id: 'trigger.form.submit' })}</Button>
