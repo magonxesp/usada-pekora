@@ -18,3 +18,5 @@ venv/
 dist
 /docker-compose.*.yml
 *.iml
+.gradle
+build
