@@ -1,9 +1,8 @@
-package com.usadapekora.context.trigger.infraestructure.persistence
+package com.usadapekora.context.trigger.infraestructure.persistence.strapi
 
 import com.usadapekora.context.shared.infraestructure.strapi.client.StrapiFilter
 import com.usadapekora.context.shared.infraestructure.strapi.client.StrapiRequest
 import com.usadapekora.context.trigger.domain.Trigger
-import com.usadapekora.context.trigger.infraestructure.strapi.trigger.TriggerModel
 import com.usadapekora.context.trigger.domain.TriggerRepository
 import com.usadapekora.context.shared.infraestructure.strapi.resources.Collection
 import com.usadapekora.context.trigger.domain.TriggerException

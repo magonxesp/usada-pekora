@@ -12,7 +12,7 @@ import com.usadapekora.context.shared.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.context.trigger.application.TriggerFinder
 import com.usadapekora.context.trigger.domain.TriggerMatcher
 import com.usadapekora.context.trigger.domain.TriggerRepository
-import com.usadapekora.context.trigger.infraestructure.persistence.StrapiTriggerRepository
+import com.usadapekora.context.trigger.infraestructure.persistence.strapi.StrapiTriggerRepository
 import com.usadapekora.context.video.application.SendVideoFeed
 import com.usadapekora.context.video.application.VideoFeedParser
 import com.usadapekora.context.video.application.VideoFeedSubscriber

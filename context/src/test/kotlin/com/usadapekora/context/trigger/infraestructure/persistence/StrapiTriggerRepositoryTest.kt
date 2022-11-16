@@ -1,5 +1,6 @@
 package com.usadapekora.context.trigger.infraestructure.persistence
 
+import com.usadapekora.context.trigger.infraestructure.persistence.strapi.StrapiTriggerRepository
 import kotlin.test.Test
 
 class StrapiTriggerRepositoryTest {

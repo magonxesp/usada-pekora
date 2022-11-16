@@ -1,4 +1,4 @@
-package com.usadapekora.context.trigger.infraestructure.strapi.trigger
+package com.usadapekora.context.trigger.infraestructure.persistence.strapi
 
 import com.usadapekora.context.backendBaseUrl
 import com.usadapekora.context.shared.infraestructure.strapi.resources.Model
