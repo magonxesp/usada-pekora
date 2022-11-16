@@ -1,7 +1,9 @@
 package com.usadapekora.context.trigger.domain
 
 interface TriggerRepository {
-    suspend fun all(): Array<Trigger>
-    suspend fun findByDiscordServer(id: String): Array<Trigger>
-    suspend fun save(trigger: Trigger)
+    fun all(): Array<Trigger>
+    fun find(id: String): Trigger
+    fun findByDiscordServer(id: String): Array<Trigger>
+    fun save(trigger: Trigger)
+    fun delete(trigger: Trigger)
 }

@@ -7,7 +7,8 @@ class Trigger(
     val input: String,
     val compare: TriggerCompare,
     val outputText: String?,
-    val outputSound: String?
+    val outputSound: String?,
+    val discordGuildId: String
 ) : AggregateRoot() {
     enum class TriggerCompare(val value: String) {
         In("in"),
@@ -32,13 +33,15 @@ class Trigger(
             input: String,
             compare: String,
             outputText: String?,
-            outputSound: String?
+            outputSound: String?,
+            discordGuildId: String
         ) = Trigger(
             id = id,
             input = input,
             compare = TriggerCompare.fromValue(compare),
             outputText = outputText,
-            outputSound = outputSound
+            outputSound = outputSound,
+            discordGuildId = discordGuildId
         )
     }
 }

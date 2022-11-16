@@ -3,7 +3,7 @@ package com.usadapekora.context
 import io.github.cdimascio.dotenv.dotenv
 
 private val dotenv = dotenv {
-    filename = ".env.local"
+    filename = ".env"
     ignoreIfMissing = true
 }
 

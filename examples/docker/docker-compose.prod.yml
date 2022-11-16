@@ -5,7 +5,7 @@ services:
     ports:
       - "1337:1337"
     env_file:
-      - "./backend/.env"
+      - "./app/backend/.env"
 
   frontend:
     ports:
@@ -15,4 +15,4 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - "./discord-bot/.env"
+      - "./app/discord-bot/.env"
