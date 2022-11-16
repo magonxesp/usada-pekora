@@ -2,7 +2,7 @@ package com.usadapekora.context.trigger
 
 import com.usadapekora.context.trigger.domain.Trigger
 import com.usadapekora.context.trigger.domain.TriggerMother
-import com.usadapekora.context.trigger.infraestructure.persistence.MongoDbTriggerRepository
+import com.usadapekora.context.trigger.infraestructure.persistence.mongodb.MongoDbTriggerRepository
 
 open class TriggerModuleIntegrationTest {
 

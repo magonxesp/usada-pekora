@@ -1,10 +1,9 @@
-package com.usadapekora.context.trigger.infraestructure.persistence
+package com.usadapekora.context.trigger.infraestructure.persistence.mongodb
 
 import com.usadapekora.context.shared.infraestructure.persistence.MongoDbRepository
 import com.usadapekora.context.trigger.domain.Trigger
 import com.usadapekora.context.trigger.domain.TriggerException
 import com.usadapekora.context.trigger.domain.TriggerRepository
-import com.usadapekora.context.trigger.infraestructure.mongodb.TriggerDocument
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.updateOne
