@@ -1,4 +1,4 @@
-package com.usadapekora.context.trigger.infraestructure.persistence
+package com.usadapekora.context.trigger.infraestructure.mongodb
 
 import com.usadapekora.context.trigger.domain.Trigger
 import org.bson.types.ObjectId
