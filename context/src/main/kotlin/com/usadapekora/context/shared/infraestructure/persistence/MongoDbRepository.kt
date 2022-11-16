@@ -4,8 +4,8 @@ import com.mongodb.client.FindIterable
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
-import com.usadapekora.mongoConnectionUrl
-import com.usadapekora.mongoDatabase
+import com.usadapekora.context.mongoConnectionUrl
+import com.usadapekora.context.mongoDatabase
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollectionOfName
 import kotlin.concurrent.thread

@@ -5,7 +5,7 @@ import discord4j.discordjson.json.ImmutableMessageEditRequest
 import com.usadapekora.context.shared.domain.KeyValueCacheStorage
 import com.usadapekora.context.video.domain.Video
 import com.usadapekora.context.video.domain.VideoFeedNotifier
-import com.usadapekora.discordBotToken
+import com.usadapekora.context.discordBotToken
 import discord4j.core.DiscordClient
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.runBlocking

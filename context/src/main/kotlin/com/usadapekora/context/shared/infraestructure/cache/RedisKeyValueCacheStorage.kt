@@ -1,8 +1,8 @@
 package com.usadapekora.context.shared.infraestructure.cache
 
 import com.usadapekora.context.shared.domain.KeyValueCacheStorage
-import com.usadapekora.redisHost
-import com.usadapekora.redisPort
+import com.usadapekora.context.redisHost
+import com.usadapekora.context.redisPort
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.params.SetParams

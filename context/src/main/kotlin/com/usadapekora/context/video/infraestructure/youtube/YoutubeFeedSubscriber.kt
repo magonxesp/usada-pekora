@@ -1,9 +1,9 @@
 package com.usadapekora.context.video.infraestructure.youtube
 
-import com.usadapekora.httpBaseUrl
+import com.usadapekora.context.httpBaseUrl
 import com.usadapekora.context.video.domain.ChannelSubscriber
 import com.usadapekora.context.video.domain.VideoException
-import com.usadapekora.youtubeChannelId
+import com.usadapekora.context.youtubeChannelId
 import io.ktor.client.HttpClient
 import io.ktor.client.call.*
 import io.ktor.client.request.forms.*

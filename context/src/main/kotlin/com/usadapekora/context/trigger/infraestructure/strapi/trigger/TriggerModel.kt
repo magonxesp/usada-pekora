@@ -1,6 +1,6 @@
 package com.usadapekora.context.trigger.infraestructure.strapi.trigger
 
-import com.usadapekora.backendBaseUrl
+import com.usadapekora.context.backendBaseUrl
 import com.usadapekora.context.shared.infraestructure.strapi.resources.Model
 import kotlinx.serialization.Serializable
 import com.usadapekora.context.trigger.domain.Trigger

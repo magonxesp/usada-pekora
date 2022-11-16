@@ -1,7 +1,7 @@
 package com.usadapekora.context.shared.infraestructure.strapi.client
 
-import com.usadapekora.backendBaseUrl
-import com.usadapekora.backendToken
+import com.usadapekora.context.backendBaseUrl
+import com.usadapekora.context.backendToken
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
