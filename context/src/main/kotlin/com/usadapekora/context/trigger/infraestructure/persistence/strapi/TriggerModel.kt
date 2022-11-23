@@ -16,6 +16,7 @@ data class TriggerModel (
             attributes = TriggerAttributes(
                 input = trigger.input,
                 compare = trigger.compare.value,
+                discord_server_id = trigger.discordGuildId,
                 output_text = trigger.outputText,
                 output_audio = null // TODO: resolve output audio from aggregate to model
             )
@@ -29,6 +30,7 @@ data class TriggerModel (
         outputText = attributes.output_text,
         outputSound = attributes.output_audio?.let {
             backendBaseUrl + it.data.attributes.url
-        }
+        },
+        discordGuildId = attributes.discord_server_id
     )
 }

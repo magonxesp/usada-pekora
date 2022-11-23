@@ -2,7 +2,7 @@ package com.usadapekora.context.trigger.domain
 
 import com.usadapekora.context.shared.domain.AggregateRoot
 
-class Trigger(
+data class Trigger(
     val id: String,
     val input: String,
     val compare: TriggerCompare,

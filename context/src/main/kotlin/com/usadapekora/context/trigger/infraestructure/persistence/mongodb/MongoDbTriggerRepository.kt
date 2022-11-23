@@ -39,7 +39,7 @@ class MongoDbTriggerRepository : MongoDbRepository(), TriggerRepository {
     }
 
     override fun save(trigger: Trigger) {
-        writeQuery<TriggerDocument>("guildPreferences") { collection ->
+        writeQuery<TriggerDocument>("triggers") { collection ->
             val document = collection.findOne(TriggerDocument::id eq trigger.id)
 
             if (document != null) {
@@ -51,7 +51,7 @@ class MongoDbTriggerRepository : MongoDbRepository(), TriggerRepository {
     }
 
     override fun delete(trigger: Trigger) {
-        writeQuery<TriggerDocument>("guildPreferences") { collection ->
+        writeQuery<TriggerDocument>("triggers") { collection ->
             collection.deleteOne(TriggerDocument::id eq trigger.id)
         }
     }

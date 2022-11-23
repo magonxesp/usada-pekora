@@ -8,6 +8,7 @@ import com.usadapekora.context.shared.infraestructure.strapi.resources.FileData
 data class TriggerAttributes (
     val input: String,
     val compare: String,
+    val discord_server_id: String,
     val output_text: String?,
     val output_audio: FileData?
 ) : ModelAttributes()

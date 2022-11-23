@@ -11,7 +11,7 @@ open class TriggerModuleIntegrationTest {
     /**
      * Creates a test user and delete from the database after test
      */
-    protected fun databaseTestGuildPreferences(
+    protected fun databaseTestTrigger(
         trigger: Trigger = TriggerMother.create(),
         save: Boolean = true,
         delete: Boolean = true,
