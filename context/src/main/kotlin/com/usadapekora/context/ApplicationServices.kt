@@ -12,6 +12,7 @@ import com.usadapekora.context.shared.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.context.trigger.application.TriggerFinder
 import com.usadapekora.context.trigger.domain.TriggerMatcher
 import com.usadapekora.context.trigger.domain.TriggerRepository
+import com.usadapekora.context.trigger.infraestructure.persistence.mongodb.MongoDbTriggerRepository
 import com.usadapekora.context.trigger.infraestructure.persistence.strapi.StrapiTriggerRepository
 import com.usadapekora.context.video.application.SendVideoFeed
 import com.usadapekora.context.video.application.VideoFeedParser
@@ -33,7 +34,7 @@ val sharedModule = module {
 }
 
 val triggerModule = module {
-    factory { StrapiTriggerRepository() } bind TriggerRepository::class
+    factory { MongoDbTriggerRepository() } bind TriggerRepository::class
     factory { TriggerMatcher() }
     factory { TriggerFinder(get(), get()) }
 }
