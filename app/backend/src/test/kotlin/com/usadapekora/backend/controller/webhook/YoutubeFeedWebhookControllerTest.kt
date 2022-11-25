@@ -1,6 +1,6 @@
-package com.usadapekora.http.controller.webhook
+package com.usadapekora.backend.controller.webhook
 
-import com.usadapekora.http.HttpApplication
+import com.usadapekora.backend.HttpApplication
 //import com.usadapekora.context.guild.domain.GuildPreferences
 //import com.usadapekora.context.guild.domain.GuildPreferencesRepository
 //import com.usadapekora.context.shared.domain.DateTimeUtils

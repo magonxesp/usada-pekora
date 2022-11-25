@@ -5,14 +5,12 @@ WORKDIR /build
 
 COPY . .
 
-RUN gradle clean build --no-daemon -x test
+RUN gradle clean :app:discord-bot:build --no-daemon -x test
 
 FROM openjdk:18-bullseye AS app
 
-COPY --from=build /build/app/build/libs/app.jar .
+COPY --from=build /build/app/discord-bot/build/libs/discord-bot-all.jar discord-bot.jar
 
-EXPOSE 8080
-EXPOSE 5005
-EXPOSE 9001
+EXPOSE 8081
 
-CMD ["java", "-jar", "app.jar", "--add-opens java.base/jdk.internal.misc=ALL-UNNAMED", "-Dio.netty.tryReflectionSetAccessible=true"]
+CMD ["java", "-jar", "discord-bot.jar", "--add-opens java.base/jdk.internal.misc=ALL-UNNAMED", "-Dio.netty.tryReflectionSetAccessible=true"]

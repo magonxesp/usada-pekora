@@ -1,16 +1,16 @@
-FROM node:16.16.0 AS app
+FROM gradle:7.5.0-jdk18-alpine AS build
 
-WORKDIR /app
-
-COPY package.json .
-COPY package-lock.json .
-
-RUN npm install
+VOLUME "/build/.gradle"
+WORKDIR /build
 
 COPY . .
 
-RUN npm run build
+RUN gradle clean :app:backend:build --no-daemon -x test
 
-EXPOSE 1337
+FROM openjdk:18-bullseye AS app
 
-CMD ["npm", "run", "start"]
+COPY --from=build /build/app/backend/build/libs/backend.jar backend.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "backend.jar"]

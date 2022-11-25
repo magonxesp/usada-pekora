@@ -10,11 +10,11 @@
         </layout>
     </appender>
 
-    <logger name="jsonLogger" level="TRACE">
+    <logger name="jsonLogger" level="info">
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

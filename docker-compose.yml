@@ -4,10 +4,12 @@ services:
   backend:
     restart: unless-stopped
     build:
-      context: app/backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: app/backend/Dockerfile
     depends_on:
       - backend_database
+    env_file:
+      - "./.env"
 
   frontend:
     restart: unless-stopped
@@ -17,12 +19,14 @@ services:
 
   discord_bot:
     build:
-      context: app/discord-bot
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: app/discord-bot/Dockerfile
     restart: unless-stopped
     depends_on:
       - discord_bot_database
       - discord_bot_cache
+    env_file:
+      - "./.env"
 
   backend_database:
     image: mysql:5.7.39

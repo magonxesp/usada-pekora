@@ -3,19 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val koinVersion = "3.2.0"
 
 plugins {
-    id("org.springframework.boot") version "2.7.2"
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
     kotlin("jvm") version "1.7.10"
-    kotlin("plugin.spring") version "1.7.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
 }
 
 allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
 
     repositories {
         mavenCentral()
@@ -30,8 +24,6 @@ allprojects {
         implementation("com.google.guava:guava:31.0.1-jre")
         implementation("com.discord4j:discord4j-core:3.2.2")
         implementation("com.discord4j:discord4j-voice:3.2.2")
-        implementation("org.springframework.boot:spring-boot-starter-web")
-        implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("io.ktor:ktor-client-core:2.0.3")
         implementation("io.ktor:ktor-client-cio:2.0.3")
@@ -55,7 +47,6 @@ allprojects {
 
         testImplementation(kotlin("test"))
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.mockk:mockk:1.12.7")
     }
 
