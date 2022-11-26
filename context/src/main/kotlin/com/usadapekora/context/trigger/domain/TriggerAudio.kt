@@ -19,4 +19,18 @@ data class TriggerAudio(
     override fun path(): String = path.value
     override fun url(): String = path.value
     override fun mimeType(): String = "audio/mpeg"
+
+    companion object {
+        fun fromPrimitives(
+            id: String,
+            trigger: String,
+            name: String,
+            path: String
+        ): TriggerAudio = TriggerAudio(
+            id = TriggerAudioId(id),
+            trigger = Trigger.TriggerId(trigger),
+            name = TriggerAudioName(name),
+            path = TriggerAudioPath(path)
+        )
+    }
 }
