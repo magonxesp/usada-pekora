@@ -14,7 +14,7 @@ class TriggerAudioDocument(
         fun fromAggregate(aggregate: TriggerAudio, document: TriggerAudioDocument = TriggerAudioDocument()) = TriggerAudioDocument(
             _id = document._id,
             id = aggregate.id.value,
-            trigger = aggregate.trigger.toString(),
+            trigger = aggregate.trigger.value,
             name = aggregate.name.value,
             path = aggregate.path.value
         )
