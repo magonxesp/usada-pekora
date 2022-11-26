@@ -20,13 +20,14 @@ suspend fun MessageCreateEvent.handleTrigger(): Boolean {
         val guildId = message.guildId.get().asString()
         val trigger = finder.findByInput(message.content, guildId)
 
-        if (trigger.outputText != null) {
-            channel.createMessage(trigger.outputText).awaitSingle()
+        if (trigger.outputText.value != null) {
+            channel.createMessage(trigger.outputText.value).awaitSingle()
         }
 
-        if (trigger.outputSound != null) {
-            playAudio(trigger.outputSound!!)
-        }
+// TODO("Get output audio through mongodb")
+//        if (trigger.outputSound != null) {
+//            playAudio(trigger.outputSound!!)
+//        }
 
         registerTriggerFired()
 

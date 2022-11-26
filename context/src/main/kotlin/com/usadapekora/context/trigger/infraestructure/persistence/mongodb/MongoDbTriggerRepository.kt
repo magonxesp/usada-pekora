@@ -18,9 +18,9 @@ class MongoDbTriggerRepository : MongoDbRepository(), TriggerRepository {
         return triggers.map { it.toAggregate() }.toList().toTypedArray()
     }
 
-    override fun find(id: String): Trigger {
+    override fun find(id: Trigger.TriggerId): Trigger {
         val trigger = oneQuery<TriggerDocument>("triggers") { collection ->
-            collection.findOne(TriggerDocument::id eq id)
+            collection.findOne(TriggerDocument::id eq id.value)
         }
 
         if (trigger != null) {
@@ -30,9 +30,9 @@ class MongoDbTriggerRepository : MongoDbRepository(), TriggerRepository {
         throw TriggerException.NotFound()
     }
 
-    override fun findByDiscordServer(id: String): Array<Trigger> {
+    override fun findByDiscordServer(id: Trigger.TriggerDiscordGuildId): Array<Trigger> {
         val triggers = collectionQuery<TriggerDocument>("triggers") { collection ->
-            collection.find(TriggerDocument::discordGuildId eq id)
+            collection.find(TriggerDocument::discordGuildId eq id.value)
         }
 
         return triggers.map { it.toAggregate() }.toList().toTypedArray()
@@ -40,7 +40,7 @@ class MongoDbTriggerRepository : MongoDbRepository(), TriggerRepository {
 
     override fun save(trigger: Trigger) {
         writeQuery<TriggerDocument>("triggers") { collection ->
-            val document = collection.findOne(TriggerDocument::id eq trigger.id)
+            val document = collection.findOne(TriggerDocument::id eq trigger.id.value)
 
             if (document != null) {
                 collection.updateOne(TriggerDocument.fromAggregate(trigger, document))
@@ -52,7 +52,7 @@ class MongoDbTriggerRepository : MongoDbRepository(), TriggerRepository {
 
     override fun delete(trigger: Trigger) {
         writeQuery<TriggerDocument>("triggers") { collection ->
-            collection.deleteOne(TriggerDocument::id eq trigger.id)
+            collection.deleteOne(TriggerDocument::id eq trigger.id.value)
         }
     }
 }

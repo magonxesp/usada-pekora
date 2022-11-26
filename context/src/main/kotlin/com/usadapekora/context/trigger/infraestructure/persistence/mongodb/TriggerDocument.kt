@@ -9,18 +9,16 @@ class TriggerDocument(
     val input: String = "",
     val compare: String = "",
     val outputText: String? = null,
-    val outputSound: String? = null,
     val discordGuildId: String = ""
 ) {
     companion object {
         fun fromAggregate(aggregate: Trigger, document: TriggerDocument = TriggerDocument()) = TriggerDocument(
             _id = document._id,
-            id = aggregate.id,
-            input = aggregate.input,
+            id = aggregate.id.value,
+            input = aggregate.input.value,
             compare = aggregate.compare.toString(),
-            outputText = aggregate.outputText,
-            outputSound = aggregate.outputSound,
-            discordGuildId = aggregate.discordGuildId
+            outputText = aggregate.outputText.value,
+            discordGuildId = aggregate.discordGuildId.value
         )
     }
 
@@ -29,7 +27,6 @@ class TriggerDocument(
         input = input,
         compare = compare,
         outputText = outputText,
-        outputSound = outputSound,
         discordGuildId = discordGuildId
     )
 }

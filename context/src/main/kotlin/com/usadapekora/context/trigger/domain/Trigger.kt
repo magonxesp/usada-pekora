@@ -1,15 +1,19 @@
 package com.usadapekora.context.trigger.domain
 
 import com.usadapekora.context.shared.domain.AggregateRoot
+import com.usadapekora.context.shared.domain.valueobject.UuidValueObject
 
 data class Trigger(
-    val id: String,
-    val input: String,
+    val id: TriggerId,
+    val input: TriggerInput,
     val compare: TriggerCompare,
-    val outputText: String?,
-    val outputSound: String?,
-    val discordGuildId: String
+    val outputText: TriggerOutputText,
+    val discordGuildId: TriggerDiscordGuildId
 ) : AggregateRoot() {
+    data class TriggerId(override val value: String) : UuidValueObject(value)
+    data class TriggerInput(val value: String)
+    data class TriggerOutputText(val value: String?)
+    data class TriggerDiscordGuildId(val value: String)
     enum class TriggerCompare(val value: String) {
         In("in"),
         Pattern("pattern");
@@ -33,15 +37,13 @@ data class Trigger(
             input: String,
             compare: String,
             outputText: String?,
-            outputSound: String?,
             discordGuildId: String
         ) = Trigger(
-            id = id,
-            input = input,
+            id = TriggerId(id),
+            input = TriggerInput(input),
             compare = TriggerCompare.fromValue(compare),
-            outputText = outputText,
-            outputSound = outputSound,
-            discordGuildId = discordGuildId
+            outputText = TriggerOutputText(outputText),
+            discordGuildId = TriggerDiscordGuildId(discordGuildId)
         )
     }
 }

@@ -12,12 +12,12 @@ data class TriggerModel (
 ): Model() {
     companion object {
         fun fromAggregate(trigger: Trigger): TriggerModel = TriggerModel(
-            id = trigger.id.toInt(),
+            id = trigger.id.value.toInt(),
             attributes = TriggerAttributes(
-                input = trigger.input,
+                input = trigger.input.value,
                 compare = trigger.compare.value,
-                discord_server_id = trigger.discordGuildId,
-                output_text = trigger.outputText,
+                discord_server_id = trigger.discordGuildId.value,
+                output_text = trigger.outputText.value,
                 output_audio = null // TODO: resolve output audio from aggregate to model
             )
         )
@@ -28,9 +28,6 @@ data class TriggerModel (
         input = attributes.input,
         compare = attributes.compare,
         outputText = attributes.output_text,
-        outputSound = attributes.output_audio?.let {
-            strapiBaseUrl + it.data.attributes.url
-        },
         discordGuildId = attributes.discord_server_id
     )
 }

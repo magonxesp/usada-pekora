@@ -29,10 +29,10 @@ class StrapiTriggerRepository : TriggerRepository {
         return arrayOf()
     }
 
-    override fun findByDiscordServer(id: String): Array<Trigger> {
+    override fun findByDiscordServer(id: Trigger.TriggerDiscordGuildId): Array<Trigger> {
         val response = runBlocking {
             StrapiRequest("triggers").get(
-                filters = arrayOf(StrapiFilter("discord_server_id", id)),
+                filters = arrayOf(StrapiFilter("discord_server_id", id.value)),
                 populate = arrayOf("output_audio")
             )
         }
@@ -46,7 +46,7 @@ class StrapiTriggerRepository : TriggerRepository {
 
     override fun save(trigger: Trigger) { }
 
-    override fun find(id: String): Trigger {
+    override fun find(id: Trigger.TriggerId): Trigger {
         throw TriggerException.NotFound()
     }
 
