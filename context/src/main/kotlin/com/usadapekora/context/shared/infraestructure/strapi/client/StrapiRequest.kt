@@ -1,7 +1,7 @@
 package com.usadapekora.context.shared.infraestructure.strapi.client
 
-import com.usadapekora.context.backendBaseUrl
-import com.usadapekora.context.backendToken
+import com.usadapekora.context.strapiBaseUrl
+import com.usadapekora.context.strapiToken
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -34,11 +34,11 @@ class StrapiRequest(
         header("Accept", "application/json")
         header("Content-Type", "application/json")
 
-        bearerAuth(backendToken)
+        bearerAuth(strapiToken)
     }
 
     private fun apiResourceUrl(url: String): String {
-        return "$backendBaseUrl/api/${url.removePrefix("/")}"
+        return "$strapiBaseUrl/api/${url.removePrefix("/")}"
     }
 
     private suspend fun strapiResponse(response: HttpResponse): StrapiResponse? {

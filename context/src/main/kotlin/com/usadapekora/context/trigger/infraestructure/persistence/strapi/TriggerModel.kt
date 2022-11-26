@@ -1,6 +1,6 @@
 package com.usadapekora.context.trigger.infraestructure.persistence.strapi
 
-import com.usadapekora.context.backendBaseUrl
+import com.usadapekora.context.strapiBaseUrl
 import com.usadapekora.context.shared.infraestructure.strapi.resources.Model
 import kotlinx.serialization.Serializable
 import com.usadapekora.context.trigger.domain.Trigger
@@ -29,7 +29,7 @@ data class TriggerModel (
         compare = attributes.compare,
         outputText = attributes.output_text,
         outputSound = attributes.output_audio?.let {
-            backendBaseUrl + it.data.attributes.url
+            strapiBaseUrl + it.data.attributes.url
         },
         discordGuildId = attributes.discord_server_id
     )
