@@ -6,8 +6,8 @@ services:
     build:
       context: .
       dockerfile: app/backend/Dockerfile
-    depends_on:
-      - backend_database
+    ports:
+      - "8080:8080"
     env_file:
       - "./.env"
 
@@ -22,32 +22,26 @@ services:
       context: .
       dockerfile: app/discord-bot/Dockerfile
     restart: unless-stopped
-    depends_on:
-      - discord_bot_database
-      - discord_bot_cache
+    ports:
+      - "8081:8081"
     env_file:
       - "./.env"
 
-  backend_database:
-    image: mysql:5.7.39
-    restart: unless-stopped
-    volumes:
-      - backend_database:/var/lib/mysql
-    env_file:
-      - "./docker/.env.mysql"
-
-  discord_bot_database:
+  mongodb:
     image: mongo:4.2.22
     restart: unless-stopped
+    ports:
+      - "27017:27017"
     volumes:
-      - discord_bot_database:/data/db
+      - mongodb:/data/db
     env_file:
-      - "./docker/.env.mongodb"
+      - "./.env.mongodb"
 
-  discord_bot_cache:
+  redis:
     image: redis:7.0.4
     restart: unless-stopped
+    ports:
+      - "6379:6379"
 
 volumes:
-  backend_database:
-  discord_bot_database:
+  mongodb:
