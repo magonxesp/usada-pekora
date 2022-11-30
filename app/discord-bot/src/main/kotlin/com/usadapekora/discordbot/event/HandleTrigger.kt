@@ -1,9 +1,8 @@
 package com.usadapekora.discordbot.event
 
 import discord4j.core.event.domain.message.MessageCreateEvent
-import com.usadapekora.discordbot.voice.playAudio
 import com.usadapekora.context.shared.infraestructure.prometheus.registerTriggerFired
-import com.usadapekora.context.trigger.application.TriggerFinder
+import com.usadapekora.context.trigger.application.find.TriggerFinder
 import com.usadapekora.context.trigger.domain.TriggerException
 import kotlinx.coroutines.reactor.awaitSingle
 import org.koin.java.KoinJavaComponent.inject

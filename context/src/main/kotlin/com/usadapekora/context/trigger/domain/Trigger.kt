@@ -5,10 +5,10 @@ import com.usadapekora.context.shared.domain.valueobject.UuidValueObject
 
 data class Trigger(
     val id: TriggerId,
-    val input: TriggerInput,
-    val compare: TriggerCompare,
-    val outputText: TriggerOutputText,
-    val discordGuildId: TriggerDiscordGuildId
+    var input: TriggerInput,
+    var compare: TriggerCompare,
+    var outputText: TriggerOutputText,
+    var discordGuildId: TriggerDiscordGuildId
 ) : AggregateRoot() {
     data class TriggerId(override val value: String) : UuidValueObject(value)
     data class TriggerInput(val value: String)

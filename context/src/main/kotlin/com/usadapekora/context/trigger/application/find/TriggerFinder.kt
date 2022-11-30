@@ -1,4 +1,4 @@
-package com.usadapekora.context.trigger.application
+package com.usadapekora.context.trigger.application.find
 
 import com.usadapekora.context.trigger.domain.Trigger
 import com.usadapekora.context.trigger.domain.TriggerException

@@ -1,5 +1,6 @@
 package com.usadapekora.context.trigger.application
 
+import com.usadapekora.context.trigger.application.find.TriggerFinder
 import com.usadapekora.context.trigger.domain.*
 import io.mockk.every
 import io.mockk.mockk
