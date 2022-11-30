@@ -15,17 +15,17 @@ class TriggerUpdaterTest {
     @Test
     fun `should update a trigger`() {
         val trigger = TriggerMother.create()
-        val repository = mockk<TriggerRepository>()
+        val repository = mockk<TriggerRepository>(relaxed = true)
         val updater = TriggerUpdater(repository)
 
         every { repository.find(trigger.id) } returns trigger
+
+        trigger.input = Trigger.TriggerInput("New expected user input")
 
         updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             input = "New expected user input"
         ))
-
-        trigger.input = Trigger.TriggerInput("New expected user input")
 
         verify { repository.save(trigger) }
     }
