@@ -1,0 +1,9 @@
+.sidebar {
+    width: 33.33%;
+    right: -33.33%;
+    transition: right 0.5s;
+}
+
+.sidebar.show {
+    right: 0;
+}
