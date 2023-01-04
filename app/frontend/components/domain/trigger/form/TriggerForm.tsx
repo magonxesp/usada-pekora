@@ -99,7 +99,7 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
   }
 
   return (
-    <Form onSubmit={submitForm} className="space-y-2.5">
+    <Form onSubmit={submitForm}>
       <>
         <InputWrapper
           label={intl.$t({ id: 'trigger.form.title.label' })}
@@ -115,36 +115,32 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
           </>
         </InputWrapper>
 
-        <div className="flex space-x-4">
-          <InputWrapper
-            label={intl.$t({ id: 'trigger.form.compare.label' })}
-            help={intl.$t({ id: 'trigger.form.compare.description' })}
-            className="w-2/4"
-          >
-            <InputWrapper.Input>
-              <select name="compare" defaultValue={trigger.compare} onChange={handleChangeEvent} >
-                {triggerCompareOptions().map(([name, value]) => (
-                  <option value={value} key={value}>{intl.$t({ id: `trigger.form.compare.option.${name.toLowerCase()}` })}</option>
-                ))}
-              </select>
-            </InputWrapper.Input>
-          </InputWrapper>
-
-          <InputWrapper
-            label={intl.$t({ id: 'trigger.form.input.label' })}
-            help={intl.$t({ id: 'trigger.form.input.description' })}
-            className="w-2/4"
-          >
-            <>
-              <InputWrapper.Input>
-                <input type="text" defaultValue={trigger.input} onChange={handleChangeEvent} name="input" />
-              </InputWrapper.Input>
-              {(formErrors.input ?? []).map((error, index) => (
-                <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
+        <InputWrapper
+          label={intl.$t({ id: 'trigger.form.compare.label' })}
+          help={intl.$t({ id: 'trigger.form.compare.description' })}
+        >
+          <InputWrapper.Input>
+            <select name="compare" defaultValue={trigger.compare} onChange={handleChangeEvent} >
+              {triggerCompareOptions().map(([name, value]) => (
+                <option value={value} key={value}>{intl.$t({ id: `trigger.form.compare.option.${name.toLowerCase()}` })}</option>
               ))}
-            </>
-          </InputWrapper>
-        </div>
+            </select>
+          </InputWrapper.Input>
+        </InputWrapper>
+
+        <InputWrapper
+          label={intl.$t({ id: 'trigger.form.input.label' })}
+          help={intl.$t({ id: 'trigger.form.input.description' })}
+        >
+          <>
+            <InputWrapper.Input>
+              <input type="text" defaultValue={trigger.input} onChange={handleChangeEvent} name="input" />
+            </InputWrapper.Input>
+            {(formErrors.input ?? []).map((error, index) => (
+              <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
+            ))}
+          </>
+        </InputWrapper>
 
         <InputWrapper
           label={intl.$t({ id: 'trigger.form.output_text.label' })}
@@ -176,7 +172,7 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
           </>
         </InputWrapper>
 
-        <Button type="submit">{intl.$t({ id: 'trigger.form.submit' })}</Button>
+        <Button className="w-full" type="submit">{intl.$t({ id: 'trigger.form.submit' })}</Button>
       </>
     </Form>
   )

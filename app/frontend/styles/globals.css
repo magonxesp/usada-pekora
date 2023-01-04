@@ -32,7 +32,12 @@
     }
 
     button, .button {
-        @apply flex items-center cursor-pointer py-2 px-3 m-1 text-center rounded
+        @apply cursor-pointer py-2 px-3 m-1 text-center rounded
+    }
+
+    button > *,
+    .button > * {
+        @apply inline-block align-sub
     }
 
     button.bg-primary,
@@ -51,6 +56,15 @@
     a:hover {
         @apply underline
     }
+
+    form {
+        @apply space-y-2.5
+    }
+
+    form button,
+    form .button {
+        @apply mx-0
+    }
 }
 
 :root {
@@ -66,4 +80,5 @@ button:active {
     --color-secondary: var(--color-secondary-active);
     --color-danger: var(--color-danger-active);
 }
+
 
