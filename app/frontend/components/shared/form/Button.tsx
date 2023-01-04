@@ -1,4 +1,4 @@
-import { ColorString } from '../../../modules/shared/domain/color/color'
+import { ColorString } from '../../../shared/domain/color'
 import { MouseEvent } from 'react'
 
 interface ButtonProps<T> {
