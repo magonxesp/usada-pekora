@@ -8,6 +8,7 @@ interface ButtonProps<T> {
   type?: 'button' | 'submit' | 'reset'
   onClick?: (event: MouseEvent, value: T|undefined) => void
   disabled?: boolean
+  className?: string
 }
 
 export default function Button<T>(props: ButtonProps<T>) {
@@ -15,7 +16,7 @@ export default function Button<T>(props: ButtonProps<T>) {
 
   return (
     <button
-      className={color}
+      className={`${(color != 'transparent') ? color : ''} ${props.className ?? ''}`}
       onClick={(event) => props.onClick && props.onClick(event, props.value)}
       type={props.type ?? 'button'}
       disabled={props.disabled ?? false}
