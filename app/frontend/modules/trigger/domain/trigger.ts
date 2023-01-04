@@ -1,3 +1,10 @@
+export type TriggerId = string
+export type TriggerTitle = string
+export type TriggerInput = string
+export type TriggerOutputText = string
+export type TriggerOutputAudio = string
+export type TriggerDiscordServerId = string
+
 export enum TriggerCompare {
   CONTAINS = 'in',
   PATTERN = 'pattern',
@@ -21,13 +28,13 @@ export interface TriggerPrimitives {
 export class Trigger {
 
   constructor(
-    public title: string,
-    public readonly uuid: string,
-    public input: string,
+    public title: TriggerTitle,
+    public readonly uuid: TriggerId,
+    public input: TriggerInput,
     public compare: TriggerCompare,
-    public discordServerId: string,
-    public outputText?: string,
-    public outputAudio?: string,
+    public discordServerId: TriggerDiscordServerId,
+    public outputText?: TriggerOutputText,
+    public outputAudio?: TriggerOutputAudio,
   ) {}
 
   static fromPrimitives(values: TriggerPrimitives): Trigger {

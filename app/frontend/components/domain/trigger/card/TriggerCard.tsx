@@ -2,6 +2,8 @@ import { Trigger } from '../../../../modules/trigger/domain/trigger'
 import Button from '../../../shared/form/Button'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import TriggerFeatureList from '../feature-list/TriggerFeatureList'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 interface TriggerCardProps {
   trigger: Trigger
@@ -10,6 +12,7 @@ interface TriggerCardProps {
 export default function TriggerCard(props: TriggerCardProps) {
   const { trigger } = props
   const features = trigger.features()
+  const router = useRouter()
 
   return (
     <div className='overflow-hidden bg-white shadow sm:rounded-lg mb-3 px-4 py-5 sm:px-6 flex justify-between'>
@@ -20,9 +23,11 @@ export default function TriggerCard(props: TriggerCardProps) {
         ) : ''}
       </div>
       <div className='flex items-center'>
-        <Button>
-          <PencilSquareIcon className='w-5' />
-        </Button>
+        <Link href={`/trigger/edit/${trigger.uuid}`}>
+          <Button>
+            <PencilSquareIcon className='w-5' />
+          </Button>
+        </Link>
         <Button>
           <TrashIcon className='w-5' />
         </Button>

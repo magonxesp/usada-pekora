@@ -28,5 +28,8 @@ export const appSlice = createSlice({
   }
 })
 
-export const { setCurrentGuild, setTriggers } = appSlice.actions
+export const {
+  setCurrentGuild,
+  setTriggers
+} = appSlice.actions
 export default appSlice.reducer
