@@ -1,8 +1,8 @@
-import { TriggerRepository } from '../../domain/trigger-repository'
-import { Trigger } from '../../domain/trigger'
-import { StrapiClient } from '../../../shared/infraestructure/strapi/strapi-client'
-import { TriggerModel, triggerModelToAggregate } from '../strapi/trigger-model'
-import { TriggerNotFoundError } from '../../domain/trigger-error'
+import { TriggerRepository } from '../../../domain/trigger-repository'
+import { Trigger } from '../../../domain/trigger'
+import { StrapiClient } from '../../strapi/strapi-client'
+import { TriggerModel, triggerModelToAggregate } from './trigger-model'
+import { TriggerNotFoundError } from '../../../domain/trigger-error'
 
 export class StrapiTriggerRepository implements TriggerRepository {
 

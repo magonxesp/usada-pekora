@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Trigger, TriggerCompare } from '../../../modules/trigger/domain/trigger'
+import { Trigger, TriggerCompare } from '../../../shared/domain/trigger'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   //const finder = new TriggerFinder(new StrapiTriggerRepository())

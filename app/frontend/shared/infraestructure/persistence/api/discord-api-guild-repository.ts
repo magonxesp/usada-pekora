@@ -1,6 +1,6 @@
-import { GuildRepository } from '../../domain/guild-repository'
-import { DiscordRestClient } from '../../../shared/infraestructure/discord/client'
-import { Guild } from '../../domain/guild'
+import { GuildRepository } from '../../../domain/guild-repository'
+import { DiscordRestClient } from '../../discord/client'
+import { Guild } from '../../../domain/guild'
 
 export class DiscordApiGuildRepository implements GuildRepository {
 

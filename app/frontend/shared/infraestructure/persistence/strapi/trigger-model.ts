@@ -1,5 +1,5 @@
-import { FileData, fileUrlToFileData } from '../../../shared/infraestructure/strapi/file'
-import { Trigger, TriggerCompare } from '../../domain/trigger'
+import { FileData, fileUrlToFileData } from '../../strapi/file'
+import { Trigger, TriggerCompare } from '../../../domain/trigger'
 
 export interface TriggerAttributes {
   title: string

@@ -1,8 +1,8 @@
-import { GuildFinder } from '../../../modules/guild/application/guild-finder'
-import { DiscordApiGuildRepository } from '../../../modules/guild/infraestructure/persistence/discord-api-guild-repository'
+import { GuildFinder } from '../../../shared/application/guild-finder'
+import { DiscordApiGuildRepository } from '../../../shared/infraestructure/persistence/api/discord-api-guild-repository'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { serverSession } from '../../../modules/shared/infraestructure/auth/session'
-import { DiscordRestClientUnauthorizedError } from '../../../modules/shared/infraestructure/discord/client-error'
+import { serverSession } from '../../../shared/infraestructure/auth/session'
+import { DiscordRestClientUnauthorizedError } from '../../../shared/infraestructure/discord/client-error'
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
