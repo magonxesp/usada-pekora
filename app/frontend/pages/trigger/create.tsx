@@ -1,7 +1,8 @@
 import { NextPage } from 'next'
 import TriggerForm from '../../components/domain/trigger/form/TriggerForm'
-import { Trigger, TriggerCompare } from '../../modules/trigger/domain/trigger'
+import { Trigger, TriggerCompare } from '../../shared/domain/trigger'
 import GuildTriggersView from '../../components/views/guild-triggers-view/GuildTriggersView'
+import Sidebar from '../../components/shared/sidebar/Sidebar'
 
 const NewTrigger: NextPage = () => {
   const trigger = Trigger.fromPrimitives({
@@ -15,7 +16,14 @@ const NewTrigger: NextPage = () => {
   return (
     <>
       <GuildTriggersView />
-      <TriggerForm trigger={trigger} />
+      <Sidebar>
+        <Sidebar.Body>
+          <TriggerForm trigger={trigger} />
+        </Sidebar.Body>
+        <Sidebar.Body>
+          <TriggerForm trigger={trigger} />
+        </Sidebar.Body>
+      </Sidebar>
     </>
   )
 }

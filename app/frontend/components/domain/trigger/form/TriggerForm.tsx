@@ -1,9 +1,9 @@
-import { Trigger, TriggerCompare, triggerCompareOptions } from '../../../../modules/trigger/domain/trigger'
+import { Trigger, TriggerCompare, triggerCompareOptions } from '../../../../shared/domain/trigger'
 import InputWrapper from '../../../shared/form/input-wrapper/InputWrapper'
 import Button from '../../../shared/form/Button'
 import Form from '../../../shared/form/Form'
 import { ChangeEvent, createRef, useState } from 'react'
-import { FormErrors, Validator } from '../../../../modules/shared/infraestructure/form/validator'
+import { FormErrors, Validator } from '../../../../shared/infraestructure/form/validator'
 import { useIntl } from 'react-intl'
 
 interface TriggerFormProps {
