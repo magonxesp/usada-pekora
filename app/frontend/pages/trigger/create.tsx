@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import TriggerForm from '../../components/domain/trigger/form/TriggerForm'
-import { Trigger, TriggerCompare } from '../../shared/domain/trigger'
+import { Trigger } from '../../shared/domain/trigger'
 import GuildTriggersView from '../../components/views/guild-triggers-view/GuildTriggersView'
 import Sidebar from '../../components/shared/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
