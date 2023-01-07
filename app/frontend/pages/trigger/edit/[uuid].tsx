@@ -7,6 +7,7 @@ import Sidebar from '../../../components/shared/sidebar/Sidebar'
 import TriggerForm from '../../../components/domain/trigger/form/TriggerForm'
 import { useIntl } from 'react-intl'
 import { triggerFinder } from '../../../shared/application-services'
+import { toast } from '../../../shared/infraestructure/helpers'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: TriggerPrimitives }> = async (context) => {
   const { uuid } = context.query
@@ -34,7 +35,11 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
   }
 
   const updateTrigger = (trigger: Trigger) => {
-
+    try {
+      throw "Ups"
+    } catch (exception) {
+      toast(intl.$t({ id: 'trigger.form.update.error' }), 'error')
+    }
   }
 
   return (
