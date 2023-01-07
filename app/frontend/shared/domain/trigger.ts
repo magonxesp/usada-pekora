@@ -1,8 +1,8 @@
 export type TriggerId = string
 export type TriggerTitle = string
 export type TriggerInput = string
-export type TriggerOutputText = string
-export type TriggerOutputAudio = string
+export type TriggerOutputText = string|null
+export type TriggerOutputAudio = string|null
 export type TriggerDiscordServerId = string
 
 export enum TriggerCompare {
@@ -20,8 +20,8 @@ export interface TriggerPrimitives {
   uuid: string,
   input: string,
   compare: string,
-  outputText?: string,
-  outputAudio?: string,
+  outputText?: string|null,
+  outputAudio?: string|null,
   discordServerId: string
 }
 
@@ -67,8 +67,8 @@ export class Trigger {
       uuid: this.uuid,
       input: this.input,
       compare: this.compare as string,
-      outputText: this.outputText,
-      outputAudio: this.outputAudio,
+      outputText: this.outputText ?? null,
+      outputAudio: this.outputAudio ?? null,
       discordServerId: this.discordServerId
     }
   }
