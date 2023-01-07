@@ -1,8 +1,7 @@
-import { GuildFinder } from '../../../shared/application/guild-finder'
-import { DiscordApiGuildRepository } from '../../../shared/infraestructure/persistence/api/discord-api-guild-repository'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { serverSession } from '../../../shared/infraestructure/auth/session'
 import { DiscordRestClientUnauthorizedError } from '../../../shared/infraestructure/discord/client-error'
+import { guildFinder } from '../../../shared/application-services'
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -14,8 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const finder = new GuildFinder(new DiscordApiGuildRepository(session.accessToken as string))
-    const guilds = await finder.userGuilds()
+    const guilds = await guildFinder(session.accessToken as string).userGuilds()
     res.status(200).json(guilds)
   } catch (exception) {
     if (exception instanceof DiscordRestClientUnauthorizedError) {

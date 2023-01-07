@@ -1,21 +1,25 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import GuildTriggersView from '../../../components/views/guild-triggers-view/GuildTriggersView'
-import { Trigger, TriggerCompare } from '../../../shared/domain/trigger'
+import { Trigger, TriggerPrimitives } from '../../../shared/domain/trigger'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Sidebar from '../../../components/shared/sidebar/Sidebar'
 import TriggerForm from '../../../components/domain/trigger/form/TriggerForm'
 import { useIntl } from 'react-intl'
+import { triggerFinder } from '../../../shared/application-services'
 
-const TriggerEdit: NextPage = ()  => {
-  const trigger = Trigger.fromPrimitives({
-    uuid: "fee1ff15-67fc-4cb6-b464-9a567549d0fb",
-    title: "Lorem fistrum está la cosa muy malar caballo",
-    compare: TriggerCompare.CONTAINS,
-    discordServerId: "222354445645",
-    input: "chiquito",
-  })
+export const getServerSideProps: GetServerSideProps<{ trigger: TriggerPrimitives }> = async (context) => {
+  const { uuid } = context.query
+  const trigger = await triggerFinder().findById(uuid as string)
 
+  return {
+    props: {
+      trigger: trigger.toPrimitives()
+    }
+  }
+}
+
+const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isOpened, setIsOpened] = useState(false)
   const router = useRouter()
   const intl = useIntl()
@@ -29,6 +33,10 @@ const TriggerEdit: NextPage = ()  => {
     setTimeout(async () => await router.push("/"), 500)
   }
 
+  const updateTrigger = (trigger: Trigger) => {
+
+  }
+
   return (
     <>
       <GuildTriggersView />
@@ -39,7 +47,7 @@ const TriggerEdit: NextPage = ()  => {
           </h2>
         </Sidebar.Header>
         <Sidebar.Body>
-          <TriggerForm trigger={trigger} />
+          <TriggerForm trigger={Trigger.fromPrimitives(trigger)} onSubmit={updateTrigger} />
         </Sidebar.Body>
       </Sidebar>
     </>

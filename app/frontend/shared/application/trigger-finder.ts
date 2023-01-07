@@ -1,5 +1,5 @@
 import { TriggerRepository } from '../domain/trigger-repository'
-import { Trigger } from '../domain/trigger'
+import { Trigger, TriggerId } from '../domain/trigger'
 
 export class TriggerFinder {
 
@@ -9,4 +9,7 @@ export class TriggerFinder {
     return await this.repository.findByDiscordServerId(discordServerId)
   }
 
+  async findById(uuid: TriggerId): Promise<Trigger> {
+    return await this.repository.findById(uuid)
+  }
 }
