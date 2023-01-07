@@ -147,7 +147,7 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
           help={intl.$t({ id: 'trigger.form.output_text.description' })}
         >
           <InputWrapper.Input>
-            <input type="text" defaultValue={trigger.outputText} onChange={handleChangeEvent} name="outputText" />
+            <input type="text" defaultValue={trigger.outputText ?? ""} onChange={handleChangeEvent} name="outputText" />
           </InputWrapper.Input>
         </InputWrapper>
 
@@ -159,7 +159,7 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
             <InputWrapper.Input>
               <input
                 type="file"
-                defaultValue={trigger.outputAudio}
+                defaultValue={trigger.outputAudio ?? ""}
                 accept="audio/mpeg"
                 onChange={handleChangeEvent}
                 name="outputAudio"
