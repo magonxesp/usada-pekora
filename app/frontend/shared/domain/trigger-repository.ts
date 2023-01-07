@@ -1,8 +1,8 @@
-import { Trigger } from './trigger'
+import { Trigger, TriggerDiscordServerId, TriggerId } from './trigger'
 
 export interface TriggerRepository {
-  findId(uuid: string): Promise<Trigger>
-  findByDiscordServerId(discordServerId: string): Promise<Trigger[]>
+  findById(uuid: TriggerId): Promise<Trigger>
+  findByDiscordServerId(discordServerId: TriggerDiscordServerId): Promise<Trigger[]>
   save(trigger: Trigger): Promise<void>
   delete(trigger: Trigger): Promise<void>
 }
