@@ -4,6 +4,7 @@ export function toast(content: string, type: TypeOptions) {
   reactToast(content, {
     hideProgressBar: true,
     autoClose: 2000,
-    type
+    type,
+    position: "bottom-right"
   })
 }
