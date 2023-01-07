@@ -13,7 +13,7 @@ interface TriggerFormProps {
 
 export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
-  const [formData, setFormData] = useState(Trigger.empty().toPrimitives())
+  const [formData, setFormData] = useState(trigger.toPrimitives())
   const intl = useIntl()
   const outputAudioRef = createRef<HTMLInputElement>()
 
@@ -87,9 +87,10 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
   const submitForm = () => {
     validator.cleanErrors()
     validator.validateAll(formData)
-    setFormErrors(validator.getErrors())
+    const errors = validator.getErrors()
+    setFormErrors(errors)
 
-    if (Object.entries(formErrors).length > 0) {
+    if (Object.entries(errors).length > 0) {
       return
     }
 
