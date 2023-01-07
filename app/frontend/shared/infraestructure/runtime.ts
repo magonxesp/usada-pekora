@@ -1,4 +1,4 @@
-import { ReactElement, Component } from 'react'
+import { ReactElement } from 'react'
 
 export function isComponent(component: ReactElement, name: string): boolean {
   if (typeof component.type == 'function') {
