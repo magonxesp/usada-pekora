@@ -5,10 +5,12 @@ import GuildTriggersView from '../../components/views/guild-triggers-view/GuildT
 import Sidebar from '../../components/shared/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useIntl } from 'react-intl'
 
 const NewTrigger: NextPage = () => {
   const [isOpened, setIsOpened] = useState(false)
   const router = useRouter()
+  const intl = useIntl()
 
   useEffect(() => {
     setTimeout(() => setIsOpened(true), 100)
@@ -25,7 +27,7 @@ const NewTrigger: NextPage = () => {
       <Sidebar show={isOpened}>
         <Sidebar.Header onClose={closeSidebar}>
           <h2 className="heading-2 py-0">
-            Crear trigger
+            {intl.$t({ id: 'trigger.form.sidebar.create.title' })}
           </h2>
         </Sidebar.Header>
         <Sidebar.Body>

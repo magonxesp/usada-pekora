@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Sidebar from '../../../components/shared/sidebar/Sidebar'
 import TriggerForm from '../../../components/domain/trigger/form/TriggerForm'
+import { useIntl } from 'react-intl'
 
 const TriggerEdit: NextPage = ()  => {
   const trigger = Trigger.fromPrimitives({
@@ -17,6 +18,7 @@ const TriggerEdit: NextPage = ()  => {
 
   const [isOpened, setIsOpened] = useState(false)
   const router = useRouter()
+  const intl = useIntl()
 
   useEffect(() => {
     setTimeout(() => setIsOpened(true), 100)
@@ -33,7 +35,7 @@ const TriggerEdit: NextPage = ()  => {
       <Sidebar show={isOpened}>
         <Sidebar.Header onClose={closeSidebar}>
           <h2 className="heading-2 py-0">
-            Editar trigger
+            {intl.$t({ id: 'trigger.form.sidebar.edit.title' })}
           </h2>
         </Sidebar.Header>
         <Sidebar.Body>
@@ -42,8 +44,6 @@ const TriggerEdit: NextPage = ()  => {
       </Sidebar>
     </>
   )
-
-  // TODO: poner sidebar con el componente de formulario para editar el trigger
 }
 
 export default TriggerEdit

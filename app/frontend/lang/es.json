@@ -1,4 +1,6 @@
 {
+  "trigger.form.sidebar.create.title": "Crear trigger",
+  "trigger.form.sidebar.edit.title": "Editar trigger",
   "trigger.form.title.label": "Titulo",
   "trigger.form.title.description": "El titulo sirve unicamente para identificar la reaccion en el listado de reacciones",
   "trigger.form.title.required.error": "El titulo es obligatorio",
