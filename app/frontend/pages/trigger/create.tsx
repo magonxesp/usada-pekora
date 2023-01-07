@@ -6,9 +6,11 @@ import Sidebar from '../../components/shared/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
+import { asyncAlert } from '../../shared/infraestructure/alert'
 
 const NewTrigger: NextPage = () => {
   const [isOpened, setIsOpened] = useState(false)
+  const [disableSubmit, setDisableSubmit] = useState(false)
   const router = useRouter()
   const intl = useIntl()
 
@@ -21,6 +23,25 @@ const NewTrigger: NextPage = () => {
     setTimeout(async () => await router.push("/"), 500)
   }
 
+  const createTrigger = (trigger: Trigger) => {
+    setDisableSubmit(true)
+
+    const request = fetch('/api/trigger/create', {
+      method: 'POST',
+      body: JSON.stringify(trigger.toPrimitives())
+    }).then((response) => (!response.ok) ? Promise.reject() : response)
+
+    asyncAlert(request, {
+      success: intl.$t({id: 'trigger.form.create.success'}),
+      error: intl.$t({ id: 'trigger.form.create.error' }),
+      pending: intl.$t({ id: 'trigger.form.create.loading' }),
+    }).then(() => {
+      closeSidebar()
+    }).catch(() => {
+      setDisableSubmit(false)
+    })
+  }
+
   return (
     <>
       <GuildTriggersView />
@@ -31,7 +52,11 @@ const NewTrigger: NextPage = () => {
           </h2>
         </Sidebar.Header>
         <Sidebar.Body>
-          <TriggerForm trigger={Trigger.empty()} />
+          <TriggerForm
+            trigger={Trigger.empty()}
+            onSubmit={createTrigger}
+            disableSubmit={disableSubmit}
+          />
         </Sidebar.Body>
       </Sidebar>
     </>

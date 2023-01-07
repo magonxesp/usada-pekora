@@ -9,9 +9,10 @@ import { useIntl } from 'react-intl'
 interface TriggerFormProps {
   trigger: Trigger,
   onSubmit?: (trigger: Trigger) => void
+  disableSubmit?: boolean
 }
 
-export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
+export default function TriggerForm({ trigger, onSubmit, disableSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
   const [formData, setFormData] = useState(trigger.toPrimitives())
   const intl = useIntl()
@@ -173,7 +174,7 @@ export default function TriggerForm({ trigger, onSubmit }: TriggerFormProps) {
           </>
         </InputWrapper>
 
-        <Button className="w-full" type="submit">{intl.$t({ id: 'trigger.form.submit' })}</Button>
+        <Button className="w-full" type="submit" disabled={disableSubmit ?? false}>{intl.$t({ id: 'trigger.form.submit' })}</Button>
       </>
     </Form>
   )

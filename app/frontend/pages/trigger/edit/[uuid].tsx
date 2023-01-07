@@ -7,7 +7,7 @@ import Sidebar from '../../../components/shared/sidebar/Sidebar'
 import TriggerForm from '../../../components/domain/trigger/form/TriggerForm'
 import { useIntl } from 'react-intl'
 import { triggerFinder } from '../../../shared/application-services'
-import { toast } from '../../../shared/infraestructure/helpers'
+import { alert, asyncAlert } from '../../../shared/infraestructure/alert'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: TriggerPrimitives }> = async (context) => {
   const { uuid } = context.query
@@ -22,6 +22,7 @@ export const getServerSideProps: GetServerSideProps<{ trigger: TriggerPrimitives
 
 const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isOpened, setIsOpened] = useState(false)
+  const [disableSubmit, setDisableSubmit] = useState(false)
   const router = useRouter()
   const intl = useIntl()
 
@@ -35,11 +36,22 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
   }
 
   const updateTrigger = (trigger: Trigger) => {
-    try {
-      throw "Ups"
-    } catch (exception) {
-      toast(intl.$t({ id: 'trigger.form.update.error' }), 'error')
-    }
+    setDisableSubmit(true)
+
+    const request = fetch('/api/trigger/update', {
+      method: 'PATCH',
+      body: JSON.stringify(trigger.toPrimitives())
+    }).then((response) => (!response.ok) ? Promise.reject() : response)
+
+    asyncAlert(request, {
+      success: intl.$t({id: 'trigger.form.update.success'}),
+      error: intl.$t({ id: 'trigger.form.update.error' }),
+      pending: intl.$t({ id: 'trigger.form.update.loading' }),
+    }).then(() => {
+      closeSidebar()
+    }).catch(() => {
+      setDisableSubmit(false)
+    })
   }
 
   return (
@@ -52,7 +64,11 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
           </h2>
         </Sidebar.Header>
         <Sidebar.Body>
-          <TriggerForm trigger={Trigger.fromPrimitives(trigger)} onSubmit={updateTrigger} />
+          <TriggerForm
+            trigger={Trigger.fromPrimitives(trigger)}
+            onSubmit={updateTrigger}
+            disableSubmit={disableSubmit}
+          />
         </Sidebar.Body>
       </Sidebar>
     </>
