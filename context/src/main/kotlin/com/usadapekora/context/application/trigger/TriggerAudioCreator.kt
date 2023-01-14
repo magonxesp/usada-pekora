@@ -10,11 +10,11 @@ class TriggerAudioCreator(private val repository: TriggerAudioRepository, privat
         val audio = TriggerAudio.fromPrimitives(
             id = request.id,
             trigger = request.triggerId,
-            name = request.fileName,
-            path = "trigger/audio/${request.id}.${request.fileName.substringAfterLast('.')}"
+            guild = request.guildId,
+            name = request.fileName
         )
 
-        writer.write(request.fileContent, audio.path.value)
+        writer.write(request.fileContent, audio.path())
         repository.save(audio)
     }
 

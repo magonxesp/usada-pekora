@@ -9,23 +9,23 @@ class TriggerAudioDocument(
     val _id: ObjectId? = null,
     val id: String = "",
     val trigger: String = "",
+    val guild: String = "",
     val name: String = "",
-    val path: String = ""
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<TriggerAudio, TriggerAudioDocument>(TriggerAudioDocument()) {
         override fun fromEntity(entity: TriggerAudio, document: TriggerAudioDocument) = TriggerAudioDocument(
             _id = document._id,
             id = entity.id.value,
             trigger = entity.trigger.value,
+            guild = entity.guild.value,
             name = entity.name.value,
-            path = entity.path.value
         )
     }
 
     fun toAggregate() = TriggerAudio.fromPrimitives(
         id = id,
         trigger = trigger,
+        guild = guild,
         name = name,
-        path = path
     )
 }
