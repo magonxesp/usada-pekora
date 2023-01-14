@@ -7,5 +7,5 @@ class TriggerAudioCreateRequest(
     val triggerId: String,
     val guildId: String,
     val fileName: String,
-    val fileContent: Array<Byte>,
+    val fileContent: ByteArray,
 )

@@ -7,6 +7,7 @@ import com.usadapekora.context.domain.TriggerAudioMother
 import com.usadapekora.context.domain.trigger.TriggerAudioRepository
 import io.mockk.mockk
 import io.mockk.verify
+import kotlin.random.Random
 import kotlin.test.Test
 
 class TriggerAudioCreatorTest {
@@ -18,16 +19,16 @@ class TriggerAudioCreatorTest {
         val creator = TriggerAudioCreator(repository, writer)
 
         val expected = TriggerAudioMother.create()
-        val file = arrayOf(Byte.MIN_VALUE)
+        val file = Random.Default.nextBytes(10)
 
         creator.create(
             TriggerAudioCreateRequest(
-            id = expected.id.value,
-            triggerId = expected.trigger.value,
-            guildId = expected.guild.value,
-            fileName = expected.name(),
-            fileContent = file
-        )
+                id = expected.id.value,
+                triggerId = expected.trigger.value,
+                guildId = expected.guild.value,
+                fileName = expected.name(),
+                fileContent = file
+            )
         )
 
         verify { repository.save(expected) }

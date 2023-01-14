@@ -3,6 +3,8 @@ package com.usadapekora.context
 import com.usadapekora.context.application.guild.GuildPreferenceCreator
 import com.usadapekora.context.application.guild.GuildPreferenceDeleter
 import com.usadapekora.context.application.guild.GuildPreferencesFinder
+import com.usadapekora.context.application.trigger.create.TriggerAudioCreator
+import com.usadapekora.context.application.trigger.create.TriggerCreator
 import com.usadapekora.context.domain.guild.GuildPreferencesRepository
 import com.usadapekora.context.infraestructure.persistence.mongodb.guild.MongoDbGuildPreferencesRepository
 import com.usadapekora.context.domain.shared.KeyValueCacheStorage
@@ -16,10 +18,14 @@ import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.Mongo
 import com.usadapekora.context.application.video.SendVideoFeed
 import com.usadapekora.context.application.video.VideoFeedParser
 import com.usadapekora.context.application.video.VideoFeedSubscriber
+import com.usadapekora.context.domain.shared.file.UploadedFileWriter
+import com.usadapekora.context.domain.trigger.TriggerAudioRepository
 import com.usadapekora.context.domain.video.ChannelSubscriber
 import com.usadapekora.context.domain.video.FeedParser
 import com.usadapekora.context.domain.video.VideoFeedNotifier
 import com.usadapekora.context.infraestructure.discord.DiscordTextChannelVideoNotifier
+import com.usadapekora.context.infraestructure.file.FileSystemUploadedFileWriter
+import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import com.usadapekora.context.infraestructure.youtube.YoutubeFeedSubscriber
 import com.usadapekora.context.infraestructure.youtube.YoutubeVideoParser
 import org.koin.core.context.startKoin
@@ -28,30 +34,34 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val sharedModule = module {
-    factory { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
-    factory { Sfl4jLogger() } bind Logger::class
+    single { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
+    single { Sfl4jLogger() } bind Logger::class
+    single { FileSystemUploadedFileWriter() } bind UploadedFileWriter::class
 }
 
 val triggerModule = module {
-    factory { MongoDbTriggerRepository() } bind TriggerRepository::class
-    factory { TriggerMatcher() }
-    factory { TriggerFinder(get(), get()) }
+    single { MongoDbTriggerRepository() } bind TriggerRepository::class
+    single { MongoDbTriggerAudioRepository() } bind TriggerAudioRepository::class
+    single { TriggerMatcher() }
+    single { TriggerFinder(get(), get()) }
+    single { TriggerCreator(get()) }
+    single { TriggerAudioCreator(get(), get()) }
 }
 
 val guildModule = module {
-    factory { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
-    factory { GuildPreferenceCreator(get()) }
-    factory { GuildPreferenceDeleter(get()) }
-    factory { GuildPreferencesFinder(get()) }
+    single { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
+    single { GuildPreferenceCreator(get()) }
+    single { GuildPreferenceDeleter(get()) }
+    single { GuildPreferencesFinder(get()) }
 }
 
 val videoModule = module {
-    factory { DiscordTextChannelVideoNotifier(get()) } bind VideoFeedNotifier::class
-    factory { YoutubeVideoParser() } bind FeedParser::class
-    factory { YoutubeFeedSubscriber() } bind ChannelSubscriber::class
-    factory { VideoFeedParser(get()) }
-    factory { VideoFeedSubscriber(get()) }
-    factory { SendVideoFeed(get()) }
+    single { DiscordTextChannelVideoNotifier(get()) } bind VideoFeedNotifier::class
+    single { YoutubeVideoParser() } bind FeedParser::class
+    single { YoutubeFeedSubscriber() } bind ChannelSubscriber::class
+    single { VideoFeedParser(get()) }
+    single { VideoFeedSubscriber(get()) }
+    single { SendVideoFeed(get()) }
 }
 
 fun enableDependencyInjection(extraModules: List<Module> = listOf()) {

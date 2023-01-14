@@ -1,6 +1,7 @@
 package com.usadapekora.context.application.trigger.create
 
 import com.usadapekora.context.domain.trigger.Trigger
+import com.usadapekora.context.domain.trigger.TriggerException
 import com.usadapekora.context.domain.trigger.TriggerRepository
 
 class TriggerCreator(private val repository: TriggerRepository) {
@@ -14,7 +15,12 @@ class TriggerCreator(private val repository: TriggerRepository) {
             discordGuildId = request.discordGuildId
         )
 
-        repository.save(trigger)
+        try {
+            repository.find(trigger.id)
+            throw TriggerException.AlreadyExists("The trigger with id ${trigger.id.value} already exists")
+        } catch (_: TriggerException.NotFound) {
+            repository.save(trigger)
+        }
     }
 
 }
