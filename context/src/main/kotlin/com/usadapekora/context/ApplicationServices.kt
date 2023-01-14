@@ -18,13 +18,13 @@ import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.Mongo
 import com.usadapekora.context.application.video.SendVideoFeed
 import com.usadapekora.context.application.video.VideoFeedParser
 import com.usadapekora.context.application.video.VideoFeedSubscriber
-import com.usadapekora.context.domain.shared.file.UploadedFileWriter
+import com.usadapekora.context.domain.shared.file.DomainFileWriter
 import com.usadapekora.context.domain.trigger.TriggerAudioRepository
 import com.usadapekora.context.domain.video.ChannelSubscriber
 import com.usadapekora.context.domain.video.FeedParser
 import com.usadapekora.context.domain.video.VideoFeedNotifier
 import com.usadapekora.context.infraestructure.discord.DiscordTextChannelVideoNotifier
-import com.usadapekora.context.infraestructure.file.FileSystemUploadedFileWriter
+import com.usadapekora.context.infraestructure.filesystem.FileSystemDomainFileWriter
 import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import com.usadapekora.context.infraestructure.youtube.YoutubeFeedSubscriber
 import com.usadapekora.context.infraestructure.youtube.YoutubeVideoParser
@@ -36,7 +36,7 @@ import org.koin.dsl.module
 val sharedModule = module {
     single { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
     single { Sfl4jLogger() } bind Logger::class
-    single { FileSystemUploadedFileWriter() } bind UploadedFileWriter::class
+    single { FileSystemDomainFileWriter() } bind DomainFileWriter::class
 }
 
 val triggerModule = module {
