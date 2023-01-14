@@ -1,13 +1,13 @@
 package com.usadapekora.backend.controller.webhook
 
 import com.usadapekora.backend.HttpApplication
-//import com.usadapekora.context.guild.domain.GuildPreferences
-//import com.usadapekora.context.guild.domain.GuildPreferencesRepository
-//import com.usadapekora.context.shared.domain.DateTimeUtils
-//import com.usadapekora.context.video.domain.FeedParser
-//import com.usadapekora.context.video.domain.Video
-//import com.usadapekora.context.video.domain.VideoException
-//import com.usadapekora.context.video.domain.VideoFeedNotifier
+//import com.usadapekora.context.domain.guild.GuildPreferences
+//import com.usadapekora.context.domain.guild.GuildPreferencesRepository
+//import com.usadapekora.context.domain.shared.DateTimeUtils
+//import com.usadapekora.context.domain.video.FeedParser
+//import com.usadapekora.context.domain.video.Video
+//import com.usadapekora.context.domain.video.VideoException
+//import com.usadapekora.context.domain.video.VideoFeedNotifier
 //import io.mockk.clearAllMocks
 //import io.mockk.every
 //import io.mockk.mockk

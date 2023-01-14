@@ -1,9 +1,9 @@
 package com.usadapekora.discordbot.event
 
 import discord4j.core.event.domain.message.MessageCreateEvent
-import com.usadapekora.context.shared.infraestructure.prometheus.registerTriggerFired
-import com.usadapekora.context.trigger.application.find.TriggerFinder
-import com.usadapekora.context.trigger.domain.TriggerException
+import com.usadapekora.context.infraestructure.prometheus.registerTriggerFired
+import com.usadapekora.context.application.trigger.find.TriggerFinder
+import com.usadapekora.context.domain.trigger.TriggerException
 import kotlinx.coroutines.reactor.awaitSingle
 import org.koin.java.KoinJavaComponent.inject
 import java.util.logging.Level

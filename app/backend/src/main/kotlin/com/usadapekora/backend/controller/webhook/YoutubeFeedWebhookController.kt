@@ -1,10 +1,10 @@
 package com.usadapekora.backend.controller.webhook
 
-import com.usadapekora.context.guild.application.GuildPreferencesFinder
-import com.usadapekora.context.guild.domain.GuildPreferences
-import com.usadapekora.context.video.application.SendVideoFeed
-import com.usadapekora.context.video.application.VideoFeedParser
-import com.usadapekora.context.video.domain.VideoException
+import com.usadapekora.context.application.guild.GuildPreferencesFinder
+import com.usadapekora.context.domain.guild.GuildPreferences
+import com.usadapekora.context.application.video.SendVideoFeed
+import com.usadapekora.context.application.video.VideoFeedParser
+import com.usadapekora.context.domain.video.VideoException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller

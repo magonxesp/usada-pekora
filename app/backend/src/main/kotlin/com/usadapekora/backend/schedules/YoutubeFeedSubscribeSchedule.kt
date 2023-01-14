@@ -1,7 +1,7 @@
 package com.usadapekora.backend.schedules
 
-import com.usadapekora.context.video.application.VideoFeedSubscriber
-import com.usadapekora.context.video.domain.VideoException
+import com.usadapekora.context.application.video.VideoFeedSubscriber
+import com.usadapekora.context.domain.video.VideoException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
