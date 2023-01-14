@@ -25,4 +25,9 @@ abstract class SpringBootHttpTestCase {
         enableDependencyInjection()
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build()
     }
+
+    protected fun readResource(name: String): ByteArray {
+        val resource = this::class.java.getResource(name) ?: throw RuntimeException("test resource $name not found")
+        return resource.readBytes()
+    }
 }
