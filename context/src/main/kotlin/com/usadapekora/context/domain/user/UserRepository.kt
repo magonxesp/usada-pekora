@@ -18,10 +18,10 @@ interface UserRepository {
     /**
      * Save the user to the database
      */
-    fun save(user: User)
+    fun save(entity: User)
 
     /**
      * Delete the user from the database
      */
-    fun delete(user: User)
+    fun delete(entity: User)
 }
