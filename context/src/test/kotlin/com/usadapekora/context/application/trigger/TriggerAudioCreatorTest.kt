@@ -1,5 +1,7 @@
 package com.usadapekora.context.application.trigger
 
+import com.usadapekora.context.application.trigger.create.TriggerAudioCreateRequest
+import com.usadapekora.context.application.trigger.create.TriggerAudioCreator
 import com.usadapekora.context.domain.shared.file.UploadedFileWriter
 import com.usadapekora.context.domain.TriggerAudioMother
 import com.usadapekora.context.domain.trigger.TriggerAudioRepository
@@ -18,13 +20,15 @@ class TriggerAudioCreatorTest {
         val expected = TriggerAudioMother.create()
         val file = arrayOf(Byte.MIN_VALUE)
 
-        creator.create(TriggerAudioCreateRequest(
+        creator.create(
+            TriggerAudioCreateRequest(
             id = expected.id.value,
             triggerId = expected.trigger.value,
             guildId = expected.guild.value,
             fileName = expected.name(),
             fileContent = file
-        ))
+        )
+        )
 
         verify { repository.save(expected) }
         verify { writer.write(file, expected.path()) }

@@ -1,4 +1,4 @@
-package com.usadapekora.context.application.trigger
+package com.usadapekora.context.application.trigger.create
 
 import com.usadapekora.context.domain.trigger.TriggerAudio
 import com.usadapekora.context.domain.trigger.TriggerAudioRepository
