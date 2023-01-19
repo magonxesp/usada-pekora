@@ -2,6 +2,7 @@ package com.usadapekora.context.application.trigger
 
 import com.usadapekora.context.domain.TriggerMother
 import com.usadapekora.context.application.trigger.find.TriggerFinder
+import com.usadapekora.context.application.trigger.find.TriggerResponse
 import com.usadapekora.context.domain.trigger.*
 import io.mockk.every
 import io.mockk.mockk
@@ -25,7 +26,7 @@ class TriggerFinderTest {
 
         val actual = finder.findByInput("It's me pekora", expected.discordGuildId.value)
 
-        assertEquals(expected, actual)
+        assertEquals(TriggerResponse.fromEntity(expected), actual)
     }
 
     @Test
@@ -58,7 +59,7 @@ class TriggerFinderTest {
 
         val actual = finder.findByInput("jajajajajajaja", expected.discordGuildId.value)
 
-        assertEquals(expected, actual)
+        assertEquals(TriggerResponse.fromEntity(expected), actual)
     }
 
 
@@ -79,4 +80,31 @@ class TriggerFinderTest {
         }
     }
 
+    @Test
+    fun `should find trigger by id`() {
+        val expected = TriggerMother.create()
+
+        val repository = mockk<TriggerRepository>()
+        val finder = TriggerFinder(repository, TriggerMatcher())
+
+        every { repository.find(expected.id) } returns expected
+
+        val actual = finder.find(expected.id.value)
+
+        assertEquals(TriggerResponse.fromEntity(expected), actual)
+    }
+
+    @Test
+    fun `should not find trigger by id`() {
+        val expected = TriggerMother.create()
+
+        val repository = mockk<TriggerRepository>()
+        val finder = TriggerFinder(repository, TriggerMatcher())
+
+        every { repository.find(expected.id) } throws TriggerException.NotFound()
+
+        assertThrows<TriggerException.NotFound> {
+            finder.find(expected.id.value)
+        }
+    }
 }
