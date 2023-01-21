@@ -16,4 +16,7 @@ class TriggerFinder(
 
     fun find(id: String): TriggerResponse
         = TriggerResponse.fromEntity(repository.find(Trigger.TriggerId(id)))
+
+    fun findByDiscordServer(discordServerId: String): TriggersResponse
+        = TriggersResponse.fromArray(repository.findByDiscordServer(Trigger.TriggerDiscordGuildId(discordServerId)))
 }

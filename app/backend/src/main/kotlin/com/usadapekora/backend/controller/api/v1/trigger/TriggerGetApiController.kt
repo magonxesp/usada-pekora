@@ -2,6 +2,7 @@ package com.usadapekora.backend.controller.api.v1.trigger
 
 import com.usadapekora.context.application.trigger.find.TriggerFinder
 import com.usadapekora.context.application.trigger.find.TriggerResponse
+import com.usadapekora.context.application.trigger.find.TriggersResponse
 import com.usadapekora.context.domain.trigger.TriggerException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
@@ -21,6 +22,18 @@ class TriggerGetApiController {
     fun find(@PathVariable("id") id: String): ResponseEntity<TriggerResponse> {
         return try {
             ResponseEntity.of(Optional.of(finder.find(id)))
+        } catch (exception: Exception) {
+            when(exception) {
+                is TriggerException.NotFound -> ResponseEntity.notFound().build()
+                else -> ResponseEntity.internalServerError().build()
+            }
+        }
+    }
+
+    @GetMapping("/guild/{id}")
+    fun findByGuildId(@PathVariable("id") id: String): ResponseEntity<TriggersResponse> {
+        return try {
+            ResponseEntity.of(Optional.of(finder.findByDiscordServer(id)))
         } catch (exception: Exception) {
             when(exception) {
                 is TriggerException.NotFound -> ResponseEntity.notFound().build()

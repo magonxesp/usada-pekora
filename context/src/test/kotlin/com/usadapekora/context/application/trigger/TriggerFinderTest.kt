@@ -3,11 +3,13 @@ package com.usadapekora.context.application.trigger
 import com.usadapekora.context.domain.TriggerMother
 import com.usadapekora.context.application.trigger.find.TriggerFinder
 import com.usadapekora.context.application.trigger.find.TriggerResponse
+import com.usadapekora.context.application.trigger.find.TriggersResponse
 import com.usadapekora.context.domain.trigger.*
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class TriggerFinderTest {
@@ -106,5 +108,31 @@ class TriggerFinderTest {
         assertThrows<TriggerException.NotFound> {
             finder.find(expected.id.value)
         }
+    }
+
+    @Test
+    fun `should find trigger by discord server id`() {
+        val trigger = TriggerMother.create()
+
+        val repository = mockk<TriggerRepository>()
+        val finder = TriggerFinder(repository, TriggerMatcher())
+
+        every { repository.findByDiscordServer(trigger.discordGuildId) } returns arrayOf(trigger)
+
+        val response = finder.findByDiscordServer(trigger.discordGuildId.value)
+        assertContentEquals(response.triggers, TriggersResponse.fromArray(arrayOf(trigger)).triggers)
+    }
+
+    @Test
+    fun `should not find trigger by discord server id`() {
+        val expected = TriggerMother.create()
+
+        val repository = mockk<TriggerRepository>()
+        val finder = TriggerFinder(repository, TriggerMatcher())
+
+        every { repository.findByDiscordServer(expected.discordGuildId) } returns arrayOf()
+
+        val response = finder.findByDiscordServer(expected.discordGuildId.value)
+        assertContentEquals(response.triggers, TriggersResponse(arrayOf()).triggers)
     }
 }
