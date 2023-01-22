@@ -10,9 +10,9 @@ class TriggerDeleteApiControllerTest : TriggerControllerTest() {
 
     private fun request(url: String)
         = mockMvc.perform(
-        MockMvcRequestBuilders.delete(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
+            MockMvcRequestBuilders.delete(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
     )
 
     @Test
