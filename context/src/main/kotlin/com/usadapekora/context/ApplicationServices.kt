@@ -5,6 +5,7 @@ import com.usadapekora.context.application.guild.GuildPreferenceDeleter
 import com.usadapekora.context.application.guild.GuildPreferencesFinder
 import com.usadapekora.context.application.trigger.create.TriggerAudioCreator
 import com.usadapekora.context.application.trigger.create.TriggerCreator
+import com.usadapekora.context.application.trigger.delete.TriggerDeleter
 import com.usadapekora.context.application.trigger.find.TriggerAudioFinder
 import com.usadapekora.context.domain.guild.GuildPreferencesRepository
 import com.usadapekora.context.infraestructure.persistence.mongodb.guild.MongoDbGuildPreferencesRepository
@@ -48,6 +49,7 @@ val triggerModule = module {
     single { TriggerCreator(get()) }
     single { TriggerAudioCreator(get(), get()) }
     single { TriggerAudioFinder(get()) }
+    single { TriggerDeleter(get()) }
 }
 
 val guildModule = module {
