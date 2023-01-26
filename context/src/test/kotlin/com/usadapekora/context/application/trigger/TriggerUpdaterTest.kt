@@ -24,7 +24,9 @@ class TriggerUpdaterTest {
 
         updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
-            input = "New expected user input"
+            values = TriggerUpdateRequest.NewValues(
+                input = "New expected user input"
+            )
         ))
 
         verify { repository.save(trigger) }

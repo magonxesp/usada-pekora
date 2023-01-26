@@ -14,6 +14,7 @@ import com.usadapekora.context.domain.shared.Logger
 import com.usadapekora.context.infraestructure.cache.RedisKeyValueCacheStorage
 import com.usadapekora.context.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.context.application.trigger.find.TriggerFinder
+import com.usadapekora.context.application.trigger.update.TriggerUpdater
 import com.usadapekora.context.domain.trigger.TriggerMatcher
 import com.usadapekora.context.domain.trigger.TriggerRepository
 import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
@@ -50,6 +51,7 @@ val triggerModule = module {
     single { TriggerAudioCreator(get(), get()) }
     single { TriggerAudioFinder(get()) }
     single { TriggerDeleter(get()) }
+    single { TriggerUpdater(get()) }
 }
 
 val guildModule = module {

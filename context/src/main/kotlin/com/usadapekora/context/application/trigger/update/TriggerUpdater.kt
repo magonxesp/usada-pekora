@@ -8,19 +8,19 @@ class TriggerUpdater(private val repository: TriggerRepository) {
     fun update(request: TriggerUpdateRequest) {
         val trigger = repository.find(Trigger.TriggerId(request.id))
 
-        request.input.takeUnless { it == null }?.let {
+        request.values.input.takeUnless { it == null }?.let {
             trigger.input = Trigger.TriggerInput(it)
         }
 
-        request.compare.takeUnless { it == null }?.let {
+        request.values.compare.takeUnless { it == null }?.let {
             trigger.compare = Trigger.TriggerCompare.fromValue(it)
         }
 
-        request.outputText.let {
+        request.values.outputText.let {
             trigger.outputText = Trigger.TriggerOutputText(it)
         }
 
-        request.discordGuildId.takeUnless { it == null }?.let {
+        request.values.discordGuildId.takeUnless { it == null }?.let {
             trigger.discordGuildId = Trigger.TriggerDiscordGuildId(it)
         }
 
