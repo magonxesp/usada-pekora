@@ -12,6 +12,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
+import java.util.UUID
 import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test
@@ -24,7 +25,8 @@ class TriggerAudioCreatorTest {
         val writer = mockk<DomainFileWriter>(relaxed = true)
         val creator = TriggerAudioCreator(repository, writer)
 
-        val expected = TriggerAudioMother.create()
+        val id = UUID.randomUUID()
+        val expected = TriggerAudioMother.create(id = id.toString(), file = "${id}.mp3")
         val file = Random.Default.nextBytes(10)
 
         every { repository.find(expected.id) } throws TriggerAudioException.NotFound()

@@ -15,6 +15,7 @@ class TriggerAudioCreator(private val repository: TriggerAudioRepository, privat
             id = request.id,
             trigger = request.triggerId,
             guild = request.guildId,
+            file = "${request.id}.${File(request.fileName).extension}"
         )
 
         try {
@@ -23,7 +24,7 @@ class TriggerAudioCreator(private val repository: TriggerAudioRepository, privat
         } catch (_: TriggerAudioException.NotFound) {
             val destination = Path(
                 TriggerAudioUtils.audioDirPath(audio),
-                "${audio.id.value}.${File(request.fileName).extension}"
+                audio.file.value
             ).toString()
 
             writer.write(request.content, destination)

@@ -10,6 +10,7 @@ class TriggerAudioDocument(
     val id: String = "",
     val trigger: String = "",
     val guild: String = "",
+    val file: String = "",
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<TriggerAudio, TriggerAudioDocument>(TriggerAudioDocument()) {
         override fun fromEntity(entity: TriggerAudio, document: TriggerAudioDocument) = TriggerAudioDocument(
@@ -17,6 +18,7 @@ class TriggerAudioDocument(
             id = entity.id.value,
             trigger = entity.trigger.value,
             guild = entity.guild.value,
+            file = entity.file.value
         )
     }
 
@@ -24,5 +26,6 @@ class TriggerAudioDocument(
         id = id,
         trigger = trigger,
         guild = guild,
+        file = file
     )
 }
