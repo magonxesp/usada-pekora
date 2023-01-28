@@ -14,12 +14,12 @@ class TriggerAudioDeleteApiControllerTest : SpringBootHttpTestCase() {
 
     private fun uploadAudioFileRequest(audioId: String, triggerId: String, guildId: String)
         = mockMvc.perform(
-        MockMvcRequestBuilders.multipart(HttpMethod.POST, "/api/v1/trigger/audio")
-            .file(MockMultipartFile("file", readResource("/assets_audio_Its_me_pekora.mp3")))
-            .param("id", audioId)
-            .param("triggerId", triggerId)
-            .param("guildId", guildId)
-            .accept(MediaType.APPLICATION_JSON)
+            MockMvcRequestBuilders.multipart(HttpMethod.POST, "/api/v1/trigger/audio")
+                .file(MockMultipartFile("file", readResource("/assets_audio_Its_me_pekora.mp3")))
+                .param("id", audioId)
+                .param("triggerId", triggerId)
+                .param("guildId", guildId)
+                .accept(MediaType.APPLICATION_JSON)
     )
 
     private fun deleteRequest(audioId: String)
