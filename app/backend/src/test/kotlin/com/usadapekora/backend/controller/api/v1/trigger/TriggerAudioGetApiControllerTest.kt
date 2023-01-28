@@ -46,7 +46,7 @@ class TriggerAudioGetApiControllerTest : SpringBootHttpTestCase() {
                 "id": "$audioId",
                 "triggerId": "c2a05313-b765-4be0-bf92-0b77136d033b",
                 "guildId": "47541556",
-                "file": "c2a05313-b765-4be0-bf92-0b77136d033b.mp3"
+                "file": "$audioId.mp3"
             }
         """.uglifyJson()
 
