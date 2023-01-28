@@ -5,6 +5,7 @@ import com.usadapekora.context.application.guild.GuildPreferenceDeleter
 import com.usadapekora.context.application.guild.GuildPreferencesFinder
 import com.usadapekora.context.application.trigger.create.TriggerAudioCreator
 import com.usadapekora.context.application.trigger.create.TriggerCreator
+import com.usadapekora.context.application.trigger.delete.TriggerAudioDeleter
 import com.usadapekora.context.application.trigger.delete.TriggerDeleter
 import com.usadapekora.context.application.trigger.find.TriggerAudioFinder
 import com.usadapekora.context.domain.guild.GuildPreferencesRepository
@@ -21,12 +22,14 @@ import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.Mongo
 import com.usadapekora.context.application.video.SendVideoFeed
 import com.usadapekora.context.application.video.VideoFeedParser
 import com.usadapekora.context.application.video.VideoFeedSubscriber
+import com.usadapekora.context.domain.shared.file.DomainFileDeleter
 import com.usadapekora.context.domain.shared.file.DomainFileWriter
 import com.usadapekora.context.domain.trigger.TriggerAudioRepository
 import com.usadapekora.context.domain.video.ChannelSubscriber
 import com.usadapekora.context.domain.video.FeedParser
 import com.usadapekora.context.domain.video.VideoFeedNotifier
 import com.usadapekora.context.infraestructure.discord.DiscordTextChannelVideoNotifier
+import com.usadapekora.context.infraestructure.filesystem.FileSystemDomainFileDeleter
 import com.usadapekora.context.infraestructure.filesystem.FileSystemDomainFileWriter
 import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import com.usadapekora.context.infraestructure.youtube.YoutubeFeedSubscriber
@@ -40,6 +43,7 @@ val sharedModule = module {
     single { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
     single { Sfl4jLogger() } bind Logger::class
     single { FileSystemDomainFileWriter() } bind DomainFileWriter::class
+    single { FileSystemDomainFileDeleter() } bind DomainFileDeleter::class
 }
 
 val triggerModule = module {
@@ -48,10 +52,11 @@ val triggerModule = module {
     single { TriggerMatcher() }
     single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get()) }
-    single { TriggerAudioCreator(get(), get()) }
-    single { TriggerAudioFinder(get()) }
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get()) }
+    single { TriggerAudioCreator(get(), get()) }
+    single { TriggerAudioFinder(get()) }
+    single { TriggerAudioDeleter(get(), get()) }
 }
 
 val guildModule = module {
