@@ -38,4 +38,29 @@ class TriggerAudioFinderTest {
         }
     }
 
+    @Test
+    fun `should find trigger audio by trigger id`() {
+        val repository = mockk<TriggerAudioRepository>()
+        val finder = TriggerAudioFinder(repository)
+        val triggerAudio = TriggerAudioMother.create()
+
+        every { repository.findByTrigger(triggerAudio.trigger) } returns triggerAudio
+
+        val actual = finder.findByTriggerId(triggerAudio.trigger.value)
+        assertEquals(TriggerAudioResponse.fromEntity(triggerAudio), actual)
+    }
+
+    @Test
+    fun `should not find trigger audio by trigger id`() {
+        val repository = mockk<TriggerAudioRepository>()
+        val finder = TriggerAudioFinder(repository)
+        val triggerAudio = TriggerAudioMother.create()
+
+        every { repository.findByTrigger(triggerAudio.trigger) } throws TriggerAudioException.NotFound()
+
+        assertThrows<TriggerAudioException.NotFound> {
+            finder.findByTriggerId(triggerAudio.trigger.value)
+        }
+    }
+
 }

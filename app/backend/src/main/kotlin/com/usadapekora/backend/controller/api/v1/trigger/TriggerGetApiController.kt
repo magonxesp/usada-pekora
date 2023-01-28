@@ -1,8 +1,7 @@
 package com.usadapekora.backend.controller.api.v1.trigger
 
-import com.usadapekora.context.application.trigger.find.TriggerFinder
-import com.usadapekora.context.application.trigger.find.TriggerResponse
-import com.usadapekora.context.application.trigger.find.TriggersResponse
+import com.usadapekora.context.application.trigger.find.*
+import com.usadapekora.context.domain.trigger.TriggerAudioException
 import com.usadapekora.context.domain.trigger.TriggerException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
@@ -17,6 +16,7 @@ import java.util.*
 class TriggerGetApiController {
 
     private val finder: TriggerFinder by inject(TriggerFinder::class.java)
+    private val audioFinder: TriggerAudioFinder by inject(TriggerAudioFinder::class.java)
 
     @GetMapping("{id}")
     fun find(@PathVariable("id") id: String): ResponseEntity<TriggerResponse> {
@@ -37,6 +37,18 @@ class TriggerGetApiController {
         } catch (exception: Exception) {
             when(exception) {
                 is TriggerException.NotFound -> ResponseEntity.notFound().build()
+                else -> ResponseEntity.internalServerError().build()
+            }
+        }
+    }
+
+    @GetMapping("{id}/audio")
+    fun findAudioByTriggerId(@PathVariable("id") id: String): ResponseEntity<TriggerAudioResponse> {
+        return try {
+            ResponseEntity.of(Optional.of(audioFinder.findByTriggerId(id)))
+        } catch (exception: Exception) {
+            when(exception) {
+                is TriggerAudioException.NotFound -> ResponseEntity.notFound().build()
                 else -> ResponseEntity.internalServerError().build()
             }
         }

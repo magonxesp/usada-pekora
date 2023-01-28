@@ -87,4 +87,34 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
         }
     }
 
+    @Test
+    fun `should find trigger associated audio by trigger id`() {
+        val id = UUID.randomUUID().toString()
+        val audioId = UUID.randomUUID().toString()
+
+        createDummy(id = id)
+        createAudioDummy(id = audioId, triggerId = id)
+
+        val expectedBody = """
+            {
+                "id": "$audioId",
+                "triggerId": "$id",
+                "guildId": "94101459",
+                "file": "$audioId.mp3"
+            }
+        """.uglifyJson()
+
+        request("/api/v1/trigger/$id/audio").andExpect {
+            assertEquals(200, it.response.status)
+            assertEquals(expectedBody, it.response.contentAsString)
+        }
+    }
+
+    @Test
+    fun `should not find a trigger audio by trigger id`() {
+        request("/api/v1/trigger/1b96c970-1a70-40a4-9dec-b32ba8408750/audio").andExpect {
+            assertEquals(404, it.response.status)
+        }
+    }
+
 }
