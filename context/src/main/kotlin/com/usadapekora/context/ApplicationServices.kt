@@ -15,6 +15,7 @@ import com.usadapekora.context.domain.shared.Logger
 import com.usadapekora.context.infraestructure.cache.RedisKeyValueCacheStorage
 import com.usadapekora.context.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.context.application.trigger.find.TriggerFinder
+import com.usadapekora.context.application.trigger.read.TriggerAudioReader
 import com.usadapekora.context.application.trigger.update.TriggerUpdater
 import com.usadapekora.context.domain.trigger.TriggerMatcher
 import com.usadapekora.context.domain.trigger.TriggerRepository
@@ -23,6 +24,7 @@ import com.usadapekora.context.application.video.SendVideoFeed
 import com.usadapekora.context.application.video.VideoFeedParser
 import com.usadapekora.context.application.video.VideoFeedSubscriber
 import com.usadapekora.context.domain.shared.file.DomainFileDeleter
+import com.usadapekora.context.domain.shared.file.DomainFileReader
 import com.usadapekora.context.domain.shared.file.DomainFileWriter
 import com.usadapekora.context.domain.trigger.TriggerAudioRepository
 import com.usadapekora.context.domain.video.ChannelSubscriber
@@ -30,6 +32,7 @@ import com.usadapekora.context.domain.video.FeedParser
 import com.usadapekora.context.domain.video.VideoFeedNotifier
 import com.usadapekora.context.infraestructure.discord.DiscordTextChannelVideoNotifier
 import com.usadapekora.context.infraestructure.filesystem.FileSystemDomainFileDeleter
+import com.usadapekora.context.infraestructure.filesystem.FileSystemDomainFileReader
 import com.usadapekora.context.infraestructure.filesystem.FileSystemDomainFileWriter
 import com.usadapekora.context.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import com.usadapekora.context.infraestructure.youtube.YoutubeFeedSubscriber
@@ -44,6 +47,7 @@ val sharedModule = module {
     single { Sfl4jLogger() } bind Logger::class
     single { FileSystemDomainFileWriter() } bind DomainFileWriter::class
     single { FileSystemDomainFileDeleter() } bind DomainFileDeleter::class
+    single { FileSystemDomainFileReader() } bind DomainFileReader::class
 }
 
 val triggerModule = module {
@@ -57,6 +61,7 @@ val triggerModule = module {
     single { TriggerAudioCreator(get(), get()) }
     single { TriggerAudioFinder(get()) }
     single { TriggerAudioDeleter(get(), get()) }
+    single { TriggerAudioReader(get(), get()) }
 }
 
 val guildModule = module {

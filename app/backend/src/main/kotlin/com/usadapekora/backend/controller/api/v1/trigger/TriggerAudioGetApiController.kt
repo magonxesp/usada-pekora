@@ -3,6 +3,7 @@ package com.usadapekora.backend.controller.api.v1.trigger
 import com.usadapekora.backend.controller.api.ApiController
 import com.usadapekora.context.application.trigger.find.TriggerAudioFinder
 import com.usadapekora.context.application.trigger.find.TriggerAudioResponse
+import com.usadapekora.context.application.trigger.read.TriggerAudioReader
 import com.usadapekora.context.domain.trigger.TriggerAudioException
 import io.ktor.util.reflect.*
 import org.springframework.stereotype.Controller
@@ -18,12 +19,13 @@ import java.util.*
 @RequestMapping("/api/v1/trigger/audio")
 class TriggerAudioGetApiController : ApiController() {
 
-    private val triggerAudiFinder: TriggerAudioFinder by inject(TriggerAudioFinder::class.java)
+    private val triggerAudioFinder: TriggerAudioFinder by inject(TriggerAudioFinder::class.java)
+    private val triggerAudioReader: TriggerAudioReader by inject(TriggerAudioReader::class.java)
 
     @GetMapping("{id}")
     fun find(@PathVariable("id") id: String): ResponseEntity<TriggerAudioResponse> {
         return try {
-            ResponseEntity.of(Optional.of(triggerAudiFinder.find(id)))
+            ResponseEntity.of(Optional.of(triggerAudioFinder.find(id)))
         } catch (exception: Exception) {
             logger.warning(exception.message)
 
@@ -34,4 +36,18 @@ class TriggerAudioGetApiController : ApiController() {
         }
     }
 
+
+    @GetMapping("{id}/content")
+    fun content(@PathVariable("id") id: String): ResponseEntity<ByteArray> {
+        return try {
+            ResponseEntity.of(Optional.of(triggerAudioReader.read(id)))
+        } catch (exception: Exception) {
+            logger.warning(exception.message)
+
+            when (exception) {
+                is TriggerAudioException.NotFound -> ResponseEntity.notFound().build()
+                else -> ResponseEntity.internalServerError().build()
+            }
+        }
+    }
 }
