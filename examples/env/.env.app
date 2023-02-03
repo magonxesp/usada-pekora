@@ -1,0 +1,24 @@
+# Discord token
+DISCORD_BOT_TOKEN=
+
+# Strapi backend
+BACKEND_TOKEN=
+BACKEND_BASE_URL=http://localhost:1337
+
+# Bot api http
+HTTP_BASE_URL=http://localhost:8080
+
+# Youtube
+YOUTUBE_CHANNEL_ID=UC1DCedRgGHBdm81E1llLhOQ
+
+# Database connection
+MONGODB_URL=mongodb://root:example@mongo:27017
+MONGODB_DATABASE=pekora
+
+# Redis connection
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+# Backend resource server oauth
+OAUTH_AUDIENCE=https://usada-pekora.backend.magonx.es
+OAUTH_ISSUER_URI=https://dev-magonxesp.eu.auth0.com/

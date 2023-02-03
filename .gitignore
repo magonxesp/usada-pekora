@@ -5,6 +5,7 @@
 !examples/env/.env.backend
 !examples/env/.env.frontend
 !examples/env/.env.mongodb
+!examples/env/.env.app
 venv/
 .vscode/*
 !.vscode/settings.json
