@@ -1,7 +1,7 @@
 package com.usadapekora.context.infraestructure.youtube
 
 import com.usadapekora.context.domain.video.ChannelSubscriber
-import com.usadapekora.context.httpBaseUrl
+import com.usadapekora.context.backendBaseUrl
 import com.usadapekora.context.domain.video.VideoException
 import com.usadapekora.context.youtubeChannelId
 import io.ktor.client.HttpClient
@@ -11,7 +11,7 @@ import io.ktor.http.*
 
 class YoutubeFeedSubscriber : ChannelSubscriber {
     private val topicUrl = "https://www.youtube.com/xml/feeds/videos.xml?channel_id=$youtubeChannelId"
-    private val callback = "$httpBaseUrl/webhook/youtube/feed"
+    private val callback = "$backendBaseUrl/webhook/youtube/feed"
 
     override suspend fun subscribe() {
         val client = HttpClient()
