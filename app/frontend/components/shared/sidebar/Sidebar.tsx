@@ -1,7 +1,7 @@
 import styles from "./Sidebar.module.css"
 import { ReactElement } from 'react'
 import { JSX } from 'preact'
-import { isComponent } from '../../../shared/infraestructure/runtime'
+import { isComponent } from '../../../shared/helpers/runtime'
 import Button from '../form/Button'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 

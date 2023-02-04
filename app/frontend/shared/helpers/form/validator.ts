@@ -9,7 +9,7 @@ export type FormData = {
 export type Validators = {
   [name: string]: {
     [validator: string]: {
-      validate: (value: string) => boolean,
+      validate: (value: unknown) => boolean,
       errorMessage: string,
       skip?: () => boolean
     }
@@ -30,7 +30,7 @@ export class Validator {
     this.errors[name] = errors
   }
 
-  validate(inputName: string, value: any) {
+  validate(inputName: string, value: unknown) {
     if (typeof this.validators[inputName] !== 'undefined') {
       const validators = this.validators[inputName]
 

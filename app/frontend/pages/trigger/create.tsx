@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import TriggerForm from '../../components/domain/trigger/form/TriggerForm'
-import { Trigger } from '../../shared/domain/trigger'
+import { TriggerFormData } from '../../shared/trigger/form/trigger-form-data'
 import GuildTriggersView from '../../components/views/guild-triggers-view/GuildTriggersView'
 import Sidebar from '../../components/shared/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
-import { asyncAlert } from '../../shared/infraestructure/alert'
+import { asyncAlert } from '../../shared/helpers/alert'
 
 const NewTrigger: NextPage = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -23,12 +23,12 @@ const NewTrigger: NextPage = () => {
     setTimeout(async () => await router.push("/"), 500)
   }
 
-  const createTrigger = (trigger: Trigger) => {
+  const createTrigger = (trigger: TriggerFormData) => {
     setDisableSubmit(true)
 
     const request = fetch('/api/trigger/create', {
       method: 'POST',
-      body: JSON.stringify(trigger.toPrimitives())
+      body: JSON.stringify(trigger)
     }).then((response) => (!response.ok) ? Promise.reject() : response)
 
     asyncAlert(request, {
@@ -53,7 +53,7 @@ const NewTrigger: NextPage = () => {
         </Sidebar.Header>
         <Sidebar.Body>
           <TriggerForm
-            trigger={Trigger.empty()}
+            trigger={TriggerFormData.new()}
             onSubmit={createTrigger}
             disableSubmit={disableSubmit}
           />

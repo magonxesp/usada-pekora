@@ -1,4 +1,4 @@
-import { Trigger } from '../../../../shared/domain/trigger'
+import { Trigger } from '../../../../shared/trigger/trigger'
 import TriggerCard from '../card/TriggerCard'
 
 interface TriggerListProps {

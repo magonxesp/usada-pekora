@@ -1,13 +1,13 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import GuildTriggersView from '../../../components/views/guild-triggers-view/GuildTriggersView'
-import { Trigger, TriggerPrimitives } from '../../../shared/domain/trigger'
+import { Trigger, TriggerPrimitives } from '../../../shared/trigger/trigger'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Sidebar from '../../../components/shared/sidebar/Sidebar'
 import TriggerForm from '../../../components/domain/trigger/form/TriggerForm'
 import { useIntl } from 'react-intl'
 import { triggerFinder } from '../../../shared/application-services'
-import { alert, asyncAlert } from '../../../shared/infraestructure/alert'
+import { alert, asyncAlert } from '../../../shared/helpers/alert'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: TriggerPrimitives }> = async (context) => {
   const { uuid } = context.query
@@ -40,7 +40,7 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
 
     const request = fetch('/api/trigger/update', {
       method: 'PATCH',
-      body: JSON.stringify(trigger.toPrimitives())
+      body: JSON.stringify(trigger.toPlainObject())
     }).then((response) => (!response.ok) ? Promise.reject() : response)
 
     asyncAlert(request, {

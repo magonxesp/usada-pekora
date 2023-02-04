@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../../hooks'
 import { useEffect, useState } from 'react'
 import { setCurrentGuild, setTriggers } from '../../../store/slices/app-slice'
-import { Trigger } from '../../../shared/domain/trigger'
+import { Trigger } from '../../../shared/trigger/trigger'
 import Button from '../../shared/form/Button'
 import TriggerList from '../../domain/trigger/list/TriggerList'
 import EmptyState from '../../shared/empty-state/EmptyState'
@@ -31,7 +31,7 @@ export default function GuildTriggersView() {
       .then(items => {
         clearTimeout(loadingAnimationTimeout)
         setLoading(false)
-        dispatch(setTriggers(items.map((item: object) => Trigger.fromPrimitives(item as any))))
+        dispatch(setTriggers(items.map((item: object) => new Trigger(item as any))))
       })
   }, [selectedGuild])
 

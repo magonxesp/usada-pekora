@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { triggerUpdater } from '../../../shared/application-services'
-import { Trigger } from '../../../shared/domain/trigger'
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'PATCH') {
@@ -9,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    await triggerUpdater().update(Trigger.fromPrimitives(JSON.parse(req.body)))
+    //await triggerUpdater().update(Trigger.fromPrimitives(JSON.parse(req.body)))
     res.status(200).json({})
   } catch (exception) {
     res.status(500).json({})

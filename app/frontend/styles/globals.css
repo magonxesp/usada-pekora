@@ -71,6 +71,10 @@
     --header-border-color: var(--color-primary);
 }
 
+body {
+    overflow-x: hidden;
+}
+
 img {
     pointer-events: none;
 }
@@ -80,5 +84,3 @@ button:active {
     --color-secondary: var(--color-secondary-active);
     --color-danger: var(--color-danger-active);
 }
-
-

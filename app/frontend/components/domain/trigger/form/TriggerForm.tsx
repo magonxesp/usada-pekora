@@ -1,39 +1,39 @@
-import { Trigger, TriggerCompare, triggerCompareOptions } from '../../../../shared/domain/trigger'
+import { TriggerCompare, triggerCompareOptions } from '../../../../shared/trigger/trigger'
+import { TriggerFormData } from '../../../../shared/trigger/form/trigger-form-data'
 import InputWrapper from '../../../shared/form/input-wrapper/InputWrapper'
 import Button from '../../../shared/form/Button'
 import Form from '../../../shared/form/Form'
-import { ChangeEvent, createRef, useState } from 'react'
-import { FormErrors, Validator } from '../../../../shared/infraestructure/form/validator'
+import { ChangeEvent, useState } from 'react'
+import { FormErrors, Validator } from '../../../../shared/helpers/form/validator'
 import { useIntl } from 'react-intl'
 
 interface TriggerFormProps {
-  trigger: Trigger,
-  onSubmit?: (trigger: Trigger) => void
+  trigger: TriggerFormData,
+  onSubmit?: (trigger: TriggerFormData) => void
   disableSubmit?: boolean
 }
 
 export default function TriggerForm({ trigger, onSubmit, disableSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
-  const [formData, setFormData] = useState(trigger.toPrimitives())
+  const [formData, setFormData] = useState(trigger.toPlainObject())
   const intl = useIntl()
-  const outputAudioRef = createRef<HTMLInputElement>()
 
   const validator = new Validator({
     title: {
       required: {
-        validate: (value: string) => value != '',
+        validate: (value) => value != '',
         errorMessage: intl.$t({ id: 'trigger.form.title.required.error' })
       }
     },
     input: {
       required: {
-        validate: (value: string) => value != '',
+        validate: (value) => value != '',
         errorMessage: intl.$t({ id: 'trigger.form.input.required.error' })
       },
       regex: {
-        validate: (value: string) => {
+        validate: (value) => {
           try {
-            if (value == '') {
+            if (typeof value != 'string' || value == '') {
               return false
             }
 
@@ -50,21 +50,13 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
     },
     outputAudio: {
       fileType: {
-        validate: () => {
-          const file = outputAudioRef.current?.files?.item(0)
-
-          if (!file) {
-            return true
-          }
-
-          return file.type == 'audio/mpeg'
-        },
+        validate: (file) => (file instanceof File) ? file.type == 'audio/mpeg' : file == null,
         errorMessage: intl.$t({ id: 'trigger.form.output_audio.file_type.error' })
       }
     }
   })
 
-  const validateInput = (name: string, value: string) => {
+  const validateInput = (name: string, value: unknown) => {
     validator.cleanErrorsOf(name)
     validator.validate(name, value)
     const errors = validator.getErrors()
@@ -85,6 +77,18 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
     validateInput(name, value)
   }
 
+  const handleChangeOutputSound = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = (event.target.files != null) ?
+      event.target.files[0] : null
+
+    setFormData({
+      ...formData,
+      outputAudio: file
+    })
+
+    validateInput("outputAudio", file)
+  }
+
   const submitForm = () => {
     validator.cleanErrors()
     validator.validateAll(formData)
@@ -96,7 +100,7 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
     }
 
     if (typeof onSubmit !== 'undefined') {
-      onSubmit(Trigger.fromPrimitives(formData))
+      onSubmit(new TriggerFormData(formData))
     }
   }
 
@@ -161,11 +165,9 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
             <InputWrapper.Input>
               <input
                 type="file"
-                defaultValue={trigger.outputAudio ?? ""}
                 accept="audio/mpeg"
-                onChange={handleChangeEvent}
+                onChange={handleChangeOutputSound}
                 name="outputAudio"
-                ref={outputAudioRef}
               />
             </InputWrapper.Input>
             {(formErrors.outputAudio ?? []).map((error, index) => (
