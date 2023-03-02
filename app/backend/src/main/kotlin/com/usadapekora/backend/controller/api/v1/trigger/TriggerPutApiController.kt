@@ -6,13 +6,13 @@ import com.usadapekora.context.application.trigger.update.TriggerUpdater
 import com.usadapekora.context.domain.trigger.TriggerException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/trigger")
 class TriggerPutApiController : ApiController() {
 

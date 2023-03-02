@@ -6,7 +6,7 @@ import com.usadapekora.context.application.trigger.create.TriggerAudioCreateRequ
 import com.usadapekora.context.application.trigger.create.TriggerAudioCreator
 import com.usadapekora.context.domain.trigger.TriggerAudioException
 import io.ktor.util.reflect.*
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.koin.java.KoinJavaComponent.inject
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/trigger/audio")
 class TriggerAudioPostApiController : ApiController() {
 

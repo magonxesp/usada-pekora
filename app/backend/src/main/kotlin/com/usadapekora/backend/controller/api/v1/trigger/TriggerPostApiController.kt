@@ -7,7 +7,7 @@ import com.usadapekora.context.application.trigger.create.TriggerCreator
 import com.usadapekora.context.domain.trigger.TriggerException
 import io.ktor.util.reflect.*
 import org.koin.core.component.KoinComponent
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/trigger")
 class TriggerPostApiController : ApiController() {
 

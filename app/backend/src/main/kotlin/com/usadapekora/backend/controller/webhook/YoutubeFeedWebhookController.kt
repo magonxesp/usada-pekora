@@ -7,7 +7,7 @@ import com.usadapekora.context.application.video.VideoFeedParser
 import com.usadapekora.context.domain.video.VideoException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,7 +18,7 @@ import java.util.*
 import java.util.logging.Level
 import java.util.logging.Logger
 
-@Controller
+@RestController
 @RequestMapping("/webhook/youtube")
 class YoutubeFeedWebhookController {
 

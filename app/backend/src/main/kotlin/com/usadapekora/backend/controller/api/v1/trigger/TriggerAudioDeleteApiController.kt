@@ -1,13 +1,10 @@
 package com.usadapekora.backend.controller.api.v1.trigger
 
 import com.usadapekora.backend.controller.api.ApiController
-import com.usadapekora.backend.utils.MultipartFileUtils
-import com.usadapekora.context.application.trigger.create.TriggerAudioCreateRequest
-import com.usadapekora.context.application.trigger.create.TriggerAudioCreator
 import com.usadapekora.context.application.trigger.delete.TriggerAudioDeleter
 import com.usadapekora.context.domain.trigger.TriggerAudioException
 import io.ktor.util.reflect.*
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.HttpStatus
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/trigger/audio")
 class TriggerAudioDeleteApiController : ApiController() {
 
