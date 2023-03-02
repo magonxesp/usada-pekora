@@ -3,9 +3,13 @@ import { TriggerFormData } from '../../../../shared/trigger/form/trigger-form-da
 import InputWrapper from '../../../shared/form/input-wrapper/InputWrapper'
 import Button from '../../../shared/form/Button'
 import Form from '../../../shared/form/Form'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { FormErrors, Validator } from '../../../../shared/helpers/form/validator'
 import { useIntl } from 'react-intl'
+import { useAppSelector } from '../../../../shared/hooks/store'
+import { v4 as uuidv4 } from 'uuid'
+import { alert } from '../../../../shared/helpers/alert'
+import { useSelectedGuild } from '../../../../shared/hooks/guilds'
 
 interface TriggerFormProps {
   trigger: TriggerFormData,
@@ -16,7 +20,14 @@ interface TriggerFormProps {
 export default function TriggerForm({ trigger, onSubmit, disableSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
   const [formData, setFormData] = useState(trigger.toPlainObject())
+  const [id, setId] = useState("")
+  const selectedGuild = useSelectedGuild()
   const intl = useIntl()
+
+  useEffect(() => {
+    setId(uuidv4())
+    console.log(selectedGuild)
+  }, [])
 
   const validator = new Validator({
     title: {
@@ -100,7 +111,12 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
     }
 
     if (typeof onSubmit !== 'undefined') {
-      onSubmit(new TriggerFormData(formData))
+      if (!selectedGuild) {
+        alert(intl.$t({ id: 'trigger.form.error.missing_discord_server_id' }), 'error')
+        return
+      }
+
+      onSubmit(new TriggerFormData({...formData, uuid: id, discordServerId: selectedGuild}))
     }
   }
 

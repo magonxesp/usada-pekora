@@ -1,22 +1,30 @@
-export class TriggerAudioFormData {
+import { FormDataValues } from '../../helpers/form/form-data-values'
 
-  constructor(
-    public readonly id: string,
-    public readonly file: File,
-    public readonly triggerId: string,
-    public readonly guildId: string,
-  ) {
+type TriggerAudioFormDataValues = {
+  id: string,
+  file: File|Buffer,
+  triggerId: string,
+  guildId: string,
+}
+
+export class TriggerAudioFormData extends FormDataValues {
+
+  public readonly id: string
+  public readonly file: File|Buffer
+  public readonly triggerId: string
+  public readonly guildId: string
+
+  constructor(values: TriggerAudioFormDataValues) {
+    super()
+
+    this.id = values.id
+    this.file = values.file
+    this.triggerId = values.triggerId
+    this.guildId = values.guildId
   }
 
-  toFormData() {
-    const formData = new FormData()
-
-    formData.set('id', this.id)
-    formData.set('file', this.file)
-    formData.set('triggerId', this.triggerId)
-    formData.set('guildId', this.guildId)
-
-    return formData
+  toPlainObject(): TriggerAudioFormDataValues {
+    return Object(this)
   }
 
 }

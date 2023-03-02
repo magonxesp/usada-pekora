@@ -1,9 +1,8 @@
 import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../../hooks'
+import { useAppSelector } from '../../../shared/hooks/store'
 import { useEffect, useState } from 'react'
 import { setCurrentGuild, setTriggers } from '../../../store/slices/app-slice'
 import { Trigger } from '../../../shared/trigger/trigger'
-import Button from '../../shared/form/Button'
 import TriggerList from '../../domain/trigger/list/TriggerList'
 import EmptyState from '../../shared/empty-state/EmptyState'
 import Link from 'next/link'
@@ -19,7 +18,7 @@ export default function GuildTriggersView() {
     let guildId
 
     if ((guildId = sessionStorage.getItem('current_selected_guild')) != null) {
-      dispatch(setCurrentGuild(guildId))
+      dispatch(setCurrentGuild({ id: guildId }))
     }
   },[])
 
@@ -42,7 +41,7 @@ export default function GuildTriggersView() {
         <div className="flex justify-between items-center">
           <h1 className="heading-1">Reacciones</h1>
           <Link href="/trigger/create">
-            <Button color="primary">Añadir</Button>
+            <button className="bg-primary">Añadir</button>
           </Link>
         </div>
         {!loading && triggers.length > 0 ? (

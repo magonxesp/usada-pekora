@@ -18,18 +18,25 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setCurrentGuild(state, action: PayloadAction<string>) {
-      state.selectedGuild = action.payload
-      sessionStorage.setItem("current_selected_guild", state.selectedGuild)
+    setCurrentGuild(state, action: PayloadAction<{id: string, storeOnSessionStorage?: boolean}>) {
+      state.selectedGuild = action.payload.id
+
+      if (action.payload.storeOnSessionStorage ?? true) {
+        sessionStorage.setItem("current_selected_guild", state.selectedGuild)
+      }
     },
     setTriggers(state, action: PayloadAction<Array<Trigger>>) {
       state.triggers = action.payload
+    },
+    setUserGuilds(state, action: PayloadAction<Array<Guild>>) {
+      state.userGuilds = action.payload
     }
   }
 })
 
 export const {
   setCurrentGuild,
-  setTriggers
+  setTriggers,
+  setUserGuilds
 } = appSlice.actions
 export default appSlice.reducer

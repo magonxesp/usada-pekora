@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import { asyncAlert } from '../../shared/helpers/alert'
+import { triggerClient } from '../../shared/services'
 
 const NewTrigger: NextPage = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -23,13 +24,10 @@ const NewTrigger: NextPage = () => {
     setTimeout(async () => await router.push("/"), 500)
   }
 
-  const createTrigger = (trigger: TriggerFormData) => {
+  const createTrigger = (data: TriggerFormData) => {
+    console.log(data)
     setDisableSubmit(true)
-
-    const request = fetch('/api/trigger/create', {
-      method: 'POST',
-      body: JSON.stringify(trigger)
-    }).then((response) => (!response.ok) ? Promise.reject() : response)
+    const request = triggerClient.createTrigger(data)
 
     asyncAlert(request, {
       success: intl.$t({id: 'trigger.form.create.success'}),
