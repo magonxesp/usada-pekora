@@ -1,12 +1,9 @@
 import { NextPage } from 'next'
-import TriggerForm from '../../components/domain/trigger/form/TriggerForm'
 import GuildTriggersView from '../../components/views/guild-triggers-view/GuildTriggersView'
-import Sidebar from '../../components/shared/sidebar/Sidebar'
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import { asyncAlert } from '../../shared/helpers/alert'
-import { emptyTriggerFormData, submitTriggerCreateRequest, TriggerFormData } from '../../shared/helpers/form/trigger'
+import { submitTriggerCreateRequest, TriggerFormData } from '../../shared/helpers/form/trigger'
 import TriggerFormSidebar from '../../components/domain/trigger/form/TriggerFormSidebar'
 
 const NewTrigger: NextPage = () => {
