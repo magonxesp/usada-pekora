@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { createTriggerAudio, createTrigger, updateTrigger } from '../../api/backend/trigger'
 import { Trigger, TriggerCompare } from '../../domain/trigger'
-import { Validator } from './validator'
 
 export interface TriggerFormData {
   title: string,
