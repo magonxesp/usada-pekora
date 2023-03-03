@@ -4,6 +4,7 @@ import com.usadapekora.context.domain.trigger.Trigger
 
 data class TriggerResponse(
     val id: String,
+    val title: String,
     val input: String,
     val compare: String,
     val outputText: String?,
@@ -12,6 +13,7 @@ data class TriggerResponse(
     companion object {
         fun fromEntity(entity: Trigger) = TriggerResponse(
             id = entity.id.value,
+            title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.value,
             outputText = entity.outputText.value,

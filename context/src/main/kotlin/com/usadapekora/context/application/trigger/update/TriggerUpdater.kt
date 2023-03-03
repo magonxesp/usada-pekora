@@ -8,6 +8,11 @@ class TriggerUpdater(private val repository: TriggerRepository) {
     fun update(request: TriggerUpdateRequest) {
         val trigger = repository.find(Trigger.TriggerId(request.id))
 
+        request.values.title.takeUnless { it == null }?.let {
+            trigger.title = Trigger.TriggerTitle(it)
+        }
+
+
         request.values.input.takeUnless { it == null }?.let {
             trigger.input = Trigger.TriggerInput(it)
         }

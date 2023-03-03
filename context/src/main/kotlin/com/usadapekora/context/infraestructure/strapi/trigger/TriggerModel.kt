@@ -24,6 +24,7 @@ data class TriggerModel (
 
     fun toAggregate(): Trigger = Trigger.fromPrimitives(
         id = id.toString(),
+        title = "no title",
         input = attributes.input,
         compare = attributes.compare,
         outputText = attributes.output_text,

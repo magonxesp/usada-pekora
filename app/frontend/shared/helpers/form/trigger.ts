@@ -35,6 +35,7 @@ export async function submitTriggerCreateRequest(data: TriggerFormData) {
 
   await createTrigger({
     id: data.uuid,
+    title: data.title,
     compare: data.compare,
     input: data.input,
     discordGuildId: data.discordServerId,

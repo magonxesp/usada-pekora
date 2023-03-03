@@ -5,6 +5,7 @@ data class TriggerUpdateRequest(
     val values: NewValues
 ) {
     data class NewValues(
+        val title: String? = null,
         val input: String? = null,
         val compare: String? = null,
         val outputText: String? = null,

@@ -8,6 +8,7 @@ import org.bson.types.ObjectId
 class TriggerDocument(
     val _id: ObjectId? = null,
     val id: String = "",
+    val title: String = "",
     val input: String = "",
     val compare: String = "",
     val outputText: String? = null,
@@ -17,6 +18,7 @@ class TriggerDocument(
         override fun fromEntity(entity: Trigger, document: TriggerDocument) = TriggerDocument(
             _id = document._id,
             id = entity.id.value,
+            title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.toString(),
             outputText = entity.outputText.value,
@@ -26,7 +28,8 @@ class TriggerDocument(
 
     fun toEntity() = Trigger.fromPrimitives(
         id = id,
-        input = input,
+        title = title.ifBlank { "untitled" },
+        input = input.ifBlank { "[empty]" },
         compare = compare,
         outputText = outputText,
         discordGuildId = discordGuildId

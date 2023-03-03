@@ -23,6 +23,7 @@ class TriggerCreatorTest {
 
         creator.create(TriggerCreateRequest(
             id = trigger.id.value,
+            title = trigger.title.value,
             input = trigger.input.value,
             compare = trigger.compare.value,
             outputText = trigger.outputText.value,
@@ -43,6 +44,7 @@ class TriggerCreatorTest {
         assertThrows<TriggerException.AlreadyExists> {
             creator.create(TriggerCreateRequest(
                 id = trigger.id.value,
+                title = trigger.title.value,
                 input = trigger.input.value,
                 compare = trigger.compare.value,
                 outputText = trigger.outputText.value,
@@ -63,6 +65,7 @@ class TriggerCreatorTest {
         assertThrows<Exception> {
             creator.create(TriggerCreateRequest(
                 id = trigger.id.value,
+                title = trigger.title.value,
                 input = trigger.input.value,
                 compare = trigger.compare.value,
                 outputText = trigger.outputText.value,

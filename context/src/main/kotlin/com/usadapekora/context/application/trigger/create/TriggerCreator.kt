@@ -9,6 +9,7 @@ class TriggerCreator(private val repository: TriggerRepository) {
     fun create(request: TriggerCreateRequest) {
         val trigger = Trigger.fromPrimitives(
             id = request.id,
+            title = request.title,
             input = request.input,
             compare = request.compare,
             outputText = request.outputText,

@@ -1,10 +1,10 @@
 import { backendUrl, headers } from './backend'
 import axios, { toFormData } from 'axios'
-import { Trigger, TriggerCompare } from '../../domain/trigger'
-import { it } from 'node:test'
+import { Trigger } from '../../domain/trigger'
 
 interface TriggerCreateRequest {
   id: string,
+  title: string
   input: string,
   compare: string,
   outputText?: string,
@@ -20,6 +20,7 @@ interface TriggerAudioCreateRequest {
 
 interface TriggerResponse {
   id: string
+  title: string
   input: string
   compare: string
   outputText?: string
@@ -32,7 +33,7 @@ interface TriggersResponse {
 
 const triggerResponseToDomainEntity = (item: TriggerResponse) => new Trigger({
   id: item.id,
-  title: "",
+  title: item.title,
   compare: item.compare,
   input: item.input,
   discordServerId: item.discordGuildId,
