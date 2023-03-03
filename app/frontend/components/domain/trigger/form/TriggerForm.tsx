@@ -20,11 +20,15 @@ interface TriggerFormProps {
 export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
   const [formData, setFormData] = useState(triggerFormData)
-  const [id, setId] = useState("")
+  const [id, setId] = useState(triggerFormData.id)
   const selectedGuild = useSelectedGuild()
   const intl = useIntl()
 
-  useEffect(() => setId(uuidv4()), [])
+  useEffect(() => {
+    if (id == '') {
+      setId(uuidv4())
+    }
+  }, [])
 
   const validator = new Validator({
     title: {
@@ -101,7 +105,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
         return
       }
 
-      onSubmit({...formData, uuid: id, discordServerId: selectedGuild})
+      onSubmit({...formData, id: id, discordServerId: selectedGuild})
     }
   }
 

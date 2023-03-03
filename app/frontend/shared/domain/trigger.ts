@@ -8,6 +8,15 @@ export enum TriggerFeature {
   AUDIO_RESPONSE,
 }
 
+export interface TriggerObject {
+  id: string
+  title: string
+  input: string
+  compare: string
+  outputText: string|null
+  discordServerId: string
+}
+
 export class Trigger {
 
   public readonly id: string
@@ -17,14 +26,7 @@ export class Trigger {
   public readonly discordServerId: string
   public readonly outputText: string|null
 
-  constructor(values: {
-    id: string,
-    title: string,
-    input: string,
-    compare: string,
-    outputText: string|null,
-    discordServerId: string
-  }) {
+  constructor(values: TriggerObject) {
     this.title = values.title
     this.id = values.id
     this.input = values.input

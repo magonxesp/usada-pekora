@@ -18,7 +18,7 @@ export default function TriggerCard(props: TriggerCardProps) {
         <h3 className='text-lg font-medium leading-6 text-gray-900'>{trigger.title ?? 'Sin título'}</h3>
       </div>
       <div className='flex items-center'>
-        <Link href={`/trigger/edit/${trigger.uuid}`} >
+        <Link href={`/trigger/edit/${trigger.id}`} >
           <button className="bg-primary">
             <PencilSquareIcon className='w-5' />
           </button>

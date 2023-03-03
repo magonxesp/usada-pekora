@@ -31,6 +31,19 @@ interface TriggersResponse {
   triggers: TriggerResponse[]
 }
 
+interface TriggerUpdateRequestNewValues {
+  title?: string
+  input?: string
+  compare?: string
+  outputText?: string
+  discordGuildId?: string
+}
+
+interface TriggerUpdateRequest {
+  id: string
+  values: TriggerUpdateRequestNewValues
+}
+
 const triggerResponseToDomainEntity = (item: TriggerResponse) => new Trigger({
   id: item.id,
   title: item.title,
@@ -50,6 +63,24 @@ export async function createTrigger(trigger: TriggerCreateRequest) {
   await axios.post(backendUrl("/api/v1/trigger"), trigger, {
     headers: headers()
   })
+}
+
+export async function updateTrigger(trigger: TriggerUpdateRequest) {
+  await axios.put(backendUrl(`/api/v1/trigger/${trigger.id}`), trigger.values, {
+    headers: headers()
+  })
+}
+
+export async function fetchTriggerById(id: string): Promise<Trigger|null> {
+  try {
+    const response = await axios.get<TriggerResponse>(backendUrl(`/api/v1/trigger/${id}`), {
+      headers: headers()
+    })
+
+    return triggerResponseToDomainEntity(response.data)
+  } catch (exception) {
+    return null
+  }
 }
 
 export async function fetchGuildTriggers(guildId: string): Promise<Trigger[]> {
