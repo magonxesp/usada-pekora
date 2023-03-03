@@ -1,8 +1,36 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { Trigger, TriggerCompare } from '../../../shared/trigger/trigger'
+import { backendUrl, headers } from './backend'
+import axios, { toFormData } from 'axios'
+import { Trigger, TriggerCompare } from '../../domain/trigger'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const triggers = [
+interface TriggerCreateRequest {
+  id: string,
+  input: string,
+  compare: string,
+  outputText?: string,
+  discordGuildId: string
+}
+
+interface TriggerAudioCreateRequest {
+  id: string
+  file: File|Buffer
+  triggerId: string
+  guildId: string
+}
+
+export async function createTriggerAudio(audio: TriggerAudioCreateRequest) {
+  await axios.post(backendUrl("/api/v1/trigger/audio"), toFormData(audio), {
+    headers: headers("multipart/form-data")
+  })
+}
+
+export async function createTrigger(trigger: TriggerCreateRequest) {
+  await axios.post(backendUrl("/api/v1/trigger"), trigger, {
+    headers: headers()
+  })
+}
+
+export async function fetchGuildTriggers(guildId: string): Promise<Trigger[]> {
+  return [
     new Trigger({
       uuid: "fee1ff15-67fc-4cb6-b464-9a567549d0fb",
       title: "Lorem fistrum está la cosa muy malar caballo",
@@ -36,6 +64,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       outputText: null,
     }),
   ]
-
-  res.status(200).json(triggers)
 }

@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import GuildTriggersView from '../../../components/views/guild-triggers-view/GuildTriggersView'
-import { Trigger, TriggerPrimitives } from '../../../shared/trigger/trigger'
+import { Trigger, TriggerPrimitives } from '../../../shared/domain/trigger'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Sidebar from '../../../components/shared/sidebar/Sidebar'
@@ -65,7 +65,7 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
         </Sidebar.Header>
         <Sidebar.Body>
           <TriggerForm
-            trigger={Trigger.fromPrimitives(trigger)}
+            triggerFormData={Trigger.fromPrimitives(trigger)}
             onSubmit={updateTrigger}
             disableSubmit={disableSubmit}
           />

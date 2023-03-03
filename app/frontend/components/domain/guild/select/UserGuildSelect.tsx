@@ -1,7 +1,7 @@
 import Select from '../../../shared/form/Select'
 import { useEffect, useState } from 'react'
 import { SelectOption } from '../../../../shared/helpers/form/select-option'
-import { Guild } from '../../../../shared/guild/guild'
+import { Guild } from '../../../../shared/domain/guild'
 import { useDispatch } from 'react-redux'
 import { setCurrentGuild, setUserGuilds } from '../../../../store/slices/app-slice'
 import { useAppSelector } from '../../../../shared/hooks/store'

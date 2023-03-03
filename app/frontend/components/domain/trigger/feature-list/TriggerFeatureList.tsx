@@ -1,4 +1,4 @@
-import { TriggerFeature } from '../../../../shared/trigger/trigger'
+import { TriggerFeature } from '../../../../shared/domain/trigger'
 import { ChatBubbleLeftIcon, SpeakerWaveIcon } from '@heroicons/react/24/solid'
 
 interface TriggerFeatureListProps {

@@ -1,13 +1,12 @@
 import { NextPage } from 'next'
 import TriggerForm from '../../components/domain/trigger/form/TriggerForm'
-import { TriggerFormData } from '../../shared/trigger/form/trigger-form-data'
 import GuildTriggersView from '../../components/views/guild-triggers-view/GuildTriggersView'
 import Sidebar from '../../components/shared/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import { asyncAlert } from '../../shared/helpers/alert'
-import { triggerClient } from '../../shared/services'
+import { emptyTriggerFormData, submitTriggerCreateRequest, TriggerFormData } from '../../shared/helpers/form/trigger'
 
 const NewTrigger: NextPage = () => {
   const [isOpened, setIsOpened] = useState(false)
@@ -27,7 +26,7 @@ const NewTrigger: NextPage = () => {
   const createTrigger = (data: TriggerFormData) => {
     console.log(data)
     setDisableSubmit(true)
-    const request = triggerClient.createTrigger(data)
+    const request = submitTriggerCreateRequest(data)
 
     asyncAlert(request, {
       success: intl.$t({id: 'trigger.form.create.success'}),
@@ -51,7 +50,7 @@ const NewTrigger: NextPage = () => {
         </Sidebar.Header>
         <Sidebar.Body>
           <TriggerForm
-            trigger={TriggerFormData.new()}
+            triggerFormData={emptyTriggerFormData()}
             onSubmit={createTrigger}
             disableSubmit={disableSubmit}
           />

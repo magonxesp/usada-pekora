@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Trigger } from '../../shared/trigger/trigger'
-import { Guild } from '../../shared/guild/guild'
+import { Trigger } from '../../shared/domain/trigger'
+import { Guild } from '../../shared/domain/guild'
 
 interface SliceState {
   userGuilds: Guild[],

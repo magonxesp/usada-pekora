@@ -1,5 +1,5 @@
-import { DiscordRestClient } from '../helpers/discord/client'
-import { Guild } from './guild'
+import { DiscordRestClient } from './rest-client'
+import { Guild } from '../../domain/guild'
 
 export class DiscordGuildClient extends DiscordRestClient {
 

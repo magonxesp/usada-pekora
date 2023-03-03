@@ -1,33 +1,29 @@
-import { TriggerCompare, triggerCompareOptions } from '../../../../shared/trigger/trigger'
-import { TriggerFormData } from '../../../../shared/trigger/form/trigger-form-data'
+import { TriggerCompare, triggerCompareOptions } from '../../../../shared/domain/trigger'
+import { TriggerFormData } from '../../../../shared/helpers/form/trigger'
 import InputWrapper from '../../../shared/form/input-wrapper/InputWrapper'
 import Button from '../../../shared/form/Button'
 import Form from '../../../shared/form/Form'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormErrors, Validator } from '../../../../shared/helpers/form/validator'
 import { useIntl } from 'react-intl'
-import { useAppSelector } from '../../../../shared/hooks/store'
 import { v4 as uuidv4 } from 'uuid'
 import { alert } from '../../../../shared/helpers/alert'
 import { useSelectedGuild } from '../../../../shared/hooks/guilds'
 
 interface TriggerFormProps {
-  trigger: TriggerFormData,
+  triggerFormData: TriggerFormData,
   onSubmit?: (trigger: TriggerFormData) => void
   disableSubmit?: boolean
 }
 
-export default function TriggerForm({ trigger, onSubmit, disableSubmit }: TriggerFormProps) {
+export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }: TriggerFormProps) {
   const [formErrors, setFormErrors] = useState<FormErrors>({})
-  const [formData, setFormData] = useState(trigger.toPlainObject())
+  const [formData, setFormData] = useState(triggerFormData)
   const [id, setId] = useState("")
   const selectedGuild = useSelectedGuild()
   const intl = useIntl()
 
-  useEffect(() => {
-    setId(uuidv4())
-    console.log(selectedGuild)
-  }, [])
+  useEffect(() => setId(uuidv4()), [])
 
   const validator = new Validator({
     title: {
@@ -116,7 +112,7 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
         return
       }
 
-      onSubmit(new TriggerFormData({...formData, uuid: id, discordServerId: selectedGuild}))
+      onSubmit({...formData, uuid: id, discordServerId: selectedGuild})
     }
   }
 
@@ -129,7 +125,7 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
         >
           <>
             <InputWrapper.Input>
-              <input type="text" defaultValue={trigger.title} onChange={handleChangeEvent} name="title" />
+              <input type="text" defaultValue={triggerFormData.title} onChange={handleChangeEvent} name="title" />
             </InputWrapper.Input>
             {(formErrors.title ?? []).map((error, index) => (
               <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
@@ -142,7 +138,7 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
           help={intl.$t({ id: 'trigger.form.compare.description' })}
         >
           <InputWrapper.Input>
-            <select name="compare" defaultValue={trigger.compare} onChange={handleChangeEvent} >
+            <select name="compare" defaultValue={triggerFormData.compare} onChange={handleChangeEvent} >
               {triggerCompareOptions().map(([name, value]) => (
                 <option value={value} key={value}>{intl.$t({ id: `trigger.form.compare.option.${name.toLowerCase()}` })}</option>
               ))}
@@ -156,7 +152,7 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
         >
           <>
             <InputWrapper.Input>
-              <input type="text" defaultValue={trigger.input} onChange={handleChangeEvent} name="input" />
+              <input type="text" defaultValue={triggerFormData.input} onChange={handleChangeEvent} name="input" />
             </InputWrapper.Input>
             {(formErrors.input ?? []).map((error, index) => (
               <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
@@ -169,7 +165,7 @@ export default function TriggerForm({ trigger, onSubmit, disableSubmit }: Trigge
           help={intl.$t({ id: 'trigger.form.output_text.description' })}
         >
           <InputWrapper.Input>
-            <input type="text" defaultValue={trigger.outputText ?? ""} onChange={handleChangeEvent} name="outputText" />
+            <input type="text" defaultValue={triggerFormData.outputText ?? ""} onChange={handleChangeEvent} name="outputText" />
           </InputWrapper.Input>
         </InputWrapper>
 

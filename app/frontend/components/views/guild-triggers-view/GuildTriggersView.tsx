@@ -2,11 +2,13 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../../shared/hooks/store'
 import { useEffect, useState } from 'react'
 import { setCurrentGuild, setTriggers } from '../../../store/slices/app-slice'
-import { Trigger } from '../../../shared/trigger/trigger'
+import { Trigger } from '../../../shared/domain/trigger'
 import TriggerList from '../../domain/trigger/list/TriggerList'
 import EmptyState from '../../shared/empty-state/EmptyState'
 import Link from 'next/link'
 import UserGuildSelect from '../../domain/guild/select/UserGuildSelect'
+import { fetchGuildTriggers } from '../../../shared/api/backend/trigger'
+import TriggerListSkeleton from '../../domain/trigger/list/TriggerListSkeleton'
 
 export default function GuildTriggersView() {
   const dispatch = useDispatch();
@@ -25,13 +27,11 @@ export default function GuildTriggersView() {
   useEffect(() => {
     const loadingAnimationTimeout = setTimeout(() => setLoading(true), 100)
 
-    fetch(`/api/trigger/guild-triggers?id=${selectedGuild}`)
-      .then(response => response.json())
-      .then(items => {
-        clearTimeout(loadingAnimationTimeout)
-        setLoading(false)
-        dispatch(setTriggers(items.map((item: object) => new Trigger(item as any))))
-      })
+    fetchGuildTriggers(selectedGuild).then(items => {
+      clearTimeout(loadingAnimationTimeout)
+      setLoading(false)
+      dispatch(setTriggers(items.map((item: object) => new Trigger(item as any))))
+    })
   }, [selectedGuild])
 
   return (
@@ -49,18 +49,7 @@ export default function GuildTriggersView() {
         ) : !loading && triggers.length == 0 ? (
           <EmptyState />
         ) : (
-          <div className="space-y-5">
-            {Array.from(Array(5).keys()).map((_, index) => (
-              <div key={index}>
-                <div role="status" className="animate-pulse mb-2">
-                  <div className="w-full h-6 bg-gray-200 rounded dark:bg-gray-600"></div>
-                </div>
-                <div role="status" className="animate-pulse">
-                  <div className="w-9/12 h-6 bg-gray-200 rounded dark:bg-gray-600"></div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <TriggerListSkeleton />
         )}
       </div>
     </>

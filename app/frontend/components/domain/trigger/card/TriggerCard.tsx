@@ -1,4 +1,4 @@
-import { Trigger } from '../../../../shared/trigger/trigger'
+import { Trigger } from '../../../../shared/domain/trigger'
 import Button from '../../../shared/form/Button'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import TriggerFeatureList from '../feature-list/TriggerFeatureList'
