@@ -9,10 +9,11 @@ import { useIntl } from 'react-intl'
 import { v4 as uuidv4 } from 'uuid'
 import { alert } from '../../../../shared/helpers/alert'
 import { useSelectedGuild } from '../../../../shared/hooks/guilds'
+import { isNotEmpty, isRegex } from '../../../../shared/helpers/validations'
 
 interface TriggerFormProps {
   triggerFormData: TriggerFormData,
-  onSubmit?: (trigger: TriggerFormData) => void
+  onSubmit?: (data: TriggerFormData) => void
   disableSubmit?: boolean
 }
 
@@ -28,29 +29,17 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
   const validator = new Validator({
     title: {
       required: {
-        validate: (value) => value != '',
+        validate: isNotEmpty,
         errorMessage: intl.$t({ id: 'trigger.form.title.required.error' })
       }
     },
     input: {
       required: {
-        validate: (value) => value != '',
+        validate: isNotEmpty,
         errorMessage: intl.$t({ id: 'trigger.form.input.required.error' })
       },
       regex: {
-        validate: (value) => {
-          try {
-            if (typeof value != 'string' || value == '') {
-              return false
-            }
-
-            new RegExp(value)
-          } catch (exception) {
-            return false
-          }
-
-          return true
-        },
+        validate: isRegex,
         errorMessage: intl.$t({ id: 'trigger.form.input.regex.error' }),
         skip: () => (formData.compare ?? '') != TriggerCompare.PATTERN
       }
