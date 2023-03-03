@@ -9,11 +9,12 @@ import Link from 'next/link'
 import UserGuildSelect from '../../domain/guild/select/UserGuildSelect'
 import { fetchGuildTriggers } from '../../../shared/api/backend/trigger'
 import TriggerListSkeleton from '../../domain/trigger/list/TriggerListSkeleton'
+import { useSelectedGuild } from '../../../shared/hooks/guilds'
 
 export default function GuildTriggersView() {
   const dispatch = useDispatch();
   const triggers = useAppSelector((state) => state.app.triggers)
-  const selectedGuild = useAppSelector((state) => state.app.selectedGuild)
+  const selectedGuild = useSelectedGuild()
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,12 +26,16 @@ export default function GuildTriggersView() {
   },[])
 
   useEffect(() => {
+    if (!selectedGuild) {
+      return
+    }
+
     const loadingAnimationTimeout = setTimeout(() => setLoading(true), 100)
 
     fetchGuildTriggers(selectedGuild).then(items => {
       clearTimeout(loadingAnimationTimeout)
       setLoading(false)
-      dispatch(setTriggers(items.map((item: object) => new Trigger(item as any))))
+      dispatch(setTriggers(items))
     })
   }, [selectedGuild])
 

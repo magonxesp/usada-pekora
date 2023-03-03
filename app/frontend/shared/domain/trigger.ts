@@ -10,32 +10,29 @@ export enum TriggerFeature {
 
 export class Trigger {
 
-  public title: string
-  public readonly uuid: string
-  public input: string
-  public compare: TriggerCompare
-  public discordServerId: string
-  public outputText: string|null
+  public readonly id: string
+  public readonly title: string
+  public readonly input: string
+  public readonly compare: TriggerCompare
+  public readonly discordServerId: string
+  public readonly outputText: string|null
 
   constructor(values: {
+    id: string,
     title: string,
-    uuid: string,
     input: string,
     compare: string,
     outputText: string|null,
     discordServerId: string
   }) {
     this.title = values.title
-    this.uuid = values.uuid
+    this.id = values.id
     this.input = values.input
     this.compare = values.compare as TriggerCompare
     this.discordServerId = values.discordServerId
     this.outputText = values.outputText
   }
 
-  toPlainObject(): object {
-    return Object(this)
-  }
 }
 
 export const triggerCompareOptions = () => Object.entries(TriggerCompare)

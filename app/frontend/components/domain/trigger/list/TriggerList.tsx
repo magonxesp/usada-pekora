@@ -9,7 +9,7 @@ export default function TriggerList(props: TriggerListProps) {
   return (
     <ul>
       {props.items.map((trigger) => (
-        <li key={trigger.uuid}>
+        <li key={trigger.id}>
           <TriggerCard trigger={trigger} />
         </li>
       ))}
