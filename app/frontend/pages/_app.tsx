@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 import es from '../lang/es.json'
 import { ToastContainer } from 'react-toastify'
+import ModalContainer from '../components/shared/modal/ModalContainer'
 
 interface AppRootProps {
   session: Session,
@@ -38,6 +39,7 @@ function MyApp({ Component, pageProps }: AppProps<AppRootProps>) {
             <Component {...pageProps} />
           </main>
           <ToastContainer />
+          <ModalContainer />
         </IntlProvider>
       </Provider>
     </SessionProvider>

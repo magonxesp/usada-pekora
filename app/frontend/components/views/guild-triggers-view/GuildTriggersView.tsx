@@ -1,21 +1,21 @@
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../../shared/hooks/store'
 import { useEffect, useState } from 'react'
-import { setCurrentGuild, setTriggers } from '../../../store/slices/app-slice'
-import { Trigger } from '../../../shared/domain/trigger'
+import { setCurrentGuild } from '../../../store/slices/app-slice'
 import TriggerList from '../../domain/trigger/list/TriggerList'
 import EmptyState from '../../shared/empty-state/EmptyState'
 import Link from 'next/link'
 import UserGuildSelect from '../../domain/guild/select/UserGuildSelect'
-import { fetchGuildTriggers } from '../../../shared/api/backend/trigger'
 import TriggerListSkeleton from '../../domain/trigger/list/TriggerListSkeleton'
 import { useSelectedGuild } from '../../../shared/hooks/guilds'
+import { useFetchTriggers } from '../../../shared/hooks/fetch'
 
 export default function GuildTriggersView() {
   const dispatch = useDispatch();
   const triggers = useAppSelector((state) => state.app.triggers)
   const selectedGuild = useSelectedGuild()
   const [loading, setLoading] = useState(true);
+  const fetchTriggers = useFetchTriggers()
 
   useEffect(() => {
     let guildId
@@ -32,10 +32,9 @@ export default function GuildTriggersView() {
 
     const loadingAnimationTimeout = setTimeout(() => setLoading(true), 100)
 
-    fetchGuildTriggers(selectedGuild).then(items => {
+    fetchTriggers().then(() => {
       clearTimeout(loadingAnimationTimeout)
       setLoading(false)
-      dispatch(setTriggers(items))
     })
   }, [selectedGuild])
 

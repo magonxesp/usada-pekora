@@ -1,17 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Trigger } from '../../shared/domain/trigger'
 import { Guild } from '../../shared/domain/guild'
+import { ReactElement } from 'react'
+
+interface ModalViewState {
+  component?: ReactElement
+  show: boolean
+}
 
 interface SliceState {
   userGuilds: Guild[],
   selectedGuild: string,
-  triggers: Array<Trigger>
+  triggers: Array<Trigger>,
+  modal: ModalViewState
+}
+
+const initialModalState: ModalViewState = {
+  show: false
 }
 
 const initialState: SliceState = {
   userGuilds: [],
   selectedGuild: "",
-  triggers: []
+  triggers: [],
+  modal: initialModalState
 }
 
 export const appSlice = createSlice({
@@ -30,6 +42,25 @@ export const appSlice = createSlice({
     },
     setUserGuilds(state, action: PayloadAction<Array<Guild>>) {
       state.userGuilds = action.payload
+    },
+    showModal(state, action: PayloadAction<ReactElement>) {
+      state.modal.component = action.payload
+      state.modal.show = true
+
+      const body = document.querySelector("body")
+
+      if (body) {
+        body.style.overflow = 'hidden'
+      }
+    },
+    closeModal(state) {
+      state.modal.show = false
+
+      const body = document.querySelector('body')
+
+      if (body) {
+        body.style.overflow = ''
+      }
     }
   }
 })
@@ -37,6 +68,8 @@ export const appSlice = createSlice({
 export const {
   setCurrentGuild,
   setTriggers,
-  setUserGuilds
+  setUserGuilds,
+  showModal,
+  closeModal,
 } = appSlice.actions
 export default appSlice.reducer

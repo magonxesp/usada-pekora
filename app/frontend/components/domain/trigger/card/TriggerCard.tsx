@@ -1,9 +1,12 @@
 import { Trigger } from '../../../../shared/domain/trigger'
 import Button from '../../../shared/form/Button'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
-import TriggerFeatureList from '../feature-list/TriggerFeatureList'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { showModal, closeModal } from '../../../../store/slices/app-slice'
+import ConfirmModal from '../../../shared/modal/ConfirmModal'
+import { useIntl } from 'react-intl'
+import { useDeleteTrigger } from '../../../../shared/hooks/trigger'
 
 interface TriggerCardProps {
   trigger: Trigger
@@ -11,6 +14,7 @@ interface TriggerCardProps {
 
 export default function TriggerCard(props: TriggerCardProps) {
   const { trigger } = props
+  const deleteTrigger = useDeleteTrigger()
 
   return (
     <div className='overflow-hidden bg-white shadow sm:rounded-lg mb-3 px-4 py-5 sm:px-6 flex justify-between'>
@@ -23,7 +27,7 @@ export default function TriggerCard(props: TriggerCardProps) {
             <PencilSquareIcon className='w-5' />
           </button>
         </Link>
-        <Button>
+        <Button onClick={() => deleteTrigger(trigger)}>
           <TrashIcon className='w-5' />
         </Button>
       </div>

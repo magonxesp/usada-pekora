@@ -65,6 +65,12 @@ export async function createTrigger(trigger: TriggerCreateRequest) {
   })
 }
 
+export async function deleteTrigger(id: string) {
+  await axios.delete(backendUrl(`/api/v1/trigger/${id}`), {
+    headers: headers()
+  })
+}
+
 export async function updateTrigger(trigger: TriggerUpdateRequest) {
   await axios.put(backendUrl(`/api/v1/trigger/${trigger.id}`), trigger.values, {
     headers: headers()

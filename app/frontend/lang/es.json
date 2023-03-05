@@ -24,5 +24,12 @@
   "trigger.form.output_audio.description": "Pekora se unira al canal de voz en el que estas y respondera con el sonido que hayas seleccionado",
   "trigger.form.output_audio.file_type.error": "El archivo solo puede ser .mp3",
   "trigger.form.output_audio.file_size.error": "El tamaño de archivo tiene que ser como maximo de 8MB",
-  "trigger.form.submit": "Guardar"
+  "trigger.form.submit": "Guardar",
+  "trigger.delete.confirmation.message": "¿Estas seguro de eliminar la reaccion?",
+  "trigger.delete.confirmation.confirm_button_text": "Eliminar",
+  "trigger.delete.success": "La reaccion \"{title}\" se ha eliminado con exito",
+  "trigger.delete.error": "Ha ocurrido un error mientras se eliminaba la reaccion \"{title}\"",
+  "trigger.delete.pending": "Eliminando \"{title}\"",
+  "confirm_modal.default.reject_button_text": "Cancelar",
+  "confirm_modal.default.confirm_button_text": "Aceptar"
 }
