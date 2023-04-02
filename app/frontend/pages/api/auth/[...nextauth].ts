@@ -1,11 +1,12 @@
-import NextAuth, { NextAuthOptions, User } from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
+import { env } from "../../../shared/helpers/env";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID as string,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+      clientId: env('DISCORD_CLIENT_ID'),
+      clientSecret: env('DISCORD_CLIENT_SECRET'),
       authorization: {
         params: {
           scope: 'identify guilds'
@@ -17,13 +18,15 @@ export const authOptions: NextAuthOptions = {
     maxAge: 604800
   },
   callbacks: {
-    async session({ session, token, user }) {
-      // @ts-ignore
-      session.user.id = token.id;
-      session.accessToken = token.accessToken;
-      return session;
+    async session({ session, token }) {
+      const defaultSession: any = session
+
+      defaultSession.user.id = token.id;
+      defaultSession.accessToken = token.accessToken;
+
+      return defaultSession;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
       }

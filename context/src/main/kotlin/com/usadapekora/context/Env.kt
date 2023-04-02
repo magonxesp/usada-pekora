@@ -1,20 +1,33 @@
 package com.usadapekora.context
 
 import io.github.cdimascio.dotenv.dotenv
+import java.io.File
 
 private val dotenv = dotenv {
     filename = ".env"
     ignoreIfMissing = true
 }
 
-val appEnv = dotenv.get("APP_ENV", "develop")
-val strapiBaseUrl = dotenv.get("STRAPI_BASE_URL", "").removeSuffix("/")
-val strapiToken = dotenv.get("STRAPI_TOKEN", "")
-val discordBotToken = dotenv.get("DISCORD_BOT_TOKEN", "")
-val backendBaseUrl = dotenv.get("BACKEND_BASE_URL", "http://localhost:8080").removeSuffix("/")
-val youtubeChannelId = dotenv.get("YOUTUBE_CHANNEL_ID", "UC1DCedRgGHBdm81E1llLhOQ")
-val mongoConnectionUrl = dotenv.get("MONGODB_URL", "")
-val mongoDatabase = dotenv.get("MONGODB_DATABASE", "")
-val redisHost = dotenv.get("REDIS_HOST")
-val redisPort = dotenv.get("REDIS_PORT", "6379").toInt()
-val storageDirPath = dotenv.get("STORAGE_DIR_PATH", "storage")
+private fun env(key: String, defaultValue: String = ""): String {
+    val file = dotenv["${key}_FILE"].takeIf { it != null }?.let {
+        File(it)
+    }
+
+    if (file != null && file.exists()) {
+        return file.readText().trim()
+    }
+
+    return dotenv[key] ?: defaultValue
+}
+
+val appEnv = env("APP_ENV", "develop")
+val strapiBaseUrl = env("STRAPI_BASE_URL").removeSuffix("/")
+val strapiToken = env("STRAPI_TOKEN")
+val discordBotToken = env("DISCORD_BOT_TOKEN")
+val backendBaseUrl = env("BACKEND_BASE_URL", "http://localhost:8080").removeSuffix("/")
+val youtubeChannelId = env("YOUTUBE_CHANNEL_ID", "UC1DCedRgGHBdm81E1llLhOQ")
+val mongoConnectionUrl = env("MONGODB_URL", "mongodb://example:example@localhost:27017")
+val mongoDatabase = env("MONGODB_DATABASE", "usada_pekora")
+val redisHost = env("REDIS_HOST", "localhost")
+val redisPort = env("REDIS_PORT", "6379").toInt()
+val storageDirPath = env("STORAGE_DIR_PATH", "storage")

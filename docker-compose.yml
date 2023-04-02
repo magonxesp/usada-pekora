@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 
 services:
   backend:
@@ -8,14 +8,19 @@ services:
       dockerfile: app/backend/Dockerfile
     ports:
       - "8080:8080"
-    env_file:
-      - "./.env"
-
-  frontend:
-    restart: unless-stopped
-    build:
-      context: app/frontend
-      dockerfile: Dockerfile
+    secrets:
+      - discord_bot_token
+      - mongodb_connection_url
+    environment:
+      APP_ENV: local
+      DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
+      BACKEND_BASE_URL: http://localhost:8080
+      YOUTUBE_CHANNEL_ID: UC1DCedRgGHBdm81E1llLhOQ
+      MONGODB_URL_FILE: /run/secrets/mongodb_connection_url
+      MONGODB_DATABASE: usada_pekora
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      STORAGE_DIR_PATH: storage
 
   discord_bot:
     build:
@@ -24,8 +29,37 @@ services:
     restart: unless-stopped
     ports:
       - "8081:8081"
-    env_file:
-      - "./.env"
+    secrets:
+      - discord_bot_token
+      - mongodb_connection_url
+    environment:
+      APP_ENV: local
+      DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
+      BACKEND_BASE_URL: http://localhost:8080
+      YOUTUBE_CHANNEL_ID: UC1DCedRgGHBdm81E1llLhOQ
+      MONGODB_URL_FILE: /run/secrets/mongodb_connection_url
+      MONGODB_DATABASE: usada_pekora
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      STORAGE_DIR_PATH: storage
+
+  frontend:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: app/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    secrets:
+      - discord_client_id
+      - discord_client_secret
+    environment:
+      APP_ENV: local
+      DISCORD_CLIENT_ID_FILE: /run/secrets/discord_client_id
+      DISCORD_CLIENT_SECRET_FILE: /run/secrets/discord_client_secret
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: secret
+      NEXT_PUBLIC_BACKEND_BASE_URL: http://localhost:8080
 
   mongodb:
     image: mongo:4.2.22
@@ -34,14 +68,32 @@ services:
       - "27017:27017"
     volumes:
       - mongodb:/data/db
-    env_file:
-      - "./.env.mongodb"
+    secrets:
+      - mongodb_username
+      - mongodb_password
+    environment:
+      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/mongodb_username
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
 
   redis:
     image: redis:7.0.4
     restart: unless-stopped
     ports:
       - "6279:6379"
+
+secrets:
+  discord_bot_token:
+    file: secrets/discord_bot_token.txt
+  discord_client_id:
+    file: secrets/discord_client_id.txt
+  discord_client_secret:
+    file: secrets/discord_client_secret.txt
+  mongodb_username:
+    file: secrets/mongodb_username.txt
+  mongodb_password:
+    file: secrets/mongodb_password.txt
+  mongodb_connection_url:
+    file: secrets/mongodb_connection_url.txt
 
 volumes:
   mongodb:
