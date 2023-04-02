@@ -16,6 +16,7 @@ docker-compose.*.yml
 .editorconfig
 .strapi-updater.json
 /backend/public/uploads
-.nuxt
+.next
 .output
 storage
+secrets
