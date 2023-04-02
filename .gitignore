@@ -2,11 +2,8 @@
 .env
 .env.*
 !app/backend/.env.example
-!examples/env/.env.discord-bot
-!examples/env/.env.backend
-!examples/env/.env.frontend
-!examples/env/.env.mongodb
-!examples/env/.env.app
+!app/discord-bot/.env.example
+!app/frontend/.env.example
 venv/
 .vscode/*
 !.vscode/settings.json
@@ -22,3 +19,4 @@ dist
 .gradle
 build
 storage
+secrets
