@@ -9,6 +9,8 @@ RUN gradle clean :app:backend:build --no-daemon -x test
 
 FROM openjdk:18-bullseye AS app
 
+WORKDIR /app
+
 COPY --from=build /build/app/backend/build/libs/backend.jar backend.jar
 
 EXPOSE 8080
