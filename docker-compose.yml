@@ -11,6 +11,9 @@ services:
     secrets:
       - discord_bot_token
       - mongodb_connection_url
+    depends_on:
+      - redis
+      - mongodb
     environment:
       APP_ENV: local
       DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
@@ -32,6 +35,9 @@ services:
     secrets:
       - discord_bot_token
       - mongodb_connection_url
+    depends_on:
+      - redis
+      - mongodb
     environment:
       APP_ENV: local
       DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
@@ -53,6 +59,8 @@ services:
     secrets:
       - discord_client_id
       - discord_client_secret
+    depends_on:
+      - backend
     environment:
       APP_ENV: local
       DISCORD_CLIENT_ID_FILE: /run/secrets/discord_client_id
