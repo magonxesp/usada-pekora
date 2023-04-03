@@ -1,0 +1,8 @@
+FROM gradle:7.5.0-jdk18-alpine AS build
+
+VOLUME "/build/.gradle"
+WORKDIR /build
+
+COPY . .
+
+RUN gradle clean :app:discord-bot:build --no-daemon -x test

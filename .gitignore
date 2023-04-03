@@ -15,8 +15,10 @@ venv/
 *.sqlite
 dist
 /docker-compose.*.yml
+!/docker-compose.test.yml
 *.iml
 .gradle
 build
 storage
 secrets
+reports

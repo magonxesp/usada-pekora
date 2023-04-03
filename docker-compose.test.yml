@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  backend:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: app/backend/Dockerfile-test
+    volumes:
+      - ./reports/backend:/test/app/backend/build/reports
+
+  discord_bot:
+    build:
+      context: .
+      dockerfile: app/discord-bot/Dockerfile-test
+    volumes:
+      - ./reports/discord-bot:/test/app/discord-bot/build/reports

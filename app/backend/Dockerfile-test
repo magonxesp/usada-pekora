@@ -1,0 +1,8 @@
+FROM gradle:7.5.0-jdk18-alpine AS build
+
+VOLUME "/test/.gradle"
+WORKDIR /test
+
+COPY . .
+
+RUN gradle clean :app:backend:build --no-daemon -x test

@@ -15,6 +15,7 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
 
     fun createDummy(
         id: String = "29da2a75-f5ba-4bff-99ee-3eb654716284",
+        title: String = "Dummy trigger",
         input: String = "peko",
         compare: String = "in",
         outputText: String? = "It's a me pekora",
@@ -23,6 +24,7 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
         creator.create(
             TriggerCreateRequest(
                 id = id,
+                title = title,
                 input = input,
                 compare = compare,
                 outputText = outputText,
