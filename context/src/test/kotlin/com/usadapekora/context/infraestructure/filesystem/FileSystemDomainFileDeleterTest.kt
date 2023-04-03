@@ -5,7 +5,7 @@ import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertFalse
 
-class FileSystemDomainFileDeleterTest {
+class FileSystemDomainFileDeleterTest : FileSystemTest() {
 
     @Test
     fun `should delete file contents to destination`() {

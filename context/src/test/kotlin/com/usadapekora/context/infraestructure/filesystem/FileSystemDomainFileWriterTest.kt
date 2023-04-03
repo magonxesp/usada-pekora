@@ -5,7 +5,7 @@ import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class FileSystemDomainFileWriterTest {
+class FileSystemDomainFileWriterTest : FileSystemTest() {
 
     @Test
     fun `should write file contents to destination`() {

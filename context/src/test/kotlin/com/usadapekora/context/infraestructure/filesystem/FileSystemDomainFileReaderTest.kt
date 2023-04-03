@@ -6,7 +6,7 @@ import kotlin.io.path.Path
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class FileSystemDomainFileReaderTest {
+class FileSystemDomainFileReaderTest : FileSystemTest() {
 
     @Test
     fun `should read a file by its source`() {
