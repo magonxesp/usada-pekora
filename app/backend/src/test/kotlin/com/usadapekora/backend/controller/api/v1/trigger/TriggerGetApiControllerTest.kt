@@ -26,6 +26,7 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
         val expectedBody = """
             {
                 "id": "$id",
+                "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
                 "outputText": "It's a me pekora",
@@ -57,6 +58,7 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
                 "triggers": [
                     {
                         "id": "$id",
+                        "title": "Dummy trigger",
                         "input": "peko",
                         "compare": "in",
                         "outputText": "It's a me pekora",

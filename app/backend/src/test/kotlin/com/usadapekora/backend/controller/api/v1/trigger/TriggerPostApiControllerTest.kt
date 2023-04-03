@@ -23,6 +23,7 @@ class TriggerPostApiControllerTest : SpringBootHttpTestCase() {
         val requestBody = """
             {
                 "id": "${UUID.randomUUID()}",
+                "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
                 "outputText": "It's a me pekora",
@@ -40,6 +41,7 @@ class TriggerPostApiControllerTest : SpringBootHttpTestCase() {
         val requestBody = """
             {
                 "id": "${UUID.randomUUID()}",
+                "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
                 "outputText": "It's a me pekora",

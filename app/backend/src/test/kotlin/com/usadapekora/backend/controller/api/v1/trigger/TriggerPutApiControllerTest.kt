@@ -45,6 +45,7 @@ class TriggerPutApiControllerTest : TriggerControllerTest() {
         val expected = """
             {
                 "id": "$id",
+                "title": "Dummy trigger",
                 "input": "pekopeko",
                 "compare": "in",
                 "outputText": "Konpeko Konpeko Konpeko! 3rd Generation, Usada Pekora peko! Almond...almond....!!",
