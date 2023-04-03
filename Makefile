@@ -39,12 +39,14 @@ env-files:
 
 docker-backend-test:
 	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \
-	COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test" docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :context:test :app:backend:test; \
+	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :context:test :app:backend:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 docker-discord-bot-test:
 	@if [ ! -d "reports/discord-bot" ]; then mkdir -p "reports/discord-bot"; fi; \
-	COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test" docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :context:test :app:discord-bot:test; \
+	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :context:test :app:discord-bot:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 .ONESHELL:
