@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: app/backend/Dockerfile
+      dockerfile: apps/bot/backend/Dockerfile
     ports:
       - "8080:8080"
     secrets:
@@ -28,7 +28,7 @@ services:
   discord_bot:
     build:
       context: .
-      dockerfile: app/discord-bot/Dockerfile
+      dockerfile: apps/bot/discord-bot/Dockerfile
     restart: unless-stopped
     ports:
       - "8081:8081"
@@ -53,7 +53,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: app/frontend/Dockerfile
+      dockerfile: apps/bot/frontend/Dockerfile
     ports:
       - "3000:3000"
     secrets:

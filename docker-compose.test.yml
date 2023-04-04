@@ -5,13 +5,13 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: app/backend/Dockerfile-test
+      dockerfile: apps/bot/backend/Dockerfile-test
     volumes:
-      - ./reports/backend:/test/app/backend/build/reports
+      - ./reports/backend:/test/apps/bot/backend/build/reports
 
   discord_bot:
     build:
       context: .
-      dockerfile: app/discord-bot/Dockerfile-test
+      dockerfile: apps/bot/discord-bot/Dockerfile-test
     volumes:
-      - ./reports/discord-bot:/test/app/discord-bot/build/reports
+      - ./reports/discord-bot:/test/apps/bot/discord-bot/build/reports

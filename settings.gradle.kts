@@ -9,6 +9,6 @@
 
 rootProject.name = "usada-pekora"
 
-include(":context")
-include(":app:discord-bot")
-include(":app:backend")
+include(":contexts:bot")
+include(":apps:bot:discord-bot")
+include(":apps:bot:backend")

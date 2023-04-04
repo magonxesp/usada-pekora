@@ -33,20 +33,20 @@ endef
 secrets: ; @$(value make_secrets)
 
 env-files:
-	@if [ ! -f "app/backend/.env" ]; then cp app/backend/.env.example app/backend/.env; fi
-	@if [ ! -f "app/discord-bot/.env" ]; then cp app/discord-bot/.env.example app/discord-bot/.env; fi
-	@if [ ! -f "app/frontend/.env" ]; then cp app/frontend/.env.example app/frontend/.env; fi
+	@if [ ! -f "apps/bot/backend/.env" ]; then cp apps/bot/backend/.env.example apps/bot/backend/.env; fi
+	@if [ ! -f "apps/bot/discord-bot/.env" ]; then cp apps/bot/discord-bot/.env.example apps/bot/discord-bot/.env; fi
+	@if [ ! -f "apps/bot/frontend/.env" ]; then cp apps/bot/frontend/.env.example apps/bot/frontend/.env; fi
 
 docker-backend-test:
 	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
-	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :context:test :app:backend:test && \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :contexts:bot:test :apps:bot:backend:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 docker-discord-bot-test:
 	@if [ ! -d "reports/discord-bot" ]; then mkdir -p "reports/discord-bot"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
-	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :context:test :app:discord-bot:test && \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :contexts:bot:test :apps:bot:discord-bot:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 .ONESHELL:

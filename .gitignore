@@ -1,9 +1,9 @@
 .DS_Store
 .env
 .env.*
-!app/backend/.env.example
-!app/discord-bot/.env.example
-!app/frontend/.env.example
+!apps/bot/backend/.env.example
+!apps/bot/discord-bot/.env.example
+!apps/bot/frontend/.env.example
 venv/
 .vscode/*
 !.vscode/settings.json
