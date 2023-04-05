@@ -34,20 +34,9 @@ function Body({ children }: { children: JSX.Element }) {
 }
 
 function Sidebar({ children, show }: SidebarProps) {
-  let header: ReactElement|undefined;
-  let body: ReactElement|undefined;
-
-  if (Array.isArray(children)) {
-    header = children.filter(element => isComponent(element, "Header")).pop()
-    body = children.filter(element => isComponent(element, "Body")).pop()
-  } else {
-    body = children
-  }
-
   return (
     <div className={`absolute top-0 bg-white h-full px-5 py-7 shadow-xl ${styles.sidebar} ${(show) ? styles.show : ""}`}>
-      {header ?? ""}
-      {body ?? ""}
+      {children}
     </div>
   )
 }
