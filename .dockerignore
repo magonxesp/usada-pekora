@@ -1,5 +1,6 @@
 **/.env
 **/.env.*
+!apps/bot/frontend/.env.public
 **/.nvmrc
 .git
 .gitignore

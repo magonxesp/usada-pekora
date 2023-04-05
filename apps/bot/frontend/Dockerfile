@@ -10,6 +10,7 @@ COPY apps/bot/frontend/yarn.lock yarn.lock
 RUN yarn install
 
 COPY apps/bot/frontend .
+COPY apps/bot/frontend/.env.public .env
 
 RUN yarn run build
 
