@@ -49,4 +49,7 @@ docker-discord-bot-test:
 	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :contexts:bot:test :apps:bot:discord-bot:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
+docker-up-infrastructure:
+	docker compose up -d mongodb redis
+
 .ONESHELL:
