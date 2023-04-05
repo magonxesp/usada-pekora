@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import style from './Header.module.css'
 import logo from './logo.png'
 import { useSession } from 'next-auth/react'

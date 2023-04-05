@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { SelectOption } from '../../../shared/helpers/form/select-option'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Picture from '../image/Picture'
 
 interface ComponentProps {
