@@ -4,7 +4,7 @@ import com.usadapekora.bot.domain.trigger.exception.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerTextResponse
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextMother
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository

@@ -1,6 +1,6 @@
 package com.usadapekora.bot.application.trigger.find
 
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 
 data class TriggerAudioResponse(
     val id: String,

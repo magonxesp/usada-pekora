@@ -3,8 +3,6 @@ package com.usadapekora.bot.application.trigger.delete
 import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
 import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import kotlin.io.path.Path
 

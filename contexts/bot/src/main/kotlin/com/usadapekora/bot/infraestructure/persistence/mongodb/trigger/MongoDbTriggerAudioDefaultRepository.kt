@@ -4,7 +4,7 @@ import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbRepository
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne

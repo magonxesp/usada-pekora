@@ -1,7 +1,7 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository

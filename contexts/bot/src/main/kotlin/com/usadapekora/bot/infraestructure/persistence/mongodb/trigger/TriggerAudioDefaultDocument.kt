@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb.trigger
 
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbDocument
 import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbDomainEntityDocument
 import org.bson.types.ObjectId

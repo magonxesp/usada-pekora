@@ -1,7 +1,6 @@
 package com.usadapekora.bot.application.trigger.create
 
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException

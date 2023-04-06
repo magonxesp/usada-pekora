@@ -1,6 +1,6 @@
 package com.usadapekora.bot.domain.trigger
 
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 
 
 interface TriggerAudioResponseRepository {

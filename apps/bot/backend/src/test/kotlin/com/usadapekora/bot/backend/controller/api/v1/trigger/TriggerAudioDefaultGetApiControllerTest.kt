@@ -1,7 +1,7 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import java.util.UUID

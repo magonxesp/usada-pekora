@@ -2,6 +2,7 @@ package com.usadapekora.bot.domain.trigger.response.audio
 
 import com.usadapekora.bot.domain.ObjectMother
 import com.usadapekora.bot.domain.Random
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 import java.util.UUID
 
 object TriggerAudioDefaultMother : ObjectMother<TriggerAudioDefault> {
