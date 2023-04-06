@@ -1,8 +1,8 @@
 package com.usadapekora.bot.application.trigger
 
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
-import com.usadapekora.bot.domain.TriggerMother
-import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerMother
+import com.usadapekora.bot.domain.trigger.exception.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import io.mockk.every
 import io.mockk.mockk

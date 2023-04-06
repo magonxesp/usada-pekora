@@ -5,6 +5,8 @@ data class TriggerCreateRequest(
     val title: String,
     val input: String,
     val compare: String,
-    val outputText: String?,
-    val discordGuildId: String
+    val discordGuildId: String,
+    val responseTextId: String?,
+    val responseAudioId: String?,
+    val responseAudioProvider: String?,
 )

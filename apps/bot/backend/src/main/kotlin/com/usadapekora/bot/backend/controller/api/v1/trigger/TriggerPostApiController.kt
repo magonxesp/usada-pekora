@@ -3,7 +3,7 @@ package com.usadapekora.bot.backend.controller.api.v1.trigger
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
-import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.exception.TriggerException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PostMapping

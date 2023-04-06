@@ -1,17 +1,38 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
-import com.usadapekora.bot.domain.TriggerAudioMother
-import com.usadapekora.bot.domain.trigger.TriggerAudio
-import com.usadapekora.bot.domain.trigger.TriggerAudioException
+import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
+import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
+import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class MongoDbTriggerAudioRepositoryTest : MongoDbRepositoryTest<TriggerAudio, MongoDbTriggerAudioRepository>(
-    repository = MongoDbTriggerAudioRepository(),
-    mother = TriggerAudioMother
-) {
+class MongoDbTriggerAudioRepositoryTest {
+
+    private val providerRepository = MongoDbTriggerAudioDefaultRepository()
+    private val repository = MongoDbTriggerAudioRepository()
+
+    /**
+     * Creates a test trigger and delete from the database after test
+     */
+    private fun databaseTest(
+        aggregate: TriggerAudioDefault = TriggerAudioDefaultMother.random(),
+        save: Boolean = true,
+        delete: Boolean = true,
+        test: (aggregate: TriggerAudioDefault) -> Unit
+    ) {
+        if (save) {
+            providerRepository.save(aggregate)
+        }
+
+        test(aggregate)
+
+        if (delete) {
+            providerRepository.delete(aggregate)
+        }
+    }
 
     @Test
     fun `should find trigger audio by id`() {
@@ -25,7 +46,7 @@ class MongoDbTriggerAudioRepositoryTest : MongoDbRepositoryTest<TriggerAudio, Mo
     @Test
     fun `should not find trigger audio by id`() {
         databaseTest(save = false) {
-            assertThrows<TriggerAudioException.NotFound> {
+            assertThrows<TriggerAudioResponseException.NotFound> {
                 repository.find(it.id)
             }
         }
@@ -42,27 +63,8 @@ class MongoDbTriggerAudioRepositoryTest : MongoDbRepositoryTest<TriggerAudio, Mo
     @Test
     fun `should not find trigger audio by trigger id`() {
         databaseTest(save = false) {
-            assertThrows<TriggerAudioException.NotFound> {
+            assertThrows<TriggerAudioResponseException.NotFound> {
                 repository.findByTrigger(it.trigger)
-            }
-        }
-    }
-
-    @Test
-    fun `should save`() {
-        databaseTest(save = false) {
-            repository.save(it)
-            val audio = repository.find(it.id)
-            assertEquals(it, audio)
-        }
-    }
-
-    @Test
-    fun `should delete`() {
-        databaseTest(delete = false) {
-            repository.delete(it)
-            assertThrows<TriggerAudioException.NotFound> {
-                repository.find(it.id)
             }
         }
     }

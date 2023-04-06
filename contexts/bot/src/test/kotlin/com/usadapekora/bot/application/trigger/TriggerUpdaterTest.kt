@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger
 import com.usadapekora.bot.application.trigger.update.TriggerUpdateRequest
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.TriggerMother
+import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import io.mockk.every
 import io.mockk.mockk

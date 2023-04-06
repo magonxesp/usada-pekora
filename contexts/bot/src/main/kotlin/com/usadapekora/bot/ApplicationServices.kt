@@ -17,8 +17,6 @@ import com.usadapekora.bot.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.read.TriggerAudioReader
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
-import com.usadapekora.bot.domain.trigger.TriggerMatcher
-import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
@@ -26,7 +24,7 @@ import com.usadapekora.bot.application.video.VideoFeedSubscriber
 import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
 import com.usadapekora.bot.domain.shared.file.DomainFileReader
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
-import com.usadapekora.bot.domain.trigger.TriggerAudioRepository
+import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
@@ -34,7 +32,9 @@ import com.usadapekora.bot.infraestructure.discord.DiscordTextChannelVideoNotifi
 import com.usadapekora.bot.infraestructure.filesystem.FileSystemDomainFileDeleter
 import com.usadapekora.bot.infraestructure.filesystem.FileSystemDomainFileReader
 import com.usadapekora.bot.infraestructure.filesystem.FileSystemDomainFileWriter
+import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
+import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerTextRepository
 import com.usadapekora.bot.infraestructure.youtube.YoutubeFeedSubscriber
 import com.usadapekora.bot.infraestructure.youtube.YoutubeVideoParser
 import org.koin.core.context.startKoin
@@ -51,11 +51,13 @@ val sharedModule = module {
 }
 
 val triggerModule = module {
-    single { MongoDbTriggerRepository() } bind TriggerRepository::class
-    single { MongoDbTriggerAudioRepository() } bind TriggerAudioRepository::class
+    single { MongoDbTriggerTextRepository() } bind TriggerTextResponseRepository::class
+    single { MongoDbTriggerAudioRepository() } bind TriggerAudioResponseRepository::class
+    single { MongoDbTriggerAudioDefaultRepository() } bind TriggerAudioDefaultRepository::class
+    single { MongoDbTriggerRepository(get(), get()) } bind TriggerRepository::class
     single { TriggerMatcher() }
     single { TriggerFinder(get(), get()) }
-    single { TriggerCreator(get()) }
+    single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get()) }
     single { TriggerAudioCreator(get(), get()) }

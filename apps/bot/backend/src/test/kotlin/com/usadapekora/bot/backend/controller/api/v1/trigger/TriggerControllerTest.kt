@@ -27,8 +27,10 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
                 title = title,
                 input = input,
                 compare = compare,
-                outputText = outputText,
-                discordGuildId = discordGuildId
+                discordGuildId = discordGuildId,
+                responseTextId = outputText,
+                responseAudioId = null,
+                responseAudioProvider = null
             )
         )
     }

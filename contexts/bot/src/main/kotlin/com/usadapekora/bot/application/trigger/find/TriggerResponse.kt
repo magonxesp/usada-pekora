@@ -16,7 +16,7 @@ data class TriggerResponse(
             title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.value,
-            outputText = entity.outputText.value,
+            outputText = entity.responseText?.content?.value,
             discordGuildId = entity.discordGuildId.value
         )
     }

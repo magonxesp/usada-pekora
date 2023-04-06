@@ -2,7 +2,7 @@ package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.application.trigger.delete.TriggerAudioDeleter
-import com.usadapekora.bot.domain.trigger.TriggerAudioException
+import com.usadapekora.bot.domain.trigger.exception.TriggerAudioException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping

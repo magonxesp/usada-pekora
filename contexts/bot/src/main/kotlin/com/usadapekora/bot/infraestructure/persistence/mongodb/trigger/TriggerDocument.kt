@@ -11,7 +11,9 @@ class TriggerDocument(
     val title: String = "",
     val input: String = "",
     val compare: String = "",
-    val outputText: String? = null,
+    val responseTextId: String? = null,
+    val responseAudioId: String? = null,
+    val responseAudioProvider: String? = null,
     val discordGuildId: String = ""
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>(TriggerDocument()) {
@@ -21,7 +23,9 @@ class TriggerDocument(
             title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.toString(),
-            outputText = entity.outputText.value,
+            responseTextId = entity.responseText?.id(),
+            responseAudioId = entity.responseAudio?.id(),
+            responseAudioProvider = entity.responseAudio?.provider()?.value,
             discordGuildId = entity.discordGuildId.value
         )
     }
@@ -31,7 +35,8 @@ class TriggerDocument(
         title = title.ifBlank { "untitled" },
         input = input.ifBlank { "[empty]" },
         compare = compare,
-        outputText = outputText,
+        responseText = null,
+        responseAudio = null,
         discordGuildId = discordGuildId
     )
 }

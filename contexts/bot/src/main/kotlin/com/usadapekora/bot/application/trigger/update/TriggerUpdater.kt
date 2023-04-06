@@ -22,7 +22,7 @@ class TriggerUpdater(private val repository: TriggerRepository) {
         }
 
         request.values.outputText.let {
-            trigger.outputText = Trigger.TriggerOutputText(it)
+            trigger.responseText = null
         }
 
         request.values.discordGuildId.takeUnless { it == null }?.let {

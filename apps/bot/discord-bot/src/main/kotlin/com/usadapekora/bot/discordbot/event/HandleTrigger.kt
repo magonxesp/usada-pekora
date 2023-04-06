@@ -3,7 +3,7 @@ package com.usadapekora.bot.discordbot.event
 import discord4j.core.event.domain.message.MessageCreateEvent
 import com.usadapekora.bot.infraestructure.prometheus.registerTriggerFired
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
-import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.exception.TriggerException
 import kotlinx.coroutines.reactor.awaitSingle
 import org.koin.java.KoinJavaComponent.inject
 import java.util.logging.Level
