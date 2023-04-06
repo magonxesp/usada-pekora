@@ -87,7 +87,7 @@ services:
     image: redis:7.0.4
     restart: unless-stopped
     ports:
-      - "6279:6379"
+      - "6379:6379"
 
 secrets:
   discord_bot_token:
