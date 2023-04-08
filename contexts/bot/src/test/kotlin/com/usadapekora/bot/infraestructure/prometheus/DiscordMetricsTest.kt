@@ -35,4 +35,8 @@ class DiscordMetricsTest : DependencyInjectionEnabledTest() {
         registerGuildCount(4)
     }
 
+    @Test
+    fun `should count the youtube video notifications sent`() {
+        registerVideoNotification()
+    }
 }
