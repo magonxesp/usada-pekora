@@ -28,6 +28,11 @@ val guildCount: Gauge = Gauge.build()
     .help("Current discord guilds using the bot")
     .register()
 
+val youtubeVideoNotificationCount: Counter = Counter.build()
+    .name("pekorabot_youtube_video_notification_sent_total")
+    .help("Total of the youtube video notifications sent")
+    .register()
+
 fun registerMessageRequest() {
     messagesCount.inc()
 }
@@ -46,4 +51,8 @@ fun registerCommandFired() {
 
 fun registerGuildCount(count: Long) {
     guildCount.set(count.toDouble())
+}
+
+fun registerVideoNotification() {
+    youtubeVideoNotificationCount.inc()
 }
