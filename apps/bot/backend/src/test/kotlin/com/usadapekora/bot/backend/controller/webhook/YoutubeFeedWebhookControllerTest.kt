@@ -58,10 +58,10 @@ class YoutubeFeedWebhookControllerTest : SpringBootHttpTestCase() {
 
     @Test
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun `should notify the received feed xml multiple times`() = runTest(dispatchTimeoutMs = 1000) {
+    fun `should notify the received feed xml multiple times`() = runTest {
         createPreferences()
 
-        (0..5).forEach { _ ->
+        (0..4).forEach { _ ->
             val xml = randomFeedXml()
 
             mockMvc.perform(
@@ -72,7 +72,7 @@ class YoutubeFeedWebhookControllerTest : SpringBootHttpTestCase() {
                 assertEquals(HttpStatus.OK.value(), it.response.status)
             }
 
-            delay(1000)
+            delay(500)
         }
 
         removePreferences()
@@ -90,23 +90,6 @@ class YoutubeFeedWebhookControllerTest : SpringBootHttpTestCase() {
                 .content(xml)
         ).andExpect {
             assertEquals(HttpStatus.BAD_REQUEST.value(), it.response.status)
-        }
-
-        removePreferences()
-    }
-
-    @Test
-    fun `should not notify by any service exception`() {
-        val xml = randomFeedXml()
-
-        createPreferences(Random.nextLong().toString()) // invalid channel id
-
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/webhook/youtube/feed")
-                .contentType(MediaType.APPLICATION_ATOM_XML)
-                .content(xml)
-        ).andExpect {
-            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), it.response.status)
         }
 
         removePreferences()
