@@ -6,6 +6,8 @@ import com.usadapekora.bot.backend.SpringBootHttpTestCase
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.testDiscordTextChannelId
 import com.usadapekora.bot.testDiscordGuildId
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -16,7 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import kotlin.random.Random
 import kotlin.test.assertEquals
-
+import kotlinx.coroutines.test.runTest
 
 class YoutubeFeedWebhookControllerTest : SpringBootHttpTestCase() {
 
@@ -49,6 +51,28 @@ class YoutubeFeedWebhookControllerTest : SpringBootHttpTestCase() {
                 .content(xml)
         ).andExpect {
             assertEquals(HttpStatus.OK.value(), it.response.status)
+        }
+
+        removePreferences()
+    }
+
+    @Test
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun `should notify the received feed xml multiple times`() = runTest(dispatchTimeoutMs = 1000) {
+        createPreferences()
+
+        (0..5).forEach { _ ->
+            val xml = randomFeedXml()
+
+            mockMvc.perform(
+                MockMvcRequestBuilders.post("/webhook/youtube/feed")
+                    .contentType(MediaType.APPLICATION_ATOM_XML)
+                    .content(xml)
+            ).andExpect {
+                assertEquals(HttpStatus.OK.value(), it.response.status)
+            }
+
+            delay(1000)
         }
 
         removePreferences()
