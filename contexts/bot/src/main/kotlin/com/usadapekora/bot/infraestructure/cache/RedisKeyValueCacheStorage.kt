@@ -43,4 +43,10 @@ class RedisKeyValueCacheStorage : KeyValueCacheStorage {
             it.get(key)
         }
     }
+
+    override fun remove(key: String) {
+        redisConnection {
+            it.del(key)
+        }
+    }
 }
