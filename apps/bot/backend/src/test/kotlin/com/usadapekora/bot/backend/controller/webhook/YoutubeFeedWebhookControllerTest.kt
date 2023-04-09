@@ -1,56 +1,31 @@
 package com.usadapekora.bot.backend.controller.webhook
 
-import com.usadapekora.bot.backend.HttpApplication
-//import com.usadapekora.bot.domain.guild.GuildPreferences
-//import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
-//import com.usadapekora.bot.domain.shared.DateTimeUtils
-//import com.usadapekora.bot.domain.video.FeedParser
-//import com.usadapekora.bot.domain.video.Video
-//import com.usadapekora.bot.domain.video.VideoException
-//import com.usadapekora.bot.domain.video.VideoFeedNotifier
-//import io.mockk.clearAllMocks
-//import io.mockk.every
-//import io.mockk.mockk
-//import io.mockk.verify
-//import org.koin.dsl.module
-//import kotlin.test.Test
-//import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-//import org.springframework.test.web.reactive.server.WebTestClient
-//import java.time.ZonedDateTime
-//import java.util.Random
-//import kotlin.test.BeforeTest
+import com.usadapekora.bot.application.guild.GuildPreferenceCreator
+import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
+import com.usadapekora.bot.backend.SpringBootHttpTestCase
+import com.usadapekora.bot.domain.guild.GuildPreferences
+import com.usadapekora.bot.testDiscordTextChannelId
+import com.usadapekora.bot.testDiscordGuildId
+import org.koin.java.KoinJavaComponent.inject
+import kotlin.test.Test
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import kotlin.random.Random
+import kotlin.test.assertEquals
 
 
-@SpringBootTest(
-    classes = [HttpApplication::class],
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-)
-class YoutubeFeedWebhookControllerTest /*: DependencyInjectionEnabledTest()*/ {
+class YoutubeFeedWebhookControllerTest : SpringBootHttpTestCase() {
 
-    /*@Autowired
-    private lateinit var webClient: WebTestClient
-    private lateinit var notifier: VideoFeedNotifier
-    private lateinit var parser: FeedParser
-    private lateinit var preferenceRepository: GuildPreferencesRepository
+    private val creator: GuildPreferenceCreator by inject(GuildPreferenceCreator::class.java)
+    private val deleter: GuildPreferenceDeleter by inject(GuildPreferenceDeleter::class.java)
 
-    @BeforeTest
-    fun beforeTest() {
-        clearAllMocks()
+    fun createPreferences(channelId: String? = null) {
+        creator.create(testDiscordGuildId, GuildPreferences.GuildPreference.FeedChannelId, channelId ?: testDiscordTextChannelId)
+    }
 
-        notifier = mockk(relaxed = true)
-        parser = mockk()
-        preferenceRepository = mockk()
-
-        setupTestModules {
-            listOf(
-                module {
-                    factory { notifier }
-                    factory { parser }
-                    factory { preferenceRepository }
-                }
-            )
-        }
+    fun removePreferences() {
+        deleter.delete(testDiscordGuildId, GuildPreferences.GuildPreference.FeedChannelId)
     }
 
     @Test
@@ -78,53 +53,34 @@ class YoutubeFeedWebhookControllerTest /*: DependencyInjectionEnabledTest()*/ {
             </feed>
         """
 
-        val video = Video(
-            title = "【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】",
-            url = "http://www.youtube.com/watch?v=H8FWadpDpmk",
-            id = "H8FWadpDpmk",
-            publishDate = DateTimeUtils.fromISO8061("2015-03-06T21:40:57+00:00")
-        )
+        createPreferences()
 
-        val target = Random().nextLong().toString() // discord channel id
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/webhook/youtube/feed")
+                .contentType(MediaType.APPLICATION_ATOM_XML)
+                .content(xml)
+        ).andExpect {
+            assertEquals(HttpStatus.OK.value(), it.response.status)
+        }
 
-        every { parser.parse(xml) } returns video
-        every { preferenceRepository.findByPreference(GuildPreferences.GuildPreference.FeedChannelId) } returns arrayOf(GuildPreferencesMother.create(
-            preferences = mutableMapOf(GuildPreferences.GuildPreference.FeedChannelId to target)
-        ))
-
-        webClient.post().uri("/webhook/youtube/feed")
-            .bodyValue(xml)
-            .exchange()
-            .expectStatus()
-            .isOk
-
-        verify { notifier.notify(video, target) }
+        removePreferences()
     }
 
     @Test
     fun `should not notify the received malformed feed xml`() {
         val xml = ""
-        val video = Video(
-            title = "【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】",
-            url = "http://www.youtube.com/watch?v=H8FWadpDpmk",
-            id = "H8FWadpDpmk",
-            publishDate = DateTimeUtils.fromISO8061("2015-03-06T21:40:57+00:00")
-        )
-        val target = Random().nextLong().toString() // discord channel id
 
-        every { parser.parse(xml) } throws VideoException.FeedParse()
-        every { preferenceRepository.findByPreference(GuildPreferences.GuildPreference.FeedChannelId) } returns arrayOf(GuildPreferences(
-            guildId = "242342314543545",
-            preferences = mutableMapOf(GuildPreferences.GuildPreference.FeedChannelId to target)
-        ))
+        createPreferences()
 
-        webClient.post().uri("/webhook/youtube/feed")
-            .bodyValue(xml)
-            .exchange()
-            .expectStatus()
-            .isBadRequest
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/webhook/youtube/feed")
+                .contentType(MediaType.APPLICATION_ATOM_XML)
+                .content(xml)
+        ).andExpect {
+            assertEquals(HttpStatus.BAD_REQUEST.value(), it.response.status)
+        }
 
-        verify(inverse = true) { notifier.notify(video, target) }
+        removePreferences()
     }
 
     @Test
@@ -152,33 +108,30 @@ class YoutubeFeedWebhookControllerTest /*: DependencyInjectionEnabledTest()*/ {
             </feed>
         """
 
-        val video = Video(
-            title = "【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】",
-            url = "http://www.youtube.com/watch?v=H8FWadpDpmk",
-            id = "H8FWadpDpmk",
-            publishDate = DateTimeUtils.fromISO8061("2015-03-06T21:40:57+00:00")
-        )
+        createPreferences(Random.nextLong().toString()) // invalid channel id
 
-        every { parser.parse(xml) } returns video
-        every { preferenceRepository.findByPreference(GuildPreferences.GuildPreference.FeedChannelId) } throws Exception()
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/webhook/youtube/feed")
+                .contentType(MediaType.APPLICATION_ATOM_XML)
+                .content(xml)
+        ).andExpect {
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), it.response.status)
+        }
 
-        webClient.post().uri("/webhook/youtube/feed")
-            .bodyValue(xml)
-            .exchange()
-            .expectStatus()
-            .is5xxServerError
+        removePreferences()
     }
 
     @Test
     fun `should return the hub challenge parameter value`() {
-        val challenge = Random().nextInt().toString()
+        val challenge = Random.nextInt().toString()
 
-        webClient.get().uri("/webhook/youtube/feed?hub.challenge=$challenge")
-            .exchange()
-            .expectStatus()
-            .isOk
-            .expectBody(String::class.java)
-            .isEqualTo(challenge)
-    }*/
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/webhook/youtube/feed?hub.challenge=$challenge")
+                .contentType(MediaType.TEXT_PLAIN)
+        ).andExpect {
+            assertEquals(HttpStatus.OK.value(), it.response.status)
+            assertEquals(challenge, it.response.contentAsString)
+        }
+    }
 
 }
