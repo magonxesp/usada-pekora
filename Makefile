@@ -6,6 +6,7 @@ secrets:
     if [ ! -f "secrets/discord_client_id.txt" ]; then touch secrets/discord_client_id.txt; fi; \
     if [ ! -f "secrets/discord_client_secret.txt" ]; then touch secrets/discord_client_secret.txt; fi; \
     if [ ! -f "secrets/test_discord_channel_id.txt" ]; then touch secrets/test_discord_channel_id.txt; fi; \
+    if [ ! -f "secrets/test_discord_guild_id.txt" ]; then touch secrets/test_discord_guild_id.txt; fi; \
     if [ ! -f "secrets/mongodb_username.txt" ]; then echo "pekora" > secrets/mongodb_username.txt; fi; \
     if [ ! -f "secrets/mongodb_password.txt" ]; then date | md5sum | head -c 25 > secrets/mongodb_password.txt; fi; \
     if [ ! -f "secrets/mongodb_connection_url.txt" ]; then echo "mongodb://pekora:$(cat secrets/mongodb_password.txt)@mongodb:27017" > secrets/mongodb_connection_url.txt; fi

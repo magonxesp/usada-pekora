@@ -34,3 +34,4 @@ val storageDirPath = env("STORAGE_DIR_PATH", "storage")
 
 // test environment variables
 val testDiscordTextChannelId = env("TEST_DISCORD_CHANNEL_ID")
+val testDiscordGuildId = env("TEST_DISCORD_GUILD_ID")
