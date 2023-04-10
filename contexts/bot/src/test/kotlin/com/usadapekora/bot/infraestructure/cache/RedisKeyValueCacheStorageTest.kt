@@ -27,4 +27,17 @@ class RedisKeyValueCacheStorageTest {
         assertEquals(null, saved)
     }
 
+    @Test
+    fun `should remove key`() {
+        val cache = RedisKeyValueCacheStorage()
+        val key = "test_${Random().nextLong()}"
+        val value = Random().nextLong().toString()
+
+        cache.set(key, value)
+        cache.remove(key)
+        val saved = cache.get(key)
+
+        assertEquals(null, saved)
+    }
+
 }

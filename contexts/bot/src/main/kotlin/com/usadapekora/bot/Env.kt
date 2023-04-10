@@ -31,3 +31,7 @@ val mongoDatabase = env("MONGODB_DATABASE", "usada_pekora")
 val redisHost = env("REDIS_HOST", "localhost")
 val redisPort = env("REDIS_PORT", "6379").toInt()
 val storageDirPath = env("STORAGE_DIR_PATH", "storage")
+
+// test environment variables
+val testDiscordTextChannelId = env("TEST_DISCORD_CHANNEL_ID")
+val testDiscordGuildId = env("TEST_DISCORD_GUILD_ID")

@@ -49,6 +49,7 @@ allprojects {
         testImplementation(kotlin("test"))
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
         testImplementation("io.mockk:mockk:1.12.7")
+        testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     }
 
     tasks.withType<KotlinCompile> {

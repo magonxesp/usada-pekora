@@ -28,7 +28,7 @@ class YoutubeFeedWebhookController {
     private val parser: VideoFeedParser by inject(VideoFeedParser::class.java)
 
     @PostMapping("/feed")
-    fun postFeed(@RequestBody body: String): ResponseEntity<String> {
+    suspend fun postFeed(@RequestBody body: String): ResponseEntity<String> {
         logger.info("incoming Youtube feed notification: $body")
 
         try {

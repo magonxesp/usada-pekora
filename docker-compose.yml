@@ -11,6 +11,8 @@ services:
     secrets:
       - discord_bot_token
       - mongodb_connection_url
+      - test_discord_channel_id
+      - test_discord_guild_id
     depends_on:
       - redis
       - mongodb
@@ -24,6 +26,8 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       STORAGE_DIR_PATH: storage
+      TEST_DISCORD_CHANNEL_ID_FILE: /run/secrets/test_discord_channel_id
+      TEST_DISCORD_GUILD_ID_FILE: /run/secrets/test_discord_guild_id
 
   discord_bot:
     build:
@@ -35,6 +39,8 @@ services:
     secrets:
       - discord_bot_token
       - mongodb_connection_url
+      - test_discord_channel_id
+      - test_discord_guild_id
     depends_on:
       - redis
       - mongodb
@@ -48,6 +54,8 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       STORAGE_DIR_PATH: storage
+      TEST_DISCORD_CHANNEL_ID_FILE: /run/secrets/test_discord_channel_id
+      TEST_DISCORD_GUILD_ID_FILE: /run/secrets/test_discord_guild_id
 
   frontend:
     restart: unless-stopped
@@ -96,6 +104,10 @@ secrets:
     file: secrets/discord_client_id.txt
   discord_client_secret:
     file: secrets/discord_client_secret.txt
+  test_discord_channel_id:
+    file: secrets/test_discord_channel_id.txt
+  test_discord_guild_id:
+    file: secrets/test_discord_guild_id.txt
   mongodb_username:
     file: secrets/mongodb_username.txt
   mongodb_password:
