@@ -9,8 +9,9 @@ data class Trigger(
     var title: TriggerTitle,
     var input: TriggerInput,
     var compare: TriggerCompare,
-    var responseText: TriggerTextResponse?,
-    var responseAudio: TriggerAudioResponse?,
+    var responseText: TriggerTextResponseId?,
+    var responseAudio: TriggerAudioResponseId?,
+    val responseAudioProvider: TriggerAudioResponseProvider?,
     var discordGuildId: TriggerDiscordGuildId
 ) : Entity() {
     data class TriggerId(override val value: String) : UuidValueObject(value)
@@ -63,15 +64,17 @@ data class Trigger(
             input: String,
             compare: String,
             discordGuildId: String,
-            responseText: TriggerTextResponse? = null,
-            responseAudio: TriggerAudioResponse? = null,
+            responseTextId: String? = null,
+            responseAudioId: String? = null,
+            responseAudioProvider: String? = null,
         ) = Trigger(
             id = TriggerId(id),
             title = TriggerTitle(title),
             input = TriggerInput(input),
             compare = TriggerCompare.fromValue(compare),
-            responseText = responseText,
-            responseAudio = responseAudio,
+            responseText = responseTextId?.let { TriggerTextResponseId(it) },
+            responseAudio = responseAudioId?.let { TriggerAudioResponseId(it) },
+            responseAudioProvider = responseAudioProvider?.let { TriggerAudioResponseProvider.fromValue(it) },
             discordGuildId = TriggerDiscordGuildId(discordGuildId)
         )
     }

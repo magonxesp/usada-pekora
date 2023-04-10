@@ -11,16 +11,18 @@ object TriggerMother : ObjectMother<Trigger> {
         title: String? = null,
         input: String? = null,
         compare: String? = null,
-        responseText: TriggerTextResponse? = null,
-        responseAudio: TriggerAudioResponse? = null,
+        responseTextId: String? = null,
+        responseAudioId: String? = null,
+        responseAudioProvider: TriggerAudioResponseProvider? = null,
         guildId: String? = null
     ) = Trigger.fromPrimitives(
         id = id ?: Random.instance().random.nextUUID(),
         title = title ?: Random.instance().chiquito.terms(),
         input = input ?: Random.instance().chiquito.expressions(),
         compare = compare ?: Trigger.TriggerCompare.values().random().toString(),
-        responseText = responseText ?: TriggerTextMother.create(),
-        responseAudio = responseAudio ?: TriggerAudioDefaultMother.create(),
+        responseTextId = responseTextId ?: Random.instance().random.nextUUID(),
+        responseAudioId = responseAudioId ?: Random.instance().random.nextUUID(),
+        responseAudioProvider = responseAudioProvider?.value ?: Random.instance().random.nextEnum(TriggerAudioResponseProvider::class.java).value,
         discordGuildId = guildId ?: java.util.Random().nextLong().toString()
     )
 

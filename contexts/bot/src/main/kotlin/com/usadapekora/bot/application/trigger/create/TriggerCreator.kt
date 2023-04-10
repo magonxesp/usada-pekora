@@ -19,7 +19,7 @@ class TriggerCreator(
         return try {
             audioResponseRepository.find(
                 TriggerAudioResponseId(request.responseAudioId),
-                TriggerAudioProvider.fromValue(request.responseAudioProvider)
+                TriggerAudioResponseProvider.fromValue(request.responseAudioProvider)
             )
         } catch (_: TriggerAudioResponseException.NotFound) {
             null
@@ -39,10 +39,7 @@ class TriggerCreator(
     }
 
     fun create(request: TriggerCreateRequest) {
-        val responseAudio = findAudioResponse(request)
-        val responseText = findTextResponse(request)
-
-        if (responseAudio == null && responseText == null) {
+        if (request.responseAudioId == null && request.responseTextId == null) {
             throw TriggerException.MissingResponse("The trigger should have at least one response")
         }
 
@@ -51,8 +48,8 @@ class TriggerCreator(
             title = request.title,
             input = request.input,
             compare = request.compare,
-            responseText = responseText,
-            responseAudio = responseAudio,
+            responseTextId = request.responseTextId,
+            responseAudioId = request.responseAudioId,
             discordGuildId = request.discordGuildId,
         )
 

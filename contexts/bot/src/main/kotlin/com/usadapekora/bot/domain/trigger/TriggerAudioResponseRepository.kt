@@ -4,8 +4,8 @@ import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
 
 
 interface TriggerAudioResponseRepository {
-    fun find(id: TriggerAudioResponseId, provider: TriggerAudioProvider = TriggerAudioProvider.DEFAULT): TriggerAudioResponse
-    fun findByTrigger(id: Trigger.TriggerId, provider: TriggerAudioProvider = TriggerAudioProvider.DEFAULT): TriggerAudioResponse
+    fun find(id: TriggerAudioResponseId, provider: TriggerAudioResponseProvider = TriggerAudioResponseProvider.DEFAULT): TriggerAudioResponse
+    fun findByTrigger(id: Trigger.TriggerId, provider: TriggerAudioResponseProvider = TriggerAudioResponseProvider.DEFAULT): TriggerAudioResponse
 }
 
 interface TriggerAudioResponseProviderRepository<T : TriggerAudioResponse> {

@@ -23,9 +23,9 @@ class TriggerDocument(
             title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.toString(),
-            responseTextId = entity.responseText?.id(),
-            responseAudioId = entity.responseAudio?.id(),
-            responseAudioProvider = entity.responseAudio?.provider()?.value,
+            responseTextId = entity.responseText?.value,
+            responseAudioId = entity.responseAudio?.value,
+            responseAudioProvider = entity.responseAudioProvider?.value,
             discordGuildId = entity.discordGuildId.value
         )
     }
@@ -35,8 +35,9 @@ class TriggerDocument(
         title = title.ifBlank { "untitled" },
         input = input.ifBlank { "[empty]" },
         compare = compare,
-        responseText = null,
-        responseAudio = null,
+        responseTextId = responseTextId,
+        responseAudioId = responseAudioId,
+        responseAudioProvider = responseAudioProvider,
         discordGuildId = discordGuildId
     )
 }

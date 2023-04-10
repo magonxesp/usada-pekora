@@ -54,7 +54,7 @@ val triggerModule = module {
     single { MongoDbTriggerTextRepository() } bind TriggerTextResponseRepository::class
     single { MongoDbTriggerAudioRepository() } bind TriggerAudioResponseRepository::class
     single { MongoDbTriggerAudioDefaultRepository() } bind TriggerAudioDefaultRepository::class
-    single { MongoDbTriggerRepository(get(), get()) } bind TriggerRepository::class
+    single { MongoDbTriggerRepository() } bind TriggerRepository::class
     single { TriggerMatcher() }
     single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get(), get(), get()) }

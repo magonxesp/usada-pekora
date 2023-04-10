@@ -3,14 +3,7 @@ package com.usadapekora.bot.infraestructure.persistence.mongodb
 import com.usadapekora.bot.domain.trigger.exception.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.TriggerTextResponse
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextMother
-import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository
-import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
-import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerTextRepository
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertContains
@@ -18,21 +11,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTriggerRepository>(
-    repository = MongoDbTriggerRepository(MongoDbTriggerAudioRepository(), MongoDbTriggerTextRepository()),
+    repository = MongoDbTriggerRepository(),
     mother = TriggerMother
 ) {
-    private val textAudioRepository = MongoDbTriggerTextRepository()
-    private val defaultAudioRepository = MongoDbTriggerAudioDefaultRepository()
-
-    private fun saveRelations(responseText: TriggerTextResponse, responseAudio: TriggerAudioDefault) {
-        textAudioRepository.save(responseText)
-        defaultAudioRepository.save(responseAudio)
-    }
-
-    private fun deleteRelations(responseText: TriggerTextResponse, responseAudio: TriggerAudioDefault) {
-        textAudioRepository.delete(responseText)
-        defaultAudioRepository.delete(responseAudio)
-    }
 
     @Test
     fun `should find all triggers`() {
@@ -44,18 +25,12 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
 
     @Test
     fun `should find trigger by id`() {
-        val audioResponse = TriggerAudioDefaultMother.create()
-        val textResponse = TriggerTextMother.create()
-        val trigger = TriggerMother.create(responseText = textResponse, responseAudio = audioResponse)
-
-        saveRelations(textResponse, audioResponse)
-
+        val trigger = TriggerMother.create()
+        
         databaseTest(aggregate = trigger) {
             val found = repository.find(it.id)
             assertEquals(it, found)
         }
-
-        deleteRelations(textResponse, audioResponse)
     }
 
     @Test
@@ -67,18 +42,12 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
 
     @Test
     fun `should find trigger by discord server id`() {
-        val audioResponse = TriggerAudioDefaultMother.create()
-        val textResponse = TriggerTextMother.create()
-        val trigger = TriggerMother.create(responseText = textResponse, responseAudio = audioResponse)
-
-        saveRelations(textResponse, audioResponse)
+        val trigger = TriggerMother.create()
 
         databaseTest(aggregate = trigger) {
             val triggers = repository.findByDiscordServer(it.discordGuildId)
             assertContains(triggers, it)
         }
-
-        deleteRelations(textResponse, audioResponse)
     }
 
     @Test
@@ -89,19 +58,13 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
 
     @Test
     fun `should save`() {
-        val audioResponse = TriggerAudioDefaultMother.create()
-        val textResponse = TriggerTextMother.create()
-        val trigger = TriggerMother.create(responseText = textResponse, responseAudio = audioResponse)
-
-        saveRelations(textResponse, audioResponse)
+        val trigger = TriggerMother.create()
 
         databaseTest(aggregate = trigger, save = false) {
             repository.save(it)
             val found = repository.find(it.id)
             assertEquals(it, found)
         }
-
-        deleteRelations(textResponse, audioResponse)
     }
 
     @Test

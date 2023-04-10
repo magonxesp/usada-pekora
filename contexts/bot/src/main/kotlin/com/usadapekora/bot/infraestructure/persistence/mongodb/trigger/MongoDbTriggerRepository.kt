@@ -6,10 +6,7 @@ import com.usadapekora.bot.domain.trigger.exception.TriggerException
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbTriggerRepository(
-    private val audioRepository: MongoDbTriggerAudioRepository,
-    private val textRepository: MongoDbTriggerTextRepository
-) : MongoDbRepository<Trigger, TriggerDocument>(
+class MongoDbTriggerRepository : MongoDbRepository<Trigger, TriggerDocument>(
     collection = "triggers",
     documentIdProp = TriggerDocument::id,
     documentCompanion = TriggerDocument.Companion
@@ -21,29 +18,12 @@ class MongoDbTriggerRepository(
         null
     }
 
-    private fun toEntityWithRelations(document: TriggerDocument): Trigger {
-        val entity = document.toEntity()
-
-        entity.responseText = nullOnException {
-            textRepository.find(TriggerTextResponseId(document.responseTextId ?: ""))
-        }
-
-        entity.responseAudio = nullOnException {
-            audioRepository.find(
-                id = TriggerAudioResponseId(document.responseAudioId ?: ""),
-                provider = TriggerAudioProvider.fromValue(document.responseAudioProvider ?: "")
-            )
-        }
-
-        return entity
-    }
-
     override fun all(): Array<Trigger> {
         val triggers = collectionQuery<TriggerDocument>("triggers") { collection ->
             collection.find()
         }
 
-        return triggers.map { toEntityWithRelations(it) }.toList().toTypedArray()
+        return triggers.map { it.toEntity() }.toList().toTypedArray()
     }
 
     override fun find(id: Trigger.TriggerId): Trigger {
@@ -52,7 +32,7 @@ class MongoDbTriggerRepository(
         }
 
         if (trigger != null) {
-            return toEntityWithRelations(trigger)
+            return trigger.toEntity()
         }
 
         throw TriggerException.NotFound()
@@ -63,7 +43,7 @@ class MongoDbTriggerRepository(
             collection.find(TriggerDocument::discordGuildId eq id.value)
         }
 
-        return triggers.map { toEntityWithRelations(it) }.toList().toTypedArray()
+        return triggers.map { it.toEntity() }.toList().toTypedArray()
     }
 
 }

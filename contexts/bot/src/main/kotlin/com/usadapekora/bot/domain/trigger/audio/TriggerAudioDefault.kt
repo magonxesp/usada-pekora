@@ -3,7 +3,7 @@ package com.usadapekora.bot.domain.trigger.audio
 import com.usadapekora.bot.domain.guild.GuildId
 import com.usadapekora.bot.domain.shared.Entity
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.TriggerAudioProvider
+import com.usadapekora.bot.domain.trigger.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.TriggerAudioResponse
 import com.usadapekora.bot.domain.trigger.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
@@ -34,5 +34,5 @@ data class TriggerAudioDefault(
 
     override fun path() = TriggerAudioUtils.audioDirPath(this)
 
-    override fun provider() = TriggerAudioProvider.DEFAULT
+    override fun provider() = TriggerAudioResponseProvider.DEFAULT
 }
