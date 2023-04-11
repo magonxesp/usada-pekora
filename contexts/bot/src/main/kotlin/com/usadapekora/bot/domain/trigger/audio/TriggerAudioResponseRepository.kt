@@ -1,6 +1,6 @@
-package com.usadapekora.bot.domain.trigger
+package com.usadapekora.bot.domain.trigger.audio
 
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.Trigger
 
 
 interface TriggerAudioResponseRepository {
@@ -15,4 +15,4 @@ interface TriggerAudioResponseProviderRepository<T : TriggerAudioResponse> {
     fun delete(entity: T)
 }
 
-interface TriggerAudioDefaultRepository : TriggerAudioResponseProviderRepository<TriggerAudioDefault>
+interface TriggerAudioDefaultRepository : TriggerAudioResponseProviderRepository<TriggerDefaultAudioResponse>

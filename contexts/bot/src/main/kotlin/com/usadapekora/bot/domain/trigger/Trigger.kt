@@ -2,7 +2,9 @@ package com.usadapekora.bot.domain.trigger
 
 import com.usadapekora.bot.domain.shared.Entity
 import com.usadapekora.bot.domain.shared.valueobject.UuidValueObject
-import com.usadapekora.bot.domain.trigger.exception.TriggerException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 
 data class Trigger(
     val id: TriggerId,
@@ -77,6 +79,16 @@ data class Trigger(
             responseAudioProvider = responseAudioProvider?.let { TriggerAudioResponseProvider.fromValue(it) },
             discordGuildId = TriggerDiscordGuildId(discordGuildId)
         )
+    }
+
+    init {
+        if (responseAudio == null && responseText == null) {
+            throw TriggerException.MissingResponse("The trigger should have at least one response")
+        }
+
+        if (responseAudio != null && responseAudioProvider == null) {
+            throw TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response")
+        }
     }
 
     override fun id(): String = id.value

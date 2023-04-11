@@ -2,7 +2,7 @@ package com.usadapekora.bot.domain.trigger.response.text
 
 import com.usadapekora.bot.domain.ObjectMother
 import com.usadapekora.bot.domain.Random
-import com.usadapekora.bot.domain.trigger.TriggerTextResponse
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 
 object TriggerTextMother : ObjectMother<TriggerTextResponse> {
     fun create(

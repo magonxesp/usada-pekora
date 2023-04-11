@@ -1,14 +1,14 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class MongoDbTriggerAudioDefaultRepositoryTest : MongoDbRepositoryTest<TriggerAudioDefault, MongoDbTriggerAudioDefaultRepository>(
+class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTest<TriggerDefaultAudioResponse, MongoDbTriggerAudioDefaultRepository>(
     repository = MongoDbTriggerAudioDefaultRepository(),
     mother = TriggerAudioDefaultMother
 ) {

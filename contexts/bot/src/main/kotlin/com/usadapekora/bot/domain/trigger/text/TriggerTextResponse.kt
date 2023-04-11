@@ -1,7 +1,8 @@
-package com.usadapekora.bot.domain.trigger
+package com.usadapekora.bot.domain.trigger.text
 
 import com.usadapekora.bot.domain.guild.GuildId
 import com.usadapekora.bot.domain.shared.Entity
+import com.usadapekora.bot.domain.trigger.Trigger
 
 data class TriggerTextResponse(
     val id: TriggerTextResponseId,

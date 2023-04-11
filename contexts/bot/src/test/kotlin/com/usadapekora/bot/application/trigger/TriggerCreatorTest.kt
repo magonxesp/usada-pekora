@@ -3,11 +3,13 @@ package com.usadapekora.bot.application.trigger
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.domain.trigger.*
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.exception.TriggerException
-import com.usadapekora.bot.domain.trigger.exception.TriggerTextResponseException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextMother
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

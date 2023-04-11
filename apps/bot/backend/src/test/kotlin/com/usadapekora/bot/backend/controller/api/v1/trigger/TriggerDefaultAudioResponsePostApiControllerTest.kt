@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerAudioDefaultDeleteApiControllerTest : SpringBootHttpTestCase() {
+class TriggerDefaultAudioResponsePostApiControllerTest : SpringBootHttpTestCase() {
 
     private fun uploadAudioFileRequest(audioId: String, triggerId: String, guildId: String)
         = mockMvc.perform(
@@ -20,35 +20,37 @@ class TriggerAudioDefaultDeleteApiControllerTest : SpringBootHttpTestCase() {
                 .param("triggerId", triggerId)
                 .param("guildId", guildId)
                 .accept(MediaType.APPLICATION_JSON)
-    )
-
-    private fun deleteRequest(audioId: String)
-        = mockMvc.perform(
-            MockMvcRequestBuilders.delete("/api/v1/trigger/audio/$audioId")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
         )
 
     @Test
-    fun `should delete trigger audio`() {
-        val id = UUID.randomUUID().toString()
-
+    fun `should upload file and save it`() {
         uploadAudioFileRequest(
-            audioId = id,
+            audioId = UUID.randomUUID().toString(),
             triggerId = UUID.randomUUID().toString(),
             guildId = "94101459"
         ).andExpect {
             assertEquals(HttpStatus.CREATED.value(), it.response.status)
         }
-
-        deleteRequest(id).andExpect {
-            assertEquals(HttpStatus.OK.value(), it.response.status)
-        }
     }
 
     @Test
-    fun `should not delete not existing trigger audio`() {
-        deleteRequest(UUID.randomUUID().toString()).andExpect {
+    fun `should not upload same file`() {
+        val audioId = UUID.randomUUID().toString()
+        val triggerId = UUID.randomUUID().toString()
+
+        uploadAudioFileRequest(
+            audioId = audioId,
+            triggerId = triggerId,
+            guildId = "94101459"
+        ).andExpect {
+            assertEquals(HttpStatus.CREATED.value(), it.response.status)
+        }
+
+        uploadAudioFileRequest(
+            audioId = audioId,
+            triggerId = triggerId,
+            guildId = "94101459"
+        ).andExpect {
             assertEquals(HttpStatus.BAD_REQUEST.value(), it.response.status)
         }
     }

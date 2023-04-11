@@ -2,7 +2,7 @@ package com.usadapekora.bot.infraestructure.persistence.mongodb.trigger
 
 import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbRepository
-import com.usadapekora.bot.domain.trigger.exception.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerException
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 

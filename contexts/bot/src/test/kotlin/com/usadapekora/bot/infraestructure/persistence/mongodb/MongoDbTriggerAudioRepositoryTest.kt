@@ -1,8 +1,8 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioDefaultRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerAudioRepository
 import org.junit.jupiter.api.assertThrows
@@ -18,10 +18,10 @@ class MongoDbTriggerAudioRepositoryTest {
      * Creates a test trigger and delete from the database after test
      */
     private fun databaseTest(
-        aggregate: TriggerAudioDefault = TriggerAudioDefaultMother.random(),
+        aggregate: TriggerDefaultAudioResponse = TriggerAudioDefaultMother.random(),
         save: Boolean = true,
         delete: Boolean = true,
-        test: (aggregate: TriggerAudioDefault) -> Unit
+        test: (aggregate: TriggerDefaultAudioResponse) -> Unit
     ) {
         if (save) {
             providerRepository.save(aggregate)

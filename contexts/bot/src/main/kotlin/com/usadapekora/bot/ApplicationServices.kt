@@ -25,6 +25,9 @@ import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
 import com.usadapekora.bot.domain.shared.file.DomainFileReader
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.*
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoFeedNotifier

@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger.exception
+package com.usadapekora.bot.domain.trigger.audio
 
 sealed class TriggerAudioResponseException(override val message: String? = null) : Exception(message) {
     class NotFound(override val message: String? = null) : TriggerAudioResponseException(message)

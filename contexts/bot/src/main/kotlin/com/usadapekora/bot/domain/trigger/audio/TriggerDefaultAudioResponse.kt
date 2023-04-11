@@ -3,12 +3,9 @@ package com.usadapekora.bot.domain.trigger.audio
 import com.usadapekora.bot.domain.guild.GuildId
 import com.usadapekora.bot.domain.shared.Entity
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseProvider
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponse
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 
-data class TriggerAudioDefault(
+data class TriggerDefaultAudioResponse(
     val id: TriggerAudioResponseId,
     val trigger: Trigger.TriggerId,
     val guild: GuildId,
@@ -22,7 +19,7 @@ data class TriggerAudioDefault(
             trigger: String,
             guild: String,
             file: String
-        ): TriggerAudioDefault = TriggerAudioDefault(
+        ): TriggerDefaultAudioResponse = TriggerDefaultAudioResponse(
             id = TriggerAudioResponseId(id),
             trigger = Trigger.TriggerId(trigger),
             guild = GuildId(guild),

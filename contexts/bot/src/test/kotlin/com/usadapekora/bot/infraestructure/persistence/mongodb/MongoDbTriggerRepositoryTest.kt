@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
-import com.usadapekora.bot.domain.trigger.exception.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository

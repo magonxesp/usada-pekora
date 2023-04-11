@@ -1,8 +1,8 @@
 package com.usadapekora.bot.application.trigger.read
 
 import com.usadapekora.bot.domain.shared.file.DomainFileReader
-import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseId
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import kotlin.io.path.Path
 

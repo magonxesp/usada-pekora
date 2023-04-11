@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger
+package com.usadapekora.bot.domain.trigger.text
 
 import com.usadapekora.bot.domain.shared.valueobject.UuidValueObject
 

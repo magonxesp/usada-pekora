@@ -4,10 +4,9 @@ import com.usadapekora.bot.application.trigger.create.TriggerAudioCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerAudioCreator
 import com.usadapekora.bot.domain.FileMother
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
-import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +17,7 @@ import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test
 
-class TriggerAudioDefaultCreatorTest {
+class TriggerDefaultAudioResponseCreatorTest {
 
     @Test
     fun `should create trigger audio and save file`() {

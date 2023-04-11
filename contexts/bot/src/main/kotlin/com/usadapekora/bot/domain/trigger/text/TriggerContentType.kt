@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger
+package com.usadapekora.bot.domain.trigger.text
 
 enum class TriggerContentType(val value: String) {
     TEXT("text"),

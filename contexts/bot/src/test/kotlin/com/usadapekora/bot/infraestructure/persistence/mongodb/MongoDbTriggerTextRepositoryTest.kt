@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
-import com.usadapekora.bot.domain.trigger.TriggerTextResponse
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextMother
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerTextRepository
 import kotlin.test.Test

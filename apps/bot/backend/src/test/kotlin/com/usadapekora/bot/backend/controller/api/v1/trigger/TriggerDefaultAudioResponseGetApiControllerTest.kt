@@ -1,7 +1,7 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import java.util.UUID
@@ -10,7 +10,7 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 
-class TriggerAudioDefaultGetApiControllerTest : TriggerControllerTest() {
+class TriggerDefaultAudioResponseGetApiControllerTest : TriggerControllerTest() {
 
     private fun request(url: String)
         = mockMvc.perform(
@@ -22,7 +22,7 @@ class TriggerAudioDefaultGetApiControllerTest : TriggerControllerTest() {
     @Test
     fun `should find a trigger audio`() {
         val audioId = UUID.randomUUID().toString()
-        val audio = TriggerAudioDefault.fromPrimitives(
+        val audio = TriggerDefaultAudioResponse.fromPrimitives(
             id = audioId,
             trigger = "c2a05313-b765-4be0-bf92-0b77136d033b",
             guild = "47541556",

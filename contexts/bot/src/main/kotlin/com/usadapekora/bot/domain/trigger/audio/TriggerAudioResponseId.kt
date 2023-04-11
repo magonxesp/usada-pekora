@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger
+package com.usadapekora.bot.domain.trigger.audio
 
 import com.usadapekora.bot.domain.shared.valueobject.UuidValueObject
 

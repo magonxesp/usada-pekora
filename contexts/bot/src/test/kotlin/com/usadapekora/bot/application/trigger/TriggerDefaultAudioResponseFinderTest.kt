@@ -2,17 +2,16 @@ package com.usadapekora.bot.application.trigger
 
 import com.usadapekora.bot.application.trigger.find.TriggerAudioFinder
 import com.usadapekora.bot.application.trigger.find.TriggerAudioResponse
-import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerAudioDefaultFinderTest {
+class TriggerDefaultAudioResponseFinderTest {
 
     @Test
     fun `should find trigger audio by id`() {

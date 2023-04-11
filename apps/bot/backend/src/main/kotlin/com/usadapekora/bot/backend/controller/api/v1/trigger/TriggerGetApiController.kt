@@ -1,8 +1,8 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.application.trigger.find.*
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioException
-import com.usadapekora.bot.domain.trigger.exception.TriggerException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
+import com.usadapekora.bot.domain.trigger.TriggerException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

@@ -5,7 +5,7 @@ import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.TriggerResponse
 import com.usadapekora.bot.application.trigger.find.TriggersResponse
 import com.usadapekora.bot.domain.trigger.*
-import com.usadapekora.bot.domain.trigger.exception.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerException
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.assertThrows

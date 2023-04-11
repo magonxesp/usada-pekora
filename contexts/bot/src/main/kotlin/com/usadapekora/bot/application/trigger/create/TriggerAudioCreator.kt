@@ -1,9 +1,9 @@
 package com.usadapekora.bot.application.trigger.create
 
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
-import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import java.io.File
 import kotlin.io.path.Path
@@ -11,7 +11,7 @@ import kotlin.io.path.Path
 class TriggerAudioCreator(private val repository: TriggerAudioDefaultRepository, private val writer: DomainFileWriter) {
 
     fun create(request: TriggerAudioCreateRequest) {
-        val audio = TriggerAudioDefault.fromPrimitives(
+        val audio = TriggerDefaultAudioResponse.fromPrimitives(
             id = request.id,
             trigger = request.triggerId,
             guild = request.guildId,

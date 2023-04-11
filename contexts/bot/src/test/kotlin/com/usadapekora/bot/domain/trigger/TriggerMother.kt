@@ -2,8 +2,7 @@ package com.usadapekora.bot.domain.trigger
 
 import com.usadapekora.bot.domain.ObjectMother
 import com.usadapekora.bot.domain.Random
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextMother
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 
 object TriggerMother : ObjectMother<Trigger> {
     fun create(
@@ -22,7 +21,8 @@ object TriggerMother : ObjectMother<Trigger> {
         compare = compare ?: Trigger.TriggerCompare.values().random().toString(),
         responseTextId = responseTextId ?: Random.instance().random.nextUUID(),
         responseAudioId = responseAudioId ?: Random.instance().random.nextUUID(),
-        responseAudioProvider = responseAudioProvider?.value ?: Random.instance().random.nextEnum(TriggerAudioResponseProvider::class.java).value,
+        responseAudioProvider = responseAudioProvider?.value ?: Random.instance().random.nextEnum(
+            TriggerAudioResponseProvider::class.java).value,
         discordGuildId = guildId ?: java.util.Random().nextLong().toString()
     )
 

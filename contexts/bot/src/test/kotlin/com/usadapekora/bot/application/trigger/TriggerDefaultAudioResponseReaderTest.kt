@@ -3,9 +3,8 @@ package com.usadapekora.bot.application.trigger
 import com.usadapekora.bot.application.trigger.read.TriggerAudioReader
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.shared.file.DomainFileReader
-import com.usadapekora.bot.domain.trigger.TriggerAudioDefaultRepository
-import com.usadapekora.bot.domain.trigger.exception.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import io.mockk.every
 import io.mockk.mockk
@@ -16,7 +15,7 @@ import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerAudioDefaultReaderTest {
+class TriggerDefaultAudioResponseReaderTest {
 
     @Test
     fun `should read the trigger audio file by id`() {

@@ -1,6 +1,6 @@
 package com.usadapekora.bot.application.trigger.find
 
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefault
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 
 data class TriggerAudioResponse(
     val id: String,
@@ -9,7 +9,7 @@ data class TriggerAudioResponse(
     val file: String
 ) {
     companion object {
-        fun fromEntity(entity: TriggerAudioDefault) = TriggerAudioResponse(
+        fun fromEntity(entity: TriggerDefaultAudioResponse) = TriggerAudioResponse(
             id = entity.id.value,
             triggerId = entity.trigger.value,
             guildId = entity.guild.value,

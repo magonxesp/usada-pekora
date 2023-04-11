@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger
+package com.usadapekora.bot.domain.trigger.audio
 
 enum class TriggerAudioResponseProvider(val value: String) {
     DEFAULT("default");
