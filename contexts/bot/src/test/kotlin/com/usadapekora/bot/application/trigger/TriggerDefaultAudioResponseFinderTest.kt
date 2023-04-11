@@ -1,7 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
-import com.usadapekora.bot.application.trigger.find.TriggerAudioFinder
-import com.usadapekora.bot.application.trigger.find.TriggerAudioResponse
+import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
+import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioResponse
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
@@ -16,19 +16,19 @@ class TriggerDefaultAudioResponseFinderTest {
     @Test
     fun `should find trigger audio by id`() {
         val repository = mockk<TriggerAudioDefaultRepository>()
-        val finder = TriggerAudioFinder(repository)
+        val finder = TriggerDefaultAudioFinder(repository)
         val triggerAudio = TriggerAudioDefaultMother.create()
 
         every { repository.find(triggerAudio.id) } returns triggerAudio
 
         val actual = finder.find(triggerAudio.id.value)
-        assertEquals(TriggerAudioResponse.fromEntity(triggerAudio), actual)
+        assertEquals(TriggerDefaultAudioResponse.fromEntity(triggerAudio), actual)
     }
 
     @Test
     fun `should not find trigger audio by id`() {
         val repository = mockk<TriggerAudioDefaultRepository>()
-        val finder = TriggerAudioFinder(repository)
+        val finder = TriggerDefaultAudioFinder(repository)
         val triggerAudio = TriggerAudioDefaultMother.create()
 
         every { repository.find(triggerAudio.id) } throws TriggerAudioResponseException.NotFound()
@@ -41,19 +41,19 @@ class TriggerDefaultAudioResponseFinderTest {
     @Test
     fun `should find trigger audio by trigger id`() {
         val repository = mockk<TriggerAudioDefaultRepository>()
-        val finder = TriggerAudioFinder(repository)
+        val finder = TriggerDefaultAudioFinder(repository)
         val triggerAudio = TriggerAudioDefaultMother.create()
 
         every { repository.findByTrigger(triggerAudio.trigger) } returns triggerAudio
 
         val actual = finder.findByTriggerId(triggerAudio.trigger.value)
-        assertEquals(TriggerAudioResponse.fromEntity(triggerAudio), actual)
+        assertEquals(TriggerDefaultAudioResponse.fromEntity(triggerAudio), actual)
     }
 
     @Test
     fun `should not find trigger audio by trigger id`() {
         val repository = mockk<TriggerAudioDefaultRepository>()
-        val finder = TriggerAudioFinder(repository)
+        val finder = TriggerDefaultAudioFinder(repository)
         val triggerAudio = TriggerAudioDefaultMother.create()
 
         every { repository.findByTrigger(triggerAudio.trigger) } throws TriggerAudioResponseException.NotFound()

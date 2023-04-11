@@ -1,7 +1,7 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.backend.controller.api.ApiController
-import com.usadapekora.bot.application.trigger.delete.TriggerAudioDeleter
+import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable
 @RequestMapping("/api/v1/trigger/audio")
 class TriggerAudioDeleteApiController : ApiController() {
 
-    private val triggerAudioDeleter: TriggerAudioDeleter by inject(TriggerAudioDeleter::class.java)
+    private val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
 
     @DeleteMapping("{id}")
     fun delete(@PathVariable("id") id: String, ): ResponseEntity<Unit> {
         try {
-            triggerAudioDeleter.delete(id)
+            triggerDefaultAudioDeleter.delete(id)
             return ResponseEntity.status(HttpStatus.OK).build()
         } catch (exception: Exception) {
             logger.warning(exception.message)

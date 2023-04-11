@@ -3,11 +3,11 @@ package com.usadapekora.bot
 import com.usadapekora.bot.application.guild.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
 import com.usadapekora.bot.application.guild.GuildPreferencesFinder
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
-import com.usadapekora.bot.application.trigger.delete.TriggerAudioDeleter
+import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
-import com.usadapekora.bot.application.trigger.find.TriggerAudioFinder
+import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.guild.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.domain.shared.KeyValueCacheStorage
@@ -15,7 +15,7 @@ import com.usadapekora.bot.domain.shared.Logger
 import com.usadapekora.bot.infraestructure.cache.RedisKeyValueCacheStorage
 import com.usadapekora.bot.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
-import com.usadapekora.bot.application.trigger.read.TriggerAudioReader
+import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
 import com.usadapekora.bot.application.video.SendVideoFeed
@@ -63,10 +63,10 @@ val triggerModule = module {
     single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get()) }
-    single { TriggerAudioCreator(get(), get()) }
-    single { TriggerAudioFinder(get()) }
-    single { TriggerAudioDeleter(get(), get()) }
-    single { TriggerAudioReader(get(), get()) }
+    single { TriggerDefaultAudioResponseCreator(get(), get()) }
+    single { TriggerDefaultAudioFinder(get()) }
+    single { TriggerDefaultAudioDeleter(get(), get()) }
+    single { TriggerDefaultAudioReader(get(), get()) }
 }
 
 val guildModule = module {

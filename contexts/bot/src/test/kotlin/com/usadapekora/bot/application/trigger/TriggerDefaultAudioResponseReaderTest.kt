@@ -1,6 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
-import com.usadapekora.bot.application.trigger.read.TriggerAudioReader
+import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.shared.file.DomainFileReader
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -21,7 +21,7 @@ class TriggerDefaultAudioResponseReaderTest {
     fun `should read the trigger audio file by id`() {
         val fileReader = mockk<DomainFileReader>()
         val repository = mockk<TriggerAudioDefaultRepository>()
-        val reader = TriggerAudioReader(repository, fileReader)
+        val reader = TriggerDefaultAudioReader(repository, fileReader)
         val audio = TriggerAudioDefaultMother.create()
         val expectedContent = Random.nextBytes(10)
 
@@ -37,7 +37,7 @@ class TriggerDefaultAudioResponseReaderTest {
     fun `should not read the trigger audio if it not exists`() {
         val fileReader = mockk<DomainFileReader>()
         val repository = mockk<TriggerAudioDefaultRepository>()
-        val reader = TriggerAudioReader(repository, fileReader)
+        val reader = TriggerDefaultAudioReader(repository, fileReader)
         val audio = TriggerAudioDefaultMother.create()
 
         every { repository.find(audio.id) } throws TriggerAudioResponseException.NotFound()

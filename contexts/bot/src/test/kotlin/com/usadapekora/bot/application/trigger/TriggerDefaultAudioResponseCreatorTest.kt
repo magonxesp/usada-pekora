@@ -1,7 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreateRequest
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.domain.FileMother
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -23,7 +23,7 @@ class TriggerDefaultAudioResponseCreatorTest {
     fun `should create trigger audio and save file`() {
         val repository = mockk<TriggerAudioDefaultRepository>(relaxed = true)
         val writer = mockk<DomainFileWriter>(relaxed = true)
-        val creator = TriggerAudioCreator(repository, writer)
+        val creator = TriggerDefaultAudioResponseCreator(repository, writer)
 
         val id = UUID.randomUUID()
         val expected = TriggerAudioDefaultMother.create(id = id.toString(), file = "${id}.mp3")
@@ -32,7 +32,7 @@ class TriggerDefaultAudioResponseCreatorTest {
         every { repository.find(expected.id) } throws TriggerAudioResponseException.NotFound()
 
         creator.create(
-            TriggerAudioCreateRequest(
+            TriggerDefaultAudioResponseCreateRequest(
                 id = expected.id.value,
                 triggerId = expected.trigger.value,
                 guildId = expected.guild.value,
@@ -49,7 +49,7 @@ class TriggerDefaultAudioResponseCreatorTest {
     fun `should not create existing trigger audio`() {
         val repository = mockk<TriggerAudioDefaultRepository>(relaxed = true)
         val writer = mockk<DomainFileWriter>(relaxed = true)
-        val creator = TriggerAudioCreator(repository, writer)
+        val creator = TriggerDefaultAudioResponseCreator(repository, writer)
 
         val expected = TriggerAudioDefaultMother.create()
         val file = Random.Default.nextBytes(10)
@@ -58,7 +58,7 @@ class TriggerDefaultAudioResponseCreatorTest {
 
         assertThrows<TriggerAudioResponseException.AlreadyExists> {
             creator.create(
-                TriggerAudioCreateRequest(
+                TriggerDefaultAudioResponseCreateRequest(
                     id = expected.id.value,
                     triggerId = expected.trigger.value,
                     guildId = expected.guild.value,

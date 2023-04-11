@@ -1,6 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
-import com.usadapekora.bot.application.trigger.delete.TriggerAudioDeleter
+import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -17,7 +17,7 @@ class TriggerDefaultAudioResponseDeleterTest {
     fun `should delete an trigger audio and its content`() {
         val repository = mockk<TriggerAudioDefaultRepository>(relaxed = true)
         val fileDeleter = mockk<DomainFileDeleter>(relaxed = true)
-        val deleter = TriggerAudioDeleter(repository, fileDeleter)
+        val deleter = TriggerDefaultAudioDeleter(repository, fileDeleter)
         val audio = TriggerAudioDefaultMother.create()
 
         every { repository.find(audio.id) } returns audio

@@ -1,7 +1,7 @@
-package com.usadapekora.bot.application.trigger.create
+package com.usadapekora.bot.application.trigger.create.audio
 
 
-class TriggerAudioCreateRequest(
+class TriggerDefaultAudioResponseCreateRequest(
     val content: ByteArray,
     val fileName: String,
     val id: String,

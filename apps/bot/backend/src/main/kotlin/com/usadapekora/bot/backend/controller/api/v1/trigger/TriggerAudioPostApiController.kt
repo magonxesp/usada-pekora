@@ -2,8 +2,8 @@ package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.backend.utils.MultipartFileUtils
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreateRequest
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile
 @RequestMapping("/api/v1/trigger/audio")
 class TriggerAudioPostApiController : ApiController() {
 
-    private val triggerAudioCreator: TriggerAudioCreator by inject(TriggerAudioCreator::class.java)
+    private val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
 
     @PostMapping("", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun create(
@@ -31,13 +31,15 @@ class TriggerAudioPostApiController : ApiController() {
         @RequestParam("guildId") guildId: String,
     ): ResponseEntity<Unit> {
         try {
-            triggerAudioCreator.create(TriggerAudioCreateRequest(
+            triggerDefaultAudioResponseCreator.create(
+                TriggerDefaultAudioResponseCreateRequest(
                 id = id,
                 triggerId = triggerId,
                 guildId = guildId,
                 fileName = MultipartFileUtils.makeTemporaryFileName(file),
                 content = file.bytes
-            ))
+            )
+            )
 
             return ResponseEntity.status(HttpStatus.CREATED).build()
         } catch (exception: Exception) {

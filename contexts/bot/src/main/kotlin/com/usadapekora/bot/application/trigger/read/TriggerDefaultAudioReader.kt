@@ -6,7 +6,7 @@ import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import kotlin.io.path.Path
 
-class TriggerAudioReader(private val repository: TriggerAudioDefaultRepository, private val reader: DomainFileReader) {
+class TriggerDefaultAudioReader(private val repository: TriggerAudioDefaultRepository, private val reader: DomainFileReader) {
 
     fun read(id: String): ByteArray {
         val audio = repository.find(TriggerAudioResponseId(id))

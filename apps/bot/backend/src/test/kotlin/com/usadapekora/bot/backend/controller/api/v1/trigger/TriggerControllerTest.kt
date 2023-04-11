@@ -1,8 +1,8 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.backend.SpringBootHttpTestCase
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreateRequest
-import com.usadapekora.bot.application.trigger.create.TriggerAudioCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import org.koin.java.KoinJavaComponent.inject
@@ -11,7 +11,7 @@ import org.koin.java.KoinJavaComponent.inject
 abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
 
     private val creator: TriggerCreator by inject(TriggerCreator::class.java)
-    private val audioCreator: TriggerAudioCreator by inject(TriggerAudioCreator::class.java)
+    private val audioCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
 
     fun createDummy(
         id: String = "29da2a75-f5ba-4bff-99ee-3eb654716284",
@@ -41,7 +41,7 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
         guildId: String = "94101459"
     ) {
         audioCreator.create(
-            TriggerAudioCreateRequest(
+            TriggerDefaultAudioResponseCreateRequest(
                 content = readResource("/assets_audio_Its_me_pekora.mp3"),
                 fileName = "assets_audio_Its_me_pekora.mp3",
                 id = id,
