@@ -79,5 +79,15 @@ data class Trigger(
         )
     }
 
+    init {
+        if (responseAudio == null && responseText == null) {
+            throw TriggerException.MissingResponse("The trigger should have at least one response")
+        }
+
+        if (responseAudio != null && responseAudioProvider == null) {
+            throw TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response")
+        }
+    }
+
     override fun id(): String = id.value
 }
