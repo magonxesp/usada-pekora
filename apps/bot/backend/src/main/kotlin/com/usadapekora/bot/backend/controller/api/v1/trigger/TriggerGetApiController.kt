@@ -3,8 +3,8 @@ package com.usadapekora.bot.backend.controller.api.v1.trigger
 import com.usadapekora.bot.application.trigger.find.*
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFindResponse
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
 import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
@@ -50,7 +50,7 @@ class TriggerGetApiController {
             ResponseEntity.of(Optional.of(audioFinder.findByTriggerId(id)))
         } catch (exception: Exception) {
             when(exception) {
-                is TriggerAudioException.NotFound -> ResponseEntity.notFound().build()
+                is TriggerAudioResponseException.NotFound -> ResponseEntity.notFound().build()
                 else -> ResponseEntity.internalServerError().build()
             }
         }

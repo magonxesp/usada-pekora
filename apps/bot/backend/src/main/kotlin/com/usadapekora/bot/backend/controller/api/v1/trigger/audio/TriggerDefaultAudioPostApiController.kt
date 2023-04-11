@@ -1,10 +1,10 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.controller.api.v1.trigger.audio
 
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.backend.utils.MultipartFileUtils
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/v1/trigger/audio")
-class TriggerAudioPostApiController : ApiController() {
+class TriggerDefaultAudioPostApiController : ApiController() {
 
     private val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
 
@@ -33,12 +33,12 @@ class TriggerAudioPostApiController : ApiController() {
         try {
             triggerDefaultAudioResponseCreator.create(
                 TriggerDefaultAudioResponseCreateRequest(
-                id = id,
-                triggerId = triggerId,
-                guildId = guildId,
-                fileName = MultipartFileUtils.makeTemporaryFileName(file),
-                content = file.bytes
-            )
+                    id = id,
+                    triggerId = triggerId,
+                    guildId = guildId,
+                    fileName = MultipartFileUtils.makeTemporaryFileName(file),
+                    content = file.bytes
+                )
             )
 
             return ResponseEntity.status(HttpStatus.CREATED).build()
@@ -46,7 +46,7 @@ class TriggerAudioPostApiController : ApiController() {
             logger.warning(exception.message)
 
             return when (exception) {
-                is TriggerAudioException -> ResponseEntity.badRequest().build()
+                is TriggerAudioResponseException -> ResponseEntity.badRequest().build()
                 else -> ResponseEntity.internalServerError().build()
             }
         }

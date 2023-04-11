@@ -21,7 +21,9 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
     @Test
     fun `should find a trigger by id`() {
         val id = UUID.randomUUID().toString()
-        createDummy(id = id)
+        val audioId = UUID.randomUUID().toString()
+        createAudioDummy(id = audioId)
+        createDummy(id = id, responseAudioId = audioId)
 
         val expectedBody = """
             {
@@ -51,7 +53,10 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
     fun `should find a triggers by discord guild id`() {
         val id = UUID.randomUUID().toString()
         val guildId = Random.nextLong(100000000, 999999999).toString()
-        createDummy(id = id, discordGuildId = guildId)
+        val audioId = UUID.randomUUID().toString()
+
+        createAudioDummy(id = audioId)
+        createDummy(id = id, discordGuildId = guildId, responseAudioId = audioId)
 
         val expectedBody = """
             {
@@ -94,8 +99,8 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
 
-        createDummy(id = id)
         createAudioDummy(id = audioId, triggerId = id)
+        createDummy(id = id, responseAudioId = audioId)
 
         val expectedBody = """
             {

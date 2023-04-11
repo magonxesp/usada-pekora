@@ -1,10 +1,10 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.controller.api.v1.trigger.audio
 
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFindResponse
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,7 +17,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/v1/trigger/audio")
-class TriggerAudioGetApiController : ApiController() {
+class TriggerDefaultAudioGetApiController : ApiController() {
 
     private val triggerAudioFinder: TriggerDefaultAudioFinder by inject(TriggerDefaultAudioFinder::class.java)
     private val triggerDefaultAudioReader: TriggerDefaultAudioReader by inject(TriggerDefaultAudioReader::class.java)
@@ -30,7 +30,7 @@ class TriggerAudioGetApiController : ApiController() {
             logger.warning(exception.message)
 
             when (exception) {
-                is TriggerAudioException.NotFound -> ResponseEntity.notFound().build()
+                is TriggerAudioResponseException.NotFound -> ResponseEntity.notFound().build()
                 else -> ResponseEntity.internalServerError().build()
             }
         }
@@ -45,7 +45,7 @@ class TriggerAudioGetApiController : ApiController() {
             logger.warning(exception.message)
 
             when (exception) {
-                is TriggerAudioException.NotFound -> ResponseEntity.notFound().build()
+                is TriggerAudioResponseException.NotFound -> ResponseEntity.notFound().build()
                 else -> ResponseEntity.internalServerError().build()
             }
         }

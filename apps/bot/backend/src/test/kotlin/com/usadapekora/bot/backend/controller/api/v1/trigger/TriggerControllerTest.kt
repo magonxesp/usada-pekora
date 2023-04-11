@@ -5,6 +5,7 @@ import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioR
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import org.koin.java.KoinJavaComponent.inject
 
 
@@ -18,7 +19,9 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
         title: String = "Dummy trigger",
         input: String = "peko",
         compare: String = "in",
-        outputText: String? = "It's a me pekora",
+        responseTextId: String? = "354448e9-b642-4e95-9f62-84c307cbfd0b",
+        responseAudioId: String? = "b0fcce03-7137-406c-8397-05b4d595bae9",
+        responseAudioProvider: String? = TriggerAudioResponseProvider.DEFAULT.value,
         discordGuildId: String = "94101459"
     ) {
         creator.create(
@@ -28,15 +31,15 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
                 input = input,
                 compare = compare,
                 discordGuildId = discordGuildId,
-                responseTextId = outputText,
-                responseAudioId = null,
-                responseAudioProvider = null
+                responseTextId = responseTextId,
+                responseAudioId = responseAudioId,
+                responseAudioProvider = responseAudioProvider
             )
         )
     }
 
     fun createAudioDummy(
-        id: String = "b0fcce03-7137-406c-8397-05b4d595bae9 ",
+        id: String = "b0fcce03-7137-406c-8397-05b4d595bae9",
         triggerId: String = "29da2a75-f5ba-4bff-99ee-3eb654716284",
         guildId: String = "94101459"
     ) {

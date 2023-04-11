@@ -18,7 +18,10 @@ class TriggerDeleteApiControllerTest : TriggerControllerTest() {
     @Test
     fun `should delete trigger by id`() {
         val id = UUID.randomUUID().toString()
-        createDummy(id = id)
+        val audioId = UUID.randomUUID().toString()
+
+        createAudioDummy(id = audioId)
+        createDummy(id = id, responseAudioId = audioId)
 
         request("/api/v1/trigger/$id").andExpect {
             assertEquals(200, it.response.status)

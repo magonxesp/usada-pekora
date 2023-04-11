@@ -1,6 +1,5 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
-import com.usadapekora.bot.backend.SpringBootHttpTestCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -8,7 +7,7 @@ import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerPostApiControllerTest : SpringBootHttpTestCase() {
+class TriggerPostApiControllerTest : TriggerControllerTest() {
 
     private fun requestTest(requestBody: String)
         = mockMvc.perform(
@@ -20,14 +19,18 @@ class TriggerPostApiControllerTest : SpringBootHttpTestCase() {
 
     @Test
     fun `should create a trigger making a POST request`() {
+        val audioId = UUID.randomUUID().toString()
+        createAudioDummy(id = audioId)
+
         val requestBody = """
             {
                 "id": "${UUID.randomUUID()}",
                 "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
-                "outputText": "It's a me pekora",
-                "discordGuildId": "94101459"
+                "discordGuildId": "94101459",
+                "responseAudioId": "$audioId",
+                "responseAudioProvider": "default"
             }
         """.trimIndent()
 
@@ -38,14 +41,18 @@ class TriggerPostApiControllerTest : SpringBootHttpTestCase() {
 
     @Test
     fun `should not create a duplicated trigger making a POST request`() {
+        val audioId = UUID.randomUUID().toString()
+        createAudioDummy(id = audioId)
+
         val requestBody = """
             {
                 "id": "${UUID.randomUUID()}",
                 "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
-                "outputText": "It's a me pekora",
                 "discordGuildId": "94101459"
+                "responseAudioId": "$audioId",
+                "responseAudioProvider": "default"
             }
         """.trimIndent()
 

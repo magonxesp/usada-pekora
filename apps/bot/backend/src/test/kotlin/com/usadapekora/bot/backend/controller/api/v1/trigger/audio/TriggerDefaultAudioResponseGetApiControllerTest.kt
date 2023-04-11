@@ -1,5 +1,6 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.controller.api.v1.trigger.audio
 
+import com.usadapekora.bot.backend.controller.api.v1.trigger.TriggerControllerTest
 import com.usadapekora.bot.backend.uglifyJson
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import org.springframework.http.MediaType

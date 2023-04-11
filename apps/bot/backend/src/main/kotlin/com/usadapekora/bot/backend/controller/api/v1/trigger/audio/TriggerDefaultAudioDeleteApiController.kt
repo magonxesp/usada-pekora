@@ -1,8 +1,8 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.controller.api.v1.trigger.audio
 
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import io.ktor.util.reflect.*
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable
 
 @RestController
 @RequestMapping("/api/v1/trigger/audio")
-class TriggerAudioDeleteApiController : ApiController() {
+class TriggerDefaultAudioDeleteApiController : ApiController() {
 
     private val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
 
@@ -28,7 +28,7 @@ class TriggerAudioDeleteApiController : ApiController() {
             logger.warning(exception.message)
 
             return when (exception) {
-                is TriggerAudioException.NotFound -> ResponseEntity.badRequest().build()
+                is TriggerAudioResponseException.NotFound -> ResponseEntity.badRequest().build()
                 else -> ResponseEntity.internalServerError().build()
             }
         }
