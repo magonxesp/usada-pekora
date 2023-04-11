@@ -50,7 +50,7 @@ class TriggerPostApiControllerTest : TriggerControllerTest() {
                 "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
-                "discordGuildId": "94101459"
+                "discordGuildId": "94101459",
                 "responseAudioId": "$audioId",
                 "responseAudioProvider": "default"
             }
