@@ -6,10 +6,10 @@ import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 
 class TriggerDefaultAudioFinder(private val repository: TriggerAudioDefaultRepository) {
 
-    fun find(id: String): TriggerDefaultAudioResponse
-        = TriggerDefaultAudioResponse.fromEntity(repository.find(TriggerAudioResponseId(id)))
+    fun find(id: String): TriggerDefaultAudioFindResponse
+        = TriggerDefaultAudioFindResponse.fromEntity(repository.find(TriggerAudioResponseId(id)))
 
-    fun findByTriggerId(triggerId: String): TriggerDefaultAudioResponse
-        = TriggerDefaultAudioResponse.fromEntity(repository.findByTrigger(Trigger.TriggerId(triggerId)))
+    fun findByTriggerId(triggerId: String): TriggerDefaultAudioFindResponse
+        = TriggerDefaultAudioFindResponse.fromEntity(repository.findByTrigger(Trigger.TriggerId(triggerId)))
 
 }

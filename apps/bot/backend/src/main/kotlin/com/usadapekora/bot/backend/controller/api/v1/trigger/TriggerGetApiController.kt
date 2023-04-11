@@ -2,7 +2,7 @@ package com.usadapekora.bot.backend.controller.api.v1.trigger
 
 import com.usadapekora.bot.application.trigger.find.*
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
-import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFindResponse
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioException
 import com.usadapekora.bot.domain.trigger.TriggerException
 import org.koin.java.KoinJavaComponent.inject
@@ -45,7 +45,7 @@ class TriggerGetApiController {
     }
 
     @GetMapping("{id}/audio")
-    fun findAudioByTriggerId(@PathVariable("id") id: String): ResponseEntity<TriggerDefaultAudioResponse> {
+    fun findAudioByTriggerId(@PathVariable("id") id: String): ResponseEntity<TriggerDefaultAudioFindResponse> {
         return try {
             ResponseEntity.of(Optional.of(audioFinder.findByTriggerId(id)))
         } catch (exception: Exception) {
