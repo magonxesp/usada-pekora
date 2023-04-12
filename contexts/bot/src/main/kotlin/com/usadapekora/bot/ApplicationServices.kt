@@ -63,7 +63,7 @@ val triggerModule = module {
     single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
-    single { TriggerUpdater(get()) }
+    single { TriggerUpdater(get(), get(), get()) }
     single { TriggerTextResponseCreator(get()) }
     single { TriggerDefaultAudioResponseCreator(get(), get()) }
     single { TriggerDefaultAudioFinder(get()) }

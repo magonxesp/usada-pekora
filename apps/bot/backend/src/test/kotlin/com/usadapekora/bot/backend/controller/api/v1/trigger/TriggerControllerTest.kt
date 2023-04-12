@@ -5,6 +5,8 @@ import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioR
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
+import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.text.TriggerContentType
 import org.koin.java.KoinJavaComponent.inject
@@ -14,6 +16,7 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
 
     private val creator: TriggerCreator by inject(TriggerCreator::class.java)
     private val audioCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
+    private val textCreator: TriggerTextResponseCreator by inject(TriggerTextResponseCreator::class.java)
 
     fun createDummy(
         id: String = "29da2a75-f5ba-4bff-99ee-3eb654716284",
@@ -60,6 +63,12 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
         content: String = "29da2a75-f5ba-4bff-99ee-3eb654716284\"Konpeko Konpeko Konpeko! 3rd Generation, Usada Pekora peko! Almond...almond....!!\"",
         type: TriggerContentType = TriggerContentType.TEXT
     ) {
-
+        textCreator.create(
+            TriggerTextResponseCreateRequest(
+                id = id,
+                content = content,
+                type = type.value
+            )
+        )
     }
 }

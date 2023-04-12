@@ -28,14 +28,16 @@ class TriggerPutApiControllerTest : TriggerControllerTest() {
     fun `should update trigger by id`() {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
+        val textId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
         createDummy(id = id, responseAudioId = audioId)
+        createTextDummy(id = textId)
 
         val requestBody = """
             {
                 "input": "pekopeko",
                 "compare": "in",
-                "responseTextId": null,
+                "responseTextId": "$textId",
                 "discordGuildId": "94101459"
             }
         """.uglifyJson()
@@ -50,7 +52,8 @@ class TriggerPutApiControllerTest : TriggerControllerTest() {
                 "title": "Dummy trigger",
                 "input": "pekopeko",
                 "compare": "in",
-                "responseTextId": null,
+                "responseTextId": "$textId",
+                "responseAudioId": "$audioId",
                 "discordGuildId": "94101459"
             }
         """.uglifyJson()

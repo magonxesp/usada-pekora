@@ -13,7 +13,7 @@ data class Trigger(
     var compare: TriggerCompare,
     var responseText: TriggerTextResponseId?,
     var responseAudio: TriggerAudioResponseId?,
-    val responseAudioProvider: TriggerAudioResponseProvider?,
+    var responseAudioProvider: TriggerAudioResponseProvider?,
     var discordGuildId: TriggerDiscordGuildId
 ) : Entity() {
     data class TriggerId(override val value: String) : UuidValueObject(value)
