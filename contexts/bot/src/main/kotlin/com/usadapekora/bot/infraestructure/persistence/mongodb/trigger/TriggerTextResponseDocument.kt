@@ -9,26 +9,20 @@ class TriggerTextResponseDocument(
     val _id: ObjectId? = null,
     val id: String = "",
     val content: String = "",
-    val type: String = "",
-    val triggerId: String = "",
-    val discordGuildId: String = ""
+    val type: String = ""
 ) : MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<TriggerTextResponse, TriggerTextResponseDocument>(TriggerTextResponseDocument()) {
         override fun fromEntity(entity: TriggerTextResponse, document: TriggerTextResponseDocument) = TriggerTextResponseDocument(
             _id = document._id,
             id = entity.id.value,
             content = entity.content.value,
-            type = entity.type.value,
-            triggerId = entity.triggerId.value,
-            discordGuildId = entity.discordGuildId.value
+            type = entity.type.value
         )
     }
 
     fun toEntity() = TriggerTextResponse.fromPrimitives(
         id = id,
         content = content,
-        type = type,
-        triggerId = triggerId,
-        discordGuildId = discordGuildId
+        type = type
     )
 }

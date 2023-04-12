@@ -4,19 +4,15 @@ import com.usadapekora.bot.domain.ObjectMother
 import com.usadapekora.bot.domain.Random
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 
-object TriggerTextMother : ObjectMother<TriggerTextResponse> {
+object TriggerTextResponseMother : ObjectMother<TriggerTextResponse> {
     fun create(
         id: String? = null,
         content: String? = null,
-        type: String? = null,
-        triggerId: String? = null,
-        guildId: String? = null
+        type: String? = null
     ) = TriggerTextResponse.fromPrimitives(
         id = id ?: Random.instance().random.nextUUID(),
         content = content ?: Random.instance().chiquito.jokes(),
-        type = type ?: "text",
-        triggerId = triggerId ?: Random.instance().random.nextUUID(),
-        discordGuildId = guildId ?: Random.instance().random.nextUUID()
+        type = type ?: "text"
     )
 
     override fun random(): TriggerTextResponse = create()

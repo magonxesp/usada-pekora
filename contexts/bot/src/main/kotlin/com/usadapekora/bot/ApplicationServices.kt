@@ -5,6 +5,7 @@ import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
 import com.usadapekora.bot.application.guild.GuildPreferencesFinder
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
+import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
@@ -63,6 +64,7 @@ val triggerModule = module {
     single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get()) }
+    single { TriggerTextResponseCreator(get()) }
     single { TriggerDefaultAudioResponseCreator(get(), get()) }
     single { TriggerDefaultAudioFinder(get()) }
     single { TriggerDefaultAudioDeleter(get(), get()) }
