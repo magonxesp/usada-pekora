@@ -8,7 +8,7 @@ import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextMother
+import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -21,7 +21,7 @@ class TriggerCreatorTest {
     @Test
     fun `should create and save a trigger`() {
         val audioResponse = TriggerAudioDefaultMother.create()
-        val textResponse = TriggerTextMother.create()
+        val textResponse = TriggerTextResponseMother.create()
         val trigger = TriggerMother.create(responseTextId = textResponse.id.value, responseAudioId = audioResponse.id.value)
 
         val repository = mockk<TriggerRepository>(relaxed = true)
@@ -52,7 +52,7 @@ class TriggerCreatorTest {
     @Test
     fun `should not create and save a trigger without response`() {
         val audioResponse = TriggerAudioDefaultMother.create()
-        val textResponse = TriggerTextMother.create()
+        val textResponse = TriggerTextResponseMother.create()
         val trigger = TriggerMother.create(responseTextId = textResponse.id.value, responseAudioId = audioResponse.id.value)
 
         val repository = mockk<TriggerRepository>(relaxed = true)
@@ -85,7 +85,7 @@ class TriggerCreatorTest {
     @Test
     fun `should not create an existing trigger`() {
         val audioResponse = TriggerAudioDefaultMother.create()
-        val textResponse = TriggerTextMother.create()
+        val textResponse = TriggerTextResponseMother.create()
         val trigger = TriggerMother.create(responseTextId = textResponse.id.value, responseAudioId = audioResponse.id.value)
         val repository = mockk<TriggerRepository>(relaxed = true)
         val audioResponseRepository = mockk<TriggerAudioResponseRepository>()

@@ -31,7 +31,8 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
                 "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
-                "outputText": "It's a me pekora",
+                "responseTextId": null,
+                "responseAudioId": "$audioId",
                 "discordGuildId": "94101459"
             }
         """.uglifyJson()
@@ -66,7 +67,8 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
                         "title": "Dummy trigger",
                         "input": "peko",
                         "compare": "in",
-                        "outputText": "It's a me pekora",
+                        "responseTextId": null,
+                        "responseAudioId": "$audioId",
                         "discordGuildId": "$guildId"
                     }
                 ]

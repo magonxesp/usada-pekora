@@ -7,7 +7,8 @@ data class TriggerResponse(
     val title: String,
     val input: String,
     val compare: String,
-    val outputText: String?,
+    val responseTextId: String?,
+    val responseAudioId: String?,
     val discordGuildId: String
 ) {
     companion object {
@@ -16,7 +17,8 @@ data class TriggerResponse(
             title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.value,
-            outputText = entity.responseText?.value,
+            responseTextId = entity.responseText?.value,
+            responseAudioId = entity.responseAudio?.value,
             discordGuildId = entity.discordGuildId.value
         )
     }
