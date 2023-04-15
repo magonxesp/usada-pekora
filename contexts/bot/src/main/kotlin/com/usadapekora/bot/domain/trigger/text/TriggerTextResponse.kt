@@ -4,10 +4,10 @@ import com.usadapekora.bot.domain.shared.Entity
 
 data class TriggerTextResponse(
     val id: TriggerTextResponseId,
-    var content: TriggerTextContent,
-    val type: TriggerContentType
+    var content: TriggerTextResponseContent,
+    var type: TriggerTextResponseContentType
 ) : Entity() {
-    data class TriggerTextContent(val value: String)
+    data class TriggerTextResponseContent(val value: String)
 
     companion object {
         fun fromPrimitives(
@@ -16,8 +16,8 @@ data class TriggerTextResponse(
             type: String
         ) = TriggerTextResponse(
             id = TriggerTextResponseId(id),
-            content = TriggerTextContent(content),
-            type = TriggerContentType.fromValue(type)
+            content = TriggerTextResponseContent(content),
+            type = TriggerTextResponseContentType.fromValue(type)
         )
     }
 

@@ -8,7 +8,7 @@ import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
-import com.usadapekora.bot.domain.trigger.text.TriggerContentType
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseContentType
 import org.koin.java.KoinJavaComponent.inject
 
 
@@ -61,7 +61,7 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
     fun createTextDummy(
         id: String = "910c4093-1e02-442e-bbd4-eaffc1aac105",
         content: String = "29da2a75-f5ba-4bff-99ee-3eb654716284\"Konpeko Konpeko Konpeko! 3rd Generation, Usada Pekora peko! Almond...almond....!!\"",
-        type: TriggerContentType = TriggerContentType.TEXT
+        type: TriggerTextResponseContentType = TriggerTextResponseContentType.TEXT
     ) {
         textCreator.create(
             TriggerTextResponseCreateRequest(
