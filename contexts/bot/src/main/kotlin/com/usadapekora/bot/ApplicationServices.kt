@@ -8,6 +8,7 @@ import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
+import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDeleter
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.guild.MongoDbGuildPreferencesRepository
@@ -16,8 +17,10 @@ import com.usadapekora.bot.domain.shared.Logger
 import com.usadapekora.bot.infraestructure.cache.RedisKeyValueCacheStorage
 import com.usadapekora.bot.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
+import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
+import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
@@ -65,6 +68,9 @@ val triggerModule = module {
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get(), get(), get()) }
     single { TriggerTextResponseCreator(get()) }
+    single { TriggerTextResponseFinder(get()) }
+    single { TriggerTextResponseDeleter(get()) }
+    single { TriggerTextResponseUpdater(get()) }
     single { TriggerDefaultAudioResponseCreator(get(), get()) }
     single { TriggerDefaultAudioFinder(get()) }
     single { TriggerDefaultAudioDeleter(get(), get()) }
