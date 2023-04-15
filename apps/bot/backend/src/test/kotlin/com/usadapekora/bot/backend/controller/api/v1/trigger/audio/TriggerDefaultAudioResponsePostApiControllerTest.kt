@@ -14,7 +14,7 @@ class TriggerDefaultAudioResponsePostApiControllerTest : SpringBootHttpTestCase(
 
     private fun uploadAudioFileRequest(audioId: String, triggerId: String, guildId: String)
         = mockMvc.perform(
-            MockMvcRequestBuilders.multipart(HttpMethod.POST, "/api/v1/trigger/audio")
+            MockMvcRequestBuilders.multipart(HttpMethod.POST, "/api/v1/trigger/response/audio")
                 .file(MockMultipartFile("file", readResource("/assets_audio_Its_me_pekora.mp3")))
                 .param("id", audioId)
                 .param("triggerId", triggerId)

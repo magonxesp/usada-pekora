@@ -14,7 +14,7 @@ class TriggerDefaultAudioResponseDeleteApiControllerTest : SpringBootHttpTestCas
 
     private fun uploadAudioFileRequest(audioId: String, triggerId: String, guildId: String)
         = mockMvc.perform(
-            MockMvcRequestBuilders.multipart(HttpMethod.POST, "/api/v1/trigger/audio")
+            MockMvcRequestBuilders.multipart(HttpMethod.POST, "/api/v1/trigger/response/audio")
                 .file(MockMultipartFile("file", readResource("/assets_audio_Its_me_pekora.mp3")))
                 .param("id", audioId)
                 .param("triggerId", triggerId)
@@ -24,7 +24,7 @@ class TriggerDefaultAudioResponseDeleteApiControllerTest : SpringBootHttpTestCas
 
     private fun deleteRequest(audioId: String)
         = mockMvc.perform(
-            MockMvcRequestBuilders.delete("/api/v1/trigger/audio/$audioId")
+            MockMvcRequestBuilders.delete("/api/v1/trigger/response/audio/$audioId")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )

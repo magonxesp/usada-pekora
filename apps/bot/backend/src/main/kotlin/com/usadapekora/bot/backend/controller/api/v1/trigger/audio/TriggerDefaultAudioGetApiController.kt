@@ -16,7 +16,7 @@ import java.util.*
 
 
 @RestController
-@RequestMapping("/api/v1/trigger/audio")
+@RequestMapping("/api/v1/trigger/response/audio")
 class TriggerDefaultAudioGetApiController : ApiController() {
 
     private val triggerAudioFinder: TriggerDefaultAudioFinder by inject(TriggerDefaultAudioFinder::class.java)

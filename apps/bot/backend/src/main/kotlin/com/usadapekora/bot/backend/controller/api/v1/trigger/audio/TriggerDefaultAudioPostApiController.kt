@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile
 
 
 @RestController
-@RequestMapping("/api/v1/trigger/audio")
+@RequestMapping("/api/v1/trigger/response/audio")
 class TriggerDefaultAudioPostApiController : ApiController() {
 
     private val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)

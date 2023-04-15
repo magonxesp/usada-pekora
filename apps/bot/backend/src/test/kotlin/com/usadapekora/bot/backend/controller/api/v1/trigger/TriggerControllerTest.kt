@@ -60,7 +60,7 @@ abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
 
     fun createTextDummy(
         id: String = "910c4093-1e02-442e-bbd4-eaffc1aac105",
-        content: String = "29da2a75-f5ba-4bff-99ee-3eb654716284\"Konpeko Konpeko Konpeko! 3rd Generation, Usada Pekora peko! Almond...almond....!!\"",
+        content: String = "Konpeko Konpeko Konpeko! 3rd Generation, Usada Pekora peko! Almond...almond....!!",
         type: TriggerTextResponseContentType = TriggerTextResponseContentType.TEXT
     ) {
         textCreator.create(

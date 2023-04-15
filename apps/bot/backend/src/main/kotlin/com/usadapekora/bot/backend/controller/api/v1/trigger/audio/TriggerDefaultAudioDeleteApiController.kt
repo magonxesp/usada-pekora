@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable
 
 
 @RestController
-@RequestMapping("/api/v1/trigger/audio")
+@RequestMapping("/api/v1/trigger/response/audio")
 class TriggerDefaultAudioDeleteApiController : ApiController() {
 
     private val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
