@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { emptyTriggerFormData, TriggerFormData } from '../../../../shared/helpers/form/trigger'
+import { TriggerFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import Sidebar from '../../../shared/sidebar/Sidebar'
 import TriggerForm from './TriggerForm'
 
@@ -45,7 +45,7 @@ export default function TriggerFormSidebar({ onSidebarClose, onSubmit, title, in
       </Sidebar.Header>
       <Sidebar.Body>
         <TriggerForm
-          triggerFormData={initialFormData ?? emptyTriggerFormData()}
+          triggerFormData={initialFormData}
           onSubmit={handleSubmit}
           disableSubmit={disableSubmit}
         />
