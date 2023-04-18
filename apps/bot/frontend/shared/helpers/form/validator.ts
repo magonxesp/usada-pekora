@@ -60,7 +60,7 @@ export class Validator {
     this.errors = {}
   }
 
-  getErrors(): FormData {
+  getErrors(): FormErrors {
     return this.errors
   }
 
