@@ -3,15 +3,17 @@ import axios, { toFormData } from 'axios'
 import { Trigger } from '../../domain/trigger'
 
 interface TriggerCreateRequest {
-  id: string,
+  id: string
   title: string
-  input: string,
-  compare: string,
-  outputText?: string,
+  input: string
+  compare: string
   discordGuildId: string
+  responseTextId?: string
+  responseAudioId?: string
+  responseAudioProvider?: string
 }
 
-interface TriggerAudioCreateRequest {
+interface TriggerDefaultAudioResponseCreateRequest {
   id: string
   file: File|Buffer
   triggerId: string
@@ -19,12 +21,13 @@ interface TriggerAudioCreateRequest {
 }
 
 interface TriggerResponse {
-  id: string
-  title: string
-  input: string
-  compare: string
-  outputText?: string
-  discordGuildId: string
+  id: string;
+  title: string;
+  input: string;
+  compare: string;
+  responseTextId?: string;
+  responseAudioId?: string;
+  discordGuildId: string;
 }
 
 interface TriggersResponse {
@@ -35,8 +38,10 @@ interface TriggerUpdateRequestNewValues {
   title?: string
   input?: string
   compare?: string
-  outputText?: string
+  responseTextId?: string
+  responseAudioId?: string
   discordGuildId?: string
+  responseAudioProvider?: string
 }
 
 interface TriggerUpdateRequest {
@@ -49,11 +54,12 @@ const triggerResponseToDomainEntity = (item: TriggerResponse) => new Trigger({
   title: item.title,
   compare: item.compare,
   input: item.input,
-  discordServerId: item.discordGuildId,
-  outputText: item.outputText ?? null
+  discordGuildId: item.discordGuildId,
+  responseTextId: item.responseTextId ?? null,
+  responseAudioId: item.responseAudioId ?? null
 })
 
-export async function createTriggerAudio(audio: TriggerAudioCreateRequest) {
+export async function createTriggerAudio(audio: TriggerDefaultAudioResponseCreateRequest) {
   await axios.post(backendUrl("/api/v1/trigger/audio"), toFormData(audio), {
     headers: headers("multipart/form-data")
   })

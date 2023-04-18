@@ -13,8 +13,9 @@ export interface TriggerObject {
   title: string
   input: string
   compare: string
-  outputText: string|null
-  discordServerId: string
+  responseTextId: string|null
+  responseAudioId: string|null
+  discordGuildId: string
 }
 
 export class Trigger {
@@ -23,16 +24,18 @@ export class Trigger {
   public readonly title: string
   public readonly input: string
   public readonly compare: TriggerCompare
-  public readonly discordServerId: string
-  public readonly outputText: string|null
+  public readonly responseTextId: string|null
+  public readonly responseAudioId: string|null
+  public readonly discordGuildId: string
 
   constructor(values: TriggerObject) {
     this.title = values.title
     this.id = values.id
     this.input = values.input
     this.compare = values.compare as TriggerCompare
-    this.discordServerId = values.discordServerId
-    this.outputText = values.outputText
+    this.responseTextId = values.responseTextId
+    this.responseAudioId = values.responseAudioId
+    this.discordGuildId = values.discordGuildId
   }
 
 }
