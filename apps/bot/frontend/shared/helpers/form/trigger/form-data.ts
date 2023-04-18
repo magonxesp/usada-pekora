@@ -13,10 +13,16 @@ export interface TriggerTextResponseFormData {
   type: string
 }
 
+export interface TriggerAudioResponseFormData {
+  id: string
+  content: FileList|null,
+  provider: string
+}
+
 export interface TriggerFormData extends TriggerEntityFormData {
   id: string,
   responseText?: TriggerTextResponseFormData,
-  responseAudio: File|Buffer|null,
+  responseAudio?: TriggerAudioResponseFormData,
   discordGuildId: string
 }
 
@@ -25,7 +31,6 @@ export const emptyTriggerFormData = (): TriggerFormData => ({
   title: "",
   input: "",
   compare: TriggerCompare.CONTAINS,
-  responseAudio: null,
   discordGuildId: ""
 })
 
@@ -33,4 +38,10 @@ export const emptyTriggerResponseTextFormData = (): TriggerTextResponseFormData 
   id: uuidv4(),
   content: "",
   type: "text"
+})
+
+export const emptyTriggerResponseAudioFormData = (): TriggerAudioResponseFormData => ({
+  id: uuidv4(),
+  content: null,
+  provider: "default"
 })
