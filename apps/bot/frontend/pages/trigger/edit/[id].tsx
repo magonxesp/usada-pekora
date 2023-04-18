@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import { asyncAlert } from '../../../shared/helpers/alert'
 import TriggerFormSidebar from '../../../components/domain/trigger/form/TriggerFormSidebar'
-import { submitTriggerUpdateRequest, TriggerFormData, triggerToFormData } from '../../../shared/helpers/form/trigger'
+import { submitTriggerUpdateRequest, TriggerFormData, triggerToFormData } from '../../../shared/helpers/form/trigger/trigger'
 import { fetchTriggerById } from '../../../shared/api/backend/trigger'
 import { Trigger, TriggerObject } from '../../../shared/domain/trigger'
 

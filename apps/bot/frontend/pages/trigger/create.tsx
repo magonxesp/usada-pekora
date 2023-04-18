@@ -3,7 +3,7 @@ import GuildTriggersView from '../../components/views/guild-triggers-view/GuildT
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import { asyncAlert } from '../../shared/helpers/alert'
-import { submitTriggerCreateRequest, TriggerFormData } from '../../shared/helpers/form/trigger'
+import { submitTriggerCreateRequest, TriggerFormData } from '../../shared/helpers/form/trigger/trigger'
 import TriggerFormSidebar from '../../components/domain/trigger/form/TriggerFormSidebar'
 
 const NewTrigger: NextPage = () => {
