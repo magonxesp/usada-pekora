@@ -25,8 +25,8 @@ export const TriggerAudioResponseFormGroup = forwardRef(
 
     return (
       <InputWrapper
-        label={intl.$t({ id: 'trigger.form.output_audio.label' })}
-        help={intl.$t({ id: 'trigger.form.output_audio.description' })}
+        label={intl.$t({ id: 'trigger.form.response_audio.file.label' })}
+        help={intl.$t({ id: 'trigger.form.response_audio.file.description' })}
       >
         <>
           <InputWrapper.Input>

@@ -33,12 +33,17 @@ export const TriggerTextResponseFormGroup = forwardRef(
 
     return (
       <InputWrapper
-        label={intl.$t({ id: 'trigger.form.output_text.label' })}
-        help={intl.$t({ id: 'trigger.form.output_text.description' })}
+        label={intl.$t({ id: 'trigger.form.response_text.content.label' })}
+        help={intl.$t({ id: 'trigger.form.response_text.content.description' })}
       >
-        <InputWrapper.Input>
-          <input type="text" defaultValue={formData.content} onChange={handleValueChange} name="content" />
-        </InputWrapper.Input>
+        <>
+          <InputWrapper.Input>
+            <input type="text" defaultValue={formData.content} onChange={handleValueChange} name="content" />
+          </InputWrapper.Input>
+          {(errors.content ?? []).map((error, index) => (
+            <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
+          ))}
+        </>
       </InputWrapper>
     )
   }
