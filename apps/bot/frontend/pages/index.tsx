@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import GuildTriggersView from '../components/views/guild-triggers-view/GuildTriggersView'
+import GuildTriggersView from '../components/views/GuildTriggersView/GuildTriggersView'
 
 
 const Home: NextPage = () => {

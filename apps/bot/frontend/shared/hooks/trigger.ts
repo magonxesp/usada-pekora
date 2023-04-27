@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useIntl } from 'react-intl'
 import { Trigger } from '../domain/trigger'
-import ConfirmModal from '../../components/shared/modal/ConfirmModal'
+import ConfirmModal from '../../components/common/modal/ConfirmModal/ConfirmModal'
 import { showModal } from '../../store/slices/app-slice'
 import { createElement } from 'react'
 import { deleteTrigger } from '../api/backend/trigger'

@@ -1,73 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-    :root {
-        --color-primary: #A5B4FC; /* Indigo 300 */
-        --color-secondary: #c7d2fe; /* Indigo 200 */
-        --color-danger: #dc2626; /* Red 600 */
-
-        --color-primary-active: #6366F1; /* Indigo 500 */
-        --color-secondary-active: #818CF8; /* Indigo 400 */
-        --color-danger-active: #991B1B; /* Red 800 */
-    }
-
-    .heading-1 {
-        @apply text-2xl
-    }
-
-    .heading-2 {
-        @apply text-xl
-    }
-
-    .heading-3 {
-        @apply text-lg
-    }
-
-    .heading-1,
-    .heading-2,
-    .heading-3 {
-        @apply py-5
-    }
-
-    button, .button {
-        @apply cursor-pointer py-2 px-3 m-1 text-center rounded
-    }
-
-    button > *,
-    .button > * {
-        @apply inline-block align-sub
-    }
-
-    button.bg-primary,
-    button.bg-secondary,
-    button.bg-danger,
-    .button.bg-primary,
-    .button.bg-secondary,
-    .button.bg-danger{
-        @apply text-white
-    }
-
-    a {
-        @apply text-primary
-    }
-
-    a:hover {
-        @apply underline
-    }
-
-    form {
-        @apply space-y-2.5
-    }
-
-    form button,
-    form .button {
-        @apply mx-0
-    }
-}
-
 :root {
+    --color-primary: #A5B4FC; /* Indigo 300 */
+    --color-secondary: #c7d2fe; /* Indigo 200 */
+    --color-danger: #dc2626; /* Red 600 */
+
+    --color-primary-active: #6366F1; /* Indigo 500 */
+    --color-secondary-active: #818CF8; /* Indigo 400 */
+    --color-danger-active: #991B1B; /* Red 800 */
+
     --header-border-color: var(--color-primary);
 }
 
