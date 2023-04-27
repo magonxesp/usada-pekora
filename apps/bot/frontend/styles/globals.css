@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
     --color-primary: #A5B4FC; /* Indigo 300 */
     --color-secondary: #c7d2fe; /* Indigo 200 */
@@ -7,11 +9,13 @@
     --color-secondary-active: #818CF8; /* Indigo 400 */
     --color-danger-active: #991B1B; /* Red 800 */
 
-    --header-border-color: var(--color-primary);
+    --main-container-width: 1216px;
 }
 
 body {
+    margin: 0;
     overflow-x: hidden;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 img {
