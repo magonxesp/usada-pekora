@@ -17,13 +17,3 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
 }
-
-img {
-    pointer-events: none;
-}
-
-button:active {
-    --primary-background-color: var(--primary-active-background-color);
-    --secondary-background-color: var(--secondary-active-background-color);
-    --danger-background-color: var(--danger-active-background-color);
-}
