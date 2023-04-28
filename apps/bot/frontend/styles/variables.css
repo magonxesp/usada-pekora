@@ -1,0 +1,43 @@
+:root {
+    --container-width: 1216px;
+    --default-border-radius: 8px;
+
+    --background-color: white;
+    --text-color: black;
+
+    --primary-background-color: #666cc8;
+    --primary-text-color: white;
+
+    --secondary-background-color: #8591c9;
+    --secondary-text-color: white;
+
+    --terciary-background-color: #AAB3DA;
+    --terciary-text-color: black;
+
+    --danger-background-color: #E66C40;
+    --danger-text-color: white;
+
+    --primary-active-background-color: #5A61C4;
+    --primary-active-text-color: white;
+
+    --secondary-active-background-color: #7F8DC7;
+    --secondary-active-text-color: white;
+
+    --danger-active-background-color: #E35926;
+    --danger-active-text-color: white;
+
+    --primary-hover-background-color: var(--primary-background-color);
+    --primary-hover-text-color: white;
+
+    --secondary-hover-background-color: var(--secondary-background-color);
+    --secondary-hover-text-color: white;
+
+    --primary-border-color: #D1D5DB;
+    --primary-active-border-color: var(--primary-background-color);
+
+    --text-disabled-color: #9CA3AF;
+
+    --input-border-color: var(--primary-border-color);
+    --select-option-background-color: var(--terciary-background-color);
+    --select-option-text-color: var(--terciary-text-color);
+}

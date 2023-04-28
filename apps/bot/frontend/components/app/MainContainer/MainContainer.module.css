@@ -1,4 +1,4 @@
 .main {
     margin: 0 auto;
-    min-width: var(--main-container-width);
+    min-width: var(--container-width);
 }

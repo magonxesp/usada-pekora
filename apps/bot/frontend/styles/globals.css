@@ -1,21 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "variables.css";
+@import "layout/sections.css";
+@import "components/common/image.css";
+@import "components/common/input.css";
+@import "components/common/select.css";
+@import "components/common/button.css";
 
-:root {
-    --color-primary: #A5B4FC; /* Indigo 300 */
-    --color-secondary: #c7d2fe; /* Indigo 200 */
-    --color-danger: #dc2626; /* Red 600 */
-
-    --color-primary-active: #6366F1; /* Indigo 500 */
-    --color-secondary-active: #818CF8; /* Indigo 400 */
-    --color-danger-active: #991B1B; /* Red 800 */
-
-    --main-container-width: 1216px;
+* {
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
     overflow-x: hidden;
     font-family: 'Noto Sans', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 img {
@@ -23,7 +23,7 @@ img {
 }
 
 button:active {
-    --color-primary: var(--color-primary-active);
-    --color-secondary: var(--color-secondary-active);
-    --color-danger: var(--color-danger-active);
+    --primary-background-color: var(--primary-active-background-color);
+    --secondary-background-color: var(--secondary-active-background-color);
+    --danger-background-color: var(--danger-active-background-color);
 }

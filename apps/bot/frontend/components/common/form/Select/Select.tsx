@@ -1,37 +1,52 @@
-import { useEffect, useState } from 'react'
-import { SelectOption } from '../../../../shared/helpers/form/select-option'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import Image from 'next/image'
-import Picture from '../../image/Picture/Picture'
+import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
-interface ComponentProps {
-  options: SelectOption[]
-  onChange?: (selected: SelectOption) => void,
-  selected?: any
+export interface Option {
+  label: string
+  value: string|number
+  disabled?: boolean
 }
 
-export default function Select(props: ComponentProps) {
-  const { options, onChange, selected } = props
-  const [selectedOption, setSelectedOption] = useState(options[0])
+interface SelectProps {
+  options: Option[]
+  onChange?: (selected: Option) => void
+  selected?: string|number
+}
 
-  useEffect(() => {
-    const option = options.filter(option => option.value == selected).shift()
+export default function Select({ options, onChange, selected }: SelectProps) {
+  const initialSelectedState = options.filter(option => option.value === selected).shift()
+  const [selectedOption, setSelectedOption] = useState(initialSelectedState)
 
-    if (option) {
-      setSelectedOption(option)
+  const handleSelectedOption = (option: Option) => {
+    if (option.disabled) {
+      return
     }
-  }, [selected])
 
-  const onChangeSelectedOption = (option: SelectOption) => {
     setSelectedOption(option)
-
-    if (onChange) {
-      onChange(option)
-    }
+    typeof onChange !== 'undefined' && onChange(option)
   }
 
   return (
-    <p>Hola select</p>
+    <div className="select">
+      <select>
+        {options.map((option, index) => (
+          <option
+            key={index}
+            value={option.value}
+            disabled={option.disabled}
+            onClick={() => handleSelectedOption(option)}
+            selected={selectedOption?.value === option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <span className="arrow">
+        <FontAwesomeIcon className="arrowIcon" icon={faChevronUp} />
+        <FontAwesomeIcon className="arrowIcon" icon={faChevronDown} />
+      </span>
+    </div>
   )
 }
 

@@ -1,0 +1,10 @@
+input,
+select,
+textarea,
+.input {
+    border-radius: var(--default-border-radius);
+    border: 2px solid var(--input-border-color);
+    font-size: 1rem;
+    padding: 10px;
+    gap: 10px;
+}

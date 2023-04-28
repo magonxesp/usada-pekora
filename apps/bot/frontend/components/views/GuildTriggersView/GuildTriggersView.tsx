@@ -40,8 +40,10 @@ export default function GuildTriggersView() {
 
   return (
     <>
-      <UserGuildSelect />
-      <div className="py-5">
+      <section>
+        <UserGuildSelect />
+      </section>
+      <section>
         <div className="flex justify-between items-center">
           <h1 className="heading-1">Reacciones</h1>
           <Link href="/trigger/create">
@@ -55,7 +57,7 @@ export default function GuildTriggersView() {
         ) : (
           <TriggerListSkeleton />
         )}
-      </div>
+      </section>
     </>
   )
 }

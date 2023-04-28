@@ -2,13 +2,13 @@
     width: 100%;
     border-bottom-width: 4px;
     border-bottom-style: solid;
-    border-bottom-color: var(--color-primary);
+    border-bottom-color: var(--primary-background-color);
     overflow: hidden;
 }
 
 .innerContainer {
     margin: 0 auto;
-    width: var(--main-container-width);
+    width: var(--container-width);
     display: flex;
     justify-content: space-between;
     align-items: center;

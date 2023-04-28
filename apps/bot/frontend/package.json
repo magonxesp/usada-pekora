@@ -24,7 +24,11 @@
     "react-toastify": "^9.1.1",
     "redux": "^4.2.0",
     "undici": "^5.10.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0"
   },
   "devDependencies": {
     "@types/formidable": "^2.0.5",
