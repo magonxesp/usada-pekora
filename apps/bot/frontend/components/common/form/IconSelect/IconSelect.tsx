@@ -1,4 +1,4 @@
-import { LegacyRef, useRef, useState } from 'react'
+import { LegacyRef, useEffect, useRef, useState } from 'react'
 import styles from './IconSelect.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp, faQuestion } from '@fortawesome/free-solid-svg-icons'
@@ -48,11 +48,13 @@ export default function IconSelect({ options, onChange, selected, className }: I
   const [showOptions, setShowOptions] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
 
-  document.addEventListener('mousedown', (event) => {
-    if (event.target instanceof HTMLElement && selectRef.current && !selectRef.current?.contains(event.target)) {
-      setShowOptions(false)
-    }
-  })
+  useEffect(() => {
+    document.addEventListener('mousedown', (event) => {
+      if (event.target instanceof HTMLElement && selectRef.current && !selectRef.current?.contains(event.target)) {
+        setShowOptions(false)
+      }
+    })
+  }, [])
 
   const handleSelectedOption = (option: Option) => {
     setSelectedOption(option)

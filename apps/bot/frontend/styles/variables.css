@@ -40,4 +40,7 @@
     --input-border-color: var(--primary-border-color);
     --select-option-background-color: var(--terciary-background-color);
     --select-option-text-color: var(--terciary-text-color);
+
+    --skeleton-background-color: #CCCCCC;
+    --skeleton-foreground-color: #D6D6D6;
 }

@@ -1,0 +1,22 @@
+.skeleton {
+    background-color: var(--skeleton-background-color);
+    border-radius: var(--default-border-radius);
+    width: fit-content;
+    animation-name: loading;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes loading {
+    from {
+        background-color: var(--skeleton-background-color);
+    }
+    to {
+        background-color: var(--skeleton-foreground-color);
+    }
+}
+
+.skeleton > * {
+    visibility: hidden;
+}
