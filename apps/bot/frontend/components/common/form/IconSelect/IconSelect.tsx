@@ -1,4 +1,4 @@
-import { LegacyRef, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './IconSelect.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp, faQuestion } from '@fortawesome/free-solid-svg-icons'
