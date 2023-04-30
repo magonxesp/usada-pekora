@@ -43,7 +43,8 @@ export default function IconSelect({ options, onChange, selected, className }: I
     value: ""
   }
 
-  const initialSelectedState = options.filter(option => option.value === selected).shift()
+  const firstOptionValue = options[0]?.value
+  const initialSelectedState = options.filter(option => option.value === (selected ?? firstOptionValue)).shift()
   const [selectedOption, setSelectedOption] = useState(initialSelectedState)
   const [showOptions, setShowOptions] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
