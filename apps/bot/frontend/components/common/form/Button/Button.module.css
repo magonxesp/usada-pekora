@@ -16,6 +16,7 @@
 
 .button.transparent,
 .button.transparent:hover {
+    min-width: 0;
     background-color: transparent;
     color: var(--text-color);
 }

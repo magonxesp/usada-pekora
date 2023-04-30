@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { TriggerFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import Sidebar from '../../../common/layout/Sidebar/Sidebar'
 import TriggerForm from '../TriggerForm/TriggerForm'
+import SidebarHeading from '../../../common/layout/SidebarHeading/SidebarHeading'
+import SidebarBody from '../../../common/layout/SidebarBody/SidebarBody'
+import SidebarTitle from '../../../common/layout/SidebarTitle/SidebarTitle'
 
 interface TriggerFormSidebarProps {
   onSidebarClose?: () => void
@@ -38,18 +41,18 @@ export default function TriggerFormSidebar({ onSidebarClose, onSubmit, title, in
 
   return (
     <Sidebar show={isOpened}>
-      <Sidebar.Header onClose={closeSidebar}>
-        <h2 className="heading-2 py-0">
-          {title}
-        </h2>
-      </Sidebar.Header>
-      <Sidebar.Body>
-        <TriggerForm
-          triggerFormData={initialFormData}
-          onSubmit={handleSubmit}
-          disableSubmit={disableSubmit}
-        />
-      </Sidebar.Body>
+      <>
+        <SidebarHeading onClose={closeSidebar}>
+          <SidebarTitle>{title}</SidebarTitle>
+        </SidebarHeading>
+        <SidebarBody>
+          <TriggerForm
+            triggerFormData={initialFormData}
+            onSubmit={handleSubmit}
+            disableSubmit={disableSubmit}
+          />
+        </SidebarBody>
+      </>
     </Sidebar>
   )
 }
