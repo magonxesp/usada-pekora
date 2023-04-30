@@ -39,7 +39,7 @@ export default function ConfirmModal({ onConfirm, onReject, rejectText, confirmT
           </div>
           <p className="text-center text-lg py-4">{message}</p>
           <div className="flex justify-center ">
-            <Button onClick={() => handleAction('reject')} color="secondary">
+            <Button onClick={() => handleAction('reject')} style="secondary">
               {rejectText ?? intl.$t({ id: 'confirm_modal.default.reject_button_text' })}
             </Button>
             <Button onClick={() => handleAction('confirm')}>

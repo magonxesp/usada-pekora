@@ -1,4 +1,4 @@
-section {
+.section {
     width: var(--container-width);
     margin: 0 auto;
     padding: 36px 0;

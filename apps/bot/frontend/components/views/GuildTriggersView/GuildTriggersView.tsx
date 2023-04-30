@@ -9,6 +9,9 @@ import UserGuildSelect from '../../domain/guild/UserGuildSelect/UserGuildSelect'
 import TriggerListSkeleton from '../../domain/trigger/TriggerListSkeleton/TriggerListSkeleton'
 import { useSelectedGuild } from '../../../shared/hooks/guilds'
 import { useFetchTriggers } from '../../../shared/hooks/fetch'
+import SectionHeading from '../../common/layout/SectionHeading/SectionHeading'
+import Section from '../../common/layout/Section/Section'
+import Button from '../../common/form/Button/Button'
 
 export default function GuildTriggersView() {
   const dispatch = useDispatch();
@@ -40,24 +43,28 @@ export default function GuildTriggersView() {
 
   return (
     <>
-      <section>
+      <Section>
         <UserGuildSelect />
-      </section>
-      <section>
-        <div className="flex justify-between items-center">
-          <h1 className="heading-1">Reacciones</h1>
-          <Link href="/trigger/create">
-            <button className="bg-primary">Añadir</button>
-          </Link>
-        </div>
-        {!loading && triggers.length > 0 ? (
-          <TriggerList items={triggers} />
-        ) : !loading && triggers.length == 0 ? (
-          <EmptyState />
-        ) : (
-          <TriggerListSkeleton />
-        )}
-      </section>
+      </Section>
+      <Section>
+        <>
+          <SectionHeading>
+            <>
+              <h1>Reacciones</h1>
+              <Link href="/trigger/create">
+                <Button>Añadir</Button>
+              </Link>
+            </>
+          </SectionHeading>
+          {!loading && triggers.length > 0 ? (
+            <TriggerList items={triggers} />
+          ) : !loading && triggers.length == 0 ? (
+            <EmptyState />
+          ) : (
+            <TriggerListSkeleton />
+          )}
+        </>
+      </Section>
     </>
   )
 }

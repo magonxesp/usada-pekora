@@ -20,7 +20,7 @@ function Header({ children, onClose }: HeaderProps) {
     <>
       <div className="flex items-center justify-between">
         {children ?? (<div></div>)}
-        <Button className="relative" color="transparent" onClick={onClose ?? (() => {})}>
+        <Button className="relative" style="transparent" onClick={onClose ?? (() => {})}>
           <XMarkIcon className="w-5" />
         </Button>
       </div>

@@ -1,37 +1,40 @@
-button, .button {
+.button {
     background-color: var(--primary-background-color);
     color: var(--primary-text-color);
     padding: 10px;
     text-align: center;
-    min-width: 10rem;
+    min-width: 5rem;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
 }
 
-button:hover, .button:hover {
+.button:hover {
     background-color: var(--primary-active-background-color);
     color: var(--primary-active-text-color);
 }
 
-button.secondary,
+.button.transparent,
+.button.transparent:hover {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
 .button.secondary {
     background-color: var(--secondary-background-color);
     color: var(--secondary-text-color);
 }
 
-button.secondary:hover,
 .button.secondary:hover {
     background-color: var(--secondary-active-background-color);
     color: var(--secondary-active-text-color);
 }
 
-button.danger,
 .button.danger {
     background-color: var(--danger-background-color);
     color: var(--danger-text-color);
 }
 
-button.danger:hover,
 .button.danger:hover {
     background-color: var(--danger-active-background-color);
     color: var(--danger-active-text-color);

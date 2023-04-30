@@ -1,25 +1,33 @@
-import { ColorString } from '../../../../shared/helpers/color'
 import { MouseEvent } from 'react'
+import styles from './Button.module.css'
 
-interface ButtonProps<T> {
-  color?: ColorString
-  children: any
-  value?: T
+type ButtonStyle = 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'transparent'
+
+interface ButtonProps {
+  style?: ButtonStyle
+  children: JSX.Element|string
   type?: 'button' | 'submit' | 'reset'
-  onClick?: (event: MouseEvent, value: T|undefined) => void
+  onClick?: (event: MouseEvent) => void
   disabled?: boolean
-  className?: string
 }
 
-export default function Button<T>(props: ButtonProps<T>) {
-  const color = (props.color) ? `bg-${props.color}` : 'bg-primary'
+export default function Button({ style, type, onClick, disabled, children }: ButtonProps) {
+  const styleClass = {
+    'transparent': styles.transparent,
+    'secondary': styles.secondary,
+    'danger': styles.danger,
+    'primary': ''
+  }
 
   return (
     <button
-      className={`${(color != 'transparent') ? color : ''} ${props.className ?? ''}`}
-      onClick={(event) => props.onClick && props.onClick(event, props.value)}
-      type={props.type ?? 'button'}
-      disabled={props.disabled ?? false}
-    >{props.children}</button>
+      className={`${styles.button} ${styleClass[style ?? 'primary']}`}
+      onClick={(event) => onClick && onClick(event)}
+      type={type ?? 'button'}
+      disabled={disabled ?? false}
+    >{children}</button>
   )
 }

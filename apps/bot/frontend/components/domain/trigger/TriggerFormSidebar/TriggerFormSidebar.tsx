@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { TriggerFormData } from '../../../../shared/helpers/form/trigger/form-data'
-import Sidebar from '../../../common/sidebar/Sidebar/Sidebar'
+import Sidebar from '../../../common/layout/Sidebar/Sidebar'
 import TriggerForm from '../TriggerForm/TriggerForm'
 
 interface TriggerFormSidebarProps {

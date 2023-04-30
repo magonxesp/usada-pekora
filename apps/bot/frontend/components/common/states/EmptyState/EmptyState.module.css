@@ -1,0 +1,14 @@
+.emptyState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 4px dashed var(--primary-border-color);
+    border-radius: 30px;
+    padding: 26px 0;
+}
+
+.emptyState p {
+    font-size: 24px;
+    font-weight: 400;
+}
