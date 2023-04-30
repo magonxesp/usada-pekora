@@ -7,4 +7,13 @@ textarea,
     font-size: 1rem;
     padding: 10px;
     gap: 10px;
+    width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.input:focus {
+    border: 2px solid var(--input-focus-border-color);
+    outline: none;
 }

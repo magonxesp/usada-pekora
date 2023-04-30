@@ -1,0 +1,19 @@
+.tooltip {
+    display: inline-block;
+    position: relative;
+}
+
+.tooltip svg {
+    color: var(--secondary-background-color);
+}
+
+.tooltip svg:hover {
+    cursor: pointer;
+    color: var(--secondary-active-background-color);
+}
+
+.content {
+    display: block;
+    position: absolute;
+    top: 0;
+}

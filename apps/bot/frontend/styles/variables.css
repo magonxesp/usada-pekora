@@ -14,8 +14,11 @@
     --terciary-background-color: #AAB3DA;
     --terciary-text-color: black;
 
-    --danger-background-color: #E66C40;
+    --danger-background-color: #DC2626;
     --danger-text-color: white;
+
+    /*--danger-background-color: #E66C40;
+    --danger-text-color: white;*/
 
     --primary-active-background-color: #5A61C4;
     --primary-active-text-color: white;
@@ -38,6 +41,8 @@
     --text-disabled-color: #9CA3AF;
 
     --input-border-color: var(--primary-border-color);
+    --input-focus-border-color: var(--primary-active-border-color);
+
     --select-option-background-color: var(--terciary-background-color);
     --select-option-text-color: var(--terciary-text-color);
 

@@ -8,6 +8,7 @@ import { useEmitOnChange, useFormData, useValidatedFormData, useValidator } from
 import { TriggerEntityFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import { FormGroupProps } from '../../../../shared/helpers/form/props'
+import Input from '../../../common/form/Input/Input'
 
 export const TriggerEntityFormGroup = forwardRef(
   (props: FormGroupProps<TriggerEntityFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
@@ -45,6 +46,14 @@ export const TriggerEntityFormGroup = forwardRef(
 
     return (
       <>
+        <Input
+          label={intl.$t({id: 'trigger.form.title.label'})}
+          help={intl.$t({id: 'trigger.form.title.description'})}
+          type="text"
+          error={errors.title ?? []}
+          defaultValue={props.data?.title}
+        />
+
         <InputWrapper
           label={intl.$t({id: 'trigger.form.title.label'})}
           help={intl.$t({id: 'trigger.form.title.description'})}
