@@ -1,15 +1,14 @@
-import InputWrapper from '../../../common/form/InputWrapper/InputWrapper'
 import { TriggerCompare, triggerCompareOptions } from '../../../../shared/domain/trigger'
 import { useIntl } from 'react-intl'
-import { ForwardedRef, forwardRef, useEffect, useImperativeHandle } from 'react'
+import { ForwardedRef, forwardRef, useImperativeHandle } from 'react'
 import { Validators } from '../../../../shared/helpers/form/validator'
 import { isNotEmpty, isRegex } from '../../../../shared/helpers/validations'
-import { useEmitOnChange, useFormData, useValidatedFormData, useValidator } from '../../../../shared/hooks/form'
+import { useEmitOnChange, useValidatedFormData } from '../../../../shared/hooks/form'
 import { TriggerEntityFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import { FormGroupProps } from '../../../../shared/helpers/form/props'
 import TextInput from '../../../common/form/TextInput/TextInput'
-import Select, { Option } from '../../../common/form/Select/Select'
+import { Option } from '../../../common/form/Select/Select'
 import TextSelect from '../../../common/form/TextSelect/TextSelect'
 
 export const TriggerEntityFormGroup = forwardRef(
