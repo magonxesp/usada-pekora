@@ -8,7 +8,9 @@ import { useEmitOnChange, useFormData, useValidatedFormData, useValidator } from
 import { TriggerEntityFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import { FormGroupProps } from '../../../../shared/helpers/form/props'
-import Input from '../../../common/form/Input/Input'
+import TextInput from '../../../common/form/TextInput/TextInput'
+import Select, { Option } from '../../../common/form/Select/Select'
+import TextSelect from '../../../common/form/TextSelect/TextSelect'
 
 export const TriggerEntityFormGroup = forwardRef(
   (props: FormGroupProps<TriggerEntityFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
@@ -46,55 +48,28 @@ export const TriggerEntityFormGroup = forwardRef(
 
     return (
       <>
-        <Input
+        <TextInput
           label={intl.$t({id: 'trigger.form.title.label'})}
           help={intl.$t({id: 'trigger.form.title.description'})}
-          type="text"
           error={errors.title ?? []}
           defaultValue={props.data?.title}
         />
 
-        <InputWrapper
-          label={intl.$t({id: 'trigger.form.title.label'})}
-          help={intl.$t({id: 'trigger.form.title.description'})}
-        >
-          <>
-            <InputWrapper.Input>
-              <input type="text" defaultValue={props.data?.title} onChange={handleValueChange} name="title"/>
-            </InputWrapper.Input>
-            {(errors.title ?? []).map((error, index) => (
-              <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
-            ))}
-          </>
-        </InputWrapper>
-
-        <InputWrapper
+        <TextSelect
           label={intl.$t({id: 'trigger.form.compare.label'})}
           help={intl.$t({id: 'trigger.form.compare.description'})}
-        >
-          <InputWrapper.Input>
-            <select name="compare" defaultValue={props.data?.compare} onChange={handleValueChange}>
-              {triggerCompareOptions().map(([name, value]) => (
-                <option value={value}
-                        key={value}>{intl.$t({id: `trigger.form.compare.option.${name.toLowerCase()}`})}</option>
-              ))}
-            </select>
-          </InputWrapper.Input>
-        </InputWrapper>
+          options={triggerCompareOptions().map(([name, value]): Option => ({
+            value,
+            label: intl.$t({id: `trigger.form.compare.option.${name.toLowerCase()}`})
+          }))}
+        />
 
-        <InputWrapper
+        <TextInput
           label={intl.$t({id: 'trigger.form.input.label'})}
           help={intl.$t({id: 'trigger.form.input.description'})}
-        >
-          <>
-            <InputWrapper.Input>
-              <input type="text" defaultValue={props.data?.input} onChange={handleValueChange} name="input"/>
-            </InputWrapper.Input>
-            {(errors.input ?? []).map((error, index) => (
-              <InputWrapper.Error key={index}>{error}</InputWrapper.Error>
-            ))}
-          </>
-        </InputWrapper>
+          error={errors.title ?? []}
+          defaultValue={props.data?.input}
+        />
       </>
     )
   }

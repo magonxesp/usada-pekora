@@ -1,19 +1,29 @@
-import InputContainer, { InputContainerProps } from '../InputContainer/InputContainer'
+import styles from './Input.module.css'
+import InputLabel from '../InputLabel/InputLabel'
+import InputError from '../InputError/InputError'
 
-interface InputProps extends InputContainerProps {
-  type: 'text' | 'number'
-  onChange?: (value: unknown) => void
-  defaultValue?: unknown
+export interface InputProps<T> {
+  label?: string
+  error?: string|string[]
+  help?: string
+  onChange?: (value: T) => void
+  defaultValue?: T
+  className?: string
 }
 
-export default function Input({ label, type, help, error }: InputProps) {
+interface InputContainerInternalProps extends InputProps<unknown> {
+  children: JSX.Element
+}
+
+export default function Input({ label, children, help, error, className }: InputContainerInternalProps) {
   return (
-    <InputContainer
-      label={label}
-      help={help}
-      error={error}
-    >
-      <input type={type} />
-    </InputContainer>
+    <div className={`${styles.input} ${className ?? ''}`}>
+      {(label) ? (
+        <InputLabel help={help}>{label}</InputLabel>
+      ) : ''}
+      {children}
+      <InputError>{error ?? []}</InputError>
+    </div>
   )
 }
+

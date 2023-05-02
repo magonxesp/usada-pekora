@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import Input, { InputProps } from '../Input/Input'
+import styles from './Select.module.css'
 
 export interface Option {
   label: string
@@ -8,45 +10,92 @@ export interface Option {
   disabled?: boolean
 }
 
-interface SelectProps {
-  options: Option[]
-  onChange?: (selected: Option) => void
-  selected?: string|number
+export interface SelectProps<T extends Option> extends InputProps<string|number> {
+  options: T[]
+  optionClassName?: string
+  children?: (option: T) => JSX.Element
 }
 
-export default function Select({ options, onChange, selected }: SelectProps) {
-  const initialSelectedState = options.filter(option => option.value === selected).shift()
-  const [selectedOption, setSelectedOption] = useState(initialSelectedState)
+interface SelectOptionProps<T extends Option> {
+  option: T
+  onClick?: (option: T) => void
+  children?: (option: T) => JSX.Element
+  className?: string
+}
 
-  const handleSelectedOption = (option: Option) => {
+function SelectOption<T extends Option>({ option, onClick, children, className }: SelectOptionProps<T>) {
+  return (
+    <div className={`${styles.option} ${className ?? ''}`} onClick={() => typeof onClick !== 'undefined' && onClick(option)}>
+      {(typeof children !== 'undefined') ? children(option) : ''}
+    </div>
+  )
+}
+
+export default function Select<T extends Option>({
+  options,
+  onChange,
+  defaultValue,
+  label,
+  error,
+  help,
+  className,
+  optionClassName,
+  children
+}: SelectProps<T>) {
+  const defaultOption = {
+    label: "-",
+    value: ""
+  }
+
+  const firstOptionValue = options[0]?.value
+  const initialSelectedState = options.filter(option => option.value === (defaultValue ?? firstOptionValue)).shift()
+  const [selectedOption, setSelectedOption] = useState(initialSelectedState)
+  const [showOptions, setShowOptions] = useState(false)
+  const selectRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    document.addEventListener('mousedown', (event) => {
+      if (event.target instanceof HTMLElement && selectRef.current && !selectRef.current?.contains(event.target)) {
+        setShowOptions(false)
+      }
+    })
+  }, [])
+
+  const handleSelectedOption = (option: T) => {
     if (option.disabled) {
       return
     }
 
     setSelectedOption(option)
-    typeof onChange !== 'undefined' && onChange(option)
+    typeof onChange !== 'undefined' && onChange(option.value)
   }
 
   return (
-    <div className="select">
-      <select>
-        {options.map((option, index) => (
-          <option
-            key={index}
-            value={option.value}
-            disabled={option.disabled}
-            onClick={() => handleSelectedOption(option)}
-            selected={selectedOption?.value === option.value}
-          >
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <span className="arrow">
-        <FontAwesomeIcon className="arrowIcon" icon={faChevronUp} />
-        <FontAwesomeIcon className="arrowIcon" icon={faChevronDown} />
-      </span>
-    </div>
+    <Input label={label} error={error} help={help} className={className}>
+      <div ref={selectRef} className={`input ${styles.select} ${showOptions ? styles.opened : ''}`} onClick={() => setShowOptions(!showOptions)}>
+        <div className={styles.selected}>
+          <SelectOption<T> option={selectedOption ?? defaultOption as T} className={optionClassName}>
+            {children}
+          </SelectOption>
+        </div>
+        <span className={styles.arrow}>
+          <FontAwesomeIcon className={styles.arrowIcon} icon={faChevronUp} />
+          <FontAwesomeIcon className={styles.arrowIcon} icon={faChevronDown} />
+        </span>
+        <div className={`${styles.options} ${showOptions ? styles.opened : ''}`}>
+          {options.map((option, index) => (
+            <SelectOption
+              key={index}
+              option={option}
+              className={optionClassName}
+              onClick={option => handleSelectedOption(option)}
+            >
+              {children}
+            </SelectOption>
+          ))}
+        </div>
+      </div>
+    </Input>
   )
 }
 

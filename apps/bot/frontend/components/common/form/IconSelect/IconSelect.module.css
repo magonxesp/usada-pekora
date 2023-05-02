@@ -1,31 +1,5 @@
-.select {
+.iconSelect {
     padding: 5px 30px 5px 10px;
-}
-
-.selected .option {
-    padding: 0;
-}
-
-.selected .option:hover {
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-
-.options {
-    display: none;
-    position: absolute;
-    overflow-y: scroll;
-    max-height: 40rem;
-    width: calc(100% + 4px);
-    left: -1.2px;
-    top: 100%;
-    border: 1px solid var(--input-border-color) !important;
-    background-color: var(--select-option-background-color) !important;
-    color: var(--select-option-text-color);
-}
-
-.option {
-    width: 100%;
 }
 
 .option img,
@@ -44,15 +18,4 @@
     height: 24px;
     align-items: center;
     justify-content: center;
-}
-
-.select.opened {
-    border-bottom: none !important;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.options.opened {
-    display: block;
-    border-top: none;
 }

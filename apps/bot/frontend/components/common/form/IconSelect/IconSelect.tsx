@@ -3,19 +3,14 @@ import styles from './IconSelect.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import Picture from '../../image/Picture/Picture'
+import Select, { SelectProps, Option as SelectOption } from '../Select/Select'
 
-export interface Option {
-  label: string
-  value: string|number
+export interface Option extends SelectOption {
   icon: string
-  //disabled?: boolean
 }
 
-interface IconSelectProps {
-  options: Option[]
-  onChange?: (selected: Option) => void
+interface IconSelectProps extends SelectProps<Option> {
   selected?: string|number
-  className?: string
 }
 
 interface IconSelectOptionProps {
@@ -36,47 +31,29 @@ function IconSelectOption({ option, onClick }: IconSelectOptionProps) {
   )
 }
 
-export default function IconSelect({ options, onChange, selected, className }: IconSelectProps) {
-  const defaultOption: Option = {
-    icon: "",
-    label: "-",
-    value: ""
-  }
-
-  const firstOptionValue = options[0]?.value
-  const initialSelectedState = options.filter(option => option.value === (selected ?? firstOptionValue)).shift()
-  const [selectedOption, setSelectedOption] = useState(initialSelectedState)
-  const [showOptions, setShowOptions] = useState(false)
-  const selectRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    document.addEventListener('mousedown', (event) => {
-      if (event.target instanceof HTMLElement && selectRef.current && !selectRef.current?.contains(event.target)) {
-        setShowOptions(false)
-      }
-    })
-  }, [])
-
-  const handleSelectedOption = (option: Option) => {
-    setSelectedOption(option)
-    typeof onChange !== 'undefined' && onChange(option)
-  }
-
+export default function IconSelect({ options, onChange, className, label, help, error, defaultValue }: IconSelectProps) {
   return (
-    <div ref={selectRef} className={`input select ${styles.select} ${showOptions ? styles.opened : ''} ${className ?? ''}`} onClick={() => setShowOptions(!showOptions)}>
-      <div className={styles.selected}>
-        <IconSelectOption option={selectedOption ?? defaultOption} />
-      </div>
-      <div className={`options ${styles.options} ${showOptions ? styles.opened : ''}`}>
-        {options.map((option, index) => (
-          <IconSelectOption key={index} option={option} onClick={option => handleSelectedOption(option)} />
-        ))}
-      </div>
-      <span className="arrow">
-        <FontAwesomeIcon className="arrowIcon" icon={faChevronUp} />
-        <FontAwesomeIcon className="arrowIcon" icon={faChevronDown} />
-      </span>
-    </div>
+    <Select
+      options={options}
+      label={label}
+      help={help}
+      error={error}
+      className={`${styles.iconSelect} ${className ?? ''}`}
+      optionClassName={styles.option}
+      onChange={onChange}
+      defaultValue={defaultValue}
+    >
+      {(option: Option) => (
+        <>
+          {(option.icon == "") ? (
+            <div className={styles.emptyImage}><FontAwesomeIcon icon={faQuestion} /></div>
+          ) : (
+            <Picture src={option.icon} alt={option.label} />
+          )}
+          {option.label}
+        </>
+      )}
+    </Select>
   )
 }
 

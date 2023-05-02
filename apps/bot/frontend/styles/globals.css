@@ -2,7 +2,6 @@
 @import "variables.css";
 @import "components/common/image.css";
 @import "components/common/input.css";
-@import "components/common/select.css";
 
 * {
     box-sizing: border-box;
