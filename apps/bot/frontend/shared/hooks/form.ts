@@ -1,33 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FormErrors, Validator, Validators, FormData } from '../helpers/form/validator'
 import { FormGroupProps } from '../helpers/form/props'
-
-type Input = HTMLInputElement
-  | HTMLSelectElement
-  | HTMLTextAreaElement
-
-export function useFormData<T extends FormData>(initialFormData: T) {
-  const [formData, setFormData] = useState(initialFormData)
-
-  const handleValueChange = (event: ChangeEvent<Input>) => {
-    const input = event.currentTarget
-    const name = input.name
-    let value
-
-    if (input.type === "file") {
-      value = (input as HTMLInputElement).files
-    } else {
-      value = input.value
-    }
-
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
-
-  return { formData, handleValueChange }
-}
 
 export function useValidator<T extends FormData>(validators: Validators, formData: T) {
   const [errors, setErrors] = useState<FormErrors>({})
