@@ -1,0 +1,23 @@
+.inputContainer {
+    border-style: dashed;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 0;
+    font-size: 12px;
+}
+
+.inputContainer svg {
+    font-size: 35px;
+}
+
+.inputContainer:hover,
+.inputContainer.active {
+    border-color: var(--primary-active-background-color);
+}
+
+.input {
+    display: none;
+}

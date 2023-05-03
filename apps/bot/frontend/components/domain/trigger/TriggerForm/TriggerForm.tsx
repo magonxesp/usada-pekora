@@ -9,6 +9,7 @@ import { TriggerEntityFormGroup } from '../TriggerEntityFormGroup/TriggerEntityF
 import { TriggerTextResponseFormGroup } from '../TriggerTextResponseFormGroup/TriggerTextResponseFormGroup'
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import CollapsibleFormGroup from '../../../common/form/CollapsibleFormGroup/CollapsibleFormGroup'
+import { TriggerAudioResponseFormGroup } from '../TriggerAudioResponseFormGroup/TriggerAudioResponseFormGroup'
 
 interface TriggerFormProps {
   triggerFormData?: TriggerFormData,
@@ -20,6 +21,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
   // form group refs
   const entityFormRef = useRef<TriggerFormGroupRef>(null)
   const responseTextFormRef = useRef<TriggerFormGroupRef>(null)
+  const responseAudioFormRef = useRef<TriggerFormGroupRef>(null)
 
   // form specific states
   const [formData, setFormData] = useState(triggerFormData ?? emptyTriggerFormData())
@@ -28,7 +30,8 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
 
   const formGroupRefs = [
     entityFormRef,
-    responseTextFormRef
+    responseTextFormRef,
+    responseAudioFormRef
   ]
 
   const validate = () => {
@@ -64,6 +67,18 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
             data={formData.responseText}
             ref={responseTextFormRef}
             onChange={(data) => setFormData({...formData, responseText: data})}
+          />
+        </CollapsibleFormGroup>
+
+        <CollapsibleFormGroup
+          addTitle={intl.$t({ id: 'trigger.form.response_audio.add' })}
+          removeTitle={intl.$t({ id: 'trigger.form.response_audio.remove' })}
+          onRemove={() => setFormData({...formData, responseAudio: undefined})}
+        >
+          <TriggerAudioResponseFormGroup
+            data={formData.responseAudio}
+            ref={responseAudioFormRef}
+            onChange={(data) => setFormData({...formData, responseAudio: data})}
           />
         </CollapsibleFormGroup>
 
