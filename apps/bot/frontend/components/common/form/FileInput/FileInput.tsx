@@ -5,14 +5,23 @@ import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useIntl } from 'react-intl'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
+import * as mimes from './FileInputMimeTypes.json'
 
-interface TextInputProps extends InputProps<File|null> {}
+type MimeType = keyof typeof mimes
 
-export default function FileInput({ label, help, error, defaultValue, onChange }: TextInputProps) {
+interface TextInputProps extends InputProps<File|null> {
+  allowedMimeTypes?: MimeType[]
+}
+
+export default function FileInput({ label, help, error, defaultValue, onChange, allowedMimeTypes }: TextInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dropping, setDropping] = useState(false)
   const [file, setFile] = useState(defaultValue ?? null)
   const intl = useIntl()
+
+  const extensions = (allowedMimeTypes ?? [])
+    .map(mimeType => `.${mimes[mimeType][0]}`)
+    .join(', ')
 
   const handleFile = (file: File|null) => {
     typeof onChange !== 'undefined' && onChange(file)
@@ -51,13 +60,17 @@ export default function FileInput({ label, help, error, defaultValue, onChange }
           ) : (
             <>
               <FontAwesomeIcon icon={faArrowUpFromBracket} />
-              <span>{intl.$t({ id: 'input.file.help' })}</span>
+              <span>
+                {intl.$t({ id: 'input.file.help.intro' })}
+                {(extensions != '') ? ` ${intl.$t({ id: 'input.file.help.allowed_types' })} ${extensions}` : ''}
+              </span>
             </>
           )}
         </div>
         <input
           type="file"
           multiple={false}
+          accept={allowedMimeTypes?.join('')}
           className={styles.input}
           ref={inputRef}
           onChange={event => handleFile(event.target.files?.item(0) ?? null)}

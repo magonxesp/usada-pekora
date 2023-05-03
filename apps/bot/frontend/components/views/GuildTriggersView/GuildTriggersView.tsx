@@ -12,6 +12,7 @@ import { useFetchTriggers } from '../../../shared/hooks/fetch'
 import SectionHeading from '../../common/layout/SectionHeading/SectionHeading'
 import Section from '../../common/layout/Section/Section'
 import Button from '../../common/form/Button/Button'
+import { useIntl } from 'react-intl'
 
 export default function GuildTriggersView() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function GuildTriggersView() {
   const selectedGuild = useSelectedGuild()
   const [loading, setLoading] = useState(true);
   const fetchTriggers = useFetchTriggers()
+  const intl = useIntl()
 
   useEffect(() => {
     let guildId
@@ -50,16 +52,16 @@ export default function GuildTriggersView() {
         <>
           <SectionHeading>
             <>
-              <h1>Reacciones</h1>
+              <h1>{intl.$t({ id: 'trigger.guild_list.title' })}</h1>
               <Link href="/trigger/create">
-                <Button>Añadir</Button>
+                <Button>{intl.$t({ id: 'trigger.guild_list.add' })}</Button>
               </Link>
             </>
           </SectionHeading>
           {!loading && triggers.length > 0 ? (
             <TriggerList items={triggers} />
           ) : !loading && triggers.length == 0 ? (
-            <EmptyState />
+            <EmptyState message={intl.$t({ id: 'trigger.guild_list.empty' })} />
           ) : (
             <TriggerListSkeleton />
           )}
