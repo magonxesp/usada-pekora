@@ -1,0 +1,30 @@
+.button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    color: var(--primary-background-color) !important;
+    font-size: 20px;
+}
+
+.button + * {
+    margin-top: 10px;
+}
+
+.button:hover {
+    text-decoration: underline;
+}
+
+.buttonIcon.active,
+.button:hover .buttonIcon {
+    display: none;
+}
+
+.button:hover .buttonIcon.active {
+    display: block;
+}
+
+.buttonIcon {
+    width: 27px;
+    margin-right: 5px;
+}

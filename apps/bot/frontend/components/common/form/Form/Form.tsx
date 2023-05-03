@@ -1,4 +1,5 @@
 import {FormEvent} from 'react'
+import styles from './Form.module.css'
 
 interface FormProps {
   onSubmit: () => void
@@ -13,7 +14,7 @@ export default function Form({ children, onSubmit, className }: FormProps) {
   }
 
   return (
-    <form onSubmit={handleFormSubmit} className={className ?? ''}>
+    <form onSubmit={handleFormSubmit} className={`${styles.form} ${className ?? ''}`}>
       {children}
     </form>
   )

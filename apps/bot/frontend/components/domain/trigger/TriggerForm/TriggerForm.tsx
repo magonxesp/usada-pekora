@@ -8,7 +8,7 @@ import { useSelectedGuild } from '../../../../shared/hooks/guilds'
 import { TriggerEntityFormGroup } from '../TriggerEntityFormGroup/TriggerEntityFormGroup'
 import { TriggerTextResponseFormGroup } from '../TriggerTextResponseFormGroup/TriggerTextResponseFormGroup'
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
-import TriggerFormAddResponse from '../TriggerFormAddResponse/TriggerFormAddResponse'
+import CollapsibleFormGroup from '../../../common/form/CollapsibleFormGroup/CollapsibleFormGroup'
 
 interface TriggerFormProps {
   triggerFormData?: TriggerFormData,
@@ -33,7 +33,6 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
 
   const validate = () => {
     formGroupRefs.forEach(ref => {
-      console.log(ref)
       ref.current?.cleanErrors()
       ref.current?.validate()
     })
@@ -56,7 +55,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
       <>
         <TriggerEntityFormGroup data={formData} ref={entityFormRef} />
 
-        <TriggerFormAddResponse
+        <CollapsibleFormGroup
           addTitle={intl.$t({ id: 'trigger.form.response_text.add' })}
           removeTitle={intl.$t({ id: 'trigger.form.response_text.remove' })}
           onRemove={() => setFormData({...formData, responseText: undefined})}
@@ -66,9 +65,9 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
             ref={responseTextFormRef}
             onChange={(data) => setFormData({...formData, responseText: data})}
           />
-        </TriggerFormAddResponse>
+        </CollapsibleFormGroup>
 
-        <Button className="w-full" type="submit" disabled={disableSubmit ?? false}>{intl.$t({ id: 'trigger.form.submit' })}</Button>
+        <Button type="submit" disabled={disableSubmit ?? false}>{intl.$t({ id: 'trigger.form.submit' })}</Button>
       </>
     </Form>
   )

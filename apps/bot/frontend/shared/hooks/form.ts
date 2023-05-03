@@ -44,19 +44,13 @@ export function useValidator<T extends FormData>(validators: Validators, formDat
     setErrors(validator.getErrors())
   }
 
-  return { errors, cleanErrors, validate }
-}
-
-export function useValidatedFormData<T extends FormData>(validators: Validators, initialFormData: T) {
-  const { formData, handleValueChange: onValueChange } = useFormData(initialFormData)
-  const { errors, cleanErrors, validate } = useValidator(validators, formData)
-
-  const handleValueChange = (event: ChangeEvent<Input>) => {
-    onValueChange(event)
-    validate()
+  const validateSingle = (name: string, value: unknown) => {
+    validator.cleanErrorsOf(name)
+    validator.validate(name, value)
+    setErrors(validator.getErrors())
   }
 
-  return { formData, errors, handleValueChange, cleanErrors, validate }
+  return { errors, cleanErrors, validate, validateSingle }
 }
 
 export function useEmitOnChange<T extends FormData>(props: FormGroupProps<T>, formData: T) {

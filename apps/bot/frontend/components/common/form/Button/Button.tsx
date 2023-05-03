@@ -12,9 +12,10 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
   onClick?: (event: MouseEvent) => void
   disabled?: boolean
+  className?: string
 }
 
-export default function Button({ style, type, onClick, disabled, children }: ButtonProps) {
+export default function Button({ style, type, onClick, disabled, children, className }: ButtonProps) {
   const styleClass = {
     'transparent': styles.transparent,
     'secondary': styles.secondary,
@@ -24,7 +25,7 @@ export default function Button({ style, type, onClick, disabled, children }: But
 
   return (
     <button
-      className={`${styles.button} ${styleClass[style ?? 'primary']}`}
+      className={`${styles.button} ${styleClass[style ?? 'primary']} ${className ?? ''}`}
       onClick={(event) => onClick && onClick(event)}
       type={type ?? 'button'}
       disabled={disabled ?? false}
