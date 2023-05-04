@@ -13,6 +13,6 @@ export function alert(content: string, type: TypeOptions) {
   })
 }
 
-export async function asyncAlert(promise: Promise<unknown>, messages: ToastPromiseParams): Promise<unknown> {
-  return await toast.promise(promise, messages, defaultToastOptions)
+export async function asyncAlert<T>(promise: Promise<T>, messages: ToastPromiseParams): Promise<T> {
+  return await toast.promise(promise, messages, defaultToastOptions) as Promise<T>
 }

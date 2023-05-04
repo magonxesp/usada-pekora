@@ -27,6 +27,7 @@
   "trigger.form.response_audio.file.description": "Pekora se unira al canal de voz en el que estas y respondera con el sonido que hayas seleccionado",
   "trigger.form.response_audio.file.file_type.error": "El archivo solo puede ser .mp3",
   "trigger.form.response_audio.file.file_size.error": "El tamaño de archivo tiene que ser como maximo de 8MB",
+  "trigger.form.response.required.error": "Es necesario añadir una respuesta como minimo",
   "trigger.form.submit": "Guardar",
   "trigger.delete.confirmation.message": "¿Estas seguro de eliminar el disparador?",
   "trigger.delete.confirmation.confirm_button_text": "Eliminar",

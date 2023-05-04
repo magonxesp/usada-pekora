@@ -5,10 +5,9 @@ import { useIntl } from 'react-intl'
 import { asyncAlert } from '../../../shared/helpers/alert'
 import TriggerFormSidebar from '../../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
 import { submitTriggerUpdateRequest, TriggerFormData, triggerToFormData } from '../../../shared/helpers/form/trigger/trigger'
-import { fetchTriggerById } from '../../../shared/api/backend/trigger'
-import { Trigger, TriggerObject } from '../../../shared/domain/trigger'
+import { fetchTriggerById, Trigger } from '../../../shared/api/backend/trigger/trigger'
 
-export const getServerSideProps: GetServerSideProps<{ trigger: TriggerObject }> = async (context) => {
+export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = async (context) => {
   const { id } = context.query
   const trigger = await fetchTriggerById(id as string)
 

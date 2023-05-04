@@ -1,4 +1,3 @@
-import { TriggerCompare, triggerCompareOptions } from '../../../../shared/domain/trigger'
 import { useIntl } from 'react-intl'
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
 import { Validators } from '../../../../shared/helpers/form/validator'
@@ -10,6 +9,7 @@ import { FormGroupProps } from '../../../../shared/helpers/form/props'
 import TextInput from '../../../common/form/TextInput/TextInput'
 import { Option } from '../../../common/form/Select/Select'
 import TextSelect from '../../../common/form/TextSelect/TextSelect'
+import { triggerCompare } from '../../../../shared/api/backend/trigger/trigger'
 
 export const TriggerEntityFormGroup = forwardRef(
   (props: FormGroupProps<TriggerEntityFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
@@ -31,7 +31,7 @@ export const TriggerEntityFormGroup = forwardRef(
         regex: {
           validate: isRegex,
           errorMessage: intl.$t({id: 'trigger.form.input.regex.error'}),
-          skip: () => (data.compare ?? '') != TriggerCompare.PATTERN
+          skip: () => (data.compare ?? '') != triggerCompare.pattern
         }
       }
     }
@@ -56,9 +56,9 @@ export const TriggerEntityFormGroup = forwardRef(
         <TextSelect
           label={intl.$t({id: 'trigger.form.compare.label'})}
           help={intl.$t({id: 'trigger.form.compare.description'})}
-          options={triggerCompareOptions().map(([name, value]): Option => ({
+          options={Object.entries(triggerCompare).map(([name, value]): Option => ({
             value,
-            label: intl.$t({id: `trigger.form.compare.option.${name.toLowerCase()}`})
+            label: intl.$t({id: `trigger.form.compare.option.${name}`})
           }))}
           onChange={(value) => {
             setData({...data, compare: String(value)})

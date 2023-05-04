@@ -35,6 +35,7 @@ export default function TriggerFormSidebar({ onSidebarClose, onSubmit, title, in
 
       onSubmit(data)
         .then(() => closeSidebar())
+        .catch((error) => console.error(error))
         .finally(() => setDisableSubmit(false))
     }
   }

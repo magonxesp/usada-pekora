@@ -1,19 +1,15 @@
-import { Trigger } from '../../../../shared/domain/trigger'
 import Button from '../../../common/form/Button/Button'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import { useDispatch } from 'react-redux'
-import { showModal, closeModal } from '../../../../store/slices/app-slice'
-import ConfirmModal from '../../../common/modal/ConfirmModal/ConfirmModal'
-import { useIntl } from 'react-intl'
 import { useDeleteTrigger } from '../../../../shared/hooks/trigger'
+
+import { Trigger } from '../../../../shared/api/backend/trigger/trigger'
 
 interface TriggerCardProps {
   trigger: Trigger
 }
 
-export default function TriggerCard(props: TriggerCardProps) {
-  const { trigger } = props
+export default function TriggerCard({ trigger }: TriggerCardProps) {
   const deleteTrigger = useDeleteTrigger()
 
   return (

@@ -39,6 +39,9 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
       ref.current?.cleanErrors()
       ref.current?.validate()
     })
+
+    return formGroupRefs.map(ref => ({ ...ref.current?.errors }))
+      .filter(errors => Object.keys(errors).length > 0)
   }
 
   const submitForm = () => {
@@ -48,15 +51,22 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
         return
       }
 
-      validate()
-      //onSubmit({ id: id, discordServerId: selectedGuild})
+      const errors = validate()
+
+      if (errors.length === 0) {
+        onSubmit({ ...formData, discordGuildId: selectedGuild })
+      }
     }
   }
 
   return (
     <Form onSubmit={submitForm}>
       <>
-        <TriggerEntityFormGroup data={formData} ref={entityFormRef} />
+        <TriggerEntityFormGroup
+          data={formData}
+          ref={entityFormRef}
+          onChange={(data) => setFormData({...formData, ...data})}
+        />
 
         <CollapsibleFormGroup
           addTitle={intl.$t({ id: 'trigger.form.response_text.add' })}

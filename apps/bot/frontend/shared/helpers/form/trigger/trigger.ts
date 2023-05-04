@@ -1,26 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
-import { createTriggerAudio, createTrigger, updateTrigger } from '../../../api/backend/trigger'
+import {
+  updateTrigger
+} from '../../../api/backend/trigger/update'
 import { TriggerFormData } from './form-data'
-
-export async function submitTriggerCreateRequest(data: TriggerFormData) {
-  if (data.responseAudio != null) {
-    await createTriggerAudio({
-      id: uuidv4(),
-      triggerId: data.id,
-      guildId: data.discordGuildId,
-      file: data.responseAudio
-    })
-  }
-
-  await createTrigger({
-    id: data.id,
-    title: data.title,
-    compare: data.compare,
-    input: data.input,
-    discordGuildId: data.discordGuildId,
-    responseText: data.responseText ?? undefined
-  })
-}
+import { createTrigger } from '../../../api/backend/trigger/create'
+import { createTriggerTextResponse } from '../../../api/backend/trigger/text-response/create-default'
+import { createTriggerAudio } from '../../../api/backend/trigger/audio-response/create-default'
 
 export async function submitTriggerUpdateRequest(data: TriggerFormData) {
   // if (data.responseAudio != null) {
@@ -32,14 +17,14 @@ export async function submitTriggerUpdateRequest(data: TriggerFormData) {
   //   })
   // }
 
-  await updateTrigger({
-    id: data.id,
-    values: {
-      title: data.title,
-      compare: data.compare,
-      input: data.input,
-      discordGuildId: data.discordGuildId,
-      responseTextIdext: data.responseText ?? undefined
-    }
-  })
+  // await updateTrigger({
+  //   id: data.id,
+  //   values: {
+  //     title: data.title,
+  //     compare: data.compare,
+  //     input: data.input,
+  //     discordGuildId: data.discordGuildId,
+  //     responseTextIdext: data.responseText ?? undefined
+  //   }
+  // })
 }

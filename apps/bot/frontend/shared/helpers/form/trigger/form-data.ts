@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { TriggerCompare } from '../../../domain/trigger'
+import { triggerCompare } from '../../../api/backend/trigger/trigger'
 
 export interface TriggerEntityFormData {
   title: string
@@ -30,7 +30,7 @@ export const emptyTriggerFormData = (): TriggerFormData => ({
   id: uuidv4(),
   title: "",
   input: "",
-  compare: TriggerCompare.CONTAINS,
+  compare: triggerCompare.contains,
   discordGuildId: ""
 })
 

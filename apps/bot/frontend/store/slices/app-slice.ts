@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Trigger } from '../../shared/domain/trigger'
 import { Guild } from '../../shared/domain/guild'
 import { ReactElement } from 'react'
+import { Trigger } from '../../shared/api/backend/trigger/trigger'
 
 interface ModalViewState {
   component?: ReactElement
