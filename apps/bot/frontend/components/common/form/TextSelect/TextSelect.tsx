@@ -16,7 +16,7 @@ export default function TextSelect({ options, onChange, defaultValue, label, err
       defaultValue={defaultValue}
     >
       {((option: Option) => (
-        <>Hola</>
+        <>{option.label}</>
       ))}
     </Select>
   )

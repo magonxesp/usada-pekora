@@ -1,7 +1,8 @@
-import { createRef, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './Tooltip.module.css'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { v4 as uuidv4 } from 'uuid'
 
 interface TooltipProps {
   content: string
@@ -10,21 +11,30 @@ interface TooltipProps {
 
 export default function Tooltip({ content, className }: TooltipProps) {
   const [show, setShow] = useState(false)
-  const ref = createRef<HTMLSpanElement>()
+  const [id, setId] = useState("")
+  const ref = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    document.querySelector('body')?.addEventListener('click', (event: MouseEvent) => {
-      const target = event.target as HTMLElement
+    setId(uuidv4())
 
-      if (!target.closest('.tooltip')) {
+    document.addEventListener('mousedown', () => {
+      if (ref.current && ref.current.id !== id) {
         setShow(false)
       }
     })
   }, [])
 
   return (
-    <span className={`${styles.tooltip} ${className ?? ''}`} ref={ref}>
-      <FontAwesomeIcon icon={faCircleInfo} onClick={() => setShow(!show)} />
+    <span
+      id={id}
+      className={`${styles.tooltip} ${className ?? ''}`}
+      ref={ref}
+      onClick={(event) => {
+        event.stopPropagation()
+        setShow(!show)
+      }}
+    >
+      <FontAwesomeIcon icon={faCircleInfo} />
       {(show) ? (
         <span className={styles.content} dangerouslySetInnerHTML={{ __html: content }}></span>
       ) : ''}

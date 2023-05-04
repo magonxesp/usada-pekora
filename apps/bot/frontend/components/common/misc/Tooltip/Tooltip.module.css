@@ -1,6 +1,5 @@
 .tooltip {
     display: inline-block;
-    position: relative;
 }
 
 .tooltip svg {
@@ -15,5 +14,13 @@
 .content {
     display: block;
     position: absolute;
-    top: 0;
+    left: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 10px;
+    font-size: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    z-index: 1;
+    width: 25rem;
 }
