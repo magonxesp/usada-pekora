@@ -26,7 +26,7 @@ export const TriggerAudioResponseFormGroup = forwardRef(
           errorMessage: intl.$t({ id: 'trigger.form.response_audio.file.file_type.error' })
         },
         size: {
-          validate: (file) => file instanceof File && file.size < (8 * 1024 * 1024),
+          validate: (file) => file instanceof File && file.size <= (8 * 1024 * 1024),
           errorMessage: intl.$t({ id: 'trigger.form.response_audio.file.file_size.error' })
         }
       }
