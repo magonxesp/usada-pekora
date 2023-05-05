@@ -25,6 +25,7 @@
   "trigger.form.response_text.content.description": "Pekora respondera este mensaje de texto en el mismo canal de texto en el que has enviado un mensaje",
   "trigger.form.response_audio.file.label": "Sonido de respuesta",
   "trigger.form.response_audio.file.description": "Pekora se unira al canal de voz en el que estas y respondera con el sonido que hayas seleccionado",
+  "trigger.form.response_audio.file.required.error": "El archivo es obligatorio",
   "trigger.form.response_audio.file.file_type.error": "El archivo solo puede ser .mp3",
   "trigger.form.response_audio.file.file_size.error": "El tamaño de archivo tiene que ser como maximo de 8MB",
   "trigger.form.response.required.error": "Es necesario añadir una respuesta como minimo",
@@ -43,5 +44,7 @@
   "confirm_modal.default.reject_button_text": "Cancelar",
   "confirm_modal.default.confirm_button_text": "Aceptar",
   "input.file.help.intro": "Selecciona un fichero o arrastralo aqui.",
-  "input.file.help.allowed_types": "Tipos permitidos:"
+  "input.file.help.allowed_types": "Tipos permitidos:",
+  "input.file.change": "Sustituir archivo",
+  "input.file.delete": "Eliminar"
 }

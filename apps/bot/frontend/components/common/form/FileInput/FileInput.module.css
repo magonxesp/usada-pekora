@@ -22,3 +22,11 @@
 .input {
     display: none;
 }
+
+.actions {
+    margin-top: 10px;
+}
+
+.actions > * + * {
+    margin-left: 5px;
+}

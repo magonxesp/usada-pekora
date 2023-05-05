@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useIntl } from 'react-intl'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
 import * as mimes from './FileInputMimeTypes.json'
+import Button from '../Button/Button'
 
 type MimeType = keyof typeof mimes
 
@@ -67,6 +68,12 @@ export default function FileInput({ label, help, error, defaultValue, onChange, 
             </>
           )}
         </div>
+        {(file) ? (
+          <div className={styles.actions}>
+            <Button onClick={() => inputRef.current?.click()}>{intl.$t({ id: 'input.file.change' })}</Button>
+            <Button style="danger" onClick={() => handleFile(null)}>{intl.$t({ id: 'input.file.delete' })}</Button>
+          </div>
+        ) : ''}
         <input
           type="file"
           multiple={false}
