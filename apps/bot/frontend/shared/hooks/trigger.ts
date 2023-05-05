@@ -10,6 +10,7 @@ import { createTrigger } from '../api/backend/trigger/create'
 import { createTriggerTextResponse } from '../api/backend/trigger/text-response/create-default'
 import { deleteTrigger } from '../api/backend/trigger/delete'
 import { Trigger } from '../api/backend/trigger/trigger'
+import { createTriggerAudio } from '../api/backend/trigger/audio-response/create-default'
 
 export function useDeleteTrigger() {
   const dispatch = useDispatch()
@@ -45,12 +46,12 @@ export function useCreateTrigger() {
     }
 
     if (data.responseAudio != null) {
-      // await createTriggerAudio({
-      //   id: uuidv4(),
-      //   triggerId: data.id,
-      //   guildId: data.discordGuildId,
-      //   file: data.responseAudio
-      // })
+      await createTriggerAudio({
+        id: data.responseAudio.id,
+        triggerId: data.id,
+        guildId: data.discordGuildId,
+        file: data.responseAudio.content as File
+      })
     }
 
     if (data.responseText != null) {

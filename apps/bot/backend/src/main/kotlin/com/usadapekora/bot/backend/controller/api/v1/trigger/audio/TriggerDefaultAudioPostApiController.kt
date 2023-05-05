@@ -15,6 +15,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.server.ResponseStatusException
 
 
 @RestController
@@ -22,6 +23,11 @@ import org.springframework.web.multipart.MultipartFile
 class TriggerDefaultAudioPostApiController : ApiController() {
 
     private val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
+
+    private fun mapHttpResponseCodeError(exception: Exception) = when (exception) {
+        is TriggerAudioResponseException -> HttpStatus.BAD_REQUEST
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
+    }
 
     @PostMapping("", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun create(
@@ -44,11 +50,7 @@ class TriggerDefaultAudioPostApiController : ApiController() {
             return ResponseEntity.status(HttpStatus.CREATED).build()
         } catch (exception: Exception) {
             logger.warning(exception.message)
-
-            return when (exception) {
-                is TriggerAudioResponseException -> ResponseEntity.badRequest().build()
-                else -> ResponseEntity.internalServerError().build()
-            }
+            throw ResponseStatusException(mapHttpResponseCodeError(exception), exception.message, exception)
         }
     }
 

@@ -15,7 +15,7 @@ export interface TriggerTextResponseFormData {
 
 export interface TriggerAudioResponseFormData {
   id: string
-  content: FileList|null,
+  content: File|null,
   provider: string
 }
 

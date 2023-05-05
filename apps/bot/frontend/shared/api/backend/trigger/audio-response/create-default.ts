@@ -1,15 +1,15 @@
-import axios, { toFormData } from 'axios/index'
+import axios, { toFormData } from 'axios'
 import { backendUrl, headers } from '../../backend'
 
 interface TriggerDefaultAudioResponseCreateRequest {
   id: string
-  file: File | Buffer
+  file: File
   triggerId: string
   guildId: string
 }
 
 export async function createTriggerAudio(audio: TriggerDefaultAudioResponseCreateRequest) {
-  await axios.post(backendUrl('/api/v1/trigger/audio'), toFormData(audio), {
+  await axios.post(backendUrl('/api/v1/trigger/response/audio'), toFormData(audio), {
     headers: headers('multipart/form-data')
   })
 }

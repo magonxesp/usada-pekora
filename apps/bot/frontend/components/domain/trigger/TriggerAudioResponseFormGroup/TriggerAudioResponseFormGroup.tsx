@@ -24,6 +24,7 @@ export const TriggerAudioResponseFormGroup = forwardRef(
           label={intl.$t({ id: 'trigger.form.response_audio.file.label' })}
           help={intl.$t({ id: 'trigger.form.response_audio.file.description' })}
           allowedMimeTypes={['audio/mpeg']}
+          onChange={(file) => setData({ ...data, content: file })}
         />
       </>
     )
