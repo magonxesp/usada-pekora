@@ -1,0 +1,20 @@
+.triggerResponseList {
+    display: flex;
+}
+
+.triggerResponseList > .item + .item {
+    margin-left: 10px;
+}
+
+.item {
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+    border-radius: 3px;
+    padding: 3px 6px;
+    min-width: 46px;
+    font-size: 12px;
+}
+
+.item span {
+    padding: 0 5px;
+}

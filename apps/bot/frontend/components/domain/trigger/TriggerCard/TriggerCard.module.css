@@ -1,0 +1,37 @@
+.triggerCard {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.actions svg {
+    color: var(--primary-background-color);
+    font-size: 16px;
+}
+
+.actions svg:hover {
+    color: var(--primary-active-background-color);
+}
+
+.actions .delete {
+    color: var(--danger-background-color);
+}
+
+.actions .delete:hover {
+    color: var(--danger-active-background-color);
+}

@@ -38,6 +38,8 @@
   "trigger.form.response_text.remove": "Eliminar respuesta de texto",
   "trigger.form.response_audio.add": "Añadir respuesta de audio",
   "trigger.form.response_audio.remove": "Eliminar respuesta de audio",
+  "trigger.response.text": "Texto",
+  "trigger.response.audio": "Audio",
   "confirm_modal.default.reject_button_text": "Cancelar",
   "confirm_modal.default.confirm_button_text": "Aceptar",
   "input.file.help.intro": "Selecciona un fichero o arrastralo aqui.",

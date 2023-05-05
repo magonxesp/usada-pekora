@@ -1,3 +1,4 @@
+import CardList from '../../../common/layout/CardList/CardList'
 import TriggerCard from '../TriggerCard/TriggerCard'
 import { Trigger } from '../../../../shared/api/backend/trigger/trigger'
 
@@ -5,14 +6,14 @@ interface TriggerListProps {
   items: Array<Trigger>
 }
 
-export default function TriggerList(props: TriggerListProps) {
+export default function TriggerList({ items }: TriggerListProps) {
   return (
-    <ul>
-      {props.items.map((trigger) => (
-        <li key={trigger.id}>
-          <TriggerCard trigger={trigger} />
-        </li>
-      ))}
-    </ul>
+    <CardList>
+      <>
+        {items.map((trigger, index) => (
+          <TriggerCard key={index} trigger={trigger} />
+        ))}
+      </>
+    </CardList>
   )
 }
