@@ -1,15 +1,14 @@
 import { useIntl } from 'react-intl'
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
-import { Validators } from '../../../../shared/helpers/form/validator'
-import { isNotEmpty, isRegex } from '../../../../shared/helpers/validations'
-import { useEmitOnChange, useValidator } from '../../../../shared/hooks/form'
-import { emptyTriggerFormData, TriggerEntityFormData } from '../../../../shared/helpers/form/trigger/form-data'
-import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
-import { FormGroupProps } from '../../../../shared/helpers/form/props'
+import { Validators } from '../../../../modules/shared/form/validator'
+import { isNotEmpty, isRegex } from '../../../../modules/shared/validations'
+import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
+import { FormGroupProps } from '../../../../modules/shared/form/props'
 import TextInput from '../../../common/form/TextInput/TextInput'
 import { Option } from '../../../common/form/Select/Select'
 import TextSelect from '../../../common/form/TextSelect/TextSelect'
-import { triggerCompare } from '../../../../shared/api/backend/trigger/trigger'
+import { triggerCompare } from '../../../../modules/trigger/trigger'
+import { emptyTriggerFormData, TriggerEntityFormData, TriggerFormGroupRef } from '../../../../modules/trigger/form'
 
 export const TriggerEntityFormGroup = forwardRef(
   (props: FormGroupProps<TriggerEntityFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {

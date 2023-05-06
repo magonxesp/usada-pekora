@@ -1,16 +1,27 @@
 import { useDispatch } from 'react-redux'
 import { useIntl } from 'react-intl'
 import ConfirmModal from '../../components/common/modal/ConfirmModal/ConfirmModal'
-import { showModal } from '../../store/slices/app-slice'
+import { setTriggers, showModal } from '../../store/slices/app-slice'
 import { createElement } from 'react'
-import { alert, asyncAlert } from '../helpers/alert'
-import { useFetchTriggers } from './fetch'
-import { TriggerFormData } from '../helpers/form/trigger/form-data'
-import { createTrigger } from '../api/backend/trigger/create'
-import { createTriggerTextResponse } from '../api/backend/trigger/text-response/create-default'
-import { deleteTrigger } from '../api/backend/trigger/delete'
-import { Trigger } from '../api/backend/trigger/trigger'
-import { createTriggerAudio } from '../api/backend/trigger/audio-response/create-default'
+import { alert, asyncAlert } from '../shared/alert'
+import { createTrigger } from './create'
+import { createTriggerTextResponse } from './text-response/create-default'
+import { deleteTrigger } from './delete'
+import { Trigger } from './trigger'
+import { createTriggerAudio } from './audio-response/create-default'
+import { TriggerFormData } from './form'
+import { useSelectedGuild } from '../guild/hooks'
+import { fetchGuildTriggers } from './fetch'
+
+export function useFetchTriggers() {
+  const selectedGuildId = useSelectedGuild()
+  const dispatch = useDispatch()
+
+  return async () => {
+    const triggers = await fetchGuildTriggers(selectedGuildId)
+    dispatch(setTriggers(triggers))
+  }
+}
 
 export function useDeleteTrigger() {
   const dispatch = useDispatch()

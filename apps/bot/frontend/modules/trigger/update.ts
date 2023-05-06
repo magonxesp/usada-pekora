@@ -1,4 +1,4 @@
-import { backendUrl, headers } from '../backend'
+import { backendUrl, headers } from '../shared/client/backend'
 import axios from 'axios'
 
 interface TriggerUpdateRequestNewValues {

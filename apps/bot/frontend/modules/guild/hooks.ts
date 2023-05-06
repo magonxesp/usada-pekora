@@ -1,4 +1,4 @@
-import { useAppSelector } from './store'
+import { useAppSelector } from '../shared/hooks'
 import { useEffect, useState } from 'react'
 
 export function useSelectedGuild(): string {

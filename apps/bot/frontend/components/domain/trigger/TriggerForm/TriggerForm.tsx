@@ -1,16 +1,15 @@
-import { emptyTriggerFormData, TriggerFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import Button from '../../../common/form/Button/Button'
 import Form from '../../../common/form/Form/Form'
 import { useRef, useState } from 'react'
 import { useIntl } from 'react-intl'
-import { alert } from '../../../../shared/helpers/alert'
-import { useSelectedGuild } from '../../../../shared/hooks/guilds'
+import { alert } from '../../../../modules/shared/alert'
+import { useSelectedGuild } from '../../../../modules/guild/hooks'
 import { TriggerEntityFormGroup } from '../TriggerEntityFormGroup/TriggerEntityFormGroup'
 import { TriggerTextResponseFormGroup } from '../TriggerTextResponseFormGroup/TriggerTextResponseFormGroup'
-import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import CollapsibleFormGroup from '../../../common/form/CollapsibleFormGroup/CollapsibleFormGroup'
 import { TriggerAudioResponseFormGroup } from '../TriggerAudioResponseFormGroup/TriggerAudioResponseFormGroup'
 import styles from './TriggerForm.module.css'
+import { emptyTriggerFormData, TriggerFormData, TriggerFormGroupRef } from '../../../../modules/trigger/form'
 
 interface TriggerFormProps {
   triggerFormData?: TriggerFormData,

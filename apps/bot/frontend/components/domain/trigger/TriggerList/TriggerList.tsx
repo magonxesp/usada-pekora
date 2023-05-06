@@ -1,6 +1,6 @@
 import CardList from '../../../common/layout/CardList/CardList'
 import TriggerCard from '../TriggerCard/TriggerCard'
-import { Trigger } from '../../../../shared/api/backend/trigger/trigger'
+import { Trigger } from '../../../../modules/trigger/trigger'
 
 interface TriggerListProps {
   items: Array<Trigger>

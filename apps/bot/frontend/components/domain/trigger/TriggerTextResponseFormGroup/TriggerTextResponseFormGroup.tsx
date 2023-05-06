@@ -1,13 +1,16 @@
 import { useIntl } from 'react-intl'
-import { useEmitOnChange, useValidator } from '../../../../shared/hooks/form'
-import { Validators } from '../../../../shared/helpers/form/validator'
-import { isNotEmpty } from '../../../../shared/helpers/validations'
+import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
+import { Validators } from '../../../../modules/shared/form/validator'
+import { isNotEmpty } from '../../../../modules/shared/validations'
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
-import { emptyTriggerResponseTextFormData, TriggerTextResponseFormData } from '../../../../shared/helpers/form/trigger/form-data'
-import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
-import { FormGroupProps } from '../../../../shared/helpers/form/props'
+import { FormGroupProps } from '../../../../modules/shared/form/props'
 import TextInput from '../../../common/form/TextInput/TextInput'
 import TextAreaInput from '../../../common/form/TextAreaInput/TextAreaInput'
+import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
+import {
+  emptyTriggerResponseTextFormData,
+  TriggerTextResponseFormData
+} from '../../../../modules/trigger/text-response/form'
 
 export const TriggerTextResponseFormGroup = forwardRef(
   (props: FormGroupProps<TriggerTextResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {

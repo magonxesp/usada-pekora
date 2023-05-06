@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../../shared/hooks/store'
+import { useAppSelector } from '../../../modules/shared/hooks'
 import { useEffect, useState } from 'react'
 import { setCurrentGuild } from '../../../store/slices/app-slice'
 import TriggerList from '../../domain/trigger/TriggerList/TriggerList'
@@ -7,12 +7,12 @@ import EmptyState from '../../common/states/EmptyState/EmptyState'
 import Link from 'next/link'
 import UserGuildSelect from '../../domain/guild/UserGuildSelect/UserGuildSelect'
 import TriggerListSkeleton from '../../domain/trigger/TriggerListSkeleton/TriggerListSkeleton'
-import { useSelectedGuild } from '../../../shared/hooks/guilds'
-import { useFetchTriggers } from '../../../shared/hooks/fetch'
+import { useSelectedGuild } from '../../../modules/guild/hooks'
 import SectionHeading from '../../common/layout/SectionHeading/SectionHeading'
 import Section from '../../common/layout/Section/Section'
 import Button from '../../common/form/Button/Button'
 import { useIntl } from 'react-intl'
+import { useFetchTriggers } from '../../../modules/trigger/hooks'
 
 export default function GuildTriggersView() {
   const dispatch = useDispatch();

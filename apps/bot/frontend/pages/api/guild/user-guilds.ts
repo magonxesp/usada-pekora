@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { serverSession } from '../../../shared/helpers/session'
-import { DiscordRestClientUnauthorizedError } from '../../../shared/api/discord/client-error'
-import { DiscordGuildClient } from '../../../shared/api/discord/client'
+import { serverSession } from '../../../modules/shared/session'
+import { DiscordRestClientUnauthorizedError } from '../../../modules/shared/client/client-error'
+import { DiscordGuildClient } from '../../../modules/shared/client/client'
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -1,5 +1,5 @@
 import styles from '../Modal/Modal.module.css'
-import { useAppSelector } from '../../../../shared/hooks/store'
+import { useAppSelector } from '../../../../modules/shared/hooks'
 
 export default function ModalContainer() {
   const show = useAppSelector((state) => state.app.modal.show)

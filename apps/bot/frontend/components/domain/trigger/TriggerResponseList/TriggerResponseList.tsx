@@ -1,4 +1,4 @@
-import { Trigger } from '../../../../shared/api/backend/trigger/trigger'
+import { Trigger } from '../../../../modules/trigger/trigger'
 import styles from './TriggerResponseList.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faMusic } from '@fortawesome/free-solid-svg-icons'

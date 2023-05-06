@@ -2,14 +2,16 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import GuildTriggersView from '../../../components/views/GuildTriggersView/GuildTriggersView'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
-import { asyncAlert } from '../../../shared/helpers/alert'
+import { asyncAlert } from '../../../modules/shared/alert'
 import TriggerFormSidebar from '../../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
-import { submitTriggerUpdateRequest, TriggerFormData, triggerToFormData } from '../../../shared/helpers/form/trigger/trigger'
-import { fetchTriggerById, Trigger } from '../../../shared/api/backend/trigger/trigger'
+import { submitTriggerUpdateRequest } from '../../../modules/trigger/form/trigger'
+import { Trigger } from '../../../modules/trigger/trigger'
+import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/fetch'
+import { TriggerFormData } from '../../../modules/trigger/form'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = async (context) => {
   const { id } = context.query
-  const trigger = await fetchTriggerById(id as string)
+  const trigger = await fetchTriggerByIdWithResponses(String(id))
 
   if (!trigger) {
     return {
@@ -17,11 +19,9 @@ export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = asyn
     }
   }
 
-  const triggerObject = { ...trigger }
-
   return {
     props: {
-      trigger: triggerObject
+      trigger: trigger
     }
   }
 }
@@ -49,7 +49,7 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
       <GuildTriggersView />
       <TriggerFormSidebar
         title={intl.$t({ id: 'trigger.form.sidebar.edit.title' })}
-        initialFormData={triggerToFormData(new Trigger(trigger))}
+        initialFormData={triggerToFormData(trigger)}
         onSubmit={updateTrigger}
         onSidebarClose={closeSidebar}
       />

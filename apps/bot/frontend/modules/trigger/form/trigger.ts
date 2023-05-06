@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import {
   updateTrigger
-} from '../../../api/backend/trigger/update'
-import { TriggerFormData } from './form-data'
-import { createTrigger } from '../../../api/backend/trigger/create'
-import { createTriggerTextResponse } from '../../../api/backend/trigger/text-response/create-default'
-import { createTriggerAudio } from '../../../api/backend/trigger/audio-response/create-default'
+} from '../update'
+import { createTrigger } from '../create'
+import { createTriggerTextResponse } from '../text-response/create-default'
+import { createTriggerAudio } from '../audio-response/create-default'
+import { TriggerFormData } from '../form'
 
 export async function submitTriggerUpdateRequest(data: TriggerFormData) {
   // if (data.responseAudio != null) {

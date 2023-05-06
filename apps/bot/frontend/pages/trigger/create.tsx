@@ -3,7 +3,7 @@ import GuildTriggersView from '../../components/views/GuildTriggersView/GuildTri
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import TriggerFormSidebar from '../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
-import { useCreateTrigger } from '../../shared/hooks/trigger'
+import { useCreateTrigger } from '../../modules/trigger/hooks'
 
 const NewTrigger: NextPage = () => {
   const router = useRouter()

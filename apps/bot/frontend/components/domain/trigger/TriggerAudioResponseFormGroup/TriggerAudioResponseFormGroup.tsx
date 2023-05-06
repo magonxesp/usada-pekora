@@ -1,14 +1,14 @@
 import { useIntl } from 'react-intl'
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
+import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
+import { FormGroupProps } from '../../../../modules/shared/form/props'
+import FileInput from '../../../common/form/FileInput/FileInput'
+import { Validators } from '../../../../modules/shared/form/validator'
+import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
 import {
   emptyTriggerResponseAudioFormData,
-  TriggerAudioResponseFormData,
-} from '../../../../shared/helpers/form/trigger/form-data'
-import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
-import { useEmitOnChange, useValidator } from '../../../../shared/hooks/form'
-import { FormGroupProps } from '../../../../shared/helpers/form/props'
-import FileInput from '../../../common/form/FileInput/FileInput'
-import { Validators } from '../../../../shared/helpers/form/validator'
+  TriggerAudioResponseFormData
+} from '../../../../modules/trigger/audio-response/form'
 
 export const TriggerAudioResponseFormGroup = forwardRef(
   (props: FormGroupProps<TriggerAudioResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {

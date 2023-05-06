@@ -1,5 +1,5 @@
 import axios, { toFormData } from 'axios'
-import { backendUrl, headers } from '../../backend'
+import { backendUrl, headers } from '../../shared/client/backend'
 
 interface TriggerDefaultAudioResponseCreateRequest {
   id: string

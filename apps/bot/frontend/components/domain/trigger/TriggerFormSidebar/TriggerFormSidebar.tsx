@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { TriggerFormData } from '../../../../shared/helpers/form/trigger/form-data'
 import Sidebar from '../../../common/layout/Sidebar/Sidebar'
 import TriggerForm from '../TriggerForm/TriggerForm'
 import SidebarHeading from '../../../common/layout/SidebarHeading/SidebarHeading'
 import SidebarBody from '../../../common/layout/SidebarBody/SidebarBody'
 import SidebarTitle from '../../../common/layout/SidebarTitle/SidebarTitle'
+import { TriggerFormData } from '../../../../modules/trigger/form'
 
 interface TriggerFormSidebarProps {
   onSidebarClose?: () => void
