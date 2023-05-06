@@ -1,6 +1,6 @@
 .header {
     width: 100%;
-    border-bottom-width: 4px;
+    border-bottom-width: 0.25rem;
     border-bottom-style: solid;
     border-bottom-color: var(--primary-background-color);
     overflow: hidden;
@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 5rem;
 }
 
 .logo {

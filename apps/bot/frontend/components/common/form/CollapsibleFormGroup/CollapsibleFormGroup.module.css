@@ -4,11 +4,11 @@
     width: 100%;
     padding: 0;
     color: var(--primary-background-color) !important;
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .button + * {
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
 
 .button:hover {
@@ -25,6 +25,6 @@
 }
 
 .buttonIcon {
-    width: 27px;
-    margin-right: 5px;
+    width: 1.6875rem;
+    margin-right: 0.3125rem;
 }

@@ -10,8 +10,8 @@
 }
 
 .title {
-    font-size: 24px;
-    margin-bottom: 15px;
+    font-size: 1.5rem;
+    margin-bottom: 0.9375rem;
 }
 
 .actions {
@@ -21,7 +21,7 @@
 
 .actions svg {
     color: var(--primary-background-color);
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .actions svg:hover {

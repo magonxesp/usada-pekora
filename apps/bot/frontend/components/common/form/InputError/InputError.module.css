@@ -1,6 +1,6 @@
 .error {
     display: block;
     color: var(--danger-background-color);
-    font-size: 14px;
-    margin-top: 2px;
+    font-size: 0.875rem;
+    margin-top: 0.125rem;
 }

@@ -9,13 +9,13 @@
     flex-direction: column;
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 0.625rem;
     height: 100%;
     justify-content: center;
 }
 
 .arrowIcon:first-child {
-    margin-bottom: -3px;
+    margin-bottom: -0.1875rem;
 }
 
 .arrowIcon {
@@ -25,11 +25,11 @@
 }
 
 .select .arrowIcon:first-child {
-    margin-bottom: -3px;
+    margin-bottom: -0.1875rem;
 }
 
 .select .option {
-    padding: 0.5rem 10px;
+    padding: 0.5rem 0.625rem;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -54,10 +54,10 @@
     position: absolute;
     overflow-y: scroll;
     max-height: 40rem;
-    width: calc(100% + 4px);
-    left: -2px;
+    width: calc(100% + 0.25rem);
+    left: -0.125rem;
     top: 100%;
-    border: 1px solid var(--input-border-color) !important;
+    border: 0.0625rem solid var(--input-border-color) !important;
     background-color: var(--select-option-background-color) !important;
     color: var(--select-option-text-color);
     border-radius: var(--default-border-radius);

@@ -1,5 +1,5 @@
 .section {
     width: var(--container-width);
     margin: 0 auto;
-    padding: 36px 0;
+    padding: 2.25rem 0;
 }

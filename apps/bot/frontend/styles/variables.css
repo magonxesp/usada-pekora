@@ -1,6 +1,6 @@
 :root {
-    --container-width: 1216px;
-    --default-border-radius: 8px;
+    --container-width: 76rem;
+    --default-border-radius: 0.5rem;
 
     --background-color: white;
     --text-color: black;
