@@ -1,8 +1,8 @@
 import { FormErrors } from '../shared/form/validator'
 import { v4 as uuidv4 } from 'uuid'
-import { triggerCompare } from './trigger'
-import { TriggerTextResponseFormData } from './text-response/form'
-import { TriggerAudioResponseFormData } from './audio-response/form'
+import { Trigger, triggerCompare } from './trigger'
+import { TriggerTextResponseFormData, triggerTextResponseToFormData } from './text-response/form'
+import { TriggerAudioResponseFormData, triggerDefaultAudioResponseToFormData } from './audio-response/form'
 
 export interface TriggerFormGroupRef {
   validate: () => void
@@ -30,3 +30,24 @@ export const emptyTriggerFormData = (): TriggerFormData => ({
   compare: triggerCompare.contains,
   discordGuildId: ''
 })
+
+export function triggerToFormData(trigger: Trigger): TriggerFormData {
+  const data: TriggerFormData = {
+    id: trigger.id,
+    title: trigger.title,
+    compare: trigger.compare,
+    input: trigger.input,
+    discordGuildId: trigger.discordGuildId,
+    responseText: undefined,
+  }
+
+  if (typeof trigger.responses?.text !== 'undefined') {
+    data.responseText = triggerTextResponseToFormData(trigger.responses.text)
+  }
+
+  if (typeof trigger.responses?.audio !== 'undefined') {
+    data.responseAudio = triggerDefaultAudioResponseToFormData(trigger.responses.audio)
+  }
+
+  return data
+}

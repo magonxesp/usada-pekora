@@ -7,7 +7,7 @@ import TriggerFormSidebar from '../../../components/domain/trigger/TriggerFormSi
 import { submitTriggerUpdateRequest } from '../../../modules/trigger/form/trigger'
 import { Trigger } from '../../../modules/trigger/trigger'
 import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/fetch'
-import { TriggerFormData } from '../../../modules/trigger/form'
+import { TriggerFormData, triggerToFormData } from '../../../modules/trigger/form'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = async (context) => {
   const { id } = context.query

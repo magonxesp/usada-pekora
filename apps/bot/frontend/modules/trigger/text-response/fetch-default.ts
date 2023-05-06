@@ -8,7 +8,7 @@ export interface TriggerTextResponseFindResponse {
 }
 
 export async function fetchTriggerTextResponse(id: string): Promise<TriggerTextResponseFindResponse> {
-  const response = await axios.get<TriggerTextResponseFindResponse>(backendUrl(`/api/v1/trigger/response/audio/${id}`), {
+  const response = await axios.get<TriggerTextResponseFindResponse>(backendUrl(`/api/v1/trigger/response/text/${id}`), {
     headers: headers()
   })
 

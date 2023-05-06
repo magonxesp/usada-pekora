@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { backendUrl, headers } from '../../shared/client/backend'
-import { TriggerTextResponseFindResponse } from '../text-response/fetch-default'
 
 export interface TriggerDefaultAudioFindResponse {
   id: string;
@@ -10,7 +9,7 @@ export interface TriggerDefaultAudioFindResponse {
 }
 
 export async function fetchTriggerDefaultAudioResponse(id: string): Promise<TriggerDefaultAudioFindResponse> {
-  const response = await axios.get<TriggerDefaultAudioFindResponse>(backendUrl(`/api/v1/trigger/response/text/${id}`), {
+  const response = await axios.get<TriggerDefaultAudioFindResponse>(backendUrl(`/api/v1/trigger/response/audio/${id}`), {
     headers: headers()
   })
 

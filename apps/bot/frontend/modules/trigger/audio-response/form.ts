@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { TriggerDefaultAudioFindResponse } from './fetch-default'
 
 export interface TriggerAudioResponseFormData {
   id: string
@@ -11,3 +12,11 @@ export const emptyTriggerResponseAudioFormData = (): TriggerAudioResponseFormDat
   content: null,
   provider: 'default'
 })
+
+export function triggerDefaultAudioResponseToFormData(audio: TriggerDefaultAudioFindResponse): TriggerAudioResponseFormData {
+  return {
+    id: audio.id,
+    content: new File([], audio.file),
+    provider: 'default'
+  }
+}
