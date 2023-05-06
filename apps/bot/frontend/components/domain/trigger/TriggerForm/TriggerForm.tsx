@@ -10,6 +10,7 @@ import { TriggerTextResponseFormGroup } from '../TriggerTextResponseFormGroup/Tr
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import CollapsibleFormGroup from '../../../common/form/CollapsibleFormGroup/CollapsibleFormGroup'
 import { TriggerAudioResponseFormGroup } from '../TriggerAudioResponseFormGroup/TriggerAudioResponseFormGroup'
+import styles from './TriggerForm.module.css'
 
 interface TriggerFormProps {
   triggerFormData?: TriggerFormData,
@@ -92,7 +93,9 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
           />
         </CollapsibleFormGroup>
 
-        <Button type="submit" disabled={disableSubmit ?? false}>{intl.$t({ id: 'trigger.form.submit' })}</Button>
+        <div className={styles.triggerFormSubmit}>
+          <Button type="submit" disabled={disableSubmit ?? false}>{intl.$t({ id: 'trigger.form.submit' })}</Button>
+        </div>
       </>
     </Form>
   )
