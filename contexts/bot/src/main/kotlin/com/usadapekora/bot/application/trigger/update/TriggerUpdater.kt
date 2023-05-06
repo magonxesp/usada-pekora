@@ -48,7 +48,6 @@ class TriggerUpdater(
             trigger.title = Trigger.TriggerTitle(it)
         }
 
-
         request.values.input.takeUnless { it == null }?.let {
             trigger.input = Trigger.TriggerInput(it)
         }

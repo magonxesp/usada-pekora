@@ -10,9 +10,9 @@ import kotlin.io.path.Path
 
 data class TriggerDefaultAudioResponse(
     val id: TriggerAudioResponseId,
-    val trigger: Trigger.TriggerId,
-    val guild: GuildId,
-    val file: TriggerAudioFile
+    var trigger: Trigger.TriggerId,
+    var guild: GuildId,
+    var file: TriggerAudioFile
 ) : Entity(), TriggerAudioResponse {
     data class TriggerAudioFile(val value: String)
 
@@ -31,6 +31,10 @@ data class TriggerDefaultAudioResponse(
     }
 
     override fun id(): String = id.value
-    override val path: String = Path(storageDirPath, "trigger", "audio", guild.value, trigger.value, "${id.value}.${File(file.value).extension}").toString()
-    override val provider = TriggerAudioResponseProvider.DEFAULT
+
+    override val path: String
+        get() = Path(storageDirPath, "trigger", "audio", guild.value, trigger.value, "${id.value}.${File(file.value).extension}").toString()
+
+    override val provider
+        get() = TriggerAudioResponseProvider.DEFAULT
 }
