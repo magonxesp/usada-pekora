@@ -27,7 +27,7 @@ class TriggerDefaultAudioResponseGetApiControllerTest : TriggerControllerTest() 
             id = audioId,
             trigger = "c2a05313-b765-4be0-bf92-0b77136d033b",
             guild = "47541556",
-            file = "c2a05313-b765-4be0-bf92-0b77136d033b.mp3"
+            file = "assets_audio_Its_me_pekora.mp3"
         )
 
         createAudioDummy(
@@ -41,7 +41,7 @@ class TriggerDefaultAudioResponseGetApiControllerTest : TriggerControllerTest() 
                 "id": "$audioId",
                 "triggerId": "c2a05313-b765-4be0-bf92-0b77136d033b",
                 "guildId": "47541556",
-                "file": "$audioId.mp3"
+                "file": "assets_audio_Its_me_pekora.mp3"
             }
         """.uglifyJson()
 

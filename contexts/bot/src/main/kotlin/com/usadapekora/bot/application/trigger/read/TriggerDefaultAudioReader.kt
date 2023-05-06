@@ -10,7 +10,7 @@ class TriggerDefaultAudioReader(private val repository: TriggerAudioDefaultRepos
 
     fun read(id: String): ByteArray {
         val audio = repository.find(TriggerAudioResponseId(id))
-        return reader.read(Path(TriggerAudioUtils.audioDirPath(audio), audio.file.value).toString())
+        return reader.read(audio.path)
     }
 
 }

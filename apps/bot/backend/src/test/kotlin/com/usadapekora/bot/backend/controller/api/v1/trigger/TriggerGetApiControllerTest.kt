@@ -109,7 +109,7 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
                 "id": "$audioId",
                 "triggerId": "$id",
                 "guildId": "94101459",
-                "file": "$audioId.mp3"
+                "file": "assets_audio_Its_me_pekora.mp3"
             }
         """.uglifyJson()
 

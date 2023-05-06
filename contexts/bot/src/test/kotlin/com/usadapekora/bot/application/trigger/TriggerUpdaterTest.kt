@@ -104,16 +104,16 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger
-        every { audioRepository.find(responseAudio.id, responseAudio.provider()) } returns responseAudio
+        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio
 
         trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider() // updated audio response
+        trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
         updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 responseAudioId = responseAudio.id.value,
-                responseAudioProvider = responseAudio.provider().value
+                responseAudioProvider = responseAudio.provider.value
             )
         ))
 
@@ -131,17 +131,17 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger
-        every { audioRepository.find(responseAudio.id, responseAudio.provider()) } throws TriggerAudioResponseException.NotFound()
+        every { audioRepository.find(responseAudio.id, responseAudio.provider) } throws TriggerAudioResponseException.NotFound()
 
         trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider() // updated audio response
+        trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
         assertThrows<TriggerException.MissingResponse> {
             updater.update(TriggerUpdateRequest(
                 id = trigger.id.value,
                 values = TriggerUpdateRequest.NewValues(
                     responseAudioId = responseAudio.id.value,
-                    responseAudioProvider = responseAudio.provider().value
+                    responseAudioProvider = responseAudio.provider.value
                 )
             ))
         }
@@ -160,10 +160,10 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger
-        every { audioRepository.find(responseAudio.id, responseAudio.provider()) } returns responseAudio
+        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio
 
         trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider() // updated audio response
+        trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
         assertThrows<TriggerException.MissingAudioProvider> {
             updater.update(TriggerUpdateRequest(

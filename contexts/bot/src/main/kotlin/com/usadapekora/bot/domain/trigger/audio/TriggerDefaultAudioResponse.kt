@@ -5,6 +5,7 @@ import com.usadapekora.bot.domain.shared.Entity
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import com.usadapekora.bot.storageDirPath
+import java.io.File
 import kotlin.io.path.Path
 
 data class TriggerDefaultAudioResponse(
@@ -30,8 +31,6 @@ data class TriggerDefaultAudioResponse(
     }
 
     override fun id(): String = id.value
-
-    override fun path() = Path(storageDirPath, "trigger", "audio", guild.value, trigger.value).toString()
-
-    override fun provider() = TriggerAudioResponseProvider.DEFAULT
+    override val path: String = Path(storageDirPath, "trigger", "audio", guild.value, trigger.value, "${id.value}.${File(file.value).extension}").toString()
+    override val provider = TriggerAudioResponseProvider.DEFAULT
 }

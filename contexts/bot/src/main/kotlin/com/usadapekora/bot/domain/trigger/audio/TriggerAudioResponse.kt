@@ -2,6 +2,6 @@ package com.usadapekora.bot.domain.trigger.audio
 
 interface TriggerAudioResponse {
     fun id(): String
-    fun path(): String
-    fun provider(): TriggerAudioResponseProvider
+    val path: String
+    val provider: TriggerAudioResponseProvider
 }

@@ -15,19 +15,14 @@ class TriggerDefaultAudioResponseCreator(private val repository: TriggerAudioDef
             id = request.id,
             trigger = request.triggerId,
             guild = request.guildId,
-            file = "${request.id}.${File(request.fileName).extension}"
+            file = request.fileName
         )
 
         try {
             repository.find(audio.id)
             throw TriggerAudioResponseException.AlreadyExists("Trigger audio with id ${audio.id.value} already exists")
         } catch (_: TriggerAudioResponseException.NotFound) {
-            val destination = Path(
-                TriggerAudioUtils.audioDirPath(audio),
-                audio.file.value
-            ).toString()
-
-            writer.write(request.content, destination)
+            writer.write(request.content, audio.path)
             repository.save(audio)
         }
     }

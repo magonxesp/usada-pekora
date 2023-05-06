@@ -26,7 +26,7 @@ class TriggerDefaultAudioResponseReaderTest {
         val expectedContent = Random.nextBytes(10)
 
         every { repository.find(audio.id) } returns audio
-        every { fileReader.read(Path(TriggerAudioUtils.audioDirPath(audio), audio.file.value).toString()) } returns expectedContent
+        every { fileReader.read(audio.path) } returns expectedContent
 
         val content = reader.read(audio.id.value)
 
