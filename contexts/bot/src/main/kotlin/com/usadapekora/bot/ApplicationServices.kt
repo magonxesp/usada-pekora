@@ -20,6 +20,7 @@ import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
+import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
 import com.usadapekora.bot.application.video.SendVideoFeed
@@ -75,6 +76,7 @@ val triggerModule = module {
     single { TriggerDefaultAudioFinder(get()) }
     single { TriggerDefaultAudioDeleter(get(), get()) }
     single { TriggerDefaultAudioReader(get(), get()) }
+    single { TriggerDefaultAudioResponseUpdater(get(), get(), get()) }
 }
 
 val guildModule = module {
