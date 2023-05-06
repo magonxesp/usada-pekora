@@ -42,7 +42,7 @@ class TriggerDefaultAudioPostApiController : ApiController() {
                     id = id,
                     triggerId = triggerId,
                     guildId = guildId,
-                    fileName = MultipartFileUtils.makeTemporaryFileName(file),
+                    fileName = file.originalFilename ?: file.name,
                     content = file.bytes
                 )
             )

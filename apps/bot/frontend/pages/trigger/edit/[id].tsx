@@ -2,12 +2,11 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import GuildTriggersView from '../../../components/views/GuildTriggersView/GuildTriggersView'
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
-import { asyncAlert } from '../../../modules/shared/alert'
 import TriggerFormSidebar from '../../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
-import { submitTriggerUpdateRequest } from '../../../modules/trigger/form/trigger'
 import { Trigger } from '../../../modules/trigger/trigger'
 import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/fetch'
-import { TriggerFormData, triggerToFormData } from '../../../modules/trigger/form'
+import { triggerToFormData } from '../../../modules/trigger/form'
+import { useUpdateTrigger } from '../../../modules/trigger/hooks'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = async (context) => {
   const { id } = context.query
@@ -29,19 +28,10 @@ export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = asyn
 const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const intl = useIntl()
+  const dispatch = useUpdateTrigger(trigger)
 
   const closeSidebar = () => {
     setTimeout(async () => await router.push("/"), 500)
-  }
-
-  const updateTrigger = async (data: TriggerFormData) => {
-    const request = submitTriggerUpdateRequest(data)
-
-    await asyncAlert(request, {
-      success: intl.$t({id: 'trigger.form.update.success'}),
-      error: intl.$t({ id: 'trigger.form.update.error' }),
-      pending: intl.$t({ id: 'trigger.form.update.loading' }),
-    })
   }
 
   return (
@@ -50,7 +40,7 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
       <TriggerFormSidebar
         title={intl.$t({ id: 'trigger.form.sidebar.edit.title' })}
         initialFormData={triggerToFormData(trigger)}
-        onSubmit={updateTrigger}
+        onSubmit={dispatch}
         onSidebarClose={closeSidebar}
       />
     </>

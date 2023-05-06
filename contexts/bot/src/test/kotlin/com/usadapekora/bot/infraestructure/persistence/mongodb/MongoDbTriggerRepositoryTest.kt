@@ -4,7 +4,10 @@ import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerRepository
+import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.TriggerDocument
 import org.junit.jupiter.api.assertThrows
+import org.litote.kmongo.eq
+import org.litote.kmongo.getCollectionOfName
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -64,6 +67,24 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
             repository.save(it)
             val found = repository.find(it.id)
             assertEquals(it, found)
+        }
+    }
+
+    @Test
+    fun `should update`() {
+        val connection = MongoDbRepository.connect()
+        val trigger = TriggerMother.create()
+
+        databaseTest(aggregate = trigger) {
+            it.input = Trigger.TriggerInput("another input")
+            repository.save(it)
+
+
+            val found = connection.getCollectionOfName<TriggerDocument>("triggers")
+                .find(TriggerDocument::id eq it.id.value).toList()
+
+            assertTrue(found.size == 1)
+            assertEquals(it, found.first().toEntity())
         }
     }
 

@@ -12,6 +12,11 @@ import { createTriggerAudio } from './audio-response/create-default'
 import { TriggerFormData } from './form'
 import { useSelectedGuild } from '../guild/hooks'
 import { fetchGuildTriggers } from './fetch'
+import { updateTrigger } from './update'
+import { updateTriggerTextResponse } from './text-response/update-default'
+import { deleteTriggerTextResponse } from './text-response/delete-default'
+import { deleteTriggerDefaultAudioResponse } from './audio-response/delete-default'
+import { updateTriggerDefaultAudioResponse } from './audio-response/update-default'
 
 export function useFetchTriggers() {
   const selectedGuildId = useSelectedGuild()
@@ -50,7 +55,6 @@ export function useCreateTrigger() {
   const intl = useIntl()
 
   const dispatchCreateTrigger = async (data: TriggerFormData): Promise<void> => {
-    console.log(data)
     if (data.responseAudio == null && data.responseText == null) {
       alert(intl.$t({ id: 'trigger.form.response.required.error' }), 'error')
       throw new Error('the trigger require at least one response')
@@ -92,6 +96,78 @@ export function useCreateTrigger() {
       success: intl.$t({id: 'trigger.form.create.success'}),
       error: intl.$t({ id: 'trigger.form.create.error' }),
       pending: intl.$t({ id: 'trigger.form.create.loading' }),
+    })
+  }
+}
+
+export function useUpdateTrigger(actualTrigger: Trigger) {
+  const intl = useIntl()
+
+  const dispatchUpdateTrigger = async (data: TriggerFormData) => {
+    if (data.responseAudio == null && data.responseText == null) {
+      alert(intl.$t({id: 'trigger.form.response.required.error'}), 'error')
+      throw new Error('the trigger require at least one response')
+    }
+
+    if (data.responseText != null && !actualTrigger.responseTextId) {
+      await createTriggerTextResponse({
+        id: data.responseText.id,
+        type: data.responseText.type,
+        content: data.responseText.content
+      })
+    } else if (data.responseText != null && actualTrigger.responseTextId != null) {
+      await updateTriggerTextResponse({
+        id: data.responseText.id,
+        values: {
+          content: data.responseText.content,
+          type: data.responseText.type,
+        }
+      })
+    } else if (!data.responseText && actualTrigger.responseTextId != null) {
+      await deleteTriggerTextResponse(actualTrigger.responseTextId)
+    }
+
+    if (data.responseAudio != null && !actualTrigger.responseAudioId) {
+      await createTriggerAudio({
+        id: data.responseAudio.id,
+        triggerId: data.id,
+        guildId: data.discordGuildId,
+        file: data.responseAudio.content as File
+      })
+    } else if (data.responseAudio != null && actualTrigger.responseAudioId != null) {
+      await updateTriggerDefaultAudioResponse({
+        id: data.responseAudio.id,
+        values: {
+          triggerId: data.id,
+          guildId: data.discordGuildId,
+          file: data.responseAudio.content ?? undefined,
+        },
+      })
+    } if (!data.responseAudio && actualTrigger.responseAudioId != null) {
+      await deleteTriggerDefaultAudioResponse(actualTrigger.responseAudioId)
+    }
+
+    await updateTrigger({
+      id: data.id,
+      values: {
+        title: data.title,
+        compare: data.compare,
+        input: data.input,
+        discordGuildId: data.discordGuildId,
+        responseTextId: data.responseText?.id,
+        responseAudioId: data.responseAudio?.id,
+        responseAudioProvider: data.responseAudio?.provider
+      }
+    })
+  }
+
+  return async (data: TriggerFormData) => {
+    const request = dispatchUpdateTrigger(data)
+
+    await asyncAlert(request, {
+      success: intl.$t({id: 'trigger.form.update.success'}),
+      error: intl.$t({ id: 'trigger.form.update.error' }),
+      pending: intl.$t({ id: 'trigger.form.update.loading' }),
     })
   }
 }

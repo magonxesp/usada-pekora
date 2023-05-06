@@ -38,7 +38,7 @@ class TriggerDefaultAudioPutApiController : ApiController() {
                 TriggerDefaultAudioResponseUpdateRequest(
                     id = id,
                     values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
-                        fileName = file.map { MultipartFileUtils.makeTemporaryFileName(it) }.orElse(null),
+                        fileName = file.map { it.originalFilename ?: it.name }.orElse(null),
                         triggerId = triggerId.orElse(null),
                         guildId = guildId.orElse(null),
                         content = file.map { it.bytes }.orElse(null)

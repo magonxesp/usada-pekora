@@ -38,7 +38,6 @@ export function triggerToFormData(trigger: Trigger): TriggerFormData {
     compare: trigger.compare,
     input: trigger.input,
     discordGuildId: trigger.discordGuildId,
-    responseText: undefined,
   }
 
   if (typeof trigger.responses?.text !== 'undefined') {

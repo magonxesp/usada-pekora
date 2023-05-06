@@ -1,4 +1,4 @@
-import axios from 'axios/index'
+import axios from 'axios'
 import { backendUrl, headers } from '../../shared/client/backend'
 
 interface TriggerTextResponseUpdateRequestNewValues {

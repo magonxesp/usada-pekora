@@ -17,31 +17,44 @@ class TriggerUpdater(
 ) {
 
     private fun updateTextResponse(request: TriggerUpdateRequest, trigger: Trigger) {
-        request.values.responseTextId.takeUnless { it == null }?.let {
+        if (request.values.responseTextId != null) {
             val id = tryOrNull<TriggerTextResponseException.NotFound, TriggerTextResponse> {
-                textResponseRepository.find(TriggerTextResponseId(it))
+                textResponseRepository.find(TriggerTextResponseId(request.values.responseTextId))
             }?.id ?: throw TriggerException.MissingResponse("The new text response is missing")
 
             trigger.responseText = id
+        } else {
+            trigger.responseText = null
         }
     }
 
     private fun updateAudioResponse(request: TriggerUpdateRequest, trigger: Trigger) {
-        request.values.responseAudioId.takeUnless { it == null }?.let {
+        if (request.values.responseAudioId != null) {
             if (request.values.responseAudioProvider == null) {
                 throw TriggerException.MissingAudioProvider("Missing audio provider for the new audio response")
             }
 
             tryOrNull<TriggerAudioResponseException.NotFound, TriggerAudioResponse> {
-                audioResponseRepository.find(TriggerAudioResponseId(it))
+                audioResponseRepository.find(TriggerAudioResponseId(request.values.responseAudioId))
             } ?: throw TriggerException.MissingResponse("The new audio response is missing")
 
-            trigger.responseAudio = TriggerAudioResponseId(it)
+            trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId)
             trigger.responseAudioProvider = TriggerAudioResponseProvider.fromValue(request.values.responseAudioProvider)
+        } else {
+            trigger.responseAudio = null
+            trigger.responseAudioProvider = null
         }
     }
 
     fun update(request: TriggerUpdateRequest) {
+        if (request.values.responseAudioId == null && request.values.responseTextId == null) {
+            throw TriggerException.MissingResponse("The trigger should have at least one response")
+        }
+
+        if (request.values.responseAudioId != null && request.values.responseAudioProvider == null) {
+            throw TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response")
+        }
+
         val trigger = repository.find(Trigger.TriggerId(request.id))
 
         request.values.title.takeUnless { it == null }?.let {

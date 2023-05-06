@@ -23,6 +23,7 @@ class TriggerUpdaterTest {
     @Test
     fun `should update a trigger`() {
         val trigger = TriggerMother.create()
+        val responseText = TriggerTextResponseMother.create()
         val repository = mockk<TriggerRepository>(relaxed = true)
         val textRepository = mockk<TriggerTextResponseRepository>(relaxed = true)
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
@@ -36,10 +37,35 @@ class TriggerUpdaterTest {
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 input = "New expected user input",
+                responseTextId = responseText.id.value,
             )
         ))
 
         verify { repository.save(trigger) }
+    }
+
+    @Test
+    fun `should update not update a trigger that deletes all responses`() {
+        val trigger = TriggerMother.create()
+        val repository = mockk<TriggerRepository>(relaxed = true)
+        val textRepository = mockk<TriggerTextResponseRepository>(relaxed = true)
+        val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
+        val updater = TriggerUpdater(repository, textRepository, audioRepository)
+
+        every { repository.find(trigger.id) } returns trigger
+
+        trigger.input = Trigger.TriggerInput("New expected user input")
+
+        assertThrows<TriggerException.MissingResponse> {
+            updater.update(TriggerUpdateRequest(
+                id = trigger.id.value,
+                values = TriggerUpdateRequest.NewValues(
+                    input = "New expected user input",
+                )
+            ))
+        }
+
+        verify(inverse = true) { repository.save(trigger) }
     }
 
     @Test

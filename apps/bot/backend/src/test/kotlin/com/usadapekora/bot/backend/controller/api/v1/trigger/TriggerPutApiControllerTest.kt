@@ -53,7 +53,7 @@ class TriggerPutApiControllerTest : TriggerControllerTest() {
                 "input": "pekopeko",
                 "compare": "in",
                 "responseTextId": "$textId",
-                "responseAudioId": "$audioId",
+                "responseAudioId": null,
                 "discordGuildId": "94101459"
             }
         """.uglifyJson()

@@ -19,33 +19,6 @@ class TriggerCreator(
     private val textResponseRepository: TriggerTextResponseRepository
 ) {
 
-    private fun findAudioResponse(request: TriggerCreateRequest): TriggerAudioResponse? {
-        if (request.responseAudioId == null || request.responseAudioProvider == null) {
-            return null
-        }
-
-        return try {
-            audioResponseRepository.find(
-                TriggerAudioResponseId(request.responseAudioId),
-                TriggerAudioResponseProvider.fromValue(request.responseAudioProvider)
-            )
-        } catch (_: TriggerAudioResponseException.NotFound) {
-            null
-        }
-    }
-
-    private fun findTextResponse(request: TriggerCreateRequest): TriggerTextResponse? {
-        if (request.responseTextId == null) {
-            return null
-        }
-
-        return try {
-            textResponseRepository.find(TriggerTextResponseId(request.responseTextId))
-        } catch (_: TriggerTextResponseException.NotFound) {
-            null
-        }
-    }
-
     fun create(request: TriggerCreateRequest) {
         val textResponse = request.responseTextId?.let {
             tryOrNull<TriggerTextResponseException.NotFound, TriggerTextResponse> {
