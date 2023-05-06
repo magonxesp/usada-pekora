@@ -9,10 +9,11 @@ interface CollapsibleFormGroupProps {
   onRemove?: () => void
   addTitle?: string
   removeTitle?: string
+  open?: boolean
 }
 
-export default function CollapsibleFormGroup({ children, onRemove, addTitle, removeTitle }: CollapsibleFormGroupProps) {
-  const [add, setAdd] = useState(false)
+export default function CollapsibleFormGroup({ children, onRemove, addTitle, removeTitle, open }: CollapsibleFormGroupProps) {
+  const [add, setAdd] = useState(open ?? false)
 
   const handleRemove = () => {
     setAdd(false)

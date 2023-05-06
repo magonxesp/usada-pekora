@@ -43,6 +43,7 @@ export const TriggerAudioResponseFormGroup = forwardRef(
           help={intl.$t({ id: 'trigger.form.response_audio.file.description' })}
           error={errors.content ?? []}
           allowedMimeTypes={['audio/mpeg']}
+          defaultValue={data.content}
           onChange={(file) => {
             setData({...data, content: file})
             validateSingle('content', file)

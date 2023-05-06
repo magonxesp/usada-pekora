@@ -72,6 +72,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
           addTitle={intl.$t({ id: 'trigger.form.response_text.add' })}
           removeTitle={intl.$t({ id: 'trigger.form.response_text.remove' })}
           onRemove={() => setFormData({...formData, responseText: undefined})}
+          open={typeof formData.responseText !== 'undefined'}
         >
           <TriggerTextResponseFormGroup
             data={formData.responseText}
@@ -84,6 +85,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
           addTitle={intl.$t({ id: 'trigger.form.response_audio.add' })}
           removeTitle={intl.$t({ id: 'trigger.form.response_audio.remove' })}
           onRemove={() => setFormData({...formData, responseAudio: undefined})}
+          open={typeof formData.responseAudio !== 'undefined'}
         >
           <TriggerAudioResponseFormGroup
             data={formData.responseAudio}

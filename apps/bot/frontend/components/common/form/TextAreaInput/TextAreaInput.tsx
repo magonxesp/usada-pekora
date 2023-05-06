@@ -7,7 +7,7 @@ interface TextAreaInputProps extends InputProps<string> {
 }
 
 export default function TextAreaInput({ label, help, error, defaultValue, onChange, limit }: TextAreaInputProps) {
-  const [characterCount, setCharacterCount] = useState(0)
+  const [characterCount, setCharacterCount] = useState(defaultValue?.length ?? 0)
 
   return (
     <Input
