@@ -7,6 +7,7 @@ import { emptyTriggerResponseTextFormData, TriggerTextResponseFormData } from '.
 import { TriggerFormGroupRef } from '../../../../shared/helpers/form/trigger/handle'
 import { FormGroupProps } from '../../../../shared/helpers/form/props'
 import TextInput from '../../../common/form/TextInput/TextInput'
+import TextAreaInput from '../../../common/form/TextAreaInput/TextAreaInput'
 
 export const TriggerTextResponseFormGroup = forwardRef(
   (props: FormGroupProps<TriggerTextResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
@@ -27,7 +28,7 @@ export const TriggerTextResponseFormGroup = forwardRef(
     useEmitOnChange(props, data)
 
     return (
-      <TextInput
+      <TextAreaInput
         label={intl.$t({ id: 'trigger.form.response_text.content.label' })}
         help={intl.$t({ id: 'trigger.form.response_text.content.description' })}
         defaultValue={data.content}
@@ -36,6 +37,7 @@ export const TriggerTextResponseFormGroup = forwardRef(
           validateSingle('content', value)
         }}
         error={errors.content}
+        limit={255}
       />
     )
   }
