@@ -32,7 +32,7 @@ export default function UserGuildSelect() {
       <IconSelect
         options={options}
         selected={(selectedGuild === '') ? undefined : selectedGuild}
-        onChange={(option) => dispatch(setCurrentGuild({ id: String(option.value) }))}
+        onChange={(option) => dispatch(setCurrentGuild({ id: String(option) }))}
         className={styles.select}
       />
     </LoadingSkeletonElement>
