@@ -4,7 +4,9 @@ import Button from '../../form/Button/Button'
 import { closeModal } from '../../../../store/slices/app-slice'
 import { useDispatch } from 'react-redux'
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline'
-import styles from '../Modal/Modal.module.css'
+import styles from './ConfirmationModal.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 
 interface ConfirmModalProps {
   onConfirm?: () => void
@@ -34,15 +36,15 @@ export default function ConfirmModal({ onConfirm, onReject, rejectText, confirmT
     <Modal>
       <Modal.ModalBody className={styles.confirmationModal}>
         <>
-          <div className="flex justify-center text-orange-600">
-            <ExclamationCircleIcon className="w-1/4" />
+          <div className={styles.messageContainer}>
+            <FontAwesomeIcon icon={faCircleExclamation} className={styles.icon} />
+            <p className={styles.message}>{message}</p>
           </div>
-          <p className="text-center text-lg py-4">{message}</p>
-          <div className="flex justify-center ">
-            <Button onClick={() => handleAction('reject')} style="secondary">
+          <div className={styles.actions}>
+            <Button onClick={() => handleAction('reject')} style="secondary" className={styles.button}>
               {rejectText ?? intl.$t({ id: 'confirm_modal.default.reject_button_text' })}
             </Button>
-            <Button onClick={() => handleAction('confirm')}>
+            <Button onClick={() => handleAction('confirm')} className={styles.button}>
               {confirmText ?? intl.$t({ id: 'confirm_modal.default.confirm_button_text' })}
             </Button>
           </div>
