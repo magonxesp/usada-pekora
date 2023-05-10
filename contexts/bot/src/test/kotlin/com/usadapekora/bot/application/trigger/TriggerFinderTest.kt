@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.TriggerResponse
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class TriggerFinderTest {
 
@@ -90,11 +93,12 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.find(expected.id) } returns expected
+        every { repository.find(expected.id) } returns expected.right()
 
         val actual = finder.find(expected.id.value)
 
-        assertEquals(TriggerResponse.fromEntity(expected), actual)
+        assertTrue(actual.isRight())
+        assertEquals(TriggerResponse.fromEntity(expected), actual.getOrNull())
     }
 
     @Test
@@ -104,7 +108,7 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.find(expected.id) } throws TriggerException.NotFound()
+        every { repository.find(expected.id) } returns TriggerException.NotFound().left()
 
         assertThrows<TriggerException.NotFound> {
             finder.find(expected.id.value)

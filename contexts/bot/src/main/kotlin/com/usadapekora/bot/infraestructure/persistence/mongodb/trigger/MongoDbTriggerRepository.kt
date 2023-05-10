@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb.trigger
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbRepository
 import com.usadapekora.bot.domain.trigger.TriggerException
@@ -26,16 +29,16 @@ class MongoDbTriggerRepository : MongoDbRepository<Trigger, TriggerDocument>(
         return triggers.map { it.toEntity() }.toList().toTypedArray()
     }
 
-    override fun find(id: Trigger.TriggerId): Trigger {
+    override fun find(id: Trigger.TriggerId): Either<TriggerException.NotFound, Trigger> {
         val trigger = oneQuery<TriggerDocument>("triggers") { collection ->
             collection.findOne(TriggerDocument::id eq id.value)
         }
 
         if (trigger != null) {
-            return trigger.toEntity()
+            return trigger.toEntity().right()
         }
 
-        throw TriggerException.NotFound()
+        return TriggerException.NotFound().left()
     }
 
     override fun findByDiscordServer(id: Trigger.TriggerDiscordGuildId): Array<Trigger> {

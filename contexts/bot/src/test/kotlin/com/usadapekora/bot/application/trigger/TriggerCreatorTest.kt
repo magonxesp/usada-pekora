@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.domain.trigger.*
@@ -31,7 +33,7 @@ class TriggerCreatorTest {
 
         every { audioResponseRepository.find(audioResponse.id) } returns audioResponse
         every { textResponseRepository.find(textResponse.id) } returns textResponse
-        every { repository.find(trigger.id) } throws TriggerException.NotFound()
+        every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         creator.create(TriggerCreateRequest(
             id = trigger.id.value,
@@ -62,7 +64,7 @@ class TriggerCreatorTest {
 
         every { audioResponseRepository.find(audioResponse.id) } throws TriggerAudioResponseException.NotFound()
         every { textResponseRepository.find(textResponse.id) } throws TriggerTextResponseException.NotFound()
-        every { repository.find(trigger.id) } throws TriggerException.NotFound()
+        every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         assertThrows<TriggerException.MissingResponse> {
             creator.create(TriggerCreateRequest(
@@ -94,7 +96,7 @@ class TriggerCreatorTest {
 
         every { audioResponseRepository.find(audioResponse.id) } returns audioResponse
         every { textResponseRepository.find(textResponse.id) } returns textResponse
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
 
         assertThrows<TriggerException.AlreadyExists> {
             creator.create(TriggerCreateRequest(
@@ -118,7 +120,7 @@ class TriggerCreatorTest {
         val textResponseRepository = mockk<TriggerTextResponseRepository>()
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
-        every { repository.find(trigger.id) } throws TriggerException.NotFound()
+        every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.save(trigger) } throws Exception()
 
         assertThrows<Exception> {
@@ -144,7 +146,7 @@ class TriggerCreatorTest {
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
         every { textResponseRepository.find(trigger.responseText!!) } throws TriggerTextResponseException.NotFound()
-        every { repository.find(trigger.id) } throws TriggerException.NotFound()
+        every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         assertThrows<TriggerException.MissingResponse> {
             creator.create(TriggerCreateRequest(
@@ -171,7 +173,7 @@ class TriggerCreatorTest {
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
         every { audioResponseRepository.find(trigger.responseAudio!!) } throws TriggerAudioResponseException.NotFound()
-        every { repository.find(trigger.id) } throws TriggerException.NotFound()
+        every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         assertThrows<TriggerException.MissingResponse> {
             creator.create(TriggerCreateRequest(

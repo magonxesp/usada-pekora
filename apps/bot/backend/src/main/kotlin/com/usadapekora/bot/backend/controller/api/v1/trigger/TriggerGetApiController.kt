@@ -23,7 +23,7 @@ class TriggerGetApiController {
     @GetMapping("{id}")
     fun find(@PathVariable("id") id: String): ResponseEntity<TriggerResponse> {
         return try {
-            ResponseEntity.of(Optional.of(finder.find(id)))
+            ResponseEntity.of(Optional.of(finder.find(id).getOrNull()!!))
         } catch (exception: Exception) {
             when(exception) {
                 is TriggerException.NotFound -> ResponseEntity.notFound().build()

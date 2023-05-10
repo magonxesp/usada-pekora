@@ -45,6 +45,7 @@ allprojects {
         implementation("io.prometheus:simpleclient_hotspot:0.16.0")
         implementation("io.prometheus:simpleclient_servlet:0.16.0")
         implementation("org.apache.tika:tika-core:2.6.0")
+        implementation("io.arrow-kt:arrow-core:1.2.0-RC")
 
         testImplementation(kotlin("test"))
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")

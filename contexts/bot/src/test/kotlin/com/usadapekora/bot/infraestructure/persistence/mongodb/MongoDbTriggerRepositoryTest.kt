@@ -32,7 +32,9 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
         
         databaseTest(aggregate = trigger) {
             val found = repository.find(it.id)
-            assertEquals(it, found)
+
+            assertTrue(found.isRight())
+            assertEquals(it, found.getOrNull())
         }
     }
 
@@ -66,7 +68,9 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
         databaseTest(aggregate = trigger, save = false) {
             repository.save(it)
             val found = repository.find(it.id)
-            assertEquals(it, found)
+
+            assertTrue(found.isRight())
+            assertEquals(it, found.getOrNull())
         }
     }
 

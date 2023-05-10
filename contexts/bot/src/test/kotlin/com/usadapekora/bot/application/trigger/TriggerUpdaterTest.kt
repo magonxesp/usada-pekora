@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.TriggerUpdateRequest
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
 import com.usadapekora.bot.domain.trigger.Trigger
@@ -17,6 +18,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerUpdaterTest {
 
@@ -29,17 +31,19 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
 
         trigger.input = Trigger.TriggerInput("New expected user input")
 
-        updater.update(TriggerUpdateRequest(
+        val result = updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 input = "New expected user input",
                 responseTextId = responseText.id.value,
             )
         ))
+
+        assertTrue(result.isRight())
 
         verify { repository.save(trigger) }
     }
@@ -52,18 +56,18 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
 
         trigger.input = Trigger.TriggerInput("New expected user input")
 
-        assertThrows<TriggerException.MissingResponse> {
-            updater.update(TriggerUpdateRequest(
-                id = trigger.id.value,
-                values = TriggerUpdateRequest.NewValues(
-                    input = "New expected user input",
-                )
-            ))
-        }
+        val result = updater.update(TriggerUpdateRequest(
+            id = trigger.id.value,
+            values = TriggerUpdateRequest.NewValues(
+                input = "New expected user input",
+            )
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify(inverse = true) { repository.save(trigger) }
     }
@@ -77,17 +81,19 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
         every { textRepository.find(responseText.id) } returns responseText
 
         trigger.responseText = responseText.id // updated text response
 
-        updater.update(TriggerUpdateRequest(
+        val result = updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 responseTextId = responseText.id.value,
             )
         ))
+
+        assertTrue(result.isRight())
 
         verify { textRepository.find(responseText.id) }
         verify { repository.save(trigger) }
@@ -102,19 +108,19 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
         every { textRepository.find(responseText.id) } throws TriggerTextResponseException.NotFound()
 
         trigger.responseText = responseText.id // updated text response
 
-        assertThrows<TriggerException.MissingResponse> {
-            updater.update(TriggerUpdateRequest(
-                id = trigger.id.value,
-                values = TriggerUpdateRequest.NewValues(
-                    responseTextId = responseText.id.value,
-                )
-            ))
-        }
+        val result = updater.update(TriggerUpdateRequest(
+            id = trigger.id.value,
+            values = TriggerUpdateRequest.NewValues(
+                responseTextId = responseText.id.value,
+            )
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify { textRepository.find(responseText.id) }
         verify(inverse = true) { repository.save(trigger) }
@@ -129,19 +135,21 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
         every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
-        updater.update(TriggerUpdateRequest(
+        val result = updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 responseAudioId = responseAudio.id.value,
                 responseAudioProvider = responseAudio.provider.value
             )
         ))
+
+        assertTrue(result.isRight())
 
         verify { audioRepository.find(responseAudio.id) }
         verify { repository.save(trigger) }
@@ -156,21 +164,21 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
         every { audioRepository.find(responseAudio.id, responseAudio.provider) } throws TriggerAudioResponseException.NotFound()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
-        assertThrows<TriggerException.MissingResponse> {
-            updater.update(TriggerUpdateRequest(
-                id = trigger.id.value,
-                values = TriggerUpdateRequest.NewValues(
-                    responseAudioId = responseAudio.id.value,
-                    responseAudioProvider = responseAudio.provider.value
-                )
-            ))
-        }
+        val result = updater.update(TriggerUpdateRequest(
+            id = trigger.id.value,
+            values = TriggerUpdateRequest.NewValues(
+                responseAudioId = responseAudio.id.value,
+                responseAudioProvider = responseAudio.provider.value
+            )
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify { audioRepository.find(responseAudio.id) }
         verify(inverse = true) { repository.save(trigger) }
@@ -185,20 +193,20 @@ class TriggerUpdaterTest {
         val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
         every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
-        assertThrows<TriggerException.MissingAudioProvider> {
-            updater.update(TriggerUpdateRequest(
-                id = trigger.id.value,
-                values = TriggerUpdateRequest.NewValues(
-                    responseAudioId = responseAudio.id.value,
-                )
-            ))
-        }
+        val result = updater.update(TriggerUpdateRequest(
+            id = trigger.id.value,
+            values = TriggerUpdateRequest.NewValues(
+                responseAudioId = responseAudio.id.value,
+            )
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingAudioProvider)
 
         verify(inverse = true) { repository.save(trigger) }
     }

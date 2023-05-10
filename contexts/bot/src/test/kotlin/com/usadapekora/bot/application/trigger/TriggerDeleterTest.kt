@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.TriggerException
@@ -18,7 +20,7 @@ class TriggerDeleterTest {
         val repository = mockk<TriggerRepository>(relaxed = true)
         val deleter = TriggerDeleter(repository)
 
-        every { repository.find(trigger.id) } returns trigger
+        every { repository.find(trigger.id) } returns trigger.right()
 
         deleter.delete(trigger.id.value)
 
@@ -31,7 +33,7 @@ class TriggerDeleterTest {
         val repository = mockk<TriggerRepository>(relaxed = true)
         val deleter = TriggerDeleter(repository)
 
-        every { repository.find(trigger.id) } throws TriggerException.NotFound()
+        every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         assertThrows<TriggerException.NotFound> {
             deleter.delete(trigger.id.value)

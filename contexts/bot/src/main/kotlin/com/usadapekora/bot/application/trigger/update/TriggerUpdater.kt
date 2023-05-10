@@ -1,5 +1,8 @@
 package com.usadapekora.bot.application.trigger.update
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.shared.tryOrNull
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
@@ -46,16 +49,22 @@ class TriggerUpdater(
         }
     }
 
-    fun update(request: TriggerUpdateRequest) {
+    fun update(request: TriggerUpdateRequest): Either<TriggerException, Unit> {
         if (request.values.responseAudioId == null && request.values.responseTextId == null) {
-            throw TriggerException.MissingResponse("The trigger should have at least one response")
+            return TriggerException.MissingResponse("The trigger should have at least one response").left()
         }
 
         if (request.values.responseAudioId != null && request.values.responseAudioProvider == null) {
-            throw TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response")
+            return TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response").left()
         }
 
-        val trigger = repository.find(Trigger.TriggerId(request.id))
+        val result = repository.find(Trigger.TriggerId(request.id))
+
+        if (result.isLeft()) {
+            return result.leftOrNull()!!.left()
+        }
+
+        val trigger = result.getOrNull()!!
 
         request.values.title.takeUnless { it == null }?.let {
             trigger.title = Trigger.TriggerTitle(it)
@@ -76,7 +85,7 @@ class TriggerUpdater(
             trigger.discordGuildId = Trigger.TriggerDiscordGuildId(it)
         }
 
-        repository.save(trigger)
+        return repository.save(trigger).right()
     }
 
 }
