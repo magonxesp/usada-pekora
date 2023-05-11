@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb.trigger
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
@@ -13,15 +16,15 @@ class MongoDbTriggerTextRepository : MongoDbRepository<TriggerTextResponse, Trig
     documentIdProp = TriggerTextResponseDocument::id,
     documentCompanion = TriggerTextResponseDocument.Companion
 ), TriggerTextResponseRepository {
-    override fun find(id: TriggerTextResponseId): TriggerTextResponse {
+    override fun find(id: TriggerTextResponseId): Either<TriggerTextResponseException, TriggerTextResponse> {
         val text = oneQuery<TriggerTextResponseDocument>(collection) { collection ->
             collection.findOne(TriggerTextResponseDocument::id eq id.value)
         }
 
         if (text != null) {
-            return text.toEntity()
+            return text.toEntity().right()
         }
 
-        throw TriggerTextResponseException.NotFound("Trigger text response with id $id not found")
+        return TriggerTextResponseException.NotFound("Trigger text response with id $id not found").left()
     }
 }

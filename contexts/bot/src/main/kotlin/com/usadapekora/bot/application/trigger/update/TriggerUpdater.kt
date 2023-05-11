@@ -19,34 +19,34 @@ class TriggerUpdater(
     private val audioResponseRepository: TriggerAudioResponseRepository
 ) {
 
-    private fun updateTextResponse(request: TriggerUpdateRequest, trigger: Trigger) {
-        if (request.values.responseTextId != null) {
-            val id = tryOrNull<TriggerTextResponseException.NotFound, TriggerTextResponse> {
-                textResponseRepository.find(TriggerTextResponseId(request.values.responseTextId))
-            }?.id ?: throw TriggerException.MissingResponse("The new text response is missing")
-
-            trigger.responseText = id
-        } else {
+    private fun updateTextResponse(request: TriggerUpdateRequest, trigger: Trigger): Either<TriggerException, Unit> {
+        if (request.values.responseTextId == null) {
             trigger.responseText = null
+            return Unit.right()
         }
+
+        return textResponseRepository.find(TriggerTextResponseId(request.values.responseTextId)).let {
+            if (it.isLeft()) return TriggerException.MissingResponse("The new text response is missing").left()
+            trigger.responseText = it.getOrNull()!!.id
+        }.right()
     }
 
-    private fun updateAudioResponse(request: TriggerUpdateRequest, trigger: Trigger) {
-        if (request.values.responseAudioId != null) {
-            if (request.values.responseAudioProvider == null) {
-                throw TriggerException.MissingAudioProvider("Missing audio provider for the new audio response")
-            }
-
-            tryOrNull<TriggerAudioResponseException.NotFound, TriggerAudioResponse> {
-                audioResponseRepository.find(TriggerAudioResponseId(request.values.responseAudioId))
-            } ?: throw TriggerException.MissingResponse("The new audio response is missing")
-
-            trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId)
-            trigger.responseAudioProvider = TriggerAudioResponseProvider.fromValue(request.values.responseAudioProvider)
-        } else {
+    private fun updateAudioResponse(request: TriggerUpdateRequest, trigger: Trigger): Either<TriggerException, Unit> {
+        if (request.values.responseAudioId == null) {
             trigger.responseAudio = null
             trigger.responseAudioProvider = null
+            return Unit.right()
         }
+
+        if (request.values.responseAudioProvider == null) {
+            return TriggerException.MissingAudioProvider("Missing audio provider for the new audio response").left()
+        }
+
+        return audioResponseRepository.find(TriggerAudioResponseId(request.values.responseAudioId)).let {
+            if (it.isLeft()) return TriggerException.MissingResponse("The new audio response is missing").left()
+            trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId)
+            trigger.responseAudioProvider = TriggerAudioResponseProvider.fromValue(request.values.responseAudioProvider)
+        }.right()
     }
 
     fun update(request: TriggerUpdateRequest): Either<TriggerException, Unit> {
@@ -78,8 +78,8 @@ class TriggerUpdater(
             trigger.compare = Trigger.TriggerCompare.fromValue(it)
         }
 
-        updateTextResponse(request, trigger)
-        updateAudioResponse(request, trigger)
+        updateTextResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
+        updateAudioResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
 
         request.values.discordGuildId.takeUnless { it == null }?.let {
             trigger.discordGuildId = Trigger.TriggerDiscordGuildId(it)

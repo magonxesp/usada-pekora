@@ -1,5 +1,8 @@
 package com.usadapekora.bot.application.trigger.create.audio
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -10,7 +13,7 @@ import kotlin.io.path.Path
 
 class TriggerDefaultAudioResponseCreator(private val repository: TriggerAudioDefaultRepository, private val writer: DomainFileWriter) {
 
-    fun create(request: TriggerDefaultAudioResponseCreateRequest) {
+    fun create(request: TriggerDefaultAudioResponseCreateRequest): Either<TriggerAudioResponseException, Unit> {
         val audio = TriggerDefaultAudioResponse.fromPrimitives(
             id = request.id,
             trigger = request.triggerId,
@@ -18,13 +21,17 @@ class TriggerDefaultAudioResponseCreator(private val repository: TriggerAudioDef
             file = request.fileName
         )
 
-        try {
-            repository.find(audio.id)
-            throw TriggerAudioResponseException.AlreadyExists("Trigger audio with id ${audio.id.value} already exists")
-        } catch (_: TriggerAudioResponseException.NotFound) {
-            writer.write(request.content, audio.path)
-            repository.save(audio)
+        val existing = repository.find(audio.id)
+
+        if (existing.getOrNull() != null) {
+            return TriggerAudioResponseException.AlreadyExists("Trigger audio with id ${audio.id.value} already exists").left()
         }
+
+        writer.write(request.content, audio.path).leftOrNull()?.let {
+            return TriggerAudioResponseException.FailedToSave("Failed writing the audio file of the trigger audio with id ${audio.id.value}").left()
+        }
+
+        return repository.save(audio).right()
     }
 
 }

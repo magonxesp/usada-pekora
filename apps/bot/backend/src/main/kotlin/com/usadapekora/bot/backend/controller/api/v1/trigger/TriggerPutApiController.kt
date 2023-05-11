@@ -5,6 +5,7 @@ import com.usadapekora.bot.application.trigger.update.TriggerUpdateRequest
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
 import com.usadapekora.bot.domain.trigger.TriggerException
 import org.koin.java.KoinJavaComponent.inject
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,19 +19,13 @@ class TriggerPutApiController : ApiController() {
 
     val updater: TriggerUpdater by inject(TriggerUpdater::class.java)
 
-    @PutMapping("{id}")
-    fun update(@PathVariable id: String, @RequestBody body: TriggerUpdateRequest.NewValues): ResponseEntity<Unit> {
-        return try {
-            updater.update(TriggerUpdateRequest(id, body))
-            ResponseEntity.ok().build()
-        } catch (excepton: Exception) {
-            logger.warning(excepton.message)
-
-            when(excepton) {
-                is TriggerException.NotFound -> ResponseEntity.badRequest().build()
-                else -> ResponseEntity.internalServerError().build()
-            }
-        }
+    override fun <T> mapErrorHttpStatus(error: T) = when(error) {
+        is TriggerException.NotFound -> HttpStatus.BAD_REQUEST
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
     }
+
+    @PutMapping("{id}")
+    fun update(@PathVariable id: String, @RequestBody body: TriggerUpdateRequest.NewValues)
+        = sendResultResponse(updater.update(TriggerUpdateRequest(id, body)))
 
 }

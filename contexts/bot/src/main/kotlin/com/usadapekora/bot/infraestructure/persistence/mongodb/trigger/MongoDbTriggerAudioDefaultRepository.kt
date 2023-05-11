@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb.trigger
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbRepository
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -15,28 +18,28 @@ class MongoDbTriggerAudioDefaultRepository : MongoDbRepository<TriggerDefaultAud
     documentCompanion = TriggerAudioDefaultDocument
 ), TriggerAudioDefaultRepository {
 
-    override fun find(id: TriggerAudioResponseId): TriggerDefaultAudioResponse {
+    override fun find(id: TriggerAudioResponseId): Either<TriggerAudioResponseException, TriggerDefaultAudioResponse> {
         val audio = oneQuery<TriggerAudioDefaultDocument>(collection) { collection ->
             collection.findOne(TriggerAudioDefaultDocument::id eq id.value)
         }
 
         if (audio != null) {
-            return audio.toEntity()
+            return audio.toEntity().right()
         }
 
-        throw TriggerAudioResponseException.NotFound("Trigger audio with id $id not found")
+        return TriggerAudioResponseException.NotFound("Trigger audio with id $id not found").left()
     }
 
-    override fun findByTrigger(id: Trigger.TriggerId): TriggerDefaultAudioResponse {
+    override fun findByTrigger(id: Trigger.TriggerId): Either<TriggerAudioResponseException, TriggerDefaultAudioResponse> {
         val audio = oneQuery<TriggerAudioDefaultDocument>(collection) { collection ->
             collection.findOne(TriggerAudioDefaultDocument::trigger eq id.value)
         }
 
         if (audio != null) {
-            return audio.toEntity()
+            return audio.toEntity().right()
         }
 
-        throw TriggerAudioResponseException.NotFound("Trigger audio of trigger with id $id not found")
+        return TriggerAudioResponseException.NotFound("Trigger audio of trigger with id $id not found").left()
     }
 
 }

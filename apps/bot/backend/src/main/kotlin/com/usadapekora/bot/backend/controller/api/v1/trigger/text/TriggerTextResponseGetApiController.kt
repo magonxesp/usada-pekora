@@ -5,6 +5,7 @@ import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFind
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import org.koin.java.KoinJavaComponent.inject
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,17 +18,13 @@ class TriggerTextResponseGetApiController : ApiController() {
 
     val finder: TriggerTextResponseFinder by inject(TriggerTextResponseFinder::class.java)
 
-    @GetMapping("{id}")
-    fun findTextResponse(@PathVariable("id") id: String): ResponseEntity<TriggerTextResponseFindResponse>
-        = try {
-            ResponseEntity.ok(finder.find(id))
-        } catch (exception: Exception) {
-            val response = when (exception) {
-                is TriggerTextResponseException.NotFound -> ResponseEntity.notFound()
-                else -> ResponseEntity.internalServerError()
-            }
+    override fun <T> mapErrorHttpStatus(error: T) = when(error) {
+        is TriggerTextResponseException.NotFound -> HttpStatus.NOT_FOUND
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
+    }
 
-            response.build()
-        }
+    @GetMapping("{id}")
+    fun findTextResponse(@PathVariable("id") id: String)
+        = sendResultResponse(finder.find(id))
 
 }

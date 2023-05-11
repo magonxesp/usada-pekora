@@ -6,6 +6,7 @@ import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFind
 import com.usadapekora.bot.backend.controller.api.ApiController
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import org.koin.java.KoinJavaComponent.inject
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,17 +16,13 @@ class TriggerTextResponseDeleteApiController : ApiController() {
 
     val deleter: TriggerTextResponseDeleter by inject(TriggerTextResponseDeleter::class.java)
 
-    @DeleteMapping("{id}")
-    fun delete(@PathVariable("id") id: String): ResponseEntity<Unit>
-        = try {
-            ResponseEntity.ok(deleter.delete(id))
-        } catch (exception: Exception) {
-            val response = when (exception) {
-                is TriggerTextResponseException.NotFound -> ResponseEntity.badRequest()
-                else -> ResponseEntity.internalServerError()
-            }
+    override fun <T> mapErrorHttpStatus(error: T) = when (error) {
+        is TriggerTextResponseException.NotFound -> HttpStatus.BAD_REQUEST
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
+    }
 
-            response.build()
-        }
+    @DeleteMapping("{id}")
+    fun delete(@PathVariable("id") id: String)
+        = sendResultResponse(deleter.delete(id))
 
 }

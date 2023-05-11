@@ -1,10 +1,14 @@
 package com.usadapekora.bot.application.trigger.update.audio
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.guild.GuildId
 import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 
@@ -14,8 +18,14 @@ class TriggerDefaultAudioResponseUpdater(
     private val fileDeleter: DomainFileDeleter
 ) {
 
-    fun update(request: TriggerDefaultAudioResponseUpdateRequest) {
-        val audioResponse = repository.find(TriggerAudioResponseId(request.id))
+    fun update(request: TriggerDefaultAudioResponseUpdateRequest): Either<TriggerAudioResponseException, Unit> {
+        val result = repository.find(TriggerAudioResponseId(request.id))
+
+        if (result.isLeft()) {
+            return result.leftOrNull()!!.left()
+        }
+
+        val audioResponse = result.getOrNull()!!
         val oldFilePath = audioResponse.path
 
         request.values.triggerId.takeUnless { it == null }?.let {
@@ -35,10 +45,12 @@ class TriggerDefaultAudioResponseUpdater(
         }
 
         if (oldFilePath != audioResponse.path) {
-            fileDeleter.delete(oldFilePath)
+            fileDeleter.delete(oldFilePath).leftOrNull()?.let {
+                return TriggerAudioResponseException.FailedToDelete("Failed to delete audio file of trigger with id ${audioResponse.id.value}").left()
+            }
         }
 
-        repository.save(audioResponse)
+        return repository.save(audioResponse).right()
     }
 
 }

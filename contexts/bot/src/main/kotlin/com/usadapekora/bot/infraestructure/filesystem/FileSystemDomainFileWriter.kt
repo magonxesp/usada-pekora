@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.filesystem
 
+import arrow.core.Either
+import arrow.core.right
+import com.usadapekora.bot.domain.shared.file.DomainFileError
 import com.usadapekora.bot.domain.shared.file.DomainFileWriter
 import java.io.File
 import kotlin.io.path.Path
@@ -7,8 +10,8 @@ import kotlin.io.path.createDirectories
 import kotlin.io.writeBytes
 
 class FileSystemDomainFileWriter : DomainFileWriter {
-    override fun write(content: ByteArray, destination: String) {
+    override fun write(content: ByteArray, destination: String): Either<DomainFileError, Unit> {
         Path(destination).parent.createDirectories()
-        File(destination).writeBytes(content)
+        return File(destination).writeBytes(content).right()
     }
 }

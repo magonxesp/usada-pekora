@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.server.ResponseStatusException
 
 
 @RestController
@@ -19,19 +20,13 @@ class TriggerDefaultAudioDeleteApiController : ApiController() {
 
     private val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
 
-    @DeleteMapping("{id}")
-    fun delete(@PathVariable("id") id: String, ): ResponseEntity<Unit> {
-        try {
-            triggerDefaultAudioDeleter.delete(id)
-            return ResponseEntity.status(HttpStatus.OK).build()
-        } catch (exception: Exception) {
-            logger.warning(exception.message)
-
-            return when (exception) {
-                is TriggerAudioResponseException.NotFound -> ResponseEntity.badRequest().build()
-                else -> ResponseEntity.internalServerError().build()
-            }
-        }
+    override fun <T> mapErrorHttpStatus(error: T): HttpStatus = when(error) {
+        is TriggerAudioResponseException.NotFound -> HttpStatus.BAD_REQUEST
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
     }
+
+    @DeleteMapping("{id}")
+    fun delete(@PathVariable("id") id: String)
+        = sendResultResponse(triggerDefaultAudioDeleter.delete(id))
 
 }

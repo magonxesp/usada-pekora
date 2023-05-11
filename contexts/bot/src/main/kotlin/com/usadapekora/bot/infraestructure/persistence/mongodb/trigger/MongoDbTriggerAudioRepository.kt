@@ -1,5 +1,6 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb.trigger
 
+import arrow.core.Either
 import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.domain.trigger.audio.*
 
@@ -9,12 +10,10 @@ class MongoDbTriggerAudioRepository : TriggerAudioResponseRepository {
         TriggerAudioResponseProvider.DEFAULT -> MongoDbTriggerAudioDefaultRepository()
     }
 
-    override fun find(id: TriggerAudioResponseId, provider: TriggerAudioResponseProvider): TriggerAudioResponse {
-        return providerRepository(provider).find(id)
-    }
+    override fun find(id: TriggerAudioResponseId, provider: TriggerAudioResponseProvider)
+        = providerRepository(provider).find(id)
 
-    override fun findByTrigger(id: Trigger.TriggerId, provider: TriggerAudioResponseProvider): TriggerAudioResponse {
-        return providerRepository(provider).findByTrigger(id)
-    }
+    override fun findByTrigger(id: Trigger.TriggerId, provider: TriggerAudioResponseProvider)
+        = providerRepository(provider).findByTrigger(id)
 
 }

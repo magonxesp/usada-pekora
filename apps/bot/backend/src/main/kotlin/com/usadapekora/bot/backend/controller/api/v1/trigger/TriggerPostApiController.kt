@@ -20,19 +20,13 @@ class TriggerPostApiController : ApiController() {
 
     private val triggerCreator: TriggerCreator by inject(TriggerCreator::class.java)
 
-    @PostMapping("")
-    fun create(@RequestBody body: TriggerCreateRequest): ResponseEntity<Unit> {
-        return try {
-            triggerCreator.create(body)
-            ResponseEntity.status(HttpStatus.CREATED).build()
-        } catch (exception: Exception) {
-            logger.warning(exception.message)
-
-            when(exception) {
-                is TriggerException -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-                else -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
-            }
-        }
+    override fun <T> mapErrorHttpStatus(error: T) = when(error) {
+        is TriggerException -> HttpStatus.BAD_REQUEST
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
     }
+
+    @PostMapping("")
+    fun create(@RequestBody body: TriggerCreateRequest)
+        = sendResultResponse(triggerCreator.create(body), HttpStatus.CREATED)
 
 }

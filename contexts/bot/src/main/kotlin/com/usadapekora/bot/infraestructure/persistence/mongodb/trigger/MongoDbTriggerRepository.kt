@@ -15,12 +15,6 @@ class MongoDbTriggerRepository : MongoDbRepository<Trigger, TriggerDocument>(
     documentCompanion = TriggerDocument.Companion
 ), TriggerRepository {
 
-    private fun <T> nullOnException(block: () -> T): T? = try {
-        block()
-    } catch(_: Exception) {
-        null
-    }
-
     override fun all(): Array<Trigger> {
         val triggers = collectionQuery<TriggerDocument>("triggers") { collection ->
             collection.find()

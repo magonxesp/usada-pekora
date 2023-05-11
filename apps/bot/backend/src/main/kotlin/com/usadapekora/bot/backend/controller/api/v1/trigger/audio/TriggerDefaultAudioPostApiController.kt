@@ -24,7 +24,7 @@ class TriggerDefaultAudioPostApiController : ApiController() {
 
     private val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
 
-    private fun mapHttpResponseCodeError(exception: Exception) = when (exception) {
+    override fun <T> mapErrorHttpStatus(error: T) = when (error) {
         is TriggerAudioResponseException -> HttpStatus.BAD_REQUEST
         else -> HttpStatus.INTERNAL_SERVER_ERROR
     }
@@ -35,23 +35,17 @@ class TriggerDefaultAudioPostApiController : ApiController() {
         @RequestParam("id") id: String,
         @RequestParam("triggerId") triggerId: String,
         @RequestParam("guildId") guildId: String,
-    ): ResponseEntity<Unit> {
-        try {
-            triggerDefaultAudioResponseCreator.create(
-                TriggerDefaultAudioResponseCreateRequest(
-                    id = id,
-                    triggerId = triggerId,
-                    guildId = guildId,
-                    fileName = file.originalFilename ?: file.name,
-                    content = file.bytes
-                )
+    ): ResponseEntity<Unit> = sendResultResponse(
+        triggerDefaultAudioResponseCreator.create(
+            TriggerDefaultAudioResponseCreateRequest(
+                id = id,
+                triggerId = triggerId,
+                guildId = guildId,
+                fileName = file.originalFilename ?: file.name,
+                content = file.bytes
             )
-
-            return ResponseEntity.status(HttpStatus.CREATED).build()
-        } catch (exception: Exception) {
-            logger.warning(exception.message)
-            throw ResponseStatusException(mapHttpResponseCodeError(exception), exception.message, exception)
-        }
-    }
+        ),
+        HttpStatus.CREATED
+    )
 
 }

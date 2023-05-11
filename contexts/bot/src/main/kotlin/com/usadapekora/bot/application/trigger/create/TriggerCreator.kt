@@ -1,5 +1,8 @@
 package com.usadapekora.bot.application.trigger.create
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.shared.tryOrNull
 import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
@@ -19,21 +22,19 @@ class TriggerCreator(
     private val textResponseRepository: TriggerTextResponseRepository
 ) {
 
-    fun create(request: TriggerCreateRequest) {
+    fun create(request: TriggerCreateRequest): Either<TriggerException, Unit> {
         val textResponse = request.responseTextId?.let {
-            tryOrNull<TriggerTextResponseException.NotFound, TriggerTextResponse> {
-                textResponseRepository.find(TriggerTextResponseId(it))
-            }
+            textResponseRepository.find(TriggerTextResponseId(it)).getOrNull()
         }
 
-        val audioResponse = request.responseAudioId.takeIf {it != null && request.responseAudioProvider != null }?.let {
-            tryOrNull<TriggerAudioResponseException.NotFound, TriggerAudioResponse> {
+        val audioResponse = request.responseAudioId
+            .takeIf {it != null && request.responseAudioProvider != null }
+            ?.let {
                 audioResponseRepository.find(
                     TriggerAudioResponseId(it),
                     TriggerAudioResponseProvider.fromValue(request.responseAudioProvider!!)
-                )
+                ).getOrNull()
             }
-        }
 
         val trigger = Trigger.fromPrimitives(
             id = request.id,
@@ -46,12 +47,13 @@ class TriggerCreator(
             discordGuildId = request.discordGuildId,
         )
 
-        try {
-            repository.find(trigger.id)
-            throw TriggerException.AlreadyExists("The trigger with id ${trigger.id.value} already exists")
-        } catch (_: TriggerException.NotFound) {
-            repository.save(trigger)
+        val existing = repository.find(trigger.id)
+
+        if (existing.getOrNull() != null) {
+            return TriggerException.AlreadyExists("The trigger with id ${trigger.id.value} already exists").left()
         }
+
+        return repository.save(trigger).right()
     }
 
 }

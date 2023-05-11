@@ -21,7 +21,7 @@ class TriggerDefaultAudioPutApiController : ApiController() {
 
     private val triggerDefaultAudioResponseUpdater: TriggerDefaultAudioResponseUpdater by inject(TriggerDefaultAudioResponseUpdater::class.java)
 
-    private fun mapHttpResponseCodeError(exception: Exception) = when (exception) {
+    override fun <T> mapErrorHttpStatus(error: T) = when (error) {
         is TriggerAudioResponseException -> HttpStatus.BAD_REQUEST
         else -> HttpStatus.INTERNAL_SERVER_ERROR
     }
@@ -32,25 +32,18 @@ class TriggerDefaultAudioPutApiController : ApiController() {
         @RequestParam("file") file: Optional<MultipartFile>,
         @RequestParam("triggerId") triggerId: Optional<String>,
         @RequestParam("guildId") guildId: Optional<String>
-    ): ResponseEntity<Unit> {
-        try {
-            triggerDefaultAudioResponseUpdater.update(
-                TriggerDefaultAudioResponseUpdateRequest(
-                    id = id,
-                    values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
-                        fileName = file.map { it.originalFilename ?: it.name }.orElse(null),
-                        triggerId = triggerId.orElse(null),
-                        guildId = guildId.orElse(null),
-                        content = file.map { it.bytes }.orElse(null)
-                    )
+    ): ResponseEntity<Unit> = sendResultResponse(
+        triggerDefaultAudioResponseUpdater.update(
+            TriggerDefaultAudioResponseUpdateRequest(
+                id = id,
+                values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
+                    fileName = file.map { it.originalFilename ?: it.name }.orElse(null),
+                    triggerId = triggerId.orElse(null),
+                    guildId = guildId.orElse(null),
+                    content = file.map { it.bytes }.orElse(null)
                 )
             )
-
-            return ResponseEntity.status(HttpStatus.OK).build()
-        } catch (exception: Exception) {
-            logger.warning(exception.message)
-            throw ResponseStatusException(mapHttpResponseCodeError(exception), exception.message, exception)
-        }
-    }
+        )
+    )
 
 }

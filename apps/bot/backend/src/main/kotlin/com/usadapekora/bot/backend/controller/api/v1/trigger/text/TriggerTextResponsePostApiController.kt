@@ -22,18 +22,13 @@ class TriggerTextResponsePostApiController : ApiController() {
 
     val creator: TriggerTextResponseCreator by inject(TriggerTextResponseCreator::class.java)
 
-    @PostMapping("")
-    fun create(@RequestBody request: TriggerTextResponseCreateRequest): ResponseEntity<Unit>
-        = try {
-            creator.create(request)
-            ResponseEntity.status(HttpStatus.CREATED).build()
-        } catch (exception: Exception) {
-            val response = when (exception) {
-                is TriggerTextResponseException.AlreadyExists -> ResponseEntity.badRequest()
-                else -> ResponseEntity.internalServerError()
-            }
+    override fun <T> mapErrorHttpStatus(error: T) = when(error) {
+        is TriggerTextResponseException.AlreadyExists -> HttpStatus.BAD_REQUEST
+        else -> HttpStatus.INTERNAL_SERVER_ERROR
+    }
 
-            response.build()
-        }
+    @PostMapping("")
+    fun create(@RequestBody request: TriggerTextResponseCreateRequest)
+        = sendResultResponse(creator.create(request), HttpStatus.CREATED)
 
 }
