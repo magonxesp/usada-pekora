@@ -7,6 +7,7 @@ import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTr
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTest<TriggerTextResponse, MongoDbTriggerTextRepository>(
     repository = MongoDbTriggerTextRepository(),
@@ -35,9 +36,8 @@ class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTest<TriggerTextRespon
         databaseTest(delete = false) {
             repository.delete(it)
 
-            assertThrows<TriggerTextResponseException.NotFound> {
-                repository.find(it.id)
-            }
+            val result = repository.find(it.id)
+            assertTrue(result.leftOrNull() is TriggerTextResponseException.NotFound)
         }
     }
 

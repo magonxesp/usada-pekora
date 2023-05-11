@@ -63,8 +63,8 @@ class TriggerCreatorTest {
         val textResponseRepository = mockk<TriggerTextResponseRepository>()
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
-        every { audioResponseRepository.find(audioResponse.id) } throws TriggerAudioResponseException.NotFound()
-        every { textResponseRepository.find(textResponse.id) } throws TriggerTextResponseException.NotFound()
+        every { audioResponseRepository.find(audioResponse.id) } returns TriggerAudioResponseException.NotFound().left()
+        every { textResponseRepository.find(textResponse.id) } returns TriggerTextResponseException.NotFound().left()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         val result = creator.create(TriggerCreateRequest(
@@ -146,7 +146,7 @@ class TriggerCreatorTest {
         val textResponseRepository = mockk<TriggerTextResponseRepository>()
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
-        every { textResponseRepository.find(trigger.responseText!!) } throws TriggerTextResponseException.NotFound()
+        every { textResponseRepository.find(trigger.responseText!!) } returns TriggerTextResponseException.NotFound().left()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         val result = creator.create(TriggerCreateRequest(
@@ -173,7 +173,7 @@ class TriggerCreatorTest {
         val textResponseRepository = mockk<TriggerTextResponseRepository>()
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
-        every { audioResponseRepository.find(trigger.responseAudio!!) } throws TriggerAudioResponseException.NotFound()
+        every { audioResponseRepository.find(trigger.responseAudio!!) } returns TriggerAudioResponseException.NotFound().left()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         val result = creator.create(TriggerCreateRequest(

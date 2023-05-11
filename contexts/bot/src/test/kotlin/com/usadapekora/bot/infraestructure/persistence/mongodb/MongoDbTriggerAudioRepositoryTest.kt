@@ -8,6 +8,7 @@ import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTr
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class MongoDbTriggerAudioRepositoryTest {
 
@@ -46,9 +47,8 @@ class MongoDbTriggerAudioRepositoryTest {
     @Test
     fun `should not find trigger audio by id`() {
         databaseTest(save = false) {
-            assertThrows<TriggerAudioResponseException.NotFound> {
-                repository.find(it.id)
-            }
+            val result = repository.find(it.id)
+            assertTrue(result.leftOrNull() is TriggerAudioResponseException.NotFound)
         }
     }
 
@@ -63,9 +63,8 @@ class MongoDbTriggerAudioRepositoryTest {
     @Test
     fun `should not find trigger audio by trigger id`() {
         databaseTest(save = false) {
-            assertThrows<TriggerAudioResponseException.NotFound> {
-                repository.findByTrigger(it.trigger)
-            }
+            val result = repository.findByTrigger(it.trigger)
+            assertTrue(result.leftOrNull() is TriggerAudioResponseException.NotFound)
         }
     }
 

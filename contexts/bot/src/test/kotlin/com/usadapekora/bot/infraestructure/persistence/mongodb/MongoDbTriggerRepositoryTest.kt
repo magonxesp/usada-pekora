@@ -40,9 +40,8 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
 
     @Test
     fun `should not find trigger by id`() {
-        assertThrows<TriggerException.NotFound> {
-            repository.find(TriggerMother.create().id)
-        }
+        val result = repository.find(TriggerMother.create().id)
+        assertTrue(result.leftOrNull() is TriggerException.NotFound)
     }
 
     @Test
@@ -96,9 +95,9 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTest<Trigger, MongoDbTrigg
     fun `should delete`() {
         databaseTest(delete = false) {
             repository.delete(it)
-            assertThrows<TriggerException.NotFound> {
-                repository.find(it.id)
-            }
+
+            val result = repository.find(it.id)
+            assertTrue(result.leftOrNull() is TriggerException.NotFound)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.TriggerUpdateRequest
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
@@ -109,7 +110,7 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { textRepository.find(responseText.id) } throws TriggerTextResponseException.NotFound()
+        every { textRepository.find(responseText.id) } returns TriggerTextResponseException.NotFound().left()
 
         trigger.responseText = responseText.id // updated text response
 
@@ -165,7 +166,7 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } throws TriggerAudioResponseException.NotFound()
+        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns TriggerAudioResponseException.NotFound().left()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
