@@ -17,6 +17,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerCreatorTest {
 
@@ -31,8 +32,8 @@ class TriggerCreatorTest {
         val textResponseRepository = mockk<TriggerTextResponseRepository>()
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
-        every { audioResponseRepository.find(audioResponse.id) } returns audioResponse
-        every { textResponseRepository.find(textResponse.id) } returns textResponse
+        every { audioResponseRepository.find(audioResponse.id) } returns audioResponse.right()
+        every { textResponseRepository.find(textResponse.id) } returns textResponse.right()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
         creator.create(TriggerCreateRequest(
@@ -66,18 +67,18 @@ class TriggerCreatorTest {
         every { textResponseRepository.find(textResponse.id) } throws TriggerTextResponseException.NotFound()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
-        assertThrows<TriggerException.MissingResponse> {
-            creator.create(TriggerCreateRequest(
-                id = trigger.id.value,
-                title = trigger.title.value,
-                input = trigger.input.value,
-                compare = trigger.compare.value,
-                discordGuildId = trigger.discordGuildId.value,
-                responseTextId = trigger.responseText?.value,
-                responseAudioId = trigger.responseAudio?.value,
-                responseAudioProvider = trigger.responseAudioProvider?.value
-            ))
-        }
+        val result = creator.create(TriggerCreateRequest(
+            id = trigger.id.value,
+            title = trigger.title.value,
+            input = trigger.input.value,
+            compare = trigger.compare.value,
+            discordGuildId = trigger.discordGuildId.value,
+            responseTextId = trigger.responseText?.value,
+            responseAudioId = trigger.responseAudio?.value,
+            responseAudioProvider = trigger.responseAudioProvider?.value
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify { audioResponseRepository.find(audioResponse.id) }
         verify { textResponseRepository.find(textResponse.id) }
@@ -94,22 +95,22 @@ class TriggerCreatorTest {
         val textResponseRepository = mockk<TriggerTextResponseRepository>()
         val creator = TriggerCreator(repository, audioResponseRepository, textResponseRepository)
 
-        every { audioResponseRepository.find(audioResponse.id) } returns audioResponse
-        every { textResponseRepository.find(textResponse.id) } returns textResponse
+        every { audioResponseRepository.find(audioResponse.id) } returns audioResponse.right()
+        every { textResponseRepository.find(textResponse.id) } returns textResponse.right()
         every { repository.find(trigger.id) } returns trigger.right()
 
-        assertThrows<TriggerException.AlreadyExists> {
-            creator.create(TriggerCreateRequest(
-                id = trigger.id.value,
-                title = trigger.title.value,
-                input = trigger.input.value,
-                compare = trigger.compare.value,
-                discordGuildId = trigger.discordGuildId.value,
-                responseTextId = trigger.responseText?.value,
-                responseAudioId = trigger.responseAudio?.value,
-                responseAudioProvider = trigger.responseAudioProvider?.value,
-            ))
-        }
+        val result = creator.create(TriggerCreateRequest(
+            id = trigger.id.value,
+            title = trigger.title.value,
+            input = trigger.input.value,
+            compare = trigger.compare.value,
+            discordGuildId = trigger.discordGuildId.value,
+            responseTextId = trigger.responseText?.value,
+            responseAudioId = trigger.responseAudio?.value,
+            responseAudioProvider = trigger.responseAudioProvider?.value,
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.AlreadyExists)
     }
 
     @Test
@@ -148,18 +149,18 @@ class TriggerCreatorTest {
         every { textResponseRepository.find(trigger.responseText!!) } throws TriggerTextResponseException.NotFound()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
-        assertThrows<TriggerException.MissingResponse> {
-            creator.create(TriggerCreateRequest(
-                id = trigger.id.value,
-                title = trigger.title.value,
-                input = trigger.input.value,
-                compare = trigger.compare.value,
-                discordGuildId = trigger.discordGuildId.value,
-                responseTextId = trigger.responseText?.value,
-                responseAudioId = null,
-                responseAudioProvider = trigger.responseAudioProvider?.value,
-            ))
-        }
+        val result = creator.create(TriggerCreateRequest(
+            id = trigger.id.value,
+            title = trigger.title.value,
+            input = trigger.input.value,
+            compare = trigger.compare.value,
+            discordGuildId = trigger.discordGuildId.value,
+            responseTextId = trigger.responseText?.value,
+            responseAudioId = null,
+            responseAudioProvider = trigger.responseAudioProvider?.value,
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify(inverse = true) { repository.save(trigger) }
     }
@@ -175,18 +176,18 @@ class TriggerCreatorTest {
         every { audioResponseRepository.find(trigger.responseAudio!!) } throws TriggerAudioResponseException.NotFound()
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
-        assertThrows<TriggerException.MissingResponse> {
-            creator.create(TriggerCreateRequest(
-                id = trigger.id.value,
-                title = trigger.title.value,
-                input = trigger.input.value,
-                compare = trigger.compare.value,
-                discordGuildId = trigger.discordGuildId.value,
-                responseTextId = null,
-                responseAudioId = trigger.responseAudio?.value,
-                responseAudioProvider = trigger.responseAudioProvider?.value,
-            ))
-        }
+        val result = creator.create(TriggerCreateRequest(
+            id = trigger.id.value,
+            title = trigger.title.value,
+            input = trigger.input.value,
+            compare = trigger.compare.value,
+            discordGuildId = trigger.discordGuildId.value,
+            responseTextId = null,
+            responseAudioId = trigger.responseAudio?.value,
+            responseAudioProvider = trigger.responseAudioProvider?.value,
+        ))
+
+        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify(inverse = true) { repository.save(trigger) }
     }

@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFindResponse
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
@@ -18,7 +19,7 @@ class TriggerTextResponseFinderTest {
         val repository = mockk<TriggerTextResponseRepository>()
         val finder = TriggerTextResponseFinder(repository)
 
-        every { repository.find(textResponse.id) } returns textResponse
+        every { repository.find(textResponse.id) } returns textResponse.right()
 
         val response = TriggerTextResponseFindResponse(
             id = textResponse.id.value,
@@ -26,7 +27,7 @@ class TriggerTextResponseFinderTest {
             type = textResponse.type.value
         )
 
-        val actual = finder.find(textResponse.id.value)
+        val actual = finder.find(textResponse.id.value).getOrNull()
 
         assertEquals(response, actual)
 

@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.domain.FileMother
@@ -18,6 +20,7 @@ import java.util.UUID
 import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerDefaultAudioResponseCreatorTest {
 
@@ -32,7 +35,7 @@ class TriggerDefaultAudioResponseCreatorTest {
         val expected = TriggerAudioDefaultMother.create(id = id.toString(), file = filename)
         val file = Random.Default.nextBytes(10)
 
-        every { repository.find(expected.id) } throws TriggerAudioResponseException.NotFound()
+        every { repository.find(expected.id) } returns TriggerAudioResponseException.NotFound().left()
 
         creator.create(
             TriggerDefaultAudioResponseCreateRequest(
@@ -59,19 +62,19 @@ class TriggerDefaultAudioResponseCreatorTest {
         val expected = TriggerAudioDefaultMother.create()
         val file = Random.Default.nextBytes(10)
 
-        every { repository.find(expected.id) } returns expected
+        every { repository.find(expected.id) } returns expected.right()
 
-        assertThrows<TriggerAudioResponseException.AlreadyExists> {
-            creator.create(
-                TriggerDefaultAudioResponseCreateRequest(
-                    id = expected.id.value,
-                    triggerId = expected.trigger.value,
-                    guildId = expected.guild.value,
-                    fileName = FileMother.filename(".mp3"),
-                    content = file
-                )
+        val result = creator.create(
+            TriggerDefaultAudioResponseCreateRequest(
+                id = expected.id.value,
+                triggerId = expected.trigger.value,
+                guildId = expected.guild.value,
+                fileName = FileMother.filename(".mp3"),
+                content = file
             )
-        }
+        )
+
+        assertTrue(result.leftOrNull() is TriggerAudioResponseException.AlreadyExists)
     }
 
 }

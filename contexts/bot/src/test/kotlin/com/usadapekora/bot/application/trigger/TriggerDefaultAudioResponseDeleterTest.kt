@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
@@ -20,11 +21,11 @@ class TriggerDefaultAudioResponseDeleterTest {
         val deleter = TriggerDefaultAudioDeleter(repository, fileDeleter)
         val audio = TriggerAudioDefaultMother.create()
 
-        every { repository.find(audio.id) } returns audio
+        every { repository.find(audio.id) } returns audio.right()
 
         deleter.delete(audio.id.value)
 
-        verify { fileDeleter.delete(Path(TriggerAudioUtils.audioDirPath(audio), audio.file.value).toString()) }
+        verify { fileDeleter.delete(audio.path) }
         verify { repository.delete(audio) }
     }
 

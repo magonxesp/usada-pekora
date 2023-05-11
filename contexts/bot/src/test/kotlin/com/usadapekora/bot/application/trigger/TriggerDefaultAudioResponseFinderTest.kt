@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFindResponse
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -19,9 +20,9 @@ class TriggerDefaultAudioResponseFinderTest {
         val finder = TriggerDefaultAudioFinder(repository)
         val triggerAudio = TriggerAudioDefaultMother.create()
 
-        every { repository.find(triggerAudio.id) } returns triggerAudio
+        every { repository.find(triggerAudio.id) } returns triggerAudio.right()
 
-        val actual = finder.find(triggerAudio.id.value)
+        val actual = finder.find(triggerAudio.id.value).getOrNull()
         assertEquals(TriggerDefaultAudioFindResponse.fromEntity(triggerAudio), actual)
     }
 
@@ -44,9 +45,9 @@ class TriggerDefaultAudioResponseFinderTest {
         val finder = TriggerDefaultAudioFinder(repository)
         val triggerAudio = TriggerAudioDefaultMother.create()
 
-        every { repository.findByTrigger(triggerAudio.trigger) } returns triggerAudio
+        every { repository.findByTrigger(triggerAudio.trigger) } returns triggerAudio.right()
 
-        val actual = finder.findByTriggerId(triggerAudio.trigger.value)
+        val actual = finder.findByTriggerId(triggerAudio.trigger.value).getOrNull()
         assertEquals(TriggerDefaultAudioFindResponse.fromEntity(triggerAudio), actual)
     }
 

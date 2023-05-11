@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.shared.file.DomainFileReader
@@ -14,6 +16,7 @@ import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class TriggerDefaultAudioResponseReaderTest {
 
@@ -25,10 +28,10 @@ class TriggerDefaultAudioResponseReaderTest {
         val audio = TriggerAudioDefaultMother.create()
         val expectedContent = Random.nextBytes(10)
 
-        every { repository.find(audio.id) } returns audio
-        every { fileReader.read(audio.path) } returns expectedContent
+        every { repository.find(audio.id) } returns audio.right()
+        every { fileReader.read(audio.path) } returns expectedContent.right()
 
-        val content = reader.read(audio.id.value)
+        val content = reader.read(audio.id.value).getOrNull()
 
         assertEquals(content, expectedContent)
     }
@@ -40,12 +43,11 @@ class TriggerDefaultAudioResponseReaderTest {
         val reader = TriggerDefaultAudioReader(repository, fileReader)
         val audio = TriggerAudioDefaultMother.create()
 
-        every { repository.find(audio.id) } throws TriggerAudioResponseException.NotFound()
+        every { repository.find(audio.id) } returns TriggerAudioResponseException.NotFound().left()
 
-        assertThrows<TriggerAudioResponseException.NotFound> {
-            reader.read(audio.id.value)
-        }
+        val result = reader.read(audio.id.value)
 
+        assertTrue(result.leftOrNull() is TriggerAudioResponseException.NotFound)
         verify(inverse = true) { fileReader.read(Path(TriggerAudioUtils.audioDirPath(audio), audio.file.value).toString()) }
     }
 

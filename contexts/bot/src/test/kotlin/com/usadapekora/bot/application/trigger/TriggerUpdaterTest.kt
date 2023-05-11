@@ -82,7 +82,7 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { textRepository.find(responseText.id) } returns responseText
+        every { textRepository.find(responseText.id) } returns responseText.right()
 
         trigger.responseText = responseText.id // updated text response
 
@@ -136,7 +136,7 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio
+        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
@@ -194,7 +194,7 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio
+        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response

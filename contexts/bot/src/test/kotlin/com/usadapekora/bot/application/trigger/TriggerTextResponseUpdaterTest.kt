@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
 import com.usadapekora.bot.domain.Random
@@ -21,7 +22,7 @@ class TriggerTextResponseUpdaterTest {
         val repository = mockk<TriggerTextResponseRepository>(relaxed = true)
         val updater = TriggerTextResponseUpdater(repository)
 
-        every { repository.find(textResponse.id) } returns textResponse
+        every { repository.find(textResponse.id) } returns textResponse.right()
 
         val request = TriggerTextResponseUpdateRequest(
             id = textResponse.id.value,

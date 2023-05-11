@@ -16,7 +16,7 @@ class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTest<TriggerTextRespon
     @Test
     fun `should find by id`() {
         databaseTest {
-            val triggerText = repository.find(it.id)
+            val triggerText = repository.find(it.id).getOrNull()
             assertEquals(it, triggerText)
         }
     }
@@ -25,7 +25,7 @@ class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTest<TriggerTextRespon
     fun `should save`() {
         databaseTest(save = false) {
             repository.save(it)
-            val saved = repository.find(it.id)
+            val saved = repository.find(it.id).getOrNull()
             assertEquals(it, saved)
         }
     }

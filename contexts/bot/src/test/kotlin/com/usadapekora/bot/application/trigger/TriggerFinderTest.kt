@@ -110,9 +110,9 @@ class TriggerFinderTest {
 
         every { repository.find(expected.id) } returns TriggerException.NotFound().left()
 
-        assertThrows<TriggerException.NotFound> {
-            finder.find(expected.id.value)
-        }
+        val result = finder.find(expected.id.value)
+
+        assertTrue(result.leftOrNull() is TriggerException.NotFound)
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
 import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
@@ -24,7 +25,7 @@ class TriggerDefaultAudioResponseUpdaterTest {
         val fileDeleter = mockk<DomainFileDeleter>(relaxed = true)
         val updater = TriggerDefaultAudioResponseUpdater(repository, fileWriter, fileDeleter)
 
-        every { repository.find(audioResponse.id) } returns audioResponse
+        every { repository.find(audioResponse.id) } returns audioResponse.right()
 
         updater.update(
             TriggerDefaultAudioResponseUpdateRequest(
@@ -52,7 +53,7 @@ class TriggerDefaultAudioResponseUpdaterTest {
         val fileDeleter = mockk<DomainFileDeleter>(relaxed = true)
         val updater = TriggerDefaultAudioResponseUpdater(repository, fileWriter, fileDeleter)
 
-        every { repository.find(audioResponse.id) } returns audioResponse.copy()
+        every { repository.find(audioResponse.id) } returns audioResponse.copy().right()
 
         updater.update(
             TriggerDefaultAudioResponseUpdateRequest(

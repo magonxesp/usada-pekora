@@ -16,7 +16,7 @@ class FileSystemDomainFileReaderTest : FileSystemTest() {
         val file = File(source)
 
         file.writeText(expected)
-        val content = reader.read(source)
+        val content = reader.read(source).getOrNull()!!
 
         assertEquals(expected, content.decodeToString())
         file.delete()

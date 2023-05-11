@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDeleter
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
@@ -18,7 +19,7 @@ class TriggerTextResponseDeleterTest {
         val repository = mockk<TriggerTextResponseRepository>(relaxed = true)
         val deleter = TriggerTextResponseDeleter(repository)
 
-        every { repository.find(textResponse.id) } returns textResponse
+        every { repository.find(textResponse.id) } returns textResponse.right()
 
         deleter.delete(textResponse.id.value)
 

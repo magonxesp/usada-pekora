@@ -11,6 +11,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerDeleterTest {
 
@@ -22,7 +23,9 @@ class TriggerDeleterTest {
 
         every { repository.find(trigger.id) } returns trigger.right()
 
-        deleter.delete(trigger.id.value)
+        val result = deleter.delete(trigger.id.value)
+
+        assertTrue(result.isRight())
 
         verify { repository.delete(trigger) }
     }
@@ -35,9 +38,8 @@ class TriggerDeleterTest {
 
         every { repository.find(trigger.id) } returns TriggerException.NotFound().left()
 
-        assertThrows<TriggerException.NotFound> {
-            deleter.delete(trigger.id.value)
-        }
+        val result = deleter.delete(trigger.id.value)
+        assertTrue(result.leftOrNull() is TriggerException.NotFound)
     }
 
 }

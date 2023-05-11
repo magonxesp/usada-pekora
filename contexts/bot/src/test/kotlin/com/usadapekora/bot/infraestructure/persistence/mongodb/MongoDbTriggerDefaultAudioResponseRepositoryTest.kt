@@ -16,7 +16,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTest<T
     @Test
     fun `should find trigger audio by id`() {
         databaseTest {
-            val audio = repository.find(it.id)
+            val audio = repository.find(it.id).getOrNull()
 
             assertEquals(it, audio)
         }
@@ -34,7 +34,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTest<T
     @Test
     fun `should find trigger audio by trigger id`() {
         databaseTest {
-            val audio = repository.findByTrigger(it.trigger)
+            val audio = repository.findByTrigger(it.trigger).getOrNull()
             assertEquals(it, audio)
         }
     }
@@ -52,7 +52,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTest<T
     fun `should save`() {
         databaseTest(save = false) {
             repository.save(it)
-            val audio = repository.find(it.id)
+            val audio = repository.find(it.id).getOrNull()
             assertEquals(it, audio)
         }
     }

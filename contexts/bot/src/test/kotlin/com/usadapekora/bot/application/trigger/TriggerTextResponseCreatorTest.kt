@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
@@ -39,7 +40,7 @@ class TriggerTextResponseCreatorTest {
         val textResponse = TriggerTextResponseMother.create()
         val repository = mockk<TriggerTextResponseRepository>(relaxed = true)
 
-        every { repository.find(textResponse.id) } returns textResponse
+        every { repository.find(textResponse.id) } returns textResponse.right()
 
         val creator = TriggerTextResponseCreator(repository)
 

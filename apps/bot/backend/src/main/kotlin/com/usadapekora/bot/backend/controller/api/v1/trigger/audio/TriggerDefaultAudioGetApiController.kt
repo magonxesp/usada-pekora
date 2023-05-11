@@ -24,7 +24,7 @@ class TriggerDefaultAudioGetApiController : ApiController() {
     private val triggerDefaultAudioReader: TriggerDefaultAudioReader by inject(TriggerDefaultAudioReader::class.java)
 
     override fun <T> mapErrorHttpStatus(error: T): HttpStatus = when(error) {
-        is TriggerAudioResponseException.NotFound -> HttpStatus.BAD_REQUEST
+        is TriggerAudioResponseException.NotFound -> HttpStatus.NOT_FOUND
         else -> HttpStatus.INTERNAL_SERVER_ERROR
     }
 
