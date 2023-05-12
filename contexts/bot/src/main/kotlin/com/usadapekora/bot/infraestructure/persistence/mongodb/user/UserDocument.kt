@@ -6,18 +6,19 @@ import com.usadapekora.bot.infraestructure.persistence.mongodb.MongoDbDomainEnti
 import org.bson.types.ObjectId
 
 class UserDocument(
-    val _id: ObjectId? = null,
+    var _id: ObjectId? = null,
     var id: String = "",
     var discordId: String = "",
 ) : MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<User, UserDocument>(UserDocument()) {
         override fun fromEntity(entity: User, document: UserDocument): UserDocument = document.apply {
-            id = entity.id
-            discordId = entity.discordId
+            _id = document._id
+            id = entity.id.value
+            discordId = entity.discordId.value
         }
     }
 
-    fun toEntity() = User(
+    fun toEntity() = User.fromPrimitives(
         id = id,
         discordId = discordId
     )

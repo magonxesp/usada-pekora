@@ -1,27 +1,10 @@
 package com.usadapekora.bot.domain.user
 
+import arrow.core.Either
+
 interface UserRepository {
-    /**
-     * Find user by id
-     *
-     * @throws UserException.NotFound in case the user is not found
-     */
-    fun find(id: String): User
-
-    /**
-     * Find user by discord id
-     *
-     * @throws UserException.NotFound in case the user is not found
-     */
-    fun findByDiscordId(discordId: String): User
-
-    /**
-     * Save the user to the database
-     */
+    fun find(id: User.UserId): Either<UserException.NotFound, User>
+    fun findByDiscordId(discordId: User.DiscordUserId): Either<UserException.NotFound, User>
     fun save(entity: User)
-
-    /**
-     * Delete the user from the database
-     */
     fun delete(entity: User)
 }
