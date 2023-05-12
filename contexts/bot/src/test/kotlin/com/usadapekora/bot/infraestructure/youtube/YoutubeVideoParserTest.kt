@@ -5,6 +5,7 @@ import com.usadapekora.bot.domain.video.VideoException
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 class YoutubeVideoParserTest {
 
@@ -34,12 +35,12 @@ class YoutubeVideoParserTest {
         """
 
         val parser = YoutubeVideoParser()
-        val video = parser.parse(xml)
+        val video = parser.parse(xml).getOrNull()
 
-        assertEquals("H8FWadpDpmk", video.id)
-        assertEquals("http://www.youtube.com/watch?v=H8FWadpDpmk", video.url)
-        assertEquals("【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】", video.title)
-        assertEquals(DateTimeUtils.fromISO8061("2015-03-06T21:40:57+00:00"), video.publishDate)
+        assertEquals("H8FWadpDpmk", video?.id)
+        assertEquals("http://www.youtube.com/watch?v=H8FWadpDpmk", video?.url)
+        assertEquals("【犬鳴トンネル】ほ…ほほ本当にある心霊スポットにみんなで行こう...！ぺこ！【ホロライブ/兎田ぺこら】", video?.title)
+        assertEquals(DateTimeUtils.fromISO8061("2015-03-06T21:40:57+00:00"), video?.publishDate)
     }
 
     @Test
@@ -54,19 +55,17 @@ class YoutubeVideoParserTest {
         """
 
         val parser = YoutubeVideoParser()
+        val result = parser.parse(xml)
 
-        assertThrows<VideoException.FeedParse> {
-            parser.parse(xml)
-        }
+        assertIs<VideoException.FeedParse>(result.leftOrNull())
     }
 
     @Test
     fun `should not parse blank string`() {
         val parser = YoutubeVideoParser()
+        val result = parser.parse("")
 
-        assertThrows<VideoException.FeedParse> {
-            parser.parse("")
-        }
+        assertIs<VideoException.FeedParse>(result.leftOrNull())
     }
 
 }

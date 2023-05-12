@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.youtube
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.backendBaseUrl
 import com.usadapekora.bot.domain.video.VideoException
@@ -13,7 +16,7 @@ class YoutubeFeedSubscriber : ChannelSubscriber {
     private val topicUrl = "https://www.youtube.com/xml/feeds/videos.xml?channel_id=$youtubeChannelId"
     private val callback = "$backendBaseUrl/webhook/youtube/feed"
 
-    override suspend fun subscribe() {
+    override suspend fun subscribe(): Either<VideoException.FeedSubscribe, Unit> {
         val client = HttpClient()
         val response = client.submitForm(
             url = "https://pubsubhubbub.appspot.com/subscribe",
@@ -27,11 +30,13 @@ class YoutubeFeedSubscriber : ChannelSubscriber {
         )
 
         if (!response.status.isSuccess()) {
-            throw VideoException.FeedSubscribe("""
+            return VideoException.FeedSubscribe("""
                 Youtube subscription error with 
                 response status ${response.status} and body ${response.body<String>()}
                 to topic url $topicUrl and callback url $callback
-            """.trimIndent())
+            """.trimIndent()).left()
         }
+
+        return Unit.right()
     }
 }

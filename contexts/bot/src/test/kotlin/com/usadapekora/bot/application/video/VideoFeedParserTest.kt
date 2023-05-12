@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.video
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoException
 import com.usadapekora.bot.domain.VideoMother
@@ -9,6 +11,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class VideoFeedParserTest {
 
@@ -41,13 +44,13 @@ class VideoFeedParserTest {
         val parser = mockk<FeedParser>()
         val feedParser = VideoFeedParser(parser)
 
-        every { parser.parse(feedContent) } returns expectedVideo
+        every { parser.parse(feedContent) } returns expectedVideo.right()
 
         val video = feedParser.parse(feedContent)
 
         verify { parser.parse(feedContent) }
 
-        assertEquals(expectedVideo, video)
+        assertEquals(expectedVideo, video.getOrNull())
     }
 
     @Test
@@ -56,11 +59,10 @@ class VideoFeedParserTest {
         val parser = mockk<FeedParser>()
         val feedParser = VideoFeedParser(parser)
 
-        every { parser.parse(feedContent) } throws VideoException.FeedParse()
+        every { parser.parse(feedContent) } returns VideoException.FeedParse().left()
 
-        assertThrows<VideoException.FeedParse> {
-            feedParser.parse(feedContent)
-        }
+        val result = feedParser.parse(feedContent)
+        assertTrue(result.leftOrNull() is VideoException.FeedParse)
     }
 
 }

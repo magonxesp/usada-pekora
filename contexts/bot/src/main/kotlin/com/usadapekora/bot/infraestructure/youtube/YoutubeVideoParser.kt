@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.youtube
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.Video
 import com.usadapekora.bot.domain.video.VideoException
@@ -10,8 +13,8 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 class YoutubeVideoParser: FeedParser {
 
-    override fun parse(feed: String): Video {
-        try {
+    override fun parse(feed: String): Either<VideoException.FeedParse, Video> {
+        return try {
             val document = DocumentBuilderFactory.newInstance()
                 .apply {
                     isValidating = false
@@ -21,9 +24,9 @@ class YoutubeVideoParser: FeedParser {
                 .newDocumentBuilder()
                 .parse(InputSource(StringReader(feed)))
 
-            return YoutubeFeedDocument(document).toAggregate()
+            YoutubeFeedDocument(document).toAggregate().right()
         } catch (exception: SAXException) {
-            throw VideoException.FeedParse(exception.message)
+            VideoException.FeedParse(exception.message).left()
         }
     }
 

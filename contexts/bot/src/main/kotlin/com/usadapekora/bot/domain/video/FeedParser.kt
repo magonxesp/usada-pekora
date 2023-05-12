@@ -1,10 +1,7 @@
 package com.usadapekora.bot.domain.video
 
+import arrow.core.Either
+
 interface FeedParser {
-    /**
-     * Parse the feed content to Video aggregate
-     *
-     * @throws VideoException.FeedParse in case of parse failure
-     */
-    fun parse(feed: String): Video
+    fun parse(feed: String): Either<VideoException.FeedParse, Video>
 }
