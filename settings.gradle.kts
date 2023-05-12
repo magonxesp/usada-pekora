@@ -9,6 +9,8 @@
 
 rootProject.name = "usada-pekora"
 
+include(":contexts:shared")
 include(":contexts:bot")
+include(":contexts:auth")
 include(":apps:bot:discord-bot")
 include(":apps:bot:backend")
