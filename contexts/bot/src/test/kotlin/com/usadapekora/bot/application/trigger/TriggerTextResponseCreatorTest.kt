@@ -1,5 +1,6 @@
 package com.usadapekora.bot.application.trigger
 
+import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
@@ -11,6 +12,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerTextResponseCreatorTest {
 
@@ -19,17 +21,18 @@ class TriggerTextResponseCreatorTest {
         val textResponse = TriggerTextResponseMother.create()
         val repository = mockk<TriggerTextResponseRepository>(relaxed = true)
 
-        every { repository.find(textResponse.id) } throws TriggerTextResponseException.NotFound()
+        every { repository.find(textResponse.id) } returns TriggerTextResponseException.NotFound().left()
 
         val creator = TriggerTextResponseCreator(repository)
-
-        creator.create(
+        val result = creator.create(
             TriggerTextResponseCreateRequest(
                 id = textResponse.id.value,
                 content = textResponse.content.value,
                 type = textResponse.type.value
             )
         )
+
+        assertTrue(result.isRight())
 
         verify { repository.find(textResponse.id) }
         verify { repository.save(textResponse) }
@@ -43,16 +46,15 @@ class TriggerTextResponseCreatorTest {
         every { repository.find(textResponse.id) } returns textResponse.right()
 
         val creator = TriggerTextResponseCreator(repository)
-
-        assertThrows<TriggerTextResponseException.AlreadyExists> {
-            creator.create(
-                TriggerTextResponseCreateRequest(
-                    id = textResponse.id.value,
-                    content = textResponse.content.value,
-                    type = textResponse.type.value
-                )
+        val result = creator.create(
+            TriggerTextResponseCreateRequest(
+                id = textResponse.id.value,
+                content = textResponse.content.value,
+                type = textResponse.type.value
             )
-        }
+        )
+
+        assertTrue(result.leftOrNull() is TriggerTextResponseException.AlreadyExists)
 
         verify { repository.find(textResponse.id) }
         verify(inverse = true) { repository.save(textResponse) }

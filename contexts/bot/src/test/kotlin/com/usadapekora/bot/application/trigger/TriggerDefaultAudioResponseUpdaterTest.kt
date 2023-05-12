@@ -12,6 +12,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerDefaultAudioResponseUpdaterTest {
 
@@ -26,8 +27,10 @@ class TriggerDefaultAudioResponseUpdaterTest {
         val updater = TriggerDefaultAudioResponseUpdater(repository, fileWriter, fileDeleter)
 
         every { repository.find(audioResponse.id) } returns audioResponse.right()
+        every { fileDeleter.delete(audioResponse.path) } returns Unit.right()
+        every { fileWriter.write(newFileContent, newAudioResponse.path) } returns Unit.right()
 
-        updater.update(
+        val result = updater.update(
             TriggerDefaultAudioResponseUpdateRequest(
                 id = audioResponse.id.value,
                 values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
@@ -38,6 +41,8 @@ class TriggerDefaultAudioResponseUpdaterTest {
                 )
             )
         )
+
+        assertTrue(result.isRight())
 
         verify { fileWriter.write(newFileContent, newAudioResponse.path) }
         verify { repository.save(newAudioResponse) }
@@ -54,8 +59,10 @@ class TriggerDefaultAudioResponseUpdaterTest {
         val updater = TriggerDefaultAudioResponseUpdater(repository, fileWriter, fileDeleter)
 
         every { repository.find(audioResponse.id) } returns audioResponse.copy().right()
+        every { fileDeleter.delete(audioResponse.path) } returns Unit.right()
+        every { fileWriter.write(newFileContent, newAudioResponse.path) } returns Unit.right()
 
-        updater.update(
+        val result = updater.update(
             TriggerDefaultAudioResponseUpdateRequest(
                 id = audioResponse.id.value,
                 values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
@@ -66,6 +73,8 @@ class TriggerDefaultAudioResponseUpdaterTest {
                 )
             )
         )
+
+        assertTrue(result.isRight())
 
         verify { fileDeleter.delete(audioResponse.path) }
         verify { fileWriter.write(newFileContent, newAudioResponse.path) }

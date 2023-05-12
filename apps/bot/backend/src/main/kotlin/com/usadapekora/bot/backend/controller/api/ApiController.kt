@@ -18,6 +18,6 @@ abstract class ApiController {
             throw ResponseStatusException(mapErrorHttpStatus(error), error.message)
         }
 
-        return ResponseEntity.status(status).body(it.getOrNull())
+        ResponseEntity.status(status).body(it.getOrNull())
     }
 }

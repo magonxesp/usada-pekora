@@ -11,6 +11,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlin.io.path.Path
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class TriggerDefaultAudioResponseDeleterTest {
 
@@ -22,8 +23,11 @@ class TriggerDefaultAudioResponseDeleterTest {
         val audio = TriggerAudioDefaultMother.create()
 
         every { repository.find(audio.id) } returns audio.right()
+        every { fileDeleter.delete(audio.path) } returns Unit.right()
 
-        deleter.delete(audio.id.value)
+        val result = deleter.delete(audio.id.value)
+
+        assertTrue(result.isRight())
 
         verify { fileDeleter.delete(audio.path) }
         verify { repository.delete(audio) }

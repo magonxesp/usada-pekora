@@ -23,6 +23,7 @@ class TriggerGetApiController : ApiController() {
     private val audioFinder: TriggerDefaultAudioFinder by inject(TriggerDefaultAudioFinder::class.java)
 
     override fun <T> mapErrorHttpStatus(error: T) = when(error) {
+        is TriggerException.NotFound -> HttpStatus.NOT_FOUND
         is TriggerAudioResponseException.NotFound -> HttpStatus.NOT_FOUND
         else -> HttpStatus.INTERNAL_SERVER_ERROR
     }

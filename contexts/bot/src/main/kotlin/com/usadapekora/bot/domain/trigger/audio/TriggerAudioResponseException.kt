@@ -6,4 +6,5 @@ sealed class TriggerAudioResponseException(override val message: String? = null)
     class FailedToSave(override val message: String? = null) : TriggerAudioResponseException(message)
     class FailedToDelete(override val message: String? = null) : TriggerAudioResponseException(message)
     class FailedToRead(override val message: String? = null) : TriggerAudioResponseException(message)
+    class FailedToUpdate(override val message: String? = null) : TriggerAudioResponseException(message)
 }

@@ -41,7 +41,9 @@ class TriggerDefaultAudioResponseUpdater(
         }
 
         request.values.content.takeUnless { it == null }?.let {
-            fileWriter.write(it, audioResponse.path)
+            fileWriter.write(it, audioResponse.path).leftOrNull()?.let {
+                return TriggerAudioResponseException.FailedToUpdate("Failed to write audio file of trigger with id ${audioResponse.id.value}").left()
+            }
         }
 
         if (oldFilePath != audioResponse.path) {

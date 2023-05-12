@@ -33,6 +33,8 @@ class TriggerUpdaterTest {
         val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
         every { repository.find(trigger.id) } returns trigger.right()
+        every { textRepository.find(responseText.id) } returns responseText.right()
+        every { audioRepository.find(trigger.responseAudio!!) } returns TriggerAudioResponseException.NotFound().left()
 
         trigger.input = Trigger.TriggerInput("New expected user input")
 

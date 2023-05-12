@@ -36,16 +36,21 @@ class TriggerCreator(
                 ).getOrNull()
             }
 
-        val trigger = Trigger.fromPrimitives(
-            id = request.id,
-            title = request.title,
-            input = request.input,
-            compare = request.compare,
-            responseTextId = textResponse?.id?.value,
-            responseAudioId = audioResponse?.id(),
-            responseAudioProvider = request.responseAudioProvider,
-            discordGuildId = request.discordGuildId,
-        )
+        val trigger = Either.catch {
+            Trigger.fromPrimitives(
+                id = request.id,
+                title = request.title,
+                input = request.input,
+                compare = request.compare,
+                responseTextId = textResponse?.id?.value,
+                responseAudioId = audioResponse?.id(),
+                responseAudioProvider = request.responseAudioProvider,
+                discordGuildId = request.discordGuildId,
+            )
+        }.let {
+            if (it.isLeft() && it.leftOrNull() is TriggerException) return (it.leftOrNull()!! as TriggerException).left()
+            it.getOrNull()!!
+        }
 
         val existing = repository.find(trigger.id)
 

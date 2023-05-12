@@ -20,6 +20,7 @@ import java.util.UUID
 import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class TriggerDefaultAudioResponseCreatorTest {
@@ -34,10 +35,12 @@ class TriggerDefaultAudioResponseCreatorTest {
         val filename = FileMother.filename(".mp3")
         val expected = TriggerAudioDefaultMother.create(id = id.toString(), file = filename)
         val file = Random.Default.nextBytes(10)
+        val destinationPath = Path(storageDirPath, "trigger", "audio", expected.guild.value, expected.trigger.value, "${expected.id.value}.${File(expected.file.value).extension}").toString()
 
         every { repository.find(expected.id) } returns TriggerAudioResponseException.NotFound().left()
+        every { writer.write(file, destinationPath) } returns Unit.right()
 
-        creator.create(
+        val result = creator.create(
             TriggerDefaultAudioResponseCreateRequest(
                 id = expected.id.value,
                 triggerId = expected.trigger.value,
@@ -47,7 +50,7 @@ class TriggerDefaultAudioResponseCreatorTest {
             )
         )
 
-        val destinationPath = Path(storageDirPath, "trigger", "audio", expected.guild.value, expected.trigger.value, "${expected.id.value}.${File(expected.file.value).extension}").toString()
+        assertTrue(result.isRight())
 
         verify { writer.write(file, destinationPath) }
         verify { repository.save(expected) }
