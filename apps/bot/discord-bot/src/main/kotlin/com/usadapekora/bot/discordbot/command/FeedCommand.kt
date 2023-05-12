@@ -36,7 +36,6 @@ class FeedCommand : CommandHandler() {
     override suspend fun handle(message: Message, args: Map<String, Any?>) {
         val guildId = message.guildId.get().asString()
         val channel = message.channel.awaitSingle()
-        var feedChannelId: String? = null
         val status = args["status"] as String
 
         if (status !in arrayOf(ENABLE_STATUS, DISABLE_STATUS)) {
@@ -44,11 +43,13 @@ class FeedCommand : CommandHandler() {
             return
         }
 
-        try {
-            val preferences = finder.find(guildId)
-            feedChannelId = preferences.preferences[GuildPreferences.GuildPreference.FeedChannelId]
-        } catch (exception: GuildPreferencesException.NotFound) {
-            logger.info(exception.message)
+        val feedChannelId = finder.find(guildId).let {
+            if (it.isLeft()) {
+                logger.info(it.leftOrNull()!!.message)
+                return
+            }
+
+            it.getOrNull()!!.preferences[GuildPreferences.GuildPreference.FeedChannelId]
         }
 
         if (feedChannelId == channel.id.asString() && status == ENABLE_STATUS) {

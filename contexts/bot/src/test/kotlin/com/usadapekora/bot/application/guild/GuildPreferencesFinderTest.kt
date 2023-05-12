@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.guild
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.GuildPreferencesMother
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
@@ -8,6 +10,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class GuildPreferencesFinderTest {
 
@@ -17,11 +20,11 @@ class GuildPreferencesFinderTest {
         val repository = mockk<GuildPreferencesRepository>()
         val finder = GuildPreferencesFinder(repository)
 
-        every { repository.findByGuildId(preferences.guildId) } returns preferences
+        every { repository.findByGuildId(preferences.guildId) } returns preferences.right()
 
         val found = finder.find(preferences.guildId)
 
-        assertEquals(preferences, found)
+        assertEquals(preferences, found.getOrNull())
     }
 
     @Test
@@ -30,11 +33,10 @@ class GuildPreferencesFinderTest {
         val repository = mockk<GuildPreferencesRepository>()
         val finder = GuildPreferencesFinder(repository)
 
-        every { repository.findByGuildId(preferences.guildId) } throws GuildPreferencesException.NotFound()
+        every { repository.findByGuildId(preferences.guildId) } returns GuildPreferencesException.NotFound().left()
 
-        assertThrows<GuildPreferencesException.NotFound> {
-            finder.find(preferences.guildId)
-        }
+        val result = finder.find(preferences.guildId)
+        assertTrue(result.leftOrNull() is GuildPreferencesException.NotFound)
     }
 
 }

@@ -7,11 +7,8 @@ import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 class GuildPreferenceCreator(private val repository: GuildPreferencesRepository) {
 
     fun create(guildId: String, preference: GuildPreferences.GuildPreference, value: String) {
-        val preferences = try {
-            repository.findByGuildId(guildId)
-        } catch (exception: GuildPreferencesException.NotFound) {
-            GuildPreferences(guildId)
-        }
+        val preferences = repository.findByGuildId(guildId).getOrNull()
+            ?: GuildPreferences(guildId)
 
         preferences.preferences[preference] = value
         repository.save(preferences)

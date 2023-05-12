@@ -1,5 +1,7 @@
 package com.usadapekora.bot.application.guild
 
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.GuildPreferencesMother
@@ -17,7 +19,7 @@ class GuildPreferenceDeleterTest {
         val repository = mockk<GuildPreferencesRepository>(relaxed = true)
         val deleter = GuildPreferenceDeleter(repository)
 
-        every { repository.findByGuildId(preferences.guildId) } returns preferences
+        every { repository.findByGuildId(preferences.guildId) } returns preferences.right()
 
         deleter.delete(preferences.guildId, GuildPreferences.GuildPreference.FeedChannelId)
 
@@ -31,7 +33,7 @@ class GuildPreferenceDeleterTest {
         val repository = mockk<GuildPreferencesRepository>(relaxed = true)
         val deleter = GuildPreferenceDeleter(repository)
 
-        every { repository.findByGuildId(preferences.guildId) } throws GuildPreferencesException.NotFound()
+        every { repository.findByGuildId(preferences.guildId) } returns GuildPreferencesException.NotFound().left()
 
         deleter.delete(preferences.guildId, GuildPreferences.GuildPreference.FeedChannelId)
 

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.assertThrows
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class MongoDbGuildPreferencesTest : MongoDbRepositoryTest<GuildPreferences, MongoDbGuildPreferencesRepository>(
     repository = MongoDbGuildPreferencesRepository(), 
@@ -18,16 +19,15 @@ class MongoDbGuildPreferencesTest : MongoDbRepositoryTest<GuildPreferences, Mong
     fun `should find guild preferences by guild discord id`() {
         databaseTest {
             val existing = repository.findByGuildId(it.guildId)
-            assertEquals(it, existing)
+            assertEquals(it, existing.getOrNull())
         }
     }
 
     @Test
     fun `should not find guild preferences by guild discord id`() {
         databaseTest(save = false) {
-            assertThrows<GuildPreferencesException.NotFound> {
-                repository.findByGuildId(it.guildId)
-            }
+            val result = repository.findByGuildId(it.guildId)
+            assertTrue(result.leftOrNull() is GuildPreferencesException.NotFound)
         }
     }
 
@@ -37,7 +37,7 @@ class MongoDbGuildPreferencesTest : MongoDbRepositoryTest<GuildPreferences, Mong
             repository.save(it)
 
             val existing = repository.findByGuildId(it.guildId)
-            assertEquals(it, existing)
+            assertEquals(it, existing.getOrNull())
         }
     }
 
@@ -49,7 +49,7 @@ class MongoDbGuildPreferencesTest : MongoDbRepositoryTest<GuildPreferences, Mong
             repository.save(it)
             val existing = repository.findByGuildId(it.guildId)
 
-            assertEquals(it, existing)
+            assertEquals(it, existing.getOrNull())
         }
     }
 
@@ -57,10 +57,8 @@ class MongoDbGuildPreferencesTest : MongoDbRepositoryTest<GuildPreferences, Mong
     fun `should delete guild preferences`() {
         databaseTest(delete = false) {
             repository.delete(it)
-
-            assertThrows<GuildPreferencesException.NotFound> {
-                repository.findByGuildId(it.guildId)
-            }
+            val result = repository.findByGuildId(it.guildId)
+            assertTrue(result.leftOrNull() is GuildPreferencesException.NotFound)
         }
     }
     

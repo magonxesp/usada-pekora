@@ -1,5 +1,8 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb.guild
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
@@ -12,16 +15,16 @@ class MongoDbGuildPreferencesRepository : MongoDbRepository<GuildPreferences, Gu
     documentCompanion = GuildPreferencesDocument.Companion
 ), GuildPreferencesRepository {
 
-    override fun findByGuildId(guildId: String): GuildPreferences {
+    override fun findByGuildId(guildId: String): Either<GuildPreferencesException.NotFound, GuildPreferences> {
         val guildPreferences = oneQuery<GuildPreferencesDocument>("guildPreferences") { collection ->
             collection.findOne(GuildPreferencesDocument::guildId eq guildId)
         }
 
         if (guildPreferences != null) {
-            return guildPreferences.toEntity()
+            return guildPreferences.toEntity().right()
         }
 
-        throw GuildPreferencesException.NotFound("Guild preferences by guild id $guildId not found")
+        return GuildPreferencesException.NotFound("Guild preferences by guild id $guildId not found").left()
     }
 
     override fun findByPreference(preference: GuildPreferences.GuildPreference): Array<GuildPreferences> {
