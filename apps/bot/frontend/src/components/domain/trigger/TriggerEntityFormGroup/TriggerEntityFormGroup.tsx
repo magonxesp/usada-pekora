@@ -11,7 +11,7 @@ import { triggerCompare } from '../../../../modules/trigger/trigger'
 import { emptyTriggerFormData, TriggerEntityFormData, TriggerFormGroupRef } from '../../../../modules/trigger/form'
 
 export const TriggerEntityFormGroup = forwardRef(
-  (props: FormGroupProps<TriggerEntityFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
+  function TriggerEntityFormGroup(props: FormGroupProps<TriggerEntityFormData>, ref: ForwardedRef<TriggerFormGroupRef>) {
     const intl = useIntl()
     const [data, setData] = useState<TriggerEntityFormData>(props.data ?? emptyTriggerFormData())
 

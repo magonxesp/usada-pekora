@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import ModalContainer from '../../common/modal/ModalContainer/ModalContainer'
 
 interface DefaultLayoutProps {
-  children: JSX.Element
+  children: any
 }
 
 export default function DefaultLayout({ children }: DefaultLayoutProps) {

@@ -13,7 +13,7 @@ import {
 } from '../../../../modules/trigger/text-response/form'
 
 export const TriggerTextResponseFormGroup = forwardRef(
-  (props: FormGroupProps<TriggerTextResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
+  function TriggerTextResponseFormGroup(props: FormGroupProps<TriggerTextResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) {
     const intl = useIntl()
     const [data, setData] = useState(props.data ?? emptyTriggerResponseTextFormData())
 

@@ -22,3 +22,5 @@ build
 storage
 secrets
 reports
+.turbo
+node_modules

@@ -6,10 +6,10 @@ import { DiscordGuildClient } from '../../../modules/shared/client/client'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session: any = await serverSession(req, res)
-  const token: string = session.accessToken ?? ''
+  const token: string = session?.accessToken ?? ''
 
   if (!session) {
-    res.status(200).json([])
+    res.status(403).json([])
     return
   }
 

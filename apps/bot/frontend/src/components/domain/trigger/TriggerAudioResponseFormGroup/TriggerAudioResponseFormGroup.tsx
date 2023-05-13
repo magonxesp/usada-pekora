@@ -11,7 +11,7 @@ import {
 } from '../../../../modules/trigger/audio-response/form'
 
 export const TriggerAudioResponseFormGroup = forwardRef(
-  (props: FormGroupProps<TriggerAudioResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) => {
+  function TriggerAudioResponseFormGroup(props: FormGroupProps<TriggerAudioResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) {
     const intl = useIntl()
     const [data, setData] = useState(props.data ?? emptyTriggerResponseAudioFormData())
 
