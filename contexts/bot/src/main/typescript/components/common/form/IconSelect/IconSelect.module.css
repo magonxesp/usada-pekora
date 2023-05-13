@@ -1,0 +1,21 @@
+.iconSelect {
+    padding: 0.3125rem 1.875rem 0.3125rem 0.625rem;
+}
+
+.option img,
+.option .emptyImage {
+    border-radius: 50%;
+    width: 1.5rem;
+    margin-right: 0.7rem;
+    vertical-align: middle;
+}
+
+.option .emptyImage {
+    display: flex;
+    background-color: var(--secondary-background-color);
+    color: var(--secondary-text-color);
+    font-size: 0.7rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}

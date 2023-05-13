@@ -1,0 +1,32 @@
+.inputContainer {
+    border-style: dashed;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1.25rem 0.625rem;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+.inputContainer svg {
+    font-size: 2.1875rem;
+}
+
+.inputContainer:hover,
+.inputContainer.active {
+    border-color: var(--primary-active-background-color);
+}
+
+.input {
+    display: none;
+}
+
+.actions {
+    margin-top: 0.625rem;
+}
+
+.actions > * + * {
+    margin-left: 0.3125rem;
+}

@@ -1,7 +1,8 @@
 {
   "name": "usada-pekora-bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/main/typescript/index.tsx",
+  "types": "./src/main/typescript/index.tsx",
   "license": "MIT",
   "private": true
 }

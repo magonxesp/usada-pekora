@@ -1,0 +1,26 @@
+.tooltip {
+    display: inline-block;
+}
+
+.tooltip svg {
+    color: var(--secondary-background-color);
+}
+
+.tooltip svg:hover {
+    cursor: pointer;
+    color: var(--secondary-active-background-color);
+}
+
+.content {
+    display: block;
+    position: absolute;
+    left: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 0.625rem;
+    font-size: 0.9375rem;
+    box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.15);
+    border-radius: 0.625rem;
+    z-index: 1;
+    width: 25rem;
+}

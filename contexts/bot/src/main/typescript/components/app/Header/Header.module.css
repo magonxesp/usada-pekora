@@ -1,0 +1,48 @@
+.header {
+    width: 100%;
+    border-bottom-width: 0.25rem;
+    border-bottom-style: solid;
+    border-bottom-color: var(--primary-background-color);
+    overflow: hidden;
+}
+
+.innerContainer {
+    margin: 0 auto;
+    width: var(--container-width);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo {
+    display: block;
+    overflow: hidden;
+}
+
+.logo img {
+    top: 2.5rem;
+    position: relative;
+    width: 15rem;
+    height: auto;
+}
+
+.currentUser {
+    display: flex;
+    align-items: center;
+}
+
+.currentUser picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+}
+
+.currentUser picture img {
+    height: 100%;
+}
