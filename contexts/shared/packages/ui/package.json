@@ -1,0 +1,19 @@
+{
+  "name": "@usada-pekora/shared-ui",
+  "version": "1.0.11",
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:package": "tsup && tsc --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
+    "esbuild-css-modules-plugin": "^2.7.1"
+  }
+}
