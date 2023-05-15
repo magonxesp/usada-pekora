@@ -8,7 +8,7 @@ import store from '../store/store'
 import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 import es from '../lang/es.json'
-import DefaultLayout from '../components/layout/DefaultLayout/DefaultLayout'
+import { DefaultLayout } from '@usada-pekora/shared-ui'
 
 interface AppRootProps {
   session: Session,

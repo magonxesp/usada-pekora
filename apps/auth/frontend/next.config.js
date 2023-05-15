@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  swcMinify: true,
   experimental: {
-    appDir: true
+    appDir: true,
+    forceSwcTransforms: true
   }
 }
 

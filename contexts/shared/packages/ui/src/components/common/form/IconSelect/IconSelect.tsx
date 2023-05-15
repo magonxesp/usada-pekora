@@ -1,21 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
 import styles from './IconSelect.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faChevronUp, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import Picture from '../../image/Picture/Picture'
-import Select, { SelectProps, Option as SelectOption } from '../Select/Select'
+import Select, { SelectProps, SelectOption } from '../Select/Select'
 
-export interface Option extends SelectOption {
+export interface IconSelectOption extends SelectOption {
   icon: string
 }
 
-interface IconSelectProps extends SelectProps<Option> {
+interface IconSelectProps extends SelectProps<IconSelectOption> {
   selected?: string|number
 }
 
 interface IconSelectOptionProps {
-  option: Option
-  onClick?: (option: Option) => void
+  option: IconSelectOption
+  onClick?: (option: IconSelectOption) => void
 }
 
 function IconSelectOption({ option, onClick }: IconSelectOptionProps) {
@@ -43,7 +42,7 @@ export default function IconSelect({ options, onChange, className, label, help, 
       onChange={onChange}
       defaultValue={defaultValue}
     >
-      {(option: Option) => (
+      {(option: IconSelectOption) => (
         <>
           {(option.icon == "") ? (
             <div className={styles.emptyImage}><FontAwesomeIcon icon={faQuestion} /></div>

@@ -1,5 +1,5 @@
 {
-  "name": "usada-pekora",
+  "name": "@usada-pekora/app",
   "version": "1.0.0",
   "description": "Notify new videos from usada pekora youtube channel and reacts to text messages on discord",
   "main": "index.js",
@@ -43,8 +43,7 @@
     "typescript": "4.8.3"
   },
   "workspaces": [
-    "contexts/bot",
-    "contexts/auth",
+    "contexts/shared/packages/**",
     "apps/bot/frontend",
     "apps/auth/frontend"
   ]

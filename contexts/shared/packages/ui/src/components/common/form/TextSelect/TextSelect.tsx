@@ -1,7 +1,7 @@
-import Select, { Option, SelectProps } from '../Select/Select'
+import Select, { SelectOption, SelectProps } from '../Select/Select'
 
-interface TextSelectProps extends SelectProps<Option> {
-  options: Option[]
+interface TextSelectProps extends SelectProps<SelectOption> {
+  options: SelectOption[]
 }
 
 export default function TextSelect({ options, onChange, defaultValue, label, error, help, className }: TextSelectProps) {
@@ -15,7 +15,7 @@ export default function TextSelect({ options, onChange, defaultValue, label, err
       onChange={onChange}
       defaultValue={defaultValue}
     >
-      {((option: Option) => (
+      {((option: SelectOption) => (
         <>{option.label}</>
       ))}
     </Select>

@@ -7,5 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "dependencies": {
+    "@usada-pekora/shared-ui": "^1.0.0"
   }
 }

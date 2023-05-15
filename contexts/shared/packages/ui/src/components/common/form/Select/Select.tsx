@@ -4,26 +4,26 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import Input, { InputProps } from '../Input/Input'
 import styles from './Select.module.css'
 
-export interface Option {
+export interface SelectOption {
   label: string
   value: string|number
   disabled?: boolean
 }
 
-export interface SelectProps<T extends Option> extends InputProps<string|number> {
+export interface SelectProps<T extends SelectOption> extends InputProps<string|number> {
   options: T[]
   optionClassName?: string
   children?: (option: T) => JSX.Element
 }
 
-interface SelectOptionProps<T extends Option> {
+interface SelectOptionProps<T extends SelectOption> {
   option: T
   onClick?: (option: T) => void
   children?: (option: T) => JSX.Element
   className?: string
 }
 
-function SelectOption<T extends Option>({ option, onClick, children, className }: SelectOptionProps<T>) {
+function SelectOption<T extends SelectOption>({ option, onClick, children, className }: SelectOptionProps<T>) {
   return (
     <div className={`${styles.option} ${className ?? ''}`} onClick={() => typeof onClick !== 'undefined' && onClick(option)}>
       {(typeof children !== 'undefined') ? children(option) : ''}
@@ -31,7 +31,7 @@ function SelectOption<T extends Option>({ option, onClick, children, className }
   )
 }
 
-export default function Select<T extends Option>({
+export default function Select<T extends SelectOption>({
   options,
   onChange,
   defaultValue,

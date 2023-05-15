@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "../../../tsconfig.json"
-  ],
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "paths": {
       "@usada-pekora/bot/*": ["./src/main/typescript/*"]
