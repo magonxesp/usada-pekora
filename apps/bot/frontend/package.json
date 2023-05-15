@@ -9,6 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@usada-pekora/shared-ui": "^1.0.0"
+    "@usada-pekora/shared-ui": "workspace:*"
   }
 }
