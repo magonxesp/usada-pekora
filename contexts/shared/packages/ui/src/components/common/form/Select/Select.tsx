@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
-import Input, { InputProps } from '../Input/Input'
+import { Input, InputProps } from '../Input/Input'
 import styles from './Select.module.css'
 
 export interface SelectOption {
@@ -31,7 +31,7 @@ function SelectOption<T extends SelectOption>({ option, onClick, children, class
   )
 }
 
-export default function Select<T extends SelectOption>({
+export function Select<T extends SelectOption>({
   options,
   onChange,
   defaultValue,

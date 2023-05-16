@@ -2,7 +2,7 @@ import { useIntl } from 'react-intl'
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
 import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
 import { FormGroupProps } from '../../../../modules/shared/form/props'
-import FileInput from '../../../common/form/FileInput/FileInput'
+import { FileInput } from '@usada-pekora/shared-ui'
 import { Validators } from '../../../../modules/shared/form/validator'
 import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
 import {
@@ -42,7 +42,7 @@ export const TriggerAudioResponseFormGroup = forwardRef(
           label={intl.$t({ id: 'trigger.form.response_audio.file.label' })}
           help={intl.$t({ id: 'trigger.form.response_audio.file.description' })}
           error={errors.content ?? []}
-          allowedMimeTypes={['audio/mpeg']}
+          allowedMimeTypes={['audio/mpeg' as any]}
           defaultValue={data.content}
           onChange={(file) => {
             setData({...data, content: file})

@@ -1,8 +1,8 @@
 import styles from './IconSelect.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
-import Picture from '../../image/Picture/Picture'
-import Select, { SelectProps, SelectOption } from '../Select/Select'
+import { Picture } from '../../image/Picture/Picture'
+import { Select, SelectProps, SelectOption } from '../Select/Select'
 
 export interface IconSelectOption extends SelectOption {
   icon: string
@@ -30,7 +30,7 @@ function IconSelectOption({ option, onClick }: IconSelectOptionProps) {
   )
 }
 
-export default function IconSelect({ options, onChange, className, label, help, error, defaultValue }: IconSelectProps) {
+export function IconSelect({ options, onChange, className, label, help, error, defaultValue }: IconSelectProps) {
   return (
     <Select
       options={options}

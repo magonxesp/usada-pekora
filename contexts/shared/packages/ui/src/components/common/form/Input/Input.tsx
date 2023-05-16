@@ -1,6 +1,6 @@
 import styles from './Input.module.css'
-import InputLabel from '../InputLabel/InputLabel'
-import InputError from '../InputError/InputError'
+import { InputLabel } from '../InputLabel/InputLabel'
+import { InputError } from '../InputError/InputError'
 
 export interface InputProps<T> {
   label?: string
@@ -15,7 +15,7 @@ interface InputContainerInternalProps extends InputProps<unknown> {
   children: JSX.Element
 }
 
-export default function Input({ label, children, help, error, className }: InputContainerInternalProps) {
+export function Input({ label, children, help, error, className }: InputContainerInternalProps) {
   return (
     <div className={`${styles.input} ${className ?? ''}`}>
       {(label) ? (

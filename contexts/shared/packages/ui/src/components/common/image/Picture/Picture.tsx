@@ -5,7 +5,7 @@ interface PictureProps {
   className?: string
 }
 
-export default function Picture(props: PictureProps) {
+export function Picture(props: PictureProps) {
   return (
     <picture>
       <source srcSet={props.src} type={props.mimeType ?? ''} />

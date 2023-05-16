@@ -4,9 +4,7 @@ import { Validators } from '../../../../modules/shared/form/validator'
 import { isNotEmpty, isRegex } from '../../../../modules/shared/validations'
 import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
 import { FormGroupProps } from '../../../../modules/shared/form/props'
-import TextInput from '../../../common/form/TextInput/TextInput'
-import { Option } from '../../../common/form/Select/Select'
-import TextSelect from '../../../common/form/TextSelect/TextSelect'
+import { TextInput, TextSelect, SelectOption } from '@usada-pekora/shared-ui'
 import { triggerCompare } from '../../../../modules/trigger/trigger'
 import { emptyTriggerFormData, TriggerEntityFormData, TriggerFormGroupRef } from '../../../../modules/trigger/form'
 
@@ -55,7 +53,7 @@ export const TriggerEntityFormGroup = forwardRef(
         <TextSelect
           label={intl.$t({id: 'trigger.form.compare.label'})}
           help={intl.$t({id: 'trigger.form.compare.description'})}
-          options={Object.entries(triggerCompare).map(([name, value]): Option => ({
+          options={Object.entries(triggerCompare).map(([name, value]): SelectOption => ({
             value,
             label: intl.$t({id: `trigger.form.compare.option.${name}`})
           }))}

@@ -4,7 +4,7 @@ interface InputErrorProps {
   children: string|string[]
 }
 
-export default function InputError({ children }: InputErrorProps) {
+export function InputError({ children }: InputErrorProps) {
   return (
     <>
       {[...children].map((error, index) => (

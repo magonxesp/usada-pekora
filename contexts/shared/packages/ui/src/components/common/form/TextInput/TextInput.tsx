@@ -1,8 +1,8 @@
-import Input, { InputProps } from '../Input/Input'
+import { Input, InputProps } from '../Input/Input'
 
 interface TextInputProps extends InputProps<string> {}
 
-export default function TextInput({ label, help, error, defaultValue, onChange }: TextInputProps) {
+export function TextInput({ label, help, error, defaultValue, onChange }: TextInputProps) {
   return (
     <Input
       label={label}

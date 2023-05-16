@@ -1,5 +1,5 @@
 import styles from './InputLabel.module.css'
-import Tooltip from '../../misc/Tooltip/Tooltip'
+import { Tooltip } from '../../misc/Tooltip/Tooltip'
 
 interface InputLabelProps {
   children: string
@@ -7,7 +7,7 @@ interface InputLabelProps {
   forInput?: string
 }
 
-export default function InputLabel({ forInput, help, children }: InputLabelProps) {
+export function InputLabel({ forInput, help, children }: InputLabelProps) {
   return (
     <div className={styles.label}>
       <label htmlFor={forInput}>{children}</label>

@@ -6,7 +6,7 @@ interface MainContainerProps {
   as?: keyof React.ReactHTML
 }
 
-export default function MainContainer({ children, as }: MainContainerProps) {
+export function MainContainer({ children, as }: MainContainerProps) {
   const containerProps = {
     className: styles.main
   }

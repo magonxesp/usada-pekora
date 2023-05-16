@@ -9,7 +9,7 @@ interface TooltipProps {
   className?: string
 }
 
-export default function Tooltip({ content, className }: TooltipProps) {
+export function Tooltip({ content, className }: TooltipProps) {
   const [show, setShow] = useState(false)
   const [id, setId] = useState("")
   const ref = useRef<HTMLSpanElement>(null)

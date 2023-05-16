@@ -4,8 +4,7 @@ import { Validators } from '../../../../modules/shared/form/validator'
 import { isNotEmpty } from '../../../../modules/shared/validations'
 import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
 import { FormGroupProps } from '../../../../modules/shared/form/props'
-import TextInput from '../../../common/form/TextInput/TextInput'
-import TextAreaInput from '../../../common/form/TextAreaInput/TextAreaInput'
+import { TextAreaInput } from '@usada-pekora/shared-ui'
 import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
 import {
   emptyTriggerResponseTextFormData,

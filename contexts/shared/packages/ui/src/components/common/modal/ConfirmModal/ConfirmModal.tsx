@@ -1,6 +1,6 @@
-import Modal from '../Modal/Modal'
+import { Modal } from '../Modal/Modal'
 import { useIntl } from 'react-intl'
-import Button from '../../form/Button/Button'
+import { Button } from '../../form/Button/Button'
 import styles from './ConfirmationModal.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
@@ -15,7 +15,7 @@ interface ConfirmModalProps {
   message: string
 }
 
-export default function ConfirmModal({ onConfirm, onReject, rejectText, confirmText, message }: ConfirmModalProps) {
+export function ConfirmModal({ onConfirm, onReject, rejectText, confirmText, message }: ConfirmModalProps) {
   const intl = useIntl()
   const show = useContext(ModalShowContext)
 

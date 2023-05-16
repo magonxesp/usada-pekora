@@ -15,7 +15,7 @@ interface ButtonProps {
   className?: string
 }
 
-export default function Button({ style, type, onClick, disabled, children, className }: ButtonProps) {
+export function Button({ style, type, onClick, disabled, children, className }: ButtonProps) {
   const styleClass = {
     'transparent': styles.transparent,
     'secondary': styles.secondary,

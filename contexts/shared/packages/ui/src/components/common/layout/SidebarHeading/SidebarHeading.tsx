@@ -1,5 +1,5 @@
 import styles from './SidebarHeading.module.css'
-import Button from '../../form/Button/Button'
+import { Button } from '../../form/Button/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -8,7 +8,7 @@ interface SidebarHeadingProps {
   onClose?: () => void
 }
 
-export default function SidebarHeading({ children, onClose }: SidebarHeadingProps) {
+export function SidebarHeading({ children, onClose }: SidebarHeadingProps) {
   return (
     <>
       <div className={styles.sidebarHeading}>

@@ -5,7 +5,7 @@ interface CardListProps {
   className?: string
 }
 
-export default function CardList({ children, className }: CardListProps) {
+export function CardList({ children, className }: CardListProps) {
   return (
     <div className={`${styles.cardList} ${className ?? ''}`}>
       {children}

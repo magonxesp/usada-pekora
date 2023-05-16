@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
-import Sidebar from '../../../common/layout/Sidebar/Sidebar'
+import { Sidebar, SidebarHeading, SidebarBody, SidebarTitle } from '@usada-pekora/shared-ui'
 import TriggerForm from '../TriggerForm/TriggerForm'
-import SidebarHeading from '../../../common/layout/SidebarHeading/SidebarHeading'
-import SidebarBody from '../../../common/layout/SidebarBody/SidebarBody'
-import SidebarTitle from '../../../common/layout/SidebarTitle/SidebarTitle'
 import { TriggerFormData } from '../../../../modules/trigger/form'
 
 interface TriggerFormSidebarProps {

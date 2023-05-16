@@ -5,7 +5,7 @@ interface SidebarProps {
 }
 
 
-export default function SidebarBody({ children }: SidebarProps) {
+export function SidebarBody({ children }: SidebarProps) {
   return (
     <div className={styles.sidebarBody}>
       {children}

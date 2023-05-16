@@ -6,7 +6,7 @@ interface EmptyStateProps {
   message?: string
 }
 
-export default function EmptyState(props: EmptyStateProps) {
+export function EmptyState(props: EmptyStateProps) {
   return (
     <div className={styles.emptyState}>
       <Image src={image} alt="Empty state image" />

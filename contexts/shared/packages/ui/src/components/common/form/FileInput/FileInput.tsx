@@ -1,4 +1,4 @@
-import Input, { InputProps } from '../Input/Input'
+import { Input, InputProps } from '../Input/Input'
 import styles from './FileInput.module.css'
 import React, { useRef, useState } from 'react'
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useIntl } from 'react-intl'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
 import * as mimes from './FileInputMimeTypes.json'
-import Button from '../Button/Button'
+import { Button } from '../Button/Button'
 
 type MimeType = keyof typeof mimes
 
@@ -14,7 +14,7 @@ interface TextInputProps extends InputProps<File|null> {
   allowedMimeTypes?: MimeType[]
 }
 
-export default function FileInput({ label, help, error, defaultValue, onChange, allowedMimeTypes }: TextInputProps) {
+export function FileInput({ label, help, error, defaultValue, onChange, allowedMimeTypes }: TextInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dropping, setDropping] = useState(false)
   const [file, setFile] = useState(defaultValue ?? null)

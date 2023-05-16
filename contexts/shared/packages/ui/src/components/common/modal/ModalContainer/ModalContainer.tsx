@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react'
 export const ModalShowContext = createContext(false)
 export const ModalComponentContext = createContext(null)
 
-export default function ModalContainer() {
+export function ModalContainer() {
   const show = useContext(ModalShowContext)
   const component = useContext(ModalComponentContext)
 

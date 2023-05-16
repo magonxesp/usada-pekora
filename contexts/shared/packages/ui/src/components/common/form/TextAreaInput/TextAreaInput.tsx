@@ -1,4 +1,4 @@
-import Input, { InputProps } from '../Input/Input'
+import { Input, InputProps } from '../Input/Input'
 import styles from './TextAreaInput.module.css'
 import { useState } from 'react'
 
@@ -6,7 +6,7 @@ interface TextAreaInputProps extends InputProps<string> {
   limit?: number
 }
 
-export default function TextAreaInput({ label, help, error, defaultValue, onChange, limit }: TextAreaInputProps) {
+export function TextAreaInput({ label, help, error, defaultValue, onChange, limit }: TextAreaInputProps) {
   const [characterCount, setCharacterCount] = useState(defaultValue?.length ?? 0)
 
   return (

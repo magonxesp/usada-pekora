@@ -5,7 +5,11 @@ export default defineConfig({
   esbuildPlugins: [cssModulesPlugin()],
   entry: ['src/index.ts'],
   dts: true,
-  format: ['esm'],
+  format: ['esm', 'cjs'],
   tsconfig: './tsconfig.json',
-  external: ['react']
+  external: ['react'],
+  loader: {
+    '.png': 'dataurl',
+    '.jpg': 'dataurl',
+  }
 })

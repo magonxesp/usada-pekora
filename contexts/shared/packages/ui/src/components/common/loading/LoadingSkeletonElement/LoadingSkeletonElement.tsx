@@ -5,7 +5,7 @@ interface SkeletonElementProps {
   children?: JSX.Element
 }
 
-export default function LoadingSkeletonElement({ children, loaded }: SkeletonElementProps) {
+export function LoadingSkeletonElement({ children, loaded }: SkeletonElementProps) {
   return (
     <>
       {(loaded) ? children : (

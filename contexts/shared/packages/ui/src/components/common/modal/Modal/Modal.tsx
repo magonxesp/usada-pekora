@@ -35,4 +35,4 @@ function Modal({ children, size }: ModalProps) {
 
 Modal.ModalBody = ModalBody
 
-export default Modal
+export { Modal }

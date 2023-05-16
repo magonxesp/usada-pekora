@@ -5,7 +5,7 @@ interface SidebarProps {
   show?: boolean
 }
 
-export default function Sidebar({ children, show }: SidebarProps) {
+export function Sidebar({ children, show }: SidebarProps) {
   return (
     <div className={`${styles.sidebar} ${(show) ? styles.show : ""}`}>
       {children}

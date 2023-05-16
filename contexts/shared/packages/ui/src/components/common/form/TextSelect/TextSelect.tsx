@@ -1,10 +1,10 @@
-import Select, { SelectOption, SelectProps } from '../Select/Select'
+import { Select, SelectOption, SelectProps } from '../Select/Select'
 
 interface TextSelectProps extends SelectProps<SelectOption> {
   options: SelectOption[]
 }
 
-export default function TextSelect({ options, onChange, defaultValue, label, error, help, className }: TextSelectProps) {
+export function TextSelect({ options, onChange, defaultValue, label, error, help, className }: TextSelectProps) {
   return (
     <Select
       options={options}

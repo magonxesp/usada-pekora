@@ -1,4 +1,4 @@
-import CardList from '../../../common/layout/CardList/CardList'
+import { CardList } from '@usada-pekora/shared-ui'
 import TriggerCard from '../TriggerCard/TriggerCard'
 import { Trigger } from '../../../../modules/trigger/trigger'
 

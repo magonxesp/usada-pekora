@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { useIntl } from 'react-intl'
-import ConfirmModal from '../../components/common/modal/ConfirmModal/ConfirmModal'
+import { ConfirmModal } from '@usada-pekora/shared-ui'
 import { setTriggers, showModal } from '../../store/slices/app-slice'
 import { createElement } from 'react'
 import { alert, asyncAlert } from '../shared/alert'
