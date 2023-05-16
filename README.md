@@ -10,6 +10,7 @@ Usada pekora discord bot, notify new videos from usada pekora youtube channel an
 Requeriments
 * Make
 * NodeJS >= 18
+* pnpm
 * Openjdk 18
 * Gradle
 
