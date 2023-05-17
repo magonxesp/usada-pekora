@@ -1,7 +1,5 @@
 import { create } from 'zustand'
 import { ReactElement } from 'react'
-import { Guild } from '../modules/guild/guild'
-import { Trigger } from '../modules/trigger/trigger'
 
 interface ModalState {
   component?: ReactElement

@@ -1,12 +1,9 @@
 import styles from './ModalContainer.module.css'
-import { createContext, useContext } from 'react'
-
-export const ModalShowContext = createContext(false)
-export const ModalComponentContext = createContext(null)
+import { useModalStore } from '../../../../store/modal'
 
 export function ModalContainer() {
-  const show = useContext(ModalShowContext)
-  const component = useContext(ModalComponentContext)
+  const show = useModalStore(state => state.show)
+  const component = useModalStore(state => state.component)
 
   return (
     <>

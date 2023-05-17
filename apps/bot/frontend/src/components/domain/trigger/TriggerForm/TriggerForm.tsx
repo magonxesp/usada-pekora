@@ -23,7 +23,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
 
   // form specific states
   const [formData, setFormData] = useState(triggerFormData ?? emptyTriggerFormData())
-  const selectedGuild = useSelectedGuild()
+  const { selected: selectedGuild } = useSelectedGuild()
   const intl = useIntl()
 
   const formGroupRefs = [

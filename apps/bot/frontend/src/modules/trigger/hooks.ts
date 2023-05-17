@@ -16,7 +16,7 @@ import { deleteTriggerTextResponse } from './text-response/delete-default'
 import { deleteTriggerDefaultAudioResponse } from './audio-response/delete-default'
 import { updateTriggerDefaultAudioResponse } from './audio-response/update-default'
 import { useAppStore } from '../../store/app'
-import { useModalStore } from '../../store/modal'
+import { useModal } from '@usada-pekora/shared-ui'
 
 export function useFetchTriggers() {
   const { selected } = useSelectedGuild()
@@ -35,7 +35,7 @@ export function useGetTriggers() {
 export function useDeleteTrigger() {
   const intl = useIntl()
   const fetchTriggers = useFetchTriggers()
-  const showModal = useModalStore(state => state.showModal)
+  const { show } = useModal()
 
   return (trigger: Trigger) => {
     const handleDeleteTrigger = () => {
@@ -51,7 +51,7 @@ export function useDeleteTrigger() {
       onConfirm: handleDeleteTrigger
     })
 
-    showModal(modal)
+    show(modal)
   }
 }
 

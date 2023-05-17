@@ -4,8 +4,7 @@ import { Button } from '../../form/Button/Button'
 import styles from './ConfirmationModal.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
-import { useContext } from 'react'
-import { ModalShowContext } from '../ModalContainer/ModalContainer'
+import { useModalStore } from '../../../../store/modal'
 
 interface ConfirmModalProps {
   onConfirm?: () => void
@@ -17,10 +16,10 @@ interface ConfirmModalProps {
 
 export function ConfirmModal({ onConfirm, onReject, rejectText, confirmText, message }: ConfirmModalProps) {
   const intl = useIntl()
-  const show = useContext(ModalShowContext)
+  const closeModal = useModalStore(state => state.closeModal)
 
   const handleAction = (action: 'reject' | 'confirm') => {
-
+    closeModal()
 
     if (action == 'reject' && typeof onReject !== 'undefined') {
       onReject()
