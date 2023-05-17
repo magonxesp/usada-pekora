@@ -1,7 +1,5 @@
-import { useDispatch } from 'react-redux'
 import { useIntl } from 'react-intl'
 import { ConfirmModal } from '@usada-pekora/shared-ui'
-import { setTriggers, showModal } from '../../store/slices/app-slice'
 import { createElement } from 'react'
 import { alert, asyncAlert } from '../shared/alert'
 import { createTrigger } from './create'
@@ -17,21 +15,27 @@ import { updateTriggerTextResponse } from './text-response/update-default'
 import { deleteTriggerTextResponse } from './text-response/delete-default'
 import { deleteTriggerDefaultAudioResponse } from './audio-response/delete-default'
 import { updateTriggerDefaultAudioResponse } from './audio-response/update-default'
+import { useAppStore } from '../../store/app'
+import { useModalStore } from '../../store/modal'
 
 export function useFetchTriggers() {
-  const selectedGuildId = useSelectedGuild()
-  const dispatch = useDispatch()
+  const { selected } = useSelectedGuild()
+  const setTriggers = useAppStore(state => state.setTriggers)
 
   return async () => {
-    const triggers = await fetchGuildTriggers(selectedGuildId)
-    dispatch(setTriggers(triggers))
+    const triggers = await fetchGuildTriggers(selected)
+    setTriggers(triggers)
   }
 }
 
+export function useGetTriggers() {
+  return useAppStore(state => state.triggers)
+}
+
 export function useDeleteTrigger() {
-  const dispatch = useDispatch()
   const intl = useIntl()
   const fetchTriggers = useFetchTriggers()
+  const showModal = useModalStore(state => state.showModal)
 
   return (trigger: Trigger) => {
     const handleDeleteTrigger = () => {
@@ -47,7 +51,7 @@ export function useDeleteTrigger() {
       onConfirm: handleDeleteTrigger
     })
 
-    dispatch(showModal(modal))
+    showModal(modal)
   }
 }
 

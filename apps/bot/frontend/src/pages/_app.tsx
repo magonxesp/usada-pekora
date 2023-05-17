@@ -3,8 +3,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 import { Session } from 'next-auth'
-import { Provider } from 'react-redux'
-import store from '../store/store'
 import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 import es from '../lang/es.json'
@@ -30,13 +28,11 @@ function MyApp({ Component, pageProps }: AppProps<AppRootProps>) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <Provider store={store}>
-        <IntlProvider locale={locale} messages={translations[locale]}>
-          <DefaultLayout>
-            <Component {...pageProps} />
-          </DefaultLayout>
-        </IntlProvider>
-      </Provider>
+      <IntlProvider locale={locale} messages={translations[locale]}>
+        <DefaultLayout>
+          <Component {...pageProps} />
+        </DefaultLayout>
+      </IntlProvider>
     </SessionProvider>
   )
 }

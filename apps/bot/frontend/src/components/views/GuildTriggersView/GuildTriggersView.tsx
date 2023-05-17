@@ -1,7 +1,4 @@
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../../modules/shared/hooks'
 import { useEffect, useState } from 'react'
-import { setCurrentGuild } from '../../../store/slices/app-slice'
 import TriggerList from '../../domain/trigger/TriggerList/TriggerList'
 import { EmptyState, Section, SectionHeading, Button } from '@usada-pekora/shared-ui'
 import Link from 'next/link'
@@ -9,23 +6,14 @@ import UserGuildSelect from '../../domain/guild/UserGuildSelect/UserGuildSelect'
 import TriggerListSkeleton from '../../domain/trigger/TriggerListSkeleton/TriggerListSkeleton'
 import { useSelectedGuild } from '../../../modules/guild/hooks'
 import { useIntl } from 'react-intl'
-import { useFetchTriggers } from '../../../modules/trigger/hooks'
+import { useFetchTriggers, useGetTriggers } from '../../../modules/trigger/hooks'
 
 export default function GuildTriggersView() {
-  const dispatch = useDispatch();
-  const triggers = useAppSelector((state) => state.app.triggers)
-  const selectedGuild = useSelectedGuild()
+  const triggers = useGetTriggers()
+  const { selected: selectedGuild } = useSelectedGuild()
   const [loading, setLoading] = useState(true);
   const fetchTriggers = useFetchTriggers()
   const intl = useIntl()
-
-  useEffect(() => {
-    let guildId
-
-    if ((guildId = sessionStorage.getItem('current_selected_guild')) != null) {
-      dispatch(setCurrentGuild({ id: guildId }))
-    }
-  },[])
 
   useEffect(() => {
     if (!selectedGuild) {

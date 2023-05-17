@@ -8,9 +8,7 @@ export interface IconSelectOption extends SelectOption {
   icon: string
 }
 
-interface IconSelectProps extends SelectProps<IconSelectOption> {
-  selected?: string|number
-}
+interface IconSelectProps extends SelectProps<IconSelectOption> { }
 
 interface IconSelectOptionProps {
   option: IconSelectOption

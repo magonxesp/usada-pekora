@@ -1,18 +1,38 @@
-import { useAppSelector } from '../shared/hooks'
 import { useEffect, useState } from 'react'
+import { useAppStore } from '../../store/app'
 
-export function useSelectedGuild(): string {
-  const selectedGuild = useAppSelector(selector => selector.app.selectedGuild)
-  const userGuilds = useAppSelector(selector => selector.app.userGuilds)
-  const [selected, setSelected] = useState("")
+export function useSelectedGuild() {
+  const selected = useAppStore(state => state.selectedGuild)
+  const setCurrentGuild = useAppStore(state => state.setCurrentGuild)
+  const guilds = useAppStore(state => state.guilds)
 
   useEffect(() => {
-    if (selectedGuild != "") {
-      setSelected(selectedGuild)
-    } else if (userGuilds.length > 0) {
-      setSelected(String(userGuilds[0].id))
-    }
-  }, [selectedGuild, userGuilds])
+    const sessionSelectedGuild = sessionStorage.getItem('current_selected_guild')
 
-  return selected
+    if (selected == "" && sessionSelectedGuild != null) {
+      setCurrentGuild(sessionSelectedGuild)
+    } else if (selected == "" && guilds.length > 0) {
+      setCurrentGuild(String(guilds[0].id))
+    }
+  }, [guilds])
+
+  const select = (guildId: string) => {
+    sessionStorage.setItem('current_selected_guild', guildId)
+    setCurrentGuild(guildId)
+  }
+
+  return { selected, select }
+}
+
+export function useGuilds() {
+  const guilds = useAppStore(state => state.guilds)
+  const setGuilds = useAppStore(state => state.setGuilds)
+
+  useEffect(() => {
+    fetch('/api/guild/user-guilds')
+      .then(response => response.json())
+      .then(guilds => setGuilds(guilds))
+  }, [])
+
+  return guilds
 }
