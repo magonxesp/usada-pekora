@@ -23,11 +23,11 @@ export default function TriggerCard({ trigger }: TriggerCardProps) {
         </div>
         <div className={styles.actions}>
           <Link href={`/trigger/edit/${trigger.id}`} >
-            <Button style="transparent">
+            <Button style="transparent" className={styles.actionButton}>
               <FontAwesomeIcon icon={faPenToSquare} />
             </Button>
           </Link>
-          <Button style="transparent" onClick={() => deleteTrigger(trigger)}>
+          <Button style="transparent" className={styles.actionButton} onClick={() => deleteTrigger(trigger)}>
             <FontAwesomeIcon className={styles.delete} icon={faTrash} />
           </Button>
         </div>

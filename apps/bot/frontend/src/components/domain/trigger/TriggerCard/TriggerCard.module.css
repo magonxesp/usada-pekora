@@ -19,6 +19,14 @@
     align-items: center;
 }
 
+.actions > * + * {
+    margin-left: 1.5rem;
+}
+
+.actionButton {
+    padding: 0 !important;
+}
+
 .actions svg {
     color: var(--primary-background-color);
     font-size: 1rem;
