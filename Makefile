@@ -1,4 +1,4 @@
-.PHONY: secrets env-files
+.PHONY: secrets env-files create-keys
 
 secrets:
 	@if [ ! -d "secrets" ]; then mkdir secrets; fi; \
@@ -30,3 +30,8 @@ docker-discord-bot-test:
 
 docker-up-infrastructure:
 	docker compose up -d mongodb redis
+
+create-keys:
+	@if [ ! -d "ssl" ]; then mkdir ssl; fi; \
+	openssl genrsa -out ssl/private.pem 2048; \
+	openssl rsa -in ssl/private.pem -outform PEM -pubout -out ssl/public.pem
