@@ -25,6 +25,9 @@ class AuthorizationCallbackHandler(private val providerFactory: OAuthProviderFac
             it.getOrNull()!!
         }
 
+        // TODO guardar usuario en el mongo
+        // TODO generar codigo temporal y guardarlo en el redis
+
         return Unit.right()
     }
 
