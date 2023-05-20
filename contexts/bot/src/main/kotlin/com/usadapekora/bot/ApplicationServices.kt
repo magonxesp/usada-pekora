@@ -12,8 +12,8 @@ import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDe
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
-import com.usadapekora.shared.domain.KeyValueCacheStorage
-import com.usadapekora.shared.domain.Logger
+import com.usadapekora.shared.domain.common.KeyValueCacheStorage
+import com.usadapekora.shared.domain.common.Logger
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueCacheStorage
 import com.usadapekora.shared.infrastructure.logger.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder

@@ -1,6 +1,6 @@
 package com.usadapekora.bot.domain.trigger
 
-import com.usadapekora.shared.domain.Entity
+import com.usadapekora.shared.domain.common.Entity
 import com.usadapekora.shared.domain.valueobject.UuidValueObject
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider

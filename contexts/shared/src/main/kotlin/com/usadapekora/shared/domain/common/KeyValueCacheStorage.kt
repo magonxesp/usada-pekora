@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain
+package com.usadapekora.shared.domain.common
 
 interface KeyValueCacheStorage {
     fun set(key: String, value: String)

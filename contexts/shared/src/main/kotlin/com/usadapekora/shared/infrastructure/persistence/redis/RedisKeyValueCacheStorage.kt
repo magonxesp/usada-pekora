@@ -1,6 +1,6 @@
 package com.usadapekora.shared.infrastructure.persistence.redis
 
-import com.usadapekora.shared.domain.KeyValueCacheStorage
+import com.usadapekora.shared.domain.common.KeyValueCacheStorage
 import com.usadapekora.shared.redisHost
 import com.usadapekora.shared.redisPort
 import redis.clients.jedis.Jedis

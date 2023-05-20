@@ -1,6 +1,6 @@
 package com.usadapekora.shared.domain.user
 
-import com.usadapekora.shared.domain.Entity
+import com.usadapekora.shared.domain.common.Entity
 import com.usadapekora.shared.domain.valueobject.UuidValueObject
 
 data class User(

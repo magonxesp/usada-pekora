@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.video.youtube
 
-import com.usadapekora.shared.domain.DateTimeUtils
+import com.usadapekora.shared.domain.common.DateTimeUtils
 import com.usadapekora.bot.domain.video.Video
 import org.w3c.dom.Document
 import org.w3c.dom.Element
