@@ -7,6 +7,7 @@ import com.usadapekora.auth.discordClientId
 import com.usadapekora.auth.discordClientSecret
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderError
+import com.usadapekora.auth.domain.oauth.OAuthUser
 import com.usadapekora.auth.domain.shared.AuthenticatedUser
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -76,7 +77,7 @@ class DiscordOAuthProvider : OAuthAuthorizationProvider {
         return user
     }
 
-    override suspend fun handleCallback(code: String): Either<OAuthProviderError.CallbackError, AuthenticatedUser> {
+    override suspend fun handleCallback(code: String): Either<OAuthProviderError.CallbackError, OAuthUser> {
         val token = fetchAccessToken(code).let {
             if (it.isLeft()) return OAuthProviderError.CallbackError(it.leftOrNull()!!.message).left()
             it.getOrNull()!!
@@ -87,10 +88,11 @@ class DiscordOAuthProvider : OAuthAuthorizationProvider {
             it.getOrNull()!!
         }
 
-        return AuthenticatedUser.fromPrimitives(
-            id = "",
+        return OAuthUser(
+            id = user.id,
+            avatar = user.avatarUrl,
             name = user.username,
-            avatarUrl = user.avatarUrl
+            token = token.accessToken
         ).right()
     }
 

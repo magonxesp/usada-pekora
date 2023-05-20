@@ -1,7 +1,7 @@
 package com.usadapekora.bot.backend.utils
 
 import com.usadapekora.shared.domain.file.MimeType
-import com.usadapekora.bot.infraestructure.metadata.FileMetadataUtils
+import com.usadapekora.shared.infrastructure.file.metadata.FileMetadataUtils
 import org.springframework.web.multipart.MultipartFile
 import java.security.MessageDigest
 import kotlin.random.Random

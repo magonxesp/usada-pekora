@@ -19,3 +19,8 @@ fun env(key: String, defaultValue: String = ""): String {
 
     return dotenv[key] ?: defaultValue
 }
+
+val mongoConnectionUrl = env("MONGODB_URL", "mongodb://example:example@localhost:27017")
+val mongoDatabase = env("MONGODB_DATABASE", "usada_pekora")
+val redisHost = env("REDIS_HOST", "localhost")
+val redisPort = env("REDIS_PORT", "6379").toInt()

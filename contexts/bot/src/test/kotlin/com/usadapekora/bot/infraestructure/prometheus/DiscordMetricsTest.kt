@@ -1,6 +1,7 @@
 package com.usadapekora.bot.infraestructure.prometheus
 
 import com.usadapekora.bot.DependencyInjectionEnabledTest
+import com.usadapekora.bot.infraestructure.trigger.prometheus.*
 import kotlin.test.Test
 
 class DiscordMetricsTest : DependencyInjectionEnabledTest() {

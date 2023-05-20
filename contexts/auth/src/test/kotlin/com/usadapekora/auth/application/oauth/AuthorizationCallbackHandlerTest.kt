@@ -1,7 +1,7 @@
 package com.usadapekora.auth.application.oauth
 
 import arrow.core.right
-import com.usadapekora.auth.domain.AuthenticatedUserMother
+import com.usadapekora.auth.domain.OAuthUserMother
 import com.usadapekora.auth.domain.Random
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
@@ -20,11 +20,11 @@ class AuthorizationCallbackHandlerTest {
         val factory = mockk<OAuthProviderFactory>()
         val provider = mockk<OAuthAuthorizationProvider>()
         val handler = AuthorizationCallbackHandler(factory)
-        val authenticatedUser = AuthenticatedUserMother.create()
+        val oAuthUser = OAuthUserMother.create()
         val code = Random.instance().code.toString()
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
-        coEvery { provider.handleCallback(code) } returns authenticatedUser.right()
+        coEvery { provider.handleCallback(code) } returns oAuthUser.right()
 
         val result = handler.handle("discord", code)
 

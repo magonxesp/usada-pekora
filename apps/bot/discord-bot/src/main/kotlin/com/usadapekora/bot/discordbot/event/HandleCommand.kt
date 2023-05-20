@@ -6,7 +6,7 @@ import com.usadapekora.bot.discordbot.commands
 import com.usadapekora.bot.discordbot.defaultCommandPrefix
 import com.usadapekora.bot.discordbot.shared.CommandHandler
 import com.usadapekora.bot.discordbot.shared.exception.CommandException
-import com.usadapekora.bot.infraestructure.prometheus.registerCommandFired
+import com.usadapekora.bot.infraestructure.trigger.prometheus.registerCommandFired
 import kotlinx.coroutines.reactor.awaitSingle
 import java.util.logging.Level
 import java.util.logging.Logger

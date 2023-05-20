@@ -20,7 +20,7 @@ class AuthorizationCallbackHandler(private val providerFactory: OAuthProviderFac
             it.getOrNull()!!
         }
 
-        val authenticatedUser = providerInstance.handleCallback(code).let {
+        val user = providerInstance.handleCallback(code).let {
             if (it.isLeft()) return it.leftOrNull()!!.left()
             it.getOrNull()!!
         }
