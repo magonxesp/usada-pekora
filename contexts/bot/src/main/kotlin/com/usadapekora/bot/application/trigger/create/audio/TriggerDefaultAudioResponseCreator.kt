@@ -4,7 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
-import com.usadapekora.bot.domain.shared.file.DomainFileWriter
+import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils

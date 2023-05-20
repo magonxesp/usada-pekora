@@ -12,8 +12,8 @@ import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDe
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.persistence.mongodb.guild.MongoDbGuildPreferencesRepository
-import com.usadapekora.bot.domain.shared.KeyValueCacheStorage
-import com.usadapekora.bot.domain.shared.Logger
+import com.usadapekora.shared.domain.KeyValueCacheStorage
+import com.usadapekora.shared.domain.Logger
 import com.usadapekora.bot.infraestructure.cache.RedisKeyValueCacheStorage
 import com.usadapekora.bot.infraestructure.logger.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
@@ -26,9 +26,9 @@ import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTr
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.application.video.VideoFeedSubscriber
-import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
-import com.usadapekora.bot.domain.shared.file.DomainFileReader
-import com.usadapekora.bot.domain.shared.file.DomainFileWriter
+import com.usadapekora.shared.domain.file.DomainFileDeleter
+import com.usadapekora.shared.domain.file.DomainFileReader
+import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
@@ -45,8 +45,6 @@ import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTr
 import com.usadapekora.bot.infraestructure.persistence.mongodb.trigger.MongoDbTriggerTextRepository
 import com.usadapekora.bot.infraestructure.youtube.YoutubeFeedSubscriber
 import com.usadapekora.bot.infraestructure.youtube.YoutubeVideoParser
-import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 

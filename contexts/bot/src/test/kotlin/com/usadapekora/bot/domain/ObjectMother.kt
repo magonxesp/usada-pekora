@@ -1,6 +1,6 @@
 package com.usadapekora.bot.domain
 
-import com.usadapekora.bot.domain.shared.Entity
+import com.usadapekora.shared.domain.Entity
 
 interface ObjectMother<E : Entity> {
     fun random(): E

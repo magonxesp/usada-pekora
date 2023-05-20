@@ -1,7 +1,7 @@
 package com.usadapekora.bot.domain.user
 
-import com.usadapekora.bot.domain.shared.Entity
-import com.usadapekora.bot.domain.shared.valueobject.UuidValueObject
+import com.usadapekora.shared.domain.Entity
+import com.usadapekora.shared.domain.valueobject.UuidValueObject
 
 data class User(
     val id: UserId,

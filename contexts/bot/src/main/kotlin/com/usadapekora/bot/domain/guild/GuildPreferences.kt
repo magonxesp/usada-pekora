@@ -1,6 +1,6 @@
 package com.usadapekora.bot.domain.guild
 
-import com.usadapekora.bot.domain.shared.Entity
+import com.usadapekora.shared.domain.Entity
 
 data class GuildPreferences(
     val guildId: String,

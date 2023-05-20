@@ -1,5 +1,6 @@
 package com.usadapekora.bot
 
+import com.usadapekora.shared.enableDependencyInjection
 import org.koin.core.context.stopKoin
 import org.koin.core.module.Module
 
@@ -8,6 +9,6 @@ abstract class DependencyInjectionEnabledTest {
         val testModules = testServices()
 
         stopKoin()
-        enableDependencyInjection(testModules)
+        enableDependencyInjection(modules = modules.plus(testModules))
     }
 }

@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
+import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import io.mockk.every

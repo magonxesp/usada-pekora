@@ -1,7 +1,7 @@
 package com.usadapekora.bot.infraestructure.persistence.mongodb
 
 import com.usadapekora.bot.domain.ObjectMother
-import com.usadapekora.bot.domain.shared.Entity
+import com.usadapekora.shared.domain.Entity
 
 open class MongoDbRepositoryTest<E : Entity, Repository : MongoDbRepository<E, *>>(
     protected val repository: Repository,

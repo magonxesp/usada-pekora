@@ -2,7 +2,7 @@ package com.usadapekora.bot.infraestructure.discord
 
 import discord4j.common.util.Snowflake
 import discord4j.discordjson.json.ImmutableMessageEditRequest
-import com.usadapekora.bot.domain.shared.KeyValueCacheStorage
+import com.usadapekora.shared.domain.KeyValueCacheStorage
 import com.usadapekora.bot.domain.video.Video
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
 import com.usadapekora.bot.discordBotToken

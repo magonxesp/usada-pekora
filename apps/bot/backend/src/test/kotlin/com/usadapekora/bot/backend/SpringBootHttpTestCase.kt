@@ -1,6 +1,7 @@
 package com.usadapekora.bot.backend
 
-import com.usadapekora.bot.enableDependencyInjection
+import com.usadapekora.bot.modules
+import com.usadapekora.shared.enableDependencyInjection
 import org.koin.core.context.stopKoin
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,7 +23,7 @@ abstract class SpringBootHttpTestCase {
     @BeforeTest
     fun setupDependencyInjection() {
         stopKoin()
-        enableDependencyInjection()
+        enableDependencyInjection(modules = modules)
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build()
     }
 

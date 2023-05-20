@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.youtube
 
-import com.usadapekora.bot.domain.shared.DateTimeUtils
+import com.usadapekora.shared.domain.DateTimeUtils
 import com.usadapekora.bot.domain.video.VideoException
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test

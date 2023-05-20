@@ -1,6 +1,6 @@
 package com.usadapekora.bot.backend.utils
 
-import com.usadapekora.bot.domain.shared.file.MimeType
+import com.usadapekora.shared.domain.file.MimeType
 import com.usadapekora.bot.infraestructure.metadata.FileMetadataUtils
 import org.springframework.web.multipart.MultipartFile
 import java.security.MessageDigest

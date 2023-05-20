@@ -31,7 +31,7 @@ class TokenController {
         }
 
 //        val privateKeyContent = Files.readString(Paths.get("ssl", "private.pem")).trimKey()
-//        val publicKeyContent = Files.readString(Paths.get("ssl", "public.pem")).trimKey()
+//        val publicKeyContent = Files.readString(Paths.get("ssl", "static.pem")).trimKey()
 //
 //        val factory = KeyFactory.getInstance("RSA")
 //        val keySpecPKCS8 = PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyContent))

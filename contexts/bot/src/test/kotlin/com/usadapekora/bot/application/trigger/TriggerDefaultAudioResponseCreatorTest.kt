@@ -5,7 +5,7 @@ import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.domain.FileMother
-import com.usadapekora.bot.domain.shared.file.DomainFileWriter
+import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException

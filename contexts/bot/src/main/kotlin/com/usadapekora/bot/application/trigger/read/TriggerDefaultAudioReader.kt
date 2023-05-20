@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger.read
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.shared.file.DomainFileReader
+import com.usadapekora.shared.domain.file.DomainFileReader
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId

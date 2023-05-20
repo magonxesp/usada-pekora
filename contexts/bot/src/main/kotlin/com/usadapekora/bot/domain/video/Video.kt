@@ -1,6 +1,6 @@
 package com.usadapekora.bot.domain.video
 
-import com.usadapekora.bot.domain.shared.Entity
+import com.usadapekora.shared.domain.Entity
 import java.time.ZonedDateTime
 
 data class Video(

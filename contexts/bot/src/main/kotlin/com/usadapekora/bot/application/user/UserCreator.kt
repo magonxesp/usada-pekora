@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.user
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.shared.exception.InvalidUuidException
+import com.usadapekora.shared.domain.exception.InvalidUuidException
 import com.usadapekora.bot.domain.user.User
 import com.usadapekora.bot.domain.user.UserException
 import com.usadapekora.bot.domain.user.UserRepository

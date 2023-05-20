@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger.update
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.shared.tryOrNull
+import com.usadapekora.shared.domain.tryOrNull
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository

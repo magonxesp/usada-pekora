@@ -3,8 +3,8 @@ package com.usadapekora.bot.application.trigger
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
-import com.usadapekora.bot.domain.shared.file.DomainFileDeleter
-import com.usadapekora.bot.domain.shared.file.DomainFileWriter
+import com.usadapekora.shared.domain.file.DomainFileDeleter
+import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import io.mockk.every

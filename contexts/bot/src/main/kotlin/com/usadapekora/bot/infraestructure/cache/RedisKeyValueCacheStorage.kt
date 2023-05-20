@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.cache
 
-import com.usadapekora.bot.domain.shared.KeyValueCacheStorage
+import com.usadapekora.shared.domain.KeyValueCacheStorage
 import com.usadapekora.bot.redisHost
 import com.usadapekora.bot.redisPort
 import redis.clients.jedis.Jedis

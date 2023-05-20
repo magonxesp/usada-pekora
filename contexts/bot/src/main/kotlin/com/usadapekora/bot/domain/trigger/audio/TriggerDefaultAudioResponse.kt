@@ -1,7 +1,7 @@
 package com.usadapekora.bot.domain.trigger.audio
 
 import com.usadapekora.bot.domain.guild.GuildId
-import com.usadapekora.bot.domain.shared.Entity
+import com.usadapekora.shared.domain.Entity
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import com.usadapekora.bot.storageDirPath

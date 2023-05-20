@@ -2,8 +2,8 @@ package com.usadapekora.bot.infraestructure.filesystem
 
 import arrow.core.Either
 import arrow.core.right
-import com.usadapekora.bot.domain.shared.file.DomainFileError
-import com.usadapekora.bot.domain.shared.file.DomainFileReader
+import com.usadapekora.shared.domain.file.DomainFileError
+import com.usadapekora.shared.domain.file.DomainFileReader
 import java.io.File
 
 class FileSystemDomainFileReader : DomainFileReader {

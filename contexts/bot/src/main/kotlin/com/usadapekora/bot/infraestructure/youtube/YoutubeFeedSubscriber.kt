@@ -22,7 +22,7 @@ class YoutubeFeedSubscriber : ChannelSubscriber {
             url = "https://pubsubhubbub.appspot.com/subscribe",
             formParameters = Parameters.build {
                 append("hub.mode", "subscribe")
-                append("hub.callback", callback)
+                append("hub.oauth", callback)
                 append("hub.lease_seconds", (60 * 60 * 24 * 365).toString())
                 append("hub.topic", topicUrl)
                 append("hub.verify", "async")
@@ -33,7 +33,7 @@ class YoutubeFeedSubscriber : ChannelSubscriber {
             return VideoException.FeedSubscribe("""
                 Youtube subscription error with 
                 response status ${response.status} and body ${response.body<String>()}
-                to topic url $topicUrl and callback url $callback
+                to topic url $topicUrl and oauth url $callback
             """.trimIndent()).left()
         }
 
