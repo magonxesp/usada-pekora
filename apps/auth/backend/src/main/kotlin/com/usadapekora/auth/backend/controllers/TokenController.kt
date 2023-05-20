@@ -30,16 +30,15 @@ class TokenController {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing code parameter")
         }
 
-        val privateKeyContent = Files.readString(Paths.get("ssl", "private.pem")).trimKey()
-        val publicKeyContent = Files.readString(Paths.get("ssl", "public.pem")).trimKey()
-
-        val factory = KeyFactory.getInstance("RSA")
-        val keySpecPKCS8 = PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyContent))
-        val privateKey = factory.generatePrivate(keySpecPKCS8) as RSAPrivateKey
-
-        val keySpecX509 = X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyContent))
-        val publicKey = factory.generatePublic(keySpecX509) as RSAPublicKey
-
+//        val privateKeyContent = Files.readString(Paths.get("ssl", "private.pem")).trimKey()
+//        val publicKeyContent = Files.readString(Paths.get("ssl", "public.pem")).trimKey()
+//
+//        val factory = KeyFactory.getInstance("RSA")
+//        val keySpecPKCS8 = PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyContent))
+//        val privateKey = factory.generatePrivate(keySpecPKCS8) as RSAPrivateKey
+//
+//        val keySpecX509 = X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyContent))
+//        val publicKey = factory.generatePublic(keySpecX509) as RSAPublicKey
 
         val algorithm = Algorithm.HMAC256("paco")
         val token = JWT.create()
@@ -56,10 +55,9 @@ class TokenController {
         )
     }
 
-    private fun String.trimKey(): String = replace("\n", "")
-        .replace("-----BEGIN PRIVATE KEY-----", "")
-        .replace("-----END PRIVATE KEY-----", "")
-        .replace("-----BEGIN PUBLIC KEY-----", "")
-        .replace("-----END PUBLIC KEY-----", "")
+    private fun String.trimKey(): String
+        = split("\n")
+            .filter { !Regex("^-+[A-Z ]+-+\$").matches(it) }
+            .joinToString("")
 
 }

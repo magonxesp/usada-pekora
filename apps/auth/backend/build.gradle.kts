@@ -7,6 +7,7 @@ plugins {
 
 dependencies {
     implementation(project(":contexts:auth"))
+    implementation(project(":contexts:shared"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")

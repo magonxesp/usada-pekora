@@ -25,4 +25,4 @@ reports
 .turbo
 node_modules
 *.tsbuildinfo
-/ssl
+ssl

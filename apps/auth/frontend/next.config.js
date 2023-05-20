@@ -4,6 +4,15 @@ const nextConfig = {
   experimental: {
     appDir: true,
     forceSwcTransforms: true
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: true,
+      },
+    ];
   }
 }
 

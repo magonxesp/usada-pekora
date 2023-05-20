@@ -95,15 +95,9 @@ val videoModule = module {
     single { SendVideoFeed(get()) }
 }
 
-fun enableDependencyInjection(extraModules: List<Module> = listOf()) {
-    startKoin {
-        modules(
-            listOf(
-                sharedModule,
-                triggerModule,
-                guildModule,
-                videoModule
-            ).plus(extraModules)
-        )
-    }
-}
+val modules = listOf(
+    sharedModule,
+    triggerModule,
+    guildModule,
+    videoModule
+)

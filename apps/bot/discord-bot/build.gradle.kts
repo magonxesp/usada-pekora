@@ -7,6 +7,7 @@ plugins {
 
 dependencies {
     implementation(project(":contexts:bot"))
+    implementation(project(":contexts:shared"))
     testImplementation(project(":contexts:bot"))
 }
 

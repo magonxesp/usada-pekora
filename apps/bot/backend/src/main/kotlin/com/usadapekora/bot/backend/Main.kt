@@ -1,6 +1,7 @@
 package com.usadapekora.bot.backend
 
-import com.usadapekora.bot.enableDependencyInjection
+import com.usadapekora.bot.modules
+import com.usadapekora.shared.enableDependencyInjection
 import io.prometheus.client.hotspot.DefaultExports
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
@@ -13,7 +14,7 @@ open class HttpApplication
 
 fun main() {
     DefaultExports.initialize()
-    enableDependencyInjection()
+    enableDependencyInjection(modules = modules)
 
     runApplication<HttpApplication>()
 }
