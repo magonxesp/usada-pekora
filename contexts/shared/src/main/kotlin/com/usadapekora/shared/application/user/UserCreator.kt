@@ -10,7 +10,7 @@ import com.usadapekora.shared.domain.user.UserRepository
 
 class UserCreator(private val repository: UserRepository) {
 
-    fun create(id: String, discordId: String): Either<UserException, Unit> {
+    fun create(id: String, name: String, avatar: String?, discordId: String): Either<UserException, Unit> {
         repository.find(User.UserId(id)).getOrNull()?.let {
             return UserException.AlreadyExists("User with id $id already exists").left()
         }
@@ -18,6 +18,8 @@ class UserCreator(private val repository: UserRepository) {
         val user = Either.catch {
             User.fromPrimitives(
                 id = id,
+                name = name,
+                avatar = avatar,
                 discordId = discordId
             )
         }.let {

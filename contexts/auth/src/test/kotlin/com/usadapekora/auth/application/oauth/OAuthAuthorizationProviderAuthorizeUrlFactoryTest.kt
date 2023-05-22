@@ -11,13 +11,13 @@ import io.mockk.mockk
 import kotlin.test.Test
 import kotlin.test.assertIs
 
-class AuthorizationUrlProviderTest {
+class OAuthAuthorizationProviderAuthorizeUrlFactoryTest {
 
     @Test
     fun `it should return the discord provider authorize url`() {
         val factory = mockk<OAuthProviderFactory>()
         val provider = mockk<OAuthAuthorizationProvider>()
-        val urlProvider = AuthorizationUrlProvider(factory)
+        val urlProvider = OAuthAuthorizationProviderAuthorizeUrlFactory(factory)
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         every { provider.authorizeUrl() } returns Random.instance().internet.domain()
@@ -31,7 +31,7 @@ class AuthorizationUrlProviderTest {
     fun `it should not return unknown provider authorize url`() {
         val factory = mockk<OAuthProviderFactory>()
         val provider = mockk<OAuthAuthorizationProvider>()
-        val urlProvider = AuthorizationUrlProvider(factory)
+        val urlProvider = OAuthAuthorizationProviderAuthorizeUrlFactory(factory)
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         every { provider.authorizeUrl() } returns Random.instance().internet.domain()

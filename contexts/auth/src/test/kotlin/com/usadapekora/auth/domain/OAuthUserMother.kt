@@ -4,9 +4,18 @@ import com.usadapekora.auth.domain.oauth.OAuthUser
 
 object OAuthUserMother {
 
-    fun create(id: String? = null, token: String? = null): OAuthUser = OAuthUser(
+    fun create(
+        id: String? = null,
+        name: String? = null,
+        avatar: String? = null,
+        token: String? = null,
+        nextDomainUserId: String? = null
+    ): OAuthUser = OAuthUser(
         id = id ?: Random.instance().random.nextUUID(),
-        token = token ?: Random.instance().code.toString()
+        name = name ?: Random.instance().overwatch.heroes(),
+        avatar = avatar ?: Random.instance().internet.domain(),
+        token = token ?: Random.instance().code.toString(),
+        nextDomainUserId = nextDomainUserId ?: Random.instance().random.nextUUID(),
     )
 
 }

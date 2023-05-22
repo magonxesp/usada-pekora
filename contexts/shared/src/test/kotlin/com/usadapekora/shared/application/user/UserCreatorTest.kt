@@ -21,7 +21,7 @@ class UserCreatorTest {
 
         every { repository.find(user.id) } returns UserException.NotFound().left()
 
-        val result = creator.create(user.id.value, user.discordId.value)
+        val result = creator.create(user.id.value, user.name.value, user.avatar?.value, user.discordId.value)
 
         assertTrue(result.isRight())
 
@@ -37,7 +37,7 @@ class UserCreatorTest {
 
         every { repository.find(user.id) } returns user.right()
 
-        val result = creator.create(user.id.value, user.discordId.value)
+        val result = creator.create(user.id.value, user.name.value, user.avatar?.value, user.discordId.value)
 
         assertTrue(result.leftOrNull() is UserException.AlreadyExists)
 

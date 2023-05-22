@@ -1,6 +1,6 @@
 package com.usadapekora.auth.backend.controllers.oauth
 
-import com.usadapekora.auth.application.oauth.AuthorizationCallbackHandler
+import com.usadapekora.auth.application.oauth.OAuthUserAccessAuthorizer
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,7 +15,7 @@ import java.util.Optional
 @RequestMapping("/oauth")
 class OAuthProviderCallbackController {
 
-    private val callbackHandler: AuthorizationCallbackHandler by inject(AuthorizationCallbackHandler::class.java)
+    private val callbackHandler: OAuthUserAccessAuthorizer by inject(OAuthUserAccessAuthorizer::class.java)
 
     @GetMapping("/{provider}/callback")
     suspend fun callback(@PathVariable("provider") provider: String, @RequestParam("code") code: Optional<String>) {

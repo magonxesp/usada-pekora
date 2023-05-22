@@ -1,6 +1,6 @@
 package com.usadapekora.auth.backend.controllers.api.v1.oauth
 
-import com.usadapekora.auth.application.oauth.AuthorizationUrlProvider
+import com.usadapekora.auth.application.oauth.OAuthAuthorizationProviderAuthorizeUrlFactory
 import org.koin.java.KoinJavaComponent.inject
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException
 @RequestMapping("/api/v1")
 class OAuthAuthorizationProviderController {
 
-    private val urlProvider: AuthorizationUrlProvider by inject(AuthorizationUrlProvider::class.java)
+    private val urlProvider: OAuthAuthorizationProviderAuthorizeUrlFactory by inject(OAuthAuthorizationProviderAuthorizeUrlFactory::class.java)
 
     @GetMapping("/oauth/provider/authorize/{provider}")
     suspend fun login(@PathVariable("provider") provider: String): String

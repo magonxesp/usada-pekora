@@ -7,7 +7,7 @@ import com.usadapekora.auth.domain.oauth.OAuthProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderError
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 
-class AuthorizationUrlProvider(private val providerFactory: OAuthProviderFactory) {
+class OAuthAuthorizationProviderAuthorizeUrlFactory(private val providerFactory: OAuthProviderFactory) {
 
     fun getUrl(provider: String): Either<OAuthProviderError.NotAvailable, String> {
         val providerEnum = Either.catch { OAuthProvider.fromValue(provider) }.let {

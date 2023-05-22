@@ -1,16 +1,23 @@
 package com.usadapekora.auth
 
-import com.usadapekora.auth.application.oauth.AuthorizationCallbackHandler
-import com.usadapekora.auth.application.oauth.AuthorizationUrlProvider
+import com.usadapekora.auth.application.oauth.OAuthUserAccessAuthorizer
+import com.usadapekora.auth.application.oauth.OAuthAuthorizationProviderAuthorizeUrlFactory
+import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
+import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantRepository
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 import com.usadapekora.auth.infrastructure.oauth.OAuthProviderFactoryImpl
+import com.usadapekora.auth.infrastructure.oauth.persistence.redis.RedisOAuthAuthorizationGrantRepository
+import kotlinx.datetime.Clock
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val authModule = module {
     single { OAuthProviderFactoryImpl() } bind OAuthProviderFactory::class
-    single { AuthorizationUrlProvider(get()) }
-    single { AuthorizationCallbackHandler(get()) }
+    single { OAuthAuthorizationGrantCodeCreator() }
+    single { RedisOAuthAuthorizationGrantRepository() } bind OAuthAuthorizationGrantRepository::class
+    single { Clock.System } bind Clock::class
+    single { OAuthAuthorizationProviderAuthorizeUrlFactory(get()) }
+    single { OAuthUserAccessAuthorizer(get(), get(), get(), get(), get()) }
 }
 
 val modules = listOf(
