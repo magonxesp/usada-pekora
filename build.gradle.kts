@@ -48,6 +48,7 @@ allprojects {
         implementation("org.apache.tika:tika-core:2.6.0")
         implementation("io.arrow-kt:arrow-core:1.2.0-RC")
         implementation("com.auth0:java-jwt:4.4.0")
+        implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
 
         testImplementation(kotlin("test"))
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")

@@ -1,19 +1,23 @@
 package com.usadapekora.auth.domain.oauth
 
 import com.usadapekora.shared.domain.user.User
+import jakarta.xml.bind.DatatypeConverter
 import java.security.MessageDigest
 import java.time.Instant
 import java.util.Base64
 
 class OAuthAuthorizationGrantCodeCreator {
+
+    private fun md5(value: String) = DatatypeConverter.printHexBinary(
+        MessageDigest.getInstance("MD5").digest(value.toByteArray())
+    )
+
     fun fromOAuthUser(oAuthUser: OAuthUser, userId: User.UserId): OAuthAuthorizationGrant.OAuthAuthorizationGrantCode {
         val base64Encoder = Base64.getEncoder()
-        val encodedUserId = base64Encoder.encode(userId.value.toByteArray(charset = Charsets.UTF_8))
-        val encodedOAuthUserId = base64Encoder.encode(oAuthUser.id.toByteArray(charset = Charsets.UTF_8))
-        val encodedIssuedAt = base64Encoder.encode(Instant.now().epochSecond.toString().toByteArray(charset = Charsets.UTF_8))
-        val code = MessageDigest.getInstance("MD5")
-            .digest("$encodedIssuedAt.$encodedUserId.$encodedOAuthUserId".toByteArray())
-            .toString(charset = Charsets.UTF_8)
+        val encodedUserId = md5(userId.value)
+        val encodedOAuthUserId = md5(oAuthUser.id)
+        val encodedIssuedAt = Instant.now().epochSecond.toString()
+        val code = base64Encoder.encode("$encodedIssuedAt.$encodedUserId.$encodedOAuthUserId".toByteArray()).toString(charset = Charsets.UTF_8)
 
         return OAuthAuthorizationGrant.OAuthAuthorizationGrantCode(code)
     }

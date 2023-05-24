@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import java.util.Optional
@@ -25,7 +26,7 @@ class OAuthAuthorizationProviderPostController {
         is OAuthProviderError.CallbackError -> HttpStatus.INTERNAL_SERVER_ERROR
     }
 
-    @PostMapping("/{provider}/handle-authorization")
+    @PostMapping("/{provider}/handle-authorization", produces = ["text/plain"])
     suspend fun login(@PathVariable("provider") provider: String, @RequestParam("code") code: Optional<String>): String
         = code.getOrNull()?.let {
             callbackHandler.handle(provider, it)
