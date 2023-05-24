@@ -17,7 +17,7 @@ class OAuthAuthorizationProviderGetController {
 
     private val urlProvider: OAuthAuthorizationProviderAuthorizeUrlFactory by inject(OAuthAuthorizationProviderAuthorizeUrlFactory::class.java)
 
-    @GetMapping("/{provider}/authorize")
+    @GetMapping("/{provider}/authorize", produces = ["text/plain"])
     suspend fun login(@PathVariable("provider") provider: String): String
         = urlProvider.getUrl(provider).let {
             if (it.isLeft()) throw ResponseStatusException(HttpStatus.NOT_FOUND, it.leftOrNull()!!.message)
