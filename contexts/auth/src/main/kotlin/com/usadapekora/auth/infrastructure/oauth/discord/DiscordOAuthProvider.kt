@@ -6,9 +6,11 @@ import arrow.core.right
 import com.usadapekora.auth.discordClientId
 import com.usadapekora.auth.discordClientSecret
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
+import com.usadapekora.auth.domain.oauth.OAuthProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderError
 import com.usadapekora.auth.domain.oauth.OAuthUser
 import com.usadapekora.auth.domain.shared.AuthenticatedUser
+import com.usadapekora.auth.oAuthProviderRedirectUrl
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
@@ -20,7 +22,7 @@ import java.net.URLEncoder
 
 class DiscordOAuthProvider : OAuthAuthorizationProvider {
 
-    private val redirectUri = "http://localhost:8081/oauth/discord/callback"
+    private val redirectUri = oAuthProviderRedirectUrl.replace("%provider%", OAuthProvider.DISCORD.value)
     private val jsonDecoder = Json { ignoreUnknownKeys = true }
 
     override fun authorizeUrl(): String {

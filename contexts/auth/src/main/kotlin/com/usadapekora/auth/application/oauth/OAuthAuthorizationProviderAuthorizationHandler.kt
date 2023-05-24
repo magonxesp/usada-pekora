@@ -8,7 +8,7 @@ import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserRepository
 import kotlinx.datetime.Clock
 
-class OAuthUserAccessAuthorizer(
+class OAuthAuthorizationProviderAuthorizationHandler(
     private val providerFactory: OAuthProviderFactory,
     private val userRepository: UserRepository,
     private val grantCodeRepository: OAuthAuthorizationGrantRepository,

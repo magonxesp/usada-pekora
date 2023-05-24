@@ -18,7 +18,7 @@ import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class OAuthUserAccessAuthorizerTest {
+class OAuthAuthorizationProviderAuthorizationHandlerTest {
 
     @Test
     fun `it should handle the code and create the user when it does not exists and then generate the authorization code`() = runBlocking {
@@ -28,7 +28,7 @@ class OAuthUserAccessAuthorizerTest {
         val authorizationCodeRepository = mockk<OAuthAuthorizationGrantRepository>(relaxUnitFun = true)
         val authorizationCodeCreator = mockk<OAuthAuthorizationGrantCodeCreator>()
         val clock = mockk<Clock>()
-        val handler = OAuthUserAccessAuthorizer(
+        val handler = OAuthAuthorizationProviderAuthorizationHandler(
             providerFactory = factory,
             userRepository = userRepository,
             grantCodeRepository = authorizationCodeRepository,
@@ -72,7 +72,7 @@ class OAuthUserAccessAuthorizerTest {
         val authorizationCodeRepository = mockk<OAuthAuthorizationGrantRepository>(relaxUnitFun = true)
         val authorizationCodeCreator = mockk<OAuthAuthorizationGrantCodeCreator>()
         val clock = mockk<Clock>()
-        val handler = OAuthUserAccessAuthorizer(
+        val handler = OAuthAuthorizationProviderAuthorizationHandler(
             providerFactory = factory,
             userRepository = userRepository,
             grantCodeRepository = authorizationCodeRepository,

@@ -9,7 +9,7 @@ const providers = {
 export default function Login() {
 
   const authorize = (provider: string) => {
-    fetch(`http://localhost:8081/api/v1/oauth/provider/authorize/${provider}`)
+    fetch(`http://localhost:8081/api/v1/oauth/provider/${provider}/authorize`)
       .then(response => response.blob())
       .then(content => content.text())
       .then(url => window.location.href = url)

@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 val koinVersion = "3.2.0"
 
 plugins {
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
+    kotlin("jvm") version "1.8.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
 }
 
 allprojects {

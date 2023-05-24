@@ -9,3 +9,4 @@ val mongoConnectionUrl = env("MONGODB_URL", "mongodb://example:example@localhost
 val mongoDatabase = env("MONGODB_DATABASE", "usada_pekora")
 val redisHost = env("REDIS_HOST", "localhost")
 val redisPort = env("REDIS_PORT", "6379").toInt()
+val oAuthProviderRedirectUrl = env("OAUTH_PROVIDER_REDIRECT_URL", "http://localhost:3000/%provider%/callback") // new
