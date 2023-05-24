@@ -27,7 +27,7 @@ allprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("io.ktor:ktor-client-core:2.0.3")
         implementation("io.ktor:ktor-client-cio:2.0.3")
-        implementation("org.litote.kmongo:kmongo:4.6.1")
+        implementation("org.litote.kmongo:kmongo:4.9.0")
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")

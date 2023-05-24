@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test
 import java.util.Random
 import kotlin.test.assertEquals
 
-class RedisKeyValueCacheStorageTest {
+class RedisKeyValueRepositoryTest {
 
     @Test
     fun `should save key with value`() {
-        val cache = RedisKeyValueCacheStorage()
+        val cache = RedisKeyValueRepository()
         val key = "test_${Random().nextLong()}"
         val value = Random().nextLong().toString()
 
@@ -20,7 +20,7 @@ class RedisKeyValueCacheStorageTest {
 
     @Test
     fun `should get null on missing key`() {
-        val cache = RedisKeyValueCacheStorage()
+        val cache = RedisKeyValueRepository()
         val key = "test_${Random().nextLong()}"
         val saved = cache.get(key)
 
@@ -29,7 +29,7 @@ class RedisKeyValueCacheStorageTest {
 
     @Test
     fun `should remove key`() {
-        val cache = RedisKeyValueCacheStorage()
+        val cache = RedisKeyValueRepository()
         val key = "test_${Random().nextLong()}"
         val value = Random().nextLong().toString()
 

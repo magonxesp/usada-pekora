@@ -12,9 +12,9 @@ import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDe
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
-import com.usadapekora.shared.domain.common.KeyValueCacheStorage
+import com.usadapekora.shared.domain.common.KeyValueRepository
 import com.usadapekora.shared.domain.common.Logger
-import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueCacheStorage
+import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueRepository
 import com.usadapekora.shared.infrastructure.logger.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
@@ -49,7 +49,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val sharedModule = module {
-    single { RedisKeyValueCacheStorage() } bind KeyValueCacheStorage::class
+    single { RedisKeyValueRepository() } bind KeyValueRepository::class
     single { Sfl4jLogger() } bind Logger::class
     single { FileSystemDomainFileWriter() } bind DomainFileWriter::class
     single { FileSystemDomainFileDeleter() } bind DomainFileDeleter::class

@@ -2,7 +2,7 @@ package com.usadapekora.bot.infraestructure.video.discord
 
 import discord4j.common.util.Snowflake
 import discord4j.discordjson.json.ImmutableMessageEditRequest
-import com.usadapekora.shared.domain.common.KeyValueCacheStorage
+import com.usadapekora.shared.domain.common.KeyValueRepository
 import com.usadapekora.bot.domain.video.Video
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
 import com.usadapekora.bot.discordBotToken
@@ -11,7 +11,7 @@ import discord4j.core.DiscordClient
 import kotlinx.coroutines.reactor.awaitSingle
 import java.util.logging.Logger
 
-class DiscordTextChannelVideoNotifier(private val cache: KeyValueCacheStorage) : VideoFeedNotifier {
+class DiscordTextChannelVideoNotifier(private val cache: KeyValueRepository) : VideoFeedNotifier {
 
     private val logger = Logger.getLogger(DiscordTextChannelVideoNotifier::class.toString())
 

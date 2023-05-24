@@ -1,6 +1,7 @@
 package com.usadapekora.auth.domain.oauth
 
 import com.usadapekora.shared.domain.user.User
+import com.usadapekora.shared.domain.valueobject.DateTimeValueObject
 import kotlinx.datetime.Instant
 
 data class OAuthAuthorizationGrant(
@@ -10,8 +11,8 @@ data class OAuthAuthorizationGrant(
     val issuedAt: OAuthAuthorizationGrantIssuedAt
 ) {
     data class OAuthAuthorizationGrantCode(val value: String)
-    data class OAuthAuthorizationGrantExpiresAt(val value: Int)
-    data class OAuthAuthorizationGrantIssuedAt(val value: Instant)
+    data class OAuthAuthorizationGrantExpiresAt(val seconds: Int)
+    class OAuthAuthorizationGrantIssuedAt(override val value: Instant) : DateTimeValueObject(value = value)
 
     companion object {
         fun fromPrimitives(
