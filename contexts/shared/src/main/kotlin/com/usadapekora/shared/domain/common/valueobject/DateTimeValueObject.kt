@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.valueobject
+package com.usadapekora.shared.domain.common.valueobject
 
 import kotlinx.datetime.Instant
 

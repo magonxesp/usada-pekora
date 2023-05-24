@@ -1,7 +1,7 @@
 package com.usadapekora.auth.domain.oauth
 
 import com.usadapekora.shared.domain.user.User
-import com.usadapekora.shared.domain.valueobject.DateTimeValueObject
+import com.usadapekora.shared.domain.common.valueobject.DateTimeValueObject
 import kotlinx.datetime.Instant
 
 data class OAuthAuthorizationGrant(
