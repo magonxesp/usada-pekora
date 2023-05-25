@@ -1,4 +1,5 @@
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { oAuthProviderAuthorizeCode } from '../../../helpers/backend'
 
 interface PageProps {
   params: {
@@ -9,11 +10,12 @@ interface PageProps {
   }
 }
 
-
-
 export default async function Callback({ params, searchParams }: PageProps) {
-  const response = await fetch(`http://localhost:8081/api/v1/oauth/provider/${params.provider}/handle-authorization?code=${searchParams.code}`, { method: 'POST' })
-  const code = await response.text()
+  const code = await oAuthProviderAuthorizeCode(params.provider, searchParams.code)
 
-  return code
+  if (!process.env.NEXT_PUBLIC_LOGIN_REDIRECT_URL) {
+    throw Error("The LOGIN_REDIRECT_URL env variable is undefined")
+  }
+
+  redirect(`${process.env.NEXT_PUBLIC_LOGIN_REDIRECT_URL}?code=${code}`)
 }

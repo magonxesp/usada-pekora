@@ -4,6 +4,7 @@
 !apps/bot/backend/.env.example
 !apps/bot/discord-bot/.env.example
 !apps/bot/frontend/.env.example
+!apps/auth/frontend/.env.example
 venv/
 .vscode/*
 !.vscode/settings.json
