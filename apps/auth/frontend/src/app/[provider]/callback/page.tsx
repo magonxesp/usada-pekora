@@ -17,5 +17,6 @@ export default async function Callback({ params, searchParams }: PageProps) {
     throw Error("The LOGIN_REDIRECT_URL env variable is undefined")
   }
 
+  // TODO: set cookie with the jwt token
   redirect(`${process.env.NEXT_PUBLIC_LOGIN_REDIRECT_URL}?code=${code}`)
 }
