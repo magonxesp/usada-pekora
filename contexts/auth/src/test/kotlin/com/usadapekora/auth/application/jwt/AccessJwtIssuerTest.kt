@@ -7,6 +7,7 @@ import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,9 +24,12 @@ class AccessJwtIssuerTest {
         val jwtToken = JwtMother.create()
 
         every { authorizationGrantRepository.find(authorizationGrant.code) } returns authorizationGrant.right()
-        every { jwtIssuer.issue(authorizationGrant.code, jwtToken.expiresAt.value) } returns jwtToken.right()
+        every { jwtIssuer.issue(authorizationGrant, jwtToken.expiresAt.value) } returns jwtToken.right()
 
         val result = accessIssuer.issue(authorizationGrant.code.value)
+
+        verify { authorizationGrantRepository.find(authorizationGrant.code) }
+        verify { jwtIssuer.issue(authorizationGrant, jwtToken.expiresAt.value) }
 
         assertEquals(jwtToken, result.getOrNull())
     }
