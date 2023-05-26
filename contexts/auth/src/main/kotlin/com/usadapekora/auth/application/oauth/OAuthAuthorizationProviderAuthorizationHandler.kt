@@ -4,6 +4,8 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.auth.domain.oauth.*
+import com.usadapekora.auth.domain.shared.AuthorizationGrant
+import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserRepository
 import kotlinx.datetime.Clock
@@ -11,12 +13,12 @@ import kotlinx.datetime.Clock
 class OAuthAuthorizationProviderAuthorizationHandler(
     private val providerFactory: OAuthProviderFactory,
     private val userRepository: UserRepository,
-    private val grantCodeRepository: OAuthAuthorizationGrantRepository,
+    private val grantCodeRepository: AuthorizationGrantRepository,
     private val grantCodeCreator: OAuthAuthorizationGrantCodeCreator,
     private val clock: Clock
 ) {
 
-    suspend fun handle(provider: String, code: String): Either<OAuthProviderError.CallbackError, OAuthAuthorizationGrant.OAuthAuthorizationGrantCode> {
+    suspend fun handle(provider: String, code: String): Either<OAuthProviderError.CallbackError, AuthorizationGrant.AuthorizationGrantCode> {
         val providerEnum = Either.catch { OAuthProvider.fromValue(provider) }.let {
             if (it.isLeft()) return OAuthProviderError.CallbackError("The $provider provider is not available").left()
             it.getOrNull()!!
@@ -45,7 +47,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
             userRepository.save(user)
         }
 
-        val grantCode = OAuthAuthorizationGrant.fromPrimitives(
+        val grantCode = AuthorizationGrant.fromPrimitives(
             code = grantCodeCreator.fromOAuthUser(providerUser, user.id).value,
             user = user.id.value,
             expiresAt = 30,

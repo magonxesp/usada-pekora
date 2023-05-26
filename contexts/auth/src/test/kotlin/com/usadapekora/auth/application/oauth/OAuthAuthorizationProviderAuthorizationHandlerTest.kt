@@ -2,10 +2,11 @@ package com.usadapekora.auth.application.oauth
 
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.auth.domain.OAuthAuthorizationGrantMother
+import com.usadapekora.auth.domain.AuthorizationGrantMother
 import com.usadapekora.auth.domain.OAuthUserMother
 import com.usadapekora.auth.domain.Random
 import com.usadapekora.auth.domain.oauth.*
+import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
@@ -25,7 +26,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         val factory = mockk<OAuthProviderFactory>()
         val provider = mockk<OAuthAuthorizationProvider>()
         val userRepository = mockk<UserRepository>(relaxUnitFun = true)
-        val authorizationCodeRepository = mockk<OAuthAuthorizationGrantRepository>(relaxUnitFun = true)
+        val authorizationCodeRepository = mockk<AuthorizationGrantRepository>(relaxUnitFun = true)
         val authorizationCodeCreator = mockk<OAuthAuthorizationGrantCodeCreator>()
         val clock = mockk<Clock>()
         val handler = OAuthAuthorizationProviderAuthorizationHandler(
@@ -52,7 +53,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             discordId = oAuthUser.id
         )
 
-        val grantCode = OAuthAuthorizationGrantMother.create(user = newUser.id.value, issuedAt = issuedAt)
+        val grantCode = AuthorizationGrantMother.create(user = newUser.id.value, issuedAt = issuedAt)
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, newUser.id) } returns grantCode.code
 
@@ -69,7 +70,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         val factory = mockk<OAuthProviderFactory>()
         val provider = mockk<OAuthAuthorizationProvider>()
         val userRepository = mockk<UserRepository>()
-        val authorizationCodeRepository = mockk<OAuthAuthorizationGrantRepository>(relaxUnitFun = true)
+        val authorizationCodeRepository = mockk<AuthorizationGrantRepository>(relaxUnitFun = true)
         val authorizationCodeCreator = mockk<OAuthAuthorizationGrantCodeCreator>()
         val clock = mockk<Clock>()
         val handler = OAuthAuthorizationProviderAuthorizationHandler(
@@ -95,7 +96,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         every { userRepository.findByDiscordId(User.DiscordUserId(oAuthUser.id)) } returns user.right()
         every { clock.now() } returns issuedAt
 
-        val grantCode = OAuthAuthorizationGrantMother.create(user = user.id.value, issuedAt = issuedAt)
+        val grantCode = AuthorizationGrantMother.create(user = user.id.value, issuedAt = issuedAt)
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, user.id) } returns grantCode.code
 

@@ -1,31 +1,31 @@
-package com.usadapekora.auth.infrastructure.oauth.persistence.redis
+package com.usadapekora.auth.infrastructure.shared.persistence.redis
 
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrant
+import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantError
-import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantRepository
+import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisRepository
 import redis.clients.jedis.params.SetParams
 
-class RedisOAuthAuthorizationGrantRepository : RedisRepository(), OAuthAuthorizationGrantRepository {
+class RedisAuthorizationGrantRepository : RedisRepository(), AuthorizationGrantRepository {
 
-    override fun find(code: OAuthAuthorizationGrant.OAuthAuthorizationGrantCode): Either<OAuthAuthorizationGrantError.NotFound, OAuthAuthorizationGrant> {
+    override fun find(code: AuthorizationGrant.AuthorizationGrantCode): Either<OAuthAuthorizationGrantError.NotFound, AuthorizationGrant> {
         val authorizationCode = redisConnection {
             it.get(code.value)?.let {
-                OAuthAuthorizationGrantJson.fromJsonString(it).toEntity()
+                AuthorizationGrantJson.fromJsonString(it).toEntity()
             }
         }
 
         return authorizationCode?.right() ?: OAuthAuthorizationGrantError.NotFound("The authorization with code ${code.value} not exists").left()
     }
 
-    override fun save(entity: OAuthAuthorizationGrant) {
+    override fun save(entity: AuthorizationGrant) {
         redisConnection {
             it.set(
                 entity.code.value,
-                OAuthAuthorizationGrantJson.fromEntity(entity).toJsonString(),
+                AuthorizationGrantJson.fromEntity(entity).toJsonString(),
                 SetParams().ex(entity.expiresAt.seconds.toLong()))
         }
     }

@@ -1,6 +1,6 @@
 package com.usadapekora.auth.infrastructure.oauth.jakarta
 
-import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrant
+import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.domain.oauth.OAuthUser
 import com.usadapekora.shared.domain.user.User
@@ -15,12 +15,12 @@ class JakartaOAuthAuthorizationGrantCodeCreator : OAuthAuthorizationGrantCodeCre
         MessageDigest.getInstance("MD5").digest(value.toByteArray())
     )
 
-    override fun fromOAuthUser(oAuthUser: OAuthUser, userId: User.UserId): OAuthAuthorizationGrant.OAuthAuthorizationGrantCode {
+    override fun fromOAuthUser(oAuthUser: OAuthUser, userId: User.UserId): AuthorizationGrant.AuthorizationGrantCode {
         val encodedUserId = md5(userId.value)
         val encodedOAuthUserId = md5(oAuthUser.id)
         val encodedIssuedAt = Clock.System.now().epochSeconds.toString()
         val code = "$encodedIssuedAt.$encodedUserId.$encodedOAuthUserId".encodeBase64()
 
-        return OAuthAuthorizationGrant.OAuthAuthorizationGrantCode(code)
+        return AuthorizationGrant.AuthorizationGrantCode(code)
     }
 }
