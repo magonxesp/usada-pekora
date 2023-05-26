@@ -2,9 +2,8 @@ package com.usadapekora.auth.application.jwt
 
 import arrow.core.right
 import com.usadapekora.auth.domain.AuthorizationGrantMother
-import com.usadapekora.auth.domain.JwtTokenMother
+import com.usadapekora.auth.domain.JwtMother
 import com.usadapekora.auth.domain.jwt.JwtIssuer
-import com.usadapekora.auth.domain.jwt.JwtToken
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -21,7 +20,7 @@ class AccessJwtIssuerTest {
         val clock = mockk<Clock>()
         val accessIssuer = AccessJwtIssuer(authorizationGrantRepository, jwtIssuer, clock)
         val authorizationGrant = AuthorizationGrantMother.create()
-        val jwtToken = JwtTokenMother.create()
+        val jwtToken = JwtMother.create()
 
         every { authorizationGrantRepository.find(authorizationGrant.code) } returns authorizationGrant.right()
         every { jwtIssuer.issue(authorizationGrant.code, jwtToken.expiresAt.value) } returns jwtToken.right()

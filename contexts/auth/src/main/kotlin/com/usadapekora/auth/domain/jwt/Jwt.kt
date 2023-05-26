@@ -1,14 +1,14 @@
 package com.usadapekora.auth.domain.jwt
 
-data class JwtToken(
-    val token: JwtTokenToken,
-    val expiresAt: JwtTokenExpiresAt
+data class Jwt(
+    val token: JwtToken,
+    val expiresAt: JwtExpiresAt
 ) {
-    data class JwtTokenToken(val value: String)
+    data class JwtToken(val value: String)
     /**
      * Token expiration in seconds
      */
-    data class JwtTokenExpiresAt(val value: Int) {
+    data class JwtExpiresAt(val value: Int) {
         companion object {
             const val DEFAULT_EXPIRATION_TIME = 604800 // 7 days
         }
@@ -18,9 +18,9 @@ data class JwtToken(
         fun fromPrimitives(
             token: String,
             expiresAt: Int
-        ) = JwtToken(
-            token = JwtTokenToken(token),
-            expiresAt = JwtTokenExpiresAt(expiresAt)
+        ) = Jwt(
+            token = JwtToken(token),
+            expiresAt = JwtExpiresAt(expiresAt)
         )
     }
 }
