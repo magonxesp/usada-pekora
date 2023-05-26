@@ -1,19 +1,30 @@
 package com.usadapekora.auth.backend
 
+import com.usadapekora.auth.backend.routes.configureRoutes
 import com.usadapekora.auth.modules
 import com.usadapekora.shared.enableDependencyInjection
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.netty.*
+import io.ktor.server.plugins.cors.routing.*
 import io.prometheus.client.hotspot.DefaultExports
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
-import org.springframework.boot.runApplication
 
-@SpringBootApplication(exclude = [MongoAutoConfiguration::class, MongoDataAutoConfiguration::class])
-open class HttpApplication
+fun main(args: Array<String>) {
+    EngineMain.main(args)
+}
 
-fun main() {
+fun Application.module() {
     enableDependencyInjection(modules = modules)
     DefaultExports.initialize()
 
-    runApplication<HttpApplication>()
+    install(CORS) {
+        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Patch)
+        allowHeader(HttpHeaders.Authorization)
+        anyHost()
+    }
+
+    configureRoutes()
 }

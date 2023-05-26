@@ -1,6 +1,7 @@
 package com.usadapekora.auth.infrastructure.jwt
 
 import arrow.core.Either
+import arrow.core.right
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.usadapekora.auth.domain.jwt.Jwt
@@ -33,5 +34,6 @@ class Auth0JwtIssuer : JwtIssuer {
 
         // TODO: generate subject by the authorization code
         // TODO: get audience and issuer by environment variable
+        return Jwt.fromPrimitives("", 1).right()
     }
 }

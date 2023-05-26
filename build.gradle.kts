@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val koinVersion = "3.2.0"
+val ktorVersion = "2.3.0"
 
 plugins {
     kotlin("jvm") version "1.8.20"
@@ -25,8 +26,15 @@ allprojects {
         implementation("com.discord4j:discord4j-core:3.2.2")
         implementation("com.discord4j:discord4j-voice:3.2.2")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-        implementation("io.ktor:ktor-client-core:2.0.3")
-        implementation("io.ktor:ktor-client-cio:2.0.3")
+        implementation("io.ktor:ktor-client-core:$ktorVersion")
+        implementation("io.ktor:ktor-client-cio:$ktorVersion")
+        implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+        implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+        implementation("io.ktor:ktor-server-status-pages-jvm:$ktorVersion")
+        implementation("io.ktor:ktor-server-default-headers-jvm:$ktorVersion")
+        implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
+        implementation("io.ktor:ktor-server-cors:$ktorVersion")
+        implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
         implementation("org.litote.kmongo:kmongo:4.9.0")
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
@@ -54,6 +62,7 @@ allprojects {
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
         testImplementation("io.mockk:mockk:1.12.7")
         testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+        testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
     }
 
     tasks.withType<KotlinCompile> {
