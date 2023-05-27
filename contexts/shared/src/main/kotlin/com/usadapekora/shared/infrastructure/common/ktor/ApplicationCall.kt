@@ -7,6 +7,6 @@ import io.ktor.server.response.*
 suspend fun ApplicationCall.respondError(httpStatusCode: HttpStatusCode, message: String) {
     respond(
         httpStatusCode,
-        ResponseError(message).toJsonString(),
+        ResponseError(message),
     )
 }

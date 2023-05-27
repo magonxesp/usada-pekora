@@ -1,14 +1,13 @@
 package com.usadapekora.auth.domain.jwt
 
+import kotlinx.datetime.Instant
+
 data class Jwt(
     val token: JwtToken,
     val expiresAt: JwtExpiresAt
 ) {
     data class JwtToken(val value: String)
-    /**
-     * Token expiration in seconds
-     */
-    data class JwtExpiresAt(val value: Int) {
+    data class JwtExpiresAt(val value: Instant) {
         companion object {
             const val DEFAULT_EXPIRATION_TIME = 604800 // 7 days
         }
@@ -17,7 +16,7 @@ data class Jwt(
     companion object {
         fun fromPrimitives(
             token: String,
-            expiresAt: Int
+            expiresAt: Instant
         ) = Jwt(
             token = JwtToken(token),
             expiresAt = JwtExpiresAt(expiresAt)

@@ -1,10 +1,13 @@
 package com.usadapekora.auth
 
+import com.usadapekora.auth.application.jwt.AccessJwtIssuer
 import com.usadapekora.auth.application.oauth.OAuthAuthorizationProviderAuthorizationHandler
 import com.usadapekora.auth.application.oauth.OAuthAuthorizationProviderAuthorizeUrlFactory
+import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
+import com.usadapekora.auth.infrastructure.jwt.auth0.Auth0JwtIssuer
 import com.usadapekora.auth.infrastructure.oauth.discord.DiscordOAuthProvider
 import com.usadapekora.auth.infrastructure.oauth.jakarta.JakartaOAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.infrastructure.oauth.koin.KoinOAuthProviderFactory
@@ -15,10 +18,12 @@ import org.koin.dsl.module
 
 val authModule = module {
     factory { DiscordOAuthProvider() }
+    single { Clock.System } bind Clock::class
     single { KoinOAuthProviderFactory() } bind OAuthProviderFactory::class
     single { JakartaOAuthAuthorizationGrantCodeCreator() } bind OAuthAuthorizationGrantCodeCreator::class
     single { RedisAuthorizationGrantRepository() } bind AuthorizationGrantRepository::class
-    single { Clock.System } bind Clock::class
+    single { Auth0JwtIssuer(get()) } bind JwtIssuer::class
+    single { AccessJwtIssuer(get(), get()) }
     single { OAuthAuthorizationProviderAuthorizeUrlFactory(get()) }
     single { OAuthAuthorizationProviderAuthorizationHandler(get(), get(), get(), get(), get()) }
 }

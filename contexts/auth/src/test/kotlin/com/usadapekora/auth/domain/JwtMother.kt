@@ -1,15 +1,17 @@
 package com.usadapekora.auth.domain
 
 import com.usadapekora.auth.domain.jwt.Jwt
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 object JwtMother {
 
     fun create(
         token: String? = null,
-        expiresAt: Int? = null
+        expiresAt: Instant? = null
     ) = Jwt.fromPrimitives(
         token = token ?: Random.instance().code.toString(),
-        expiresAt = expiresAt ?: Jwt.JwtExpiresAt.DEFAULT_EXPIRATION_TIME
+        expiresAt = expiresAt ?: Clock.System.now()
     )
 
 }

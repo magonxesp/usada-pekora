@@ -7,6 +7,4 @@ import kotlinx.serialization.encodeToString
 @Serializable
 data class ResponseError(
     val error: String,
-) {
-    fun toJsonString() = Json.encodeToString(this)
-}
+)

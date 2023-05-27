@@ -1,3 +1,8 @@
+interface AccessTokenResponse {
+  accessToken: string,
+  expiresAt: number
+}
+
 export const oAuthProviders = {
   discord: "discord"
 }
@@ -24,4 +29,13 @@ export async function oAuthProviderAuthorizeCode(provider: string, code: string)
   )
 
   return response.text()
+}
+
+export async function fetchAuthToken(code: string): Promise<AccessTokenResponse> {
+  const response = await fetch(
+    backendUrl(`/oauth/token?code=${code}`),
+    { method: 'POST' }
+  )
+
+  return await response.json() as Promise<AccessTokenResponse>
 }
