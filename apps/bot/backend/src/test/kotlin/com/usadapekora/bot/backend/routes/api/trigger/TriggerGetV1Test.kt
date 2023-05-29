@@ -1,6 +1,10 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.server.testing.*
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import java.util.UUID
@@ -9,17 +13,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 
-class TriggerGetApiControllerTest : TriggerControllerTest() {
-
-    private fun request(url: String)
-        = mockMvc.perform(
-            MockMvcRequestBuilders.get(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-        )
+class TriggerGetV1Test : TriggerTest() {
 
     @Test
-    fun `should find a trigger by id`() {
+    fun `should find a trigger by id`() = testApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
@@ -37,21 +34,27 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
             }
         """.uglifyJson()
 
-        request("/api/v1/trigger/${id}").andExpect {
-            assertEquals(200, it.response.status)
-            assertEquals(expectedBody, it.response.contentAsString)
+        val response = client.get("/api/v1/trigger/$id") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
+
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expectedBody, response.bodyAsText())
     }
 
     @Test
-    fun `should not find a trigger by id`() {
-        request("/api/v1/trigger/e322b3ac-2d30-4eff-afdc-3504f66ac4ba").andExpect {
-            assertEquals(404, it.response.status)
+    fun `should not find a trigger by id`() = testApplication {
+        val response = client.get("/api/v1/trigger/e322b3ac-2d30-4eff-afdc-3504f66ac4ba") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
+
+        assertEquals(HttpStatusCode.NotFound, response.status)
     }
 
     @Test
-    fun `should find a triggers by discord guild id`() {
+    fun `should find a triggers by discord guild id`() = testApplication{
         val id = UUID.randomUUID().toString()
         val guildId = Random.nextLong(100000000, 999999999).toString()
         val audioId = UUID.randomUUID().toString()
@@ -75,14 +78,17 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
             }
         """.uglifyJson()
 
-        request("/api/v1/trigger/guild/$guildId").andExpect {
-            assertEquals(200, it.response.status)
-            assertEquals(expectedBody, it.response.contentAsString)
+        val response = client.get("/api/v1/trigger/guild/$guildId") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
+
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expectedBody, response.bodyAsText())
     }
 
     @Test
-    fun `should not find a triggers by discord guild id`() {
+    fun `should not find a triggers by discord guild id`() = testApplication {
         val guildId = Random.nextLong(100000000, 999999999).toString()
         val expectedBody = """
             {
@@ -90,14 +96,17 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
             }
         """.uglifyJson()
 
-        request("/api/v1/trigger/guild/$guildId").andExpect {
-            assertEquals(200, it.response.status)
-            assertEquals(expectedBody, it.response.contentAsString)
+        val response = client.get("/api/v1/trigger/guild/$guildId") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
+
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expectedBody, response.bodyAsText())
     }
 
     @Test
-    fun `should find trigger associated audio by trigger id`() {
+    fun `should find trigger associated audio by trigger id`() = testApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
 
@@ -113,17 +122,22 @@ class TriggerGetApiControllerTest : TriggerControllerTest() {
             }
         """.uglifyJson()
 
-        request("/api/v1/trigger/$id/audio").andExpect {
-            assertEquals(200, it.response.status)
-            assertEquals(expectedBody, it.response.contentAsString)
+        val response = client.get("/api/v1/trigger/$id/audio") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
+
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expectedBody, response.bodyAsText())
     }
 
     @Test
-    fun `should not find a trigger audio by trigger id`() {
-        request("/api/v1/trigger/1b96c970-1a70-40a4-9dec-b32ba8408750/audio").andExpect {
-            assertEquals(404, it.response.status)
+    fun `should not find a trigger audio by trigger id`() = testApplication {
+        val response = client.get("/api/v1/trigger/1b96c970-1a70-40a4-9dec-b32ba8408750/audio") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
-    }
 
+        assertEquals(HttpStatusCode.NotFound, response.status)
+    }
 }

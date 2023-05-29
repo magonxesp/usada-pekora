@@ -1,31 +1,20 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.server.testing.*
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerPutApiControllerTest : TriggerControllerTest() {
-
-    private fun request(url: String, requestBody: String)
-        = mockMvc.perform(
-            MockMvcRequestBuilders.put(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(requestBody)
-    )
-
-    private fun getRequest(url: String)
-        = mockMvc.perform(
-        MockMvcRequestBuilders.get(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-    )
+class TriggerPutV1Test : TriggerTest() {
 
     @Test
-    fun `should update trigger by id`() {
+    fun `should update trigger by id`() = testApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
         val textId = UUID.randomUUID().toString()
@@ -42,9 +31,13 @@ class TriggerPutApiControllerTest : TriggerControllerTest() {
             }
         """.uglifyJson()
 
-        request("/api/v1/trigger/$id", requestBody).andExpect {
-            assertEquals(200, it.response.status)
+        var response = client.put("/api/v1/trigger/$id") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+            setBody(requestBody)
         }
+
+        assertEquals(HttpStatusCode.OK, response.status)
 
         val expected = """
             {
@@ -58,10 +51,13 @@ class TriggerPutApiControllerTest : TriggerControllerTest() {
             }
         """.uglifyJson()
 
-        getRequest("/api/v1/trigger/$id").andExpect {
-            assertEquals(200, it.response.status)
-            assertEquals(expected, it.response.contentAsString)
+        response = client.get("/api/v1/trigger/$id") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
         }
+
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expected, response.bodyAsText())
     }
 
 }

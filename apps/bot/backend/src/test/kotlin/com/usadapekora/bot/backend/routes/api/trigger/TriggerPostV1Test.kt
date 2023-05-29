@@ -1,5 +1,8 @@
-package com.usadapekora.bot.backend.controller.api.v1.trigger
+package com.usadapekora.bot.backend.routes.api.trigger
 
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.server.testing.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -7,18 +10,10 @@ import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerPostApiControllerTest : TriggerControllerTest() {
-
-    private fun requestTest(requestBody: String)
-        = mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/v1/trigger")
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)
-        )
+class TriggerPostV1Test : TriggerTest() {
 
     @Test
-    fun `should create a trigger making a POST request`() {
+    fun `should create a trigger making a POST request`() = testApplication {
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
 
@@ -34,13 +29,17 @@ class TriggerPostApiControllerTest : TriggerControllerTest() {
             }
         """.trimIndent()
 
-        requestTest(requestBody).andExpect {
-            assertEquals(HttpStatus.CREATED.value(), it.response.status)
+        val response = client.post("/api/v1/trigger") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+            setBody(requestBody)
         }
+
+        assertEquals(HttpStatusCode.Created, response.status)
     }
 
     @Test
-    fun `should not create a duplicated trigger making a POST request`() {
+    fun `should not create a duplicated trigger making a POST request`() = testApplication {
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
 
@@ -56,17 +55,25 @@ class TriggerPostApiControllerTest : TriggerControllerTest() {
             }
         """.trimIndent()
 
-        requestTest(requestBody).andExpect {
-            assertEquals(HttpStatus.CREATED.value(), it.response.status)
+        var response = client.post("/api/v1/trigger") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+            setBody(requestBody)
         }
 
-        requestTest(requestBody).andExpect {
-            assertEquals(HttpStatus.BAD_REQUEST.value(), it.response.status)
+        assertEquals(HttpStatusCode.Created, response.status)
+
+        response = client.post("/api/v1/trigger") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+            setBody(requestBody)
         }
+
+        assertEquals(HttpStatusCode.BadRequest, response.status)
     }
 
     @Test
-    fun `should not create a trigger with invalid body`() {
+    fun `should not create a trigger with invalid body`() = testApplication {
         val requestBody = """
             {
                 "id": "${UUID.randomUUID()}",
@@ -76,9 +83,13 @@ class TriggerPostApiControllerTest : TriggerControllerTest() {
             }
         """.trimIndent()
 
-        requestTest(requestBody).andExpect {
-            assertEquals(HttpStatus.BAD_REQUEST.value(), it.response.status)
+        val response = client.post("/api/v1/trigger") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+            setBody(requestBody)
         }
+
+        assertEquals(HttpStatusCode.BadRequest, response.status)
     }
 
 }
