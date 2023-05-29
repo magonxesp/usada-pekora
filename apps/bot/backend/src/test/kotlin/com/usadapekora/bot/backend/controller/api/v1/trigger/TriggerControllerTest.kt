@@ -1,6 +1,6 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger
 
-import com.usadapekora.bot.backend.SpringBootHttpTestCase
+import com.usadapekora.bot.backend.HttpTestCase
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
@@ -12,7 +12,7 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseContentType
 import org.koin.java.KoinJavaComponent.inject
 
 
-abstract class TriggerControllerTest : SpringBootHttpTestCase()  {
+abstract class TriggerControllerTest : HttpTestCase()  {
 
     private val creator: TriggerCreator by inject(TriggerCreator::class.java)
     private val audioCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)

@@ -1,6 +1,8 @@
 package com.usadapekora.shared
 
+import com.usadapekora.shared.domain.common.Logger
 import com.usadapekora.shared.domain.user.UserRepository
+import com.usadapekora.shared.infrastructure.logger.Sfl4jLogger
 import com.usadapekora.shared.infrastructure.user.peristence.mongodb.MongoDbUserRepository
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
@@ -14,6 +16,7 @@ import org.koin.dsl.module
 private var koinApplication: KoinApplication? = null
 
 val userModule = module {
+    single { Sfl4jLogger() } bind Logger::class
     single { MongoDbUserRepository() } bind UserRepository::class
 }
 

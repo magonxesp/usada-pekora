@@ -1,6 +1,6 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger.audio
 
-import com.usadapekora.bot.backend.SpringBootHttpTestCase
+import com.usadapekora.bot.backend.HttpTestCase
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TriggerDefaultAudioResponsePostApiControllerTest : SpringBootHttpTestCase() {
+class TriggerDefaultAudioResponsePostApiControllerTest : HttpTestCase() {
 
     private fun uploadAudioFileRequest(audioId: String, triggerId: String, guildId: String)
         = mockMvc.perform(

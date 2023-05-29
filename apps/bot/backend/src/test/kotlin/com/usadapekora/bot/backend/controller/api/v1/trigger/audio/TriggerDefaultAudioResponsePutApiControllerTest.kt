@@ -1,6 +1,5 @@
 package com.usadapekora.bot.backend.controller.api.v1.trigger.audio
 
-import com.usadapekora.bot.backend.SpringBootHttpTestCase
 import com.usadapekora.bot.backend.controller.api.v1.trigger.TriggerControllerTest
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
