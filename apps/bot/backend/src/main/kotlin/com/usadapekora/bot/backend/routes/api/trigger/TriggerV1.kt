@@ -22,7 +22,7 @@ private val triggerCreator: TriggerCreator by inject(TriggerCreator::class.java)
 private val updater: TriggerUpdater by inject(TriggerUpdater::class.java)
 private val deleter: TriggerDeleter by inject(TriggerDeleter::class.java)
 
-fun errorStatusCode(error: Any) = when(error) {
+private fun errorStatusCode(error: Any) = when(error) {
     is TriggerException.NotFound -> HttpStatusCode.NotFound
     is TriggerException.MissingResponse -> HttpStatusCode.BadRequest
     is TriggerException.AlreadyExists -> HttpStatusCode.BadRequest
