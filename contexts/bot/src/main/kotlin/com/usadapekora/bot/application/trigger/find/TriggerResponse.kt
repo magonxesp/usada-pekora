@@ -1,7 +1,9 @@
 package com.usadapekora.bot.application.trigger.find
 
 import com.usadapekora.bot.domain.trigger.Trigger
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class TriggerResponse(
     val id: String,
     val title: String,

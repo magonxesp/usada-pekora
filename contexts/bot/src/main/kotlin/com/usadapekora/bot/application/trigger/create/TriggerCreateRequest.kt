@@ -1,5 +1,8 @@
 package com.usadapekora.bot.application.trigger.create
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TriggerCreateRequest(
     val id: String,
     val title: String,

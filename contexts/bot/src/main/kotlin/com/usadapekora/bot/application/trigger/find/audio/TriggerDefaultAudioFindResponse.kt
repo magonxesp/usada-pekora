@@ -1,7 +1,9 @@
 package com.usadapekora.bot.application.trigger.find.audio
 
+import kotlinx.serialization.Serializable
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse as TriggerDefaultAudioResponseEntity
 
+@Serializable
 data class TriggerDefaultAudioFindResponse(
     val id: String,
     val triggerId: String,
