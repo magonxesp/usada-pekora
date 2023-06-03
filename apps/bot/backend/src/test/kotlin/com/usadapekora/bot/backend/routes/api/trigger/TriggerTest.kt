@@ -1,12 +1,12 @@
 package com.usadapekora.bot.backend.routes.api.trigger
 
-import com.usadapekora.bot.backend.HttpTestCase
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
+import com.usadapekora.bot.backend.HttpTestCase
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseContentType
 import org.koin.java.KoinJavaComponent.inject

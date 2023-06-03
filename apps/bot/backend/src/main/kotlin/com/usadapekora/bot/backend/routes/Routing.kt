@@ -1,6 +1,7 @@
 package com.usadapekora.bot.backend.routes
 
 import com.usadapekora.bot.backend.routes.api.trigger.triggerDefaultAudioV1
+import com.usadapekora.bot.backend.routes.api.trigger.triggerTextV1
 import com.usadapekora.bot.backend.routes.api.trigger.triggerV1
 import com.usadapekora.bot.backend.routes.webhook.youtubeWebhook
 import io.ktor.server.application.*
@@ -11,5 +12,6 @@ fun Application.configureRoutes() {
         youtubeWebhook()
         triggerV1()
         triggerDefaultAudioV1()
+        triggerTextV1()
     }
 }

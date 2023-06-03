@@ -3,7 +3,6 @@ package com.usadapekora.bot.backend.routes.webhook
 import com.usadapekora.bot.application.guild.GuildPreferencesFinder
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
-import com.usadapekora.bot.backend.controller.webhook.YoutubeFeedWebhookController
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.video.VideoException
 import com.usadapekora.shared.infrastructure.common.ktor.respondError
@@ -15,7 +14,7 @@ import io.ktor.server.routing.*
 import org.koin.java.KoinJavaComponent
 import java.util.logging.Logger
 
-private val logger = Logger.getLogger(YoutubeFeedWebhookController::class.toString())
+private val logger = Logger.getLogger("YoutubeFeedWebhook")
 private val finder: GuildPreferencesFinder by KoinJavaComponent.inject(GuildPreferencesFinder::class.java)
 private val sender: SendVideoFeed by KoinJavaComponent.inject(SendVideoFeed::class.java)
 private val parser: VideoFeedParser by KoinJavaComponent.inject(VideoFeedParser::class.java)

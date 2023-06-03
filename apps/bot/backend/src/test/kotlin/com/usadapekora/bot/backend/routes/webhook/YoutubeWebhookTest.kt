@@ -4,27 +4,22 @@ import com.usadapekora.bot.application.guild.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
 import com.usadapekora.bot.backend.HttpTestCase
 import com.usadapekora.bot.domain.guild.GuildPreferences
-import com.usadapekora.bot.testDiscordTextChannelId
 import com.usadapekora.bot.testDiscordGuildId
+import com.usadapekora.bot.testDiscordTextChannelId
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent.inject
-import kotlin.test.Test
-import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import kotlin.random.Random
-import kotlin.test.assertEquals
-import kotlinx.coroutines.test.runTest
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class YoutubeWebhookTest : HttpTestCase() {
 
@@ -92,6 +87,7 @@ class YoutubeWebhookTest : HttpTestCase() {
 
         val response = client.get("/webhook/youtube/feed") {
             contentType(ContentType.Text.Plain)
+            parameter("hub.challenge", challenge)
         }
 
         assertEquals(HttpStatusCode.OK, response.status)

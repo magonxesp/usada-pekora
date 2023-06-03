@@ -16,12 +16,14 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
         val response = client.post("/api/v1/trigger/response/audio") {
             contentType(ContentType.MultiPart.FormData)
             accept(ContentType.Application.Json)
-            formData {
-                append("id", UUID.randomUUID().toString())
-                append("triggerId", UUID.randomUUID().toString())
-                append("guildId", "94101459")
-                append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
-            }
+            setBody(MultiPartFormDataContent(
+                formData {
+                    append("id", UUID.randomUUID().toString())
+                    append("triggerId", UUID.randomUUID().toString())
+                    append("guildId", "94101459")
+                    append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
+                }
+            ))
         }
 
         assertEquals(HttpStatusCode.Created, response.status)
@@ -35,12 +37,14 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
         var response = client.post("/api/v1/trigger/response/audio") {
             contentType(ContentType.MultiPart.FormData)
             accept(ContentType.Application.Json)
-            formData {
-                append("id", audioId)
-                append("triggerId", triggerId)
-                append("guildId", "94101459")
-                append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
-            }
+            setBody(MultiPartFormDataContent(
+                formData {
+                    append("id", audioId)
+                    append("triggerId", triggerId)
+                    append("guildId", "94101459")
+                    append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
+                }
+            ))
         }
 
         assertEquals(HttpStatusCode.Created, response.status)
@@ -48,12 +52,14 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
         response = client.post("/api/v1/trigger/response/audio") {
             contentType(ContentType.MultiPart.FormData)
             accept(ContentType.Application.Json)
-            formData {
-                append("id", audioId)
-                append("triggerId", triggerId)
-                append("guildId", "94101459")
-                append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
-            }
+            setBody(MultiPartFormDataContent(
+                formData {
+                    append("id", audioId)
+                    append("triggerId", triggerId)
+                    append("guildId", "94101459")
+                    append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
+                }
+            ))
         }
 
         assertEquals(HttpStatusCode.BadRequest, response.status)

@@ -3,9 +3,6 @@ package com.usadapekora.bot.backend.routes.api.trigger
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals

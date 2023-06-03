@@ -10,6 +10,7 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.prometheus.client.hotspot.DefaultExports
+import kotlinx.coroutines.launch
 
 fun main(args: Array<String>) {
     EngineMain.main(args)
@@ -33,4 +34,8 @@ fun Application.module() {
     }
 
     configureRoutes()
+
+    launch {
+        scheduleJobs()
+    }
 }
