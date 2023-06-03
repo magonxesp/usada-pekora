@@ -23,7 +23,14 @@ class TriggerDefaultAudioDeleteV1Test : HttpTestCase() {
                     append("id", id)
                     append("triggerId", UUID.randomUUID().toString())
                     append("guildId", "94101459")
-                    append("file", readResource("/assets_audio_Its_me_pekora.mp3"))
+                    append(
+                        key = "file",
+                        value = readResource("/assets_audio_Its_me_pekora.mp3"),
+                        headers = headers {
+                            append(HttpHeaders.ContentType, ContentType.Audio.MPEG)
+                            append(HttpHeaders.ContentDisposition, "filename=assets_audio_Its_me_pekora.mp3")
+                        }.build()
+                    )
                 }
             ))
         }
@@ -45,7 +52,7 @@ class TriggerDefaultAudioDeleteV1Test : HttpTestCase() {
             accept(ContentType.Application.Json)
         }
 
-        assertEquals(HttpStatusCode.BadRequest, response.status)
+        assertEquals(HttpStatusCode.NotFound, response.status)
     }
 
 }

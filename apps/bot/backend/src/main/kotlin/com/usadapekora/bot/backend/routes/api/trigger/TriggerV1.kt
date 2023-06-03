@@ -55,7 +55,7 @@ fun Route.triggerV1() {
         put("/{id}") {
             updater.update(TriggerUpdateRequest(id = call.parameters["id"] ?: "", call.receive()))
                 .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.Created) }
+                .onRight { call.respond(HttpStatusCode.OK) }
         }
         delete("/{id}") {
             deleter.delete(call.parameters["id"] ?: "")

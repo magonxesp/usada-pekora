@@ -31,7 +31,7 @@ class TriggerTextDeleteV1Test : TriggerTest() {
             accept(ContentType.Application.Json)
         }
 
-        assertEquals(HttpStatusCode.BadRequest, response.status)
+        assertEquals(HttpStatusCode.NotFound, response.status)
     }
 
 }

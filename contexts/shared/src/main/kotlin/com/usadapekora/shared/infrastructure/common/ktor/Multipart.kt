@@ -10,11 +10,7 @@ suspend fun MultiPartData.toFormData(): FormData {
             data[part.name!!] = part
         }
     }
-    /*when(part) {
-        is PartData.FormItem -> part.value
-        is PartData.FileItem -> part.streamProvider().readAllBytes()
-        else -> null
-    }*/
+
     return FormData(data)
 }
 

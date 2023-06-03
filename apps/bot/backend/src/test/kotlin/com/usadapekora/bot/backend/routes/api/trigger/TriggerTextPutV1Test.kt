@@ -38,7 +38,7 @@ class TriggerTextPutV1Test : TriggerTest() {
             }
         """.uglifyJson()
 
-        val getResponse = client.put("/api/v1/trigger/response/text/$id") {
+        val getResponse = client.get("/api/v1/trigger/response/text/$id") {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
         }
@@ -63,7 +63,7 @@ class TriggerTextPutV1Test : TriggerTest() {
             setBody(request)
         }
 
-        assertEquals(HttpStatusCode.BadRequest, response.status)
+        assertEquals(HttpStatusCode.NotFound, response.status)
     }
 
 }
