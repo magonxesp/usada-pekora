@@ -40,7 +40,6 @@ class Auth0JwkIssuer(private val clock: Clock) : JwkIssuer {
             .privateKey(privateKey)
             .keyUse(KeyUse.SIGNATURE)
             .keyID(jwkKeyId)
-            .algorithm(Algorithm.parse("RSA256"))
             .issueTime(Date.from(clock.now().toJavaInstant()))
             .build()
 
