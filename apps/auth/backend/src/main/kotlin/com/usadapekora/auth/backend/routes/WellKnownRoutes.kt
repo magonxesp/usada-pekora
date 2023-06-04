@@ -14,6 +14,9 @@ fun Route.wellKnown() {
 
         issuer.issue()
             .onLeft { call.respondError(HttpStatusCode.InternalServerError, it.message ?: "") }
-            .onRight { call.respondText(it, ContentType.Application.Json, HttpStatusCode.OK) }
+            .onRight {
+                val keys = "{\"keys\":[$it]}"
+                call.respondText(keys, ContentType.Application.Json, HttpStatusCode.OK)
+            }
     }
 }
