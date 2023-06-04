@@ -8,8 +8,9 @@ import com.usadapekora.auth.domain.jwt.Jwt
 import com.usadapekora.auth.domain.jwt.JwtError
 import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
-import com.usadapekora.auth.jwtAudience
-import com.usadapekora.auth.jwtIssuer
+import com.usadapekora.auth.jwkKeyId
+import com.usadapekora.shared.jwtAudience
+import com.usadapekora.shared.jwtIssuer
 import com.usadapekora.auth.privateKeyPath
 import com.usadapekora.auth.publicKeyPath
 import kotlinx.datetime.*
@@ -23,11 +24,6 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 
 class Auth0JwtIssuer(private val clock: Clock) : JwtIssuer {
-
-    private fun String.trimKey(): String
-        = split("\n")
-        .filter { !Regex("^-+[A-Z ]+-+\$").matches(it) }
-        .joinToString("")
 
     override fun issue(authorization: AuthorizationGrant, expirationTimeInSeconds: Int): Either<JwtError, Jwt> {
         val privateKeyContent = Files.readString(Paths.get(privateKeyPath)).trimKey()
@@ -50,6 +46,7 @@ class Auth0JwtIssuer(private val clock: Clock) : JwtIssuer {
             .withPayload(mapOf("userId" to authorization.user.value))
             .withExpiresAt(expiresAt.toJavaInstant())
             .withIssuedAt(clock.now().toJavaInstant())
+            .withKeyId(jwkKeyId)
             .sign(algorithm)
 
         return Jwt.fromPrimitives(token, expiresAt).right()

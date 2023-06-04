@@ -11,6 +11,7 @@ import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.shared.infrastructure.common.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -33,34 +34,36 @@ private fun errorStatusCode(error: Any) = when(error) {
 }
 
 fun Route.triggerV1() {
-    route("/api/v1/trigger") {
-        get("/{id}") {
-            finder.find(call.parameters["id"] ?: "")
-                .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(it) }
-        }
-        get("/guild/{id}") {
-            call.respond(finder.findByDiscordServer(call.parameters["id"] ?: ""))
-        }
-        get("/{id}/audio") {
-            audioFinder.findByTriggerId(call.parameters["id"] ?: "")
-                .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(it) }
-        }
-        post {
-            triggerCreator.create(call.receive())
-                .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.Created) }
-        }
-        put("/{id}") {
-            updater.update(TriggerUpdateRequest(id = call.parameters["id"] ?: "", call.receive()))
-                .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.OK) }
-        }
-        delete("/{id}") {
-            deleter.delete(call.parameters["id"] ?: "")
-                .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.OK) }
+    authenticate {
+        route("/api/v1/trigger") {
+            get("/{id}") {
+                finder.find(call.parameters["id"] ?: "")
+                    .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(it) }
+            }
+            get("/guild/{id}") {
+                call.respond(finder.findByDiscordServer(call.parameters["id"] ?: ""))
+            }
+            get("/{id}/audio") {
+                audioFinder.findByTriggerId(call.parameters["id"] ?: "")
+                    .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(it) }
+            }
+            post {
+                triggerCreator.create(call.receive())
+                    .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.Created) }
+            }
+            put("/{id}") {
+                updater.update(TriggerUpdateRequest(id = call.parameters["id"] ?: "", call.receive()))
+                    .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.OK) }
+            }
+            delete("/{id}") {
+                deleter.delete(call.parameters["id"] ?: "")
+                    .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.OK) }
+            }
         }
     }
 }

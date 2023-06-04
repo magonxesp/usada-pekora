@@ -7,6 +7,8 @@ plugins {
 dependencies {
     implementation(project(":contexts:bot"))
     implementation(project(":contexts:shared"))
+    implementation("io.ktor:ktor-server-auth-jvm:2.3.0")
+    implementation("io.ktor:ktor-server-auth-jwt-jvm:2.3.0")
 
     testImplementation(project(":contexts:bot"))
 }

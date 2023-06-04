@@ -24,3 +24,5 @@ val mongoConnectionUrl = env("MONGODB_URL", "mongodb://example:example@localhost
 val mongoDatabase = env("MONGODB_DATABASE", "usada_pekora")
 val redisHost = env("REDIS_HOST", "localhost")
 val redisPort = env("REDIS_PORT", "6379").toInt()
+val jwtIssuer = env("AUTH_JWT_ISSUER", "http://localhost:8081")
+val jwtAudience = env("AUTH_JWT_AUDIENCE", "http://localhost")

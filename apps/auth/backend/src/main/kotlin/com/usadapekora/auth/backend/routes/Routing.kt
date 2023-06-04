@@ -6,6 +6,7 @@ import io.ktor.server.routing.*
 
 fun Application.configureRoutes() {
     routing {
+        wellKnown()
         oauthRoutes()
         authorizationProviderRoutesV1()
     }
