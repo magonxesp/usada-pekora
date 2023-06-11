@@ -97,6 +97,15 @@ services:
     ports:
       - "6379:6379"
 
+  rabbitmq:
+    image: rabbitmq:3.12.0-management-alpine
+    restart: unless-stopped
+    ports:
+      - "8000:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "usadapekora"
+      RABBITMQ_DEFAULT_PASS: "usadapekora"
+
 secrets:
   discord_bot_token:
     file: secrets/discord_bot_token.txt
