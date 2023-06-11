@@ -6,10 +6,12 @@ import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDe
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
+import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.shared.infrastructure.common.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -27,34 +29,36 @@ private fun errorStatusCode(error: Any) = when(error) {
 }
 
 fun Route.triggerTextV1() {
-    route("/api/v1/trigger/response/text") {
-        get("/{id}") {
-            triggerTextFinder.find(call.parameters["id"] ?: "")
-                .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(it) }
-        }
-        post {
-            val request = call.receive<TriggerTextResponseCreateRequest>()
+    authenticate(optional = environment?.testMode ?: false) {
+        route("/api/v1/trigger/response/text") {
+            get("/{id}") {
+                triggerTextFinder.find(call.parameters["id"] ?: "")
+                    .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(it) }
+            }
+            post {
+                val request = call.receive<TriggerTextResponseCreateRequest>()
 
-            triggerTextCreator.create(request)
-                .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.Created) }
-        }
-        put("/{id}") {
-            val updateRequest = call.receive<TriggerTextResponseUpdateRequest.NewValues>()
-            val request = TriggerTextResponseUpdateRequest(
-                id = call.parameters["id"] ?: "",
-                values = updateRequest
-            )
+                triggerTextCreator.create(request)
+                    .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.Created) }
+            }
+            put("/{id}") {
+                val updateRequest = call.receive<TriggerTextResponseUpdateRequest.NewValues>()
+                val request = TriggerTextResponseUpdateRequest(
+                    id = call.parameters["id"] ?: "",
+                    values = updateRequest
+                )
 
-            triggerTextUpdater.update(request)
-                .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.OK) }
-        }
-        delete("/{id}") {
-            triggerTextDeleter.delete(call.parameters["id"] ?: "")
-                .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.OK) }
+                triggerTextUpdater.update(request)
+                    .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.OK) }
+            }
+            delete("/{id}") {
+                triggerTextDeleter.delete(call.parameters["id"] ?: "")
+                    .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.OK) }
+            }
         }
     }
 }

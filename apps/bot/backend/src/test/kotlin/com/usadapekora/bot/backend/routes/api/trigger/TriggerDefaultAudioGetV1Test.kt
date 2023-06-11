@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 class TriggerDefaultAudioGetV1Test : TriggerTest() {
 
     @Test
-    fun `should find a trigger audio`() = testApplication {
+    fun `should find a trigger audio`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
         val audio = TriggerDefaultAudioResponse.fromPrimitives(
             id = audioId,
@@ -48,7 +48,7 @@ class TriggerDefaultAudioGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not find a trigger audio`() = testApplication {
+    fun `should not find a trigger audio`() = withTestApplication {
         val response = client.get("/api/v1/trigger/response/audio/e322b3ac-2d30-4eff-afdc-3504f66ac4ba") {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
@@ -58,7 +58,7 @@ class TriggerDefaultAudioGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should get the file contents of trigger audio`() = testApplication {
+    fun `should get the file contents of trigger audio`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
 
@@ -72,7 +72,7 @@ class TriggerDefaultAudioGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not get the file contents of trigger audio does not exists`() = testApplication {
+    fun `should not get the file contents of trigger audio does not exists`() = withTestApplication {
         val response = client.get("/api/v1/trigger/response/audio/e322b3ac-2d30-4eff-afdc-3504f66ac4ba/content") {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)

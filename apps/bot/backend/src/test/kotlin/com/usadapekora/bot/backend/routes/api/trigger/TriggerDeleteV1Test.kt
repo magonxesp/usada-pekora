@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 class TriggerDeleteV1Test : TriggerTest() {
 
     @Test
-    fun `should delete trigger by id`() = testApplication {
+    fun `should delete trigger by id`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
 

@@ -7,11 +7,13 @@ import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFin
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
+import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.shared.infrastructure.common.ktor.respondError
 import com.usadapekora.shared.infrastructure.common.ktor.toFormData
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -28,63 +30,81 @@ private fun errorStatusCode(error: Any) = when(error) {
 }
 
 fun Route.triggerDefaultAudioV1() {
-    route("/api/v1/trigger/response/audio") {
-        get("/{id}") {
-            val triggerAudioFinder: TriggerDefaultAudioFinder by inject(TriggerDefaultAudioFinder::class.java)
+    authenticate(optional = environment?.testMode ?: false) {
+        route("/api/v1/trigger/response/audio") {
+            get("/{id}") {
+                val triggerAudioFinder: TriggerDefaultAudioFinder by inject(TriggerDefaultAudioFinder::class.java)
 
-            triggerAudioFinder.find(call.parameters["id"] ?: "")
-                .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(it) }
-        }
-        get("/{id}/content") {
-            val triggerDefaultAudioReader: TriggerDefaultAudioReader by inject(TriggerDefaultAudioReader::class.java)
+                triggerAudioFinder.find(call.parameters["id"] ?: "")
+                    .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(it) }
+            }
+            get("/{id}/content") {
+                val triggerDefaultAudioReader: TriggerDefaultAudioReader by inject(TriggerDefaultAudioReader::class.java)
 
-            triggerDefaultAudioReader.read(call.parameters["id"] ?: "")
-                .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respondBytes(it) }
-        }
-        post {
-            val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
-            val formData = call.receiveMultipart().toFormData()
-            val file = formData.getFile("file") ?: return@post call.respondError(HttpStatusCode.BadRequest, "The file parameter is missing")
-
-            val request = TriggerDefaultAudioResponseCreateRequest(
-                id = formData.getString("id") ?: return@post call.respondError(HttpStatusCode.BadRequest, "The id parameter is missing"),
-                triggerId = formData.getString("triggerId") ?: return@post call.respondError(HttpStatusCode.BadRequest, "The triggerId parameter is missing"),
-                guildId = formData.getString("guildId") ?: return@post call.respondError(HttpStatusCode.BadRequest, "The guildId parameter is missing"),
-                fileName = file.fileName,
-                content = file.content
-            )
-
-            triggerDefaultAudioResponseCreator.create(request)
-                .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.Created) }
-        }
-        put("/{id}") {
-            val triggerDefaultAudioResponseUpdater: TriggerDefaultAudioResponseUpdater by inject(TriggerDefaultAudioResponseUpdater::class.java)
-            val formData = call.receiveMultipart().toFormData()
-            val file = formData.getFile("file")
-
-            val request = TriggerDefaultAudioResponseUpdateRequest(
-                id = call.parameters["id"] ?: "",
-                values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
-                    fileName = file?.fileName,
-                    triggerId = formData.getString("triggerId"),
-                    guildId = formData.getString("guildId"),
-                    content = file?.content
+                triggerDefaultAudioReader.read(call.parameters["id"] ?: "")
+                    .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respondBytes(it) }
+            }
+            post {
+                val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(
+                    TriggerDefaultAudioResponseCreator::class.java
                 )
-            )
+                val formData = call.receiveMultipart().toFormData()
+                val file = formData.getFile("file") ?: return@post call.respondError(
+                    HttpStatusCode.BadRequest,
+                    "The file parameter is missing"
+                )
 
-            triggerDefaultAudioResponseUpdater.update(request)
-                .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.OK) }
-        }
-        delete("/{id}") {
-            val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
+                val request = TriggerDefaultAudioResponseCreateRequest(
+                    id = formData.getString("id") ?: return@post call.respondError(
+                        HttpStatusCode.BadRequest,
+                        "The id parameter is missing"
+                    ),
+                    triggerId = formData.getString("triggerId") ?: return@post call.respondError(
+                        HttpStatusCode.BadRequest,
+                        "The triggerId parameter is missing"
+                    ),
+                    guildId = formData.getString("guildId") ?: return@post call.respondError(
+                        HttpStatusCode.BadRequest,
+                        "The guildId parameter is missing"
+                    ),
+                    fileName = file.fileName,
+                    content = file.content
+                )
 
-            triggerDefaultAudioDeleter.delete(call.parameters["id"] ?: "")
-                .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
-                .onRight { call.respond(HttpStatusCode.OK) }
+                triggerDefaultAudioResponseCreator.create(request)
+                    .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.Created) }
+            }
+            put("/{id}") {
+                val triggerDefaultAudioResponseUpdater: TriggerDefaultAudioResponseUpdater by inject(
+                    TriggerDefaultAudioResponseUpdater::class.java
+                )
+                val formData = call.receiveMultipart().toFormData()
+                val file = formData.getFile("file")
+
+                val request = TriggerDefaultAudioResponseUpdateRequest(
+                    id = call.parameters["id"] ?: "",
+                    values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
+                        fileName = file?.fileName,
+                        triggerId = formData.getString("triggerId"),
+                        guildId = formData.getString("guildId"),
+                        content = file?.content
+                    )
+                )
+
+                triggerDefaultAudioResponseUpdater.update(request)
+                    .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.OK) }
+            }
+            delete("/{id}") {
+                val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
+
+                triggerDefaultAudioDeleter.delete(call.parameters["id"] ?: "")
+                    .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
+                    .onRight { call.respond(HttpStatusCode.OK) }
+            }
         }
     }
 }

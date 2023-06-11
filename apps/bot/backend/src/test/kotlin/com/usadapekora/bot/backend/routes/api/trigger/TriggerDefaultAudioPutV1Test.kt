@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 class TriggerDefaultAudioPutV1Test : TriggerTest() {
 
     @Test
-    fun `should update file and save it`() = testApplication {
+    fun `should update file and save it`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         createAudioDummy(id = id)
 
@@ -38,7 +38,7 @@ class TriggerDefaultAudioPutV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not update non existing audio file`() = testApplication {
+    fun `should not update non existing audio file`() = withTestApplication {
         val response = client.put("/api/v1/trigger/response/audio/${UUID.randomUUID()}") {
             contentType(ContentType.MultiPart.FormData)
             accept(ContentType.Application.Json)

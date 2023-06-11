@@ -6,6 +6,7 @@ import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.application.trigger.update.TriggerUpdateRequest
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
+import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.shared.infrastructure.common.ktor.respondError
@@ -34,7 +35,7 @@ private fun errorStatusCode(error: Any) = when(error) {
 }
 
 fun Route.triggerV1() {
-    authenticate {
+    authenticate(optional = environment?.testMode ?: false) {
         route("/api/v1/trigger") {
             get("/{id}") {
                 finder.find(call.parameters["id"] ?: "")

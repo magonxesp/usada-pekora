@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 class TriggerPostV1Test : TriggerTest() {
 
     @Test
-    fun `should create a trigger making a POST request`() = testApplication {
+    fun `should create a trigger making a POST request`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
 
@@ -36,7 +36,7 @@ class TriggerPostV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not create a duplicated trigger making a POST request`() = testApplication {
+    fun `should not create a duplicated trigger making a POST request`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
 
@@ -70,7 +70,7 @@ class TriggerPostV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not create a trigger with invalid body`() = testApplication {
+    fun `should not create a trigger with invalid body`() = withTestApplication {
         val requestBody = """
             {
                 "id": "${UUID.randomUUID()}",

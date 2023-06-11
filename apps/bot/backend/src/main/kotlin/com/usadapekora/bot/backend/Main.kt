@@ -19,6 +19,9 @@ fun main(args: Array<String>) {
     EngineMain.main(args)
 }
 
+val ApplicationEnvironment.testMode: Boolean
+    get() = (config.propertyOrNull("ktor.environment")?.getString() ?: "prod") == "test"
+
 fun Application.module() {
     enableDependencyInjection(modules = modules)
     DefaultExports.initialize()
@@ -41,7 +44,7 @@ fun Application.module() {
             defaultConfiguration()
         }
     }
-
+    // TODO: poner como una variable de entorno que ponga APP_ENV=test y con eso poner un usuario mockeado en la sesion
     configureRoutes()
 
     launch {

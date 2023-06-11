@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 class TriggerGetV1Test : TriggerTest() {
 
     @Test
-    fun `should find a trigger by id`() = testApplication {
+    fun `should find a trigger by id`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
         createAudioDummy(id = audioId)
@@ -42,7 +42,7 @@ class TriggerGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not find a trigger by id`() = testApplication {
+    fun `should not find a trigger by id`() = withTestApplication {
         val response = client.get("/api/v1/trigger/e322b3ac-2d30-4eff-afdc-3504f66ac4ba") {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
@@ -52,7 +52,7 @@ class TriggerGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should find a triggers by discord guild id`() = testApplication{
+    fun `should find a triggers by discord guild id`() = withTestApplication{
         val id = UUID.randomUUID().toString()
         val guildId = Random.nextLong(100000000, 999999999).toString()
         val audioId = UUID.randomUUID().toString()
@@ -86,7 +86,7 @@ class TriggerGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not find a triggers by discord guild id`() = testApplication {
+    fun `should not find a triggers by discord guild id`() = withTestApplication {
         val guildId = Random.nextLong(100000000, 999999999).toString()
         val expectedBody = """
             {
@@ -104,7 +104,7 @@ class TriggerGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should find trigger associated audio by trigger id`() = testApplication {
+    fun `should find trigger associated audio by trigger id`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
 
@@ -130,7 +130,7 @@ class TriggerGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not find a trigger audio by trigger id`() = testApplication {
+    fun `should not find a trigger audio by trigger id`() = withTestApplication {
         val response = client.get("/api/v1/trigger/1b96c970-1a70-40a4-9dec-b32ba8408750/audio") {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)

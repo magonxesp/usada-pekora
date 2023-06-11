@@ -3,6 +3,7 @@ package com.usadapekora.bot.backend.routes.api.trigger
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
+import org.koin.dsl.module
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -10,7 +11,7 @@ import kotlin.test.assertEquals
 class TriggerTextDeleteV1Test : TriggerTest() {
 
     @Test
-    fun `should delete a trigger text response`() = testApplication {
+    fun `should delete a trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         createTextDummy(id = id)
 
@@ -23,7 +24,7 @@ class TriggerTextDeleteV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not delete a not existing trigger text response`()= testApplication {
+    fun `should not delete a not existing trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
 
         val response = client.delete("/api/v1/trigger/response/text/$id") {

@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class TriggerPutV1Test : TriggerTest() {
 
     @Test
-    fun `should update trigger by id`() = testApplication {
+    fun `should update trigger by id`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
         val textId = UUID.randomUUID().toString()

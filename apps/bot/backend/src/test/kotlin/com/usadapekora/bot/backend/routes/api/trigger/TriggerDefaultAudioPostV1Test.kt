@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class TriggerDefaultAudioPostV1Test : HttpTestCase() {
 
     @Test
-    fun `should upload file and save it`() = testApplication {
+    fun `should upload file and save it`() = withTestApplication {
         val response = client.post("/api/v1/trigger/response/audio") {
             contentType(ContentType.MultiPart.FormData)
             accept(ContentType.Application.Json)
@@ -37,7 +37,7 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
     }
 
     @Test
-    fun `should not upload same file`() = testApplication {
+    fun `should not upload same file`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
         val triggerId = UUID.randomUUID().toString()
 

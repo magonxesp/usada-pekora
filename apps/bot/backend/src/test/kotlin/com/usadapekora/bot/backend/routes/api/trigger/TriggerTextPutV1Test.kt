@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class TriggerTextPutV1Test : TriggerTest() {
 
     @Test
-    fun `should update a trigger text response`() = testApplication {
+    fun `should update a trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         createTextDummy(id = id)
 
@@ -48,7 +48,7 @@ class TriggerTextPutV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not update a not existing trigger text response`() = testApplication {
+    fun `should not update a not existing trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
 
         val request = """

@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 class TriggerTextPostV1Test : TriggerTest() {
 
     @Test
-    fun `should create a trigger text response`() = testApplication {
+    fun `should create a trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
 
         val request = """
@@ -32,7 +32,7 @@ class TriggerTextPostV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not crate an existing trigger text response`() = testApplication {
+    fun `should not crate an existing trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
 
         val request = """

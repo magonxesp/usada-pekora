@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class TriggerTextGetV1Test : TriggerTest() {
 
     @Test
-    fun `should find a trigger text response`() = testApplication {
+    fun `should find a trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
         createTextDummy(id = id)
 
@@ -34,7 +34,7 @@ class TriggerTextGetV1Test : TriggerTest() {
     }
 
     @Test
-    fun `should not find a not existing trigger text response`() = testApplication {
+    fun `should not find a not existing trigger text response`() = withTestApplication {
         val id = UUID.randomUUID().toString()
 
         val response = client.get("/api/v1/trigger/response/text/$id") {
