@@ -20,9 +20,13 @@ class RabbitMqEventBus(private val serializerModule: SerializersModule) : EventB
     override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
         for (event in events) {
             val message = jsonEncoder.encodeToString(event)
+            val connection = ConnectionFactory()
+                .apply { setUri(rabbitMqUrl) }
+                .newConnection()
 
-            ConnectionFactory().newConnection(rabbitMqUrl).use { connection ->
-                connection.createChannel().use { channel ->
+            connection.use {
+                it.createChannel().use { channel ->
+                    channel.exchangeDeclare("usadapekora", "direct", true)
                     channel.queueDeclare("usadapekora.event", true, false, true, null)
                     channel.basicPublish("usadapekora", "event", null, message.toByteArray())
                 }

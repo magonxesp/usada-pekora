@@ -105,9 +105,6 @@ services:
     ports:
       - "8000:15672"
       - "5672:5672"
-    environment:
-      RABBITMQ_DEFAULT_USER: "usadapekora"
-      RABBITMQ_DEFAULT_PASS: "usadapekora"
 
 secrets:
   discord_bot_token:
