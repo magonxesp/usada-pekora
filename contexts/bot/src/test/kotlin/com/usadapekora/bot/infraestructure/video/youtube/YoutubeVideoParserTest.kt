@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.video.youtube
 
-import com.usadapekora.shared.domain.common.DateTimeUtils
+import com.usadapekora.shared.domain.DateTimeUtils
 import com.usadapekora.bot.domain.video.VideoException
 import kotlin.test.Test
 import kotlin.test.assertEquals

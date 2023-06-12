@@ -1,4 +1,4 @@
-package com.usadapekora.shared.infrastructure.common.ktor
+package com.usadapekora.shared.infrastructure.ktor
 
 import io.ktor.http.content.*
 

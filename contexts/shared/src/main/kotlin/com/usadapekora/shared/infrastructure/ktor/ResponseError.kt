@@ -1,4 +1,4 @@
-package com.usadapekora.shared.infrastructure.common.ktor
+package com.usadapekora.shared.infrastructure.ktor
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json

@@ -1,7 +1,7 @@
 package com.usadapekora.shared.infrastructure
 
 import com.usadapekora.shared.domain.ObjectMother
-import com.usadapekora.shared.domain.common.Entity
+import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
 
 open class MongoDbRepositoryTestCase<E : Entity, Repository : MongoDbRepository<E, *>>(

@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.common
+package com.usadapekora.shared.domain
 
 interface Logger {
     fun warning(logger: String, message: String, exception: Exception)

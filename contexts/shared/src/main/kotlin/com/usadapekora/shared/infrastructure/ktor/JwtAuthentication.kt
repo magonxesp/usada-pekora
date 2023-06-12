@@ -1,6 +1,6 @@
-package com.usadapekora.shared.infrastructure.common.ktor
+package com.usadapekora.shared.infrastructure.ktor
 
-import com.usadapekora.shared.infrastructure.common.auth0.Auth0JwkProvider
+import com.usadapekora.shared.infrastructure.auth0.Auth0JwkProvider
 import com.usadapekora.shared.jwtAudience
 import com.usadapekora.shared.jwtIssuer
 import io.ktor.http.*

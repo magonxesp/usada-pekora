@@ -12,10 +12,10 @@ import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDe
 import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
-import com.usadapekora.shared.domain.common.KeyValueRepository
-import com.usadapekora.shared.domain.common.Logger
+import com.usadapekora.shared.domain.KeyValueRepository
+import com.usadapekora.shared.domain.Logger
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueRepository
-import com.usadapekora.shared.infrastructure.logger.Sfl4jLogger
+import com.usadapekora.shared.infrastructure.Sfl4jLogger
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader

@@ -1,6 +1,6 @@
-package com.usadapekora.shared.infrastructure.logger
+package com.usadapekora.shared.infrastructure
 
-import com.usadapekora.shared.domain.common.Logger
+import com.usadapekora.shared.domain.Logger
 import org.slf4j.LoggerFactory
 
 class Sfl4jLogger : Logger {

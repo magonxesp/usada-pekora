@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.common
+package com.usadapekora.shared.domain
 
 interface KeyValueRepository {
     fun set(key: String, value: String)

@@ -4,7 +4,7 @@ import com.mongodb.client.FindIterable
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
-import com.usadapekora.shared.domain.common.Entity
+import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.mongoConnectionUrl
 import com.usadapekora.shared.mongoDatabase
 import org.litote.kmongo.*

@@ -2,7 +2,7 @@ package com.usadapekora.auth.backend.routes
 
 import com.usadapekora.auth.application.jwt.AccessJwtIssuer
 import com.usadapekora.auth.domain.jwt.JwtError
-import com.usadapekora.shared.infrastructure.common.ktor.respondError
+import com.usadapekora.shared.infrastructure.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*

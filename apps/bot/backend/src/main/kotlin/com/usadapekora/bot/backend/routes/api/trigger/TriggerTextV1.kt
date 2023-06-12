@@ -8,7 +8,7 @@ import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUp
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
-import com.usadapekora.shared.infrastructure.common.ktor.respondError
+import com.usadapekora.shared.infrastructure.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

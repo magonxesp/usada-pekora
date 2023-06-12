@@ -3,7 +3,7 @@ package com.usadapekora.bot.backend
 import com.usadapekora.bot.backend.routes.configureRoutes
 import com.usadapekora.bot.modules
 import com.usadapekora.shared.enableDependencyInjection
-import com.usadapekora.shared.infrastructure.common.ktor.defaultConfiguration
+import com.usadapekora.shared.infrastructure.ktor.defaultConfiguration
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

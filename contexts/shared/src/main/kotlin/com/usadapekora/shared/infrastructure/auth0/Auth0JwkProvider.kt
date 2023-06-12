@@ -1,4 +1,4 @@
-package com.usadapekora.shared.infrastructure.common.auth0
+package com.usadapekora.shared.infrastructure.auth0
 
 import com.auth0.jwk.JwkProvider
 import com.auth0.jwk.JwkProviderBuilder

@@ -9,7 +9,7 @@ import com.usadapekora.bot.application.trigger.update.TriggerUpdater
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.shared.infrastructure.common.ktor.respondError
+import com.usadapekora.shared.infrastructure.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

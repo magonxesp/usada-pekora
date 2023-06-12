@@ -9,8 +9,8 @@ import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioR
 import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.shared.infrastructure.common.ktor.respondError
-import com.usadapekora.shared.infrastructure.common.ktor.toFormData
+import com.usadapekora.shared.infrastructure.ktor.respondError
+import com.usadapekora.shared.infrastructure.ktor.toFormData
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

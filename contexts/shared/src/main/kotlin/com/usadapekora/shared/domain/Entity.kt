@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.common
+package com.usadapekora.shared.domain
 
 abstract class Entity {
     abstract fun id(): String

@@ -5,7 +5,7 @@ import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.video.VideoException
-import com.usadapekora.shared.infrastructure.common.ktor.respondError
+import com.usadapekora.shared.infrastructure.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*

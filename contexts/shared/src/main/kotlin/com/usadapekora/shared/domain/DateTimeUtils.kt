@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.common
+package com.usadapekora.shared.domain
 
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
