@@ -41,7 +41,7 @@ allprojects {
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
         implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
         implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.10")
         implementation("com.sedmelluq:lavaplayer:1.3.77")
@@ -63,6 +63,7 @@ allprojects {
         implementation("com.auth0:jwks-rsa:0.22.0")
         implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
         implementation("com.nimbusds:nimbus-jose-jwt:9.31")
+        implementation("com.rabbitmq:amqp-client:5.17.0")
 
         testImplementation(kotlin("test"))
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
