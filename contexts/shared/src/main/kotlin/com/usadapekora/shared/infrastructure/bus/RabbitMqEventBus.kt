@@ -17,6 +17,10 @@ class RabbitMqEventBus(private val serializerModule: SerializersModule) : EventB
         charset(Charsets.UTF_8.name())
     }
 
+    private val exchangeName = "usadapekora"
+    private val queueName = "usadapekora.event"
+    private val routingKey = "event"
+
     override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
         for (event in events) {
             val message = jsonEncoder.encodeToString(event)
@@ -26,9 +30,10 @@ class RabbitMqEventBus(private val serializerModule: SerializersModule) : EventB
 
             connection.use {
                 it.createChannel().use { channel ->
-                    channel.exchangeDeclare("usadapekora", "direct", true)
-                    channel.queueDeclare("usadapekora.event", true, false, true, null)
-                    channel.basicPublish("usadapekora", "event", null, message.toByteArray())
+                    channel.exchangeDeclare(exchangeName, "direct", true)
+                    channel.queueDeclare(queueName, true, false, true, null)
+                    channel.queueBind(queueName, exchangeName, routingKey)
+                    channel.basicPublish(exchangeName, routingKey, null, message.toByteArray())
                 }
             }
         }
