@@ -1,6 +1,6 @@
 package com.usadapekora.bot.backend.routes.webhook
 
-import com.usadapekora.bot.application.guild.GuildPreferencesFinder
+import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.domain.guild.GuildPreferences

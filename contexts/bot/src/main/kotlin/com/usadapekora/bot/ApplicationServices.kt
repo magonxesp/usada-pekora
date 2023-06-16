@@ -1,8 +1,8 @@
 package com.usadapekora.bot
 
-import com.usadapekora.bot.application.guild.GuildPreferenceCreator
-import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
-import com.usadapekora.bot.application.guild.GuildPreferencesFinder
+import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
+import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
+import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator

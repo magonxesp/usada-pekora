@@ -4,11 +4,10 @@ import discord4j.core.`object`.entity.Message
 import com.usadapekora.bot.discordbot.shared.CommandHandler
 import com.usadapekora.bot.discordbot.shared.annotation.Command
 import com.usadapekora.bot.discordbot.shared.CommandArgument
-import com.usadapekora.bot.application.guild.GuildPreferenceCreator
-import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
-import com.usadapekora.bot.application.guild.GuildPreferencesFinder
+import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
+import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
+import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.domain.guild.GuildPreferences
-import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import kotlinx.coroutines.reactor.awaitSingle
 import org.koin.java.KoinJavaComponent.inject
 import java.util.logging.Logger

@@ -2,12 +2,12 @@ package com.usadapekora.bot.application.guild
 
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.GuildPreferencesMother
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

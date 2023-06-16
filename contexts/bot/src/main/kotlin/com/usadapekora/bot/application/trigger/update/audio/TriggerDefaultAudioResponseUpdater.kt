@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger.update.audio
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.guild.GuildId
+import com.usadapekora.bot.domain.guild.Guild.GuildId
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.Trigger

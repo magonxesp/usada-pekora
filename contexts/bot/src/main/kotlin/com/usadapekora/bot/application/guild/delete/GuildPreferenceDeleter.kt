@@ -1,7 +1,6 @@
-package com.usadapekora.bot.application.guild
+package com.usadapekora.bot.application.guild.delete
 
 import com.usadapekora.bot.domain.guild.GuildPreferences
-import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 
 class GuildPreferenceDeleter(private val repository: GuildPreferencesRepository) {

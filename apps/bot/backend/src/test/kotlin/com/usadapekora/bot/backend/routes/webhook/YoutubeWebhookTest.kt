@@ -1,7 +1,7 @@
 package com.usadapekora.bot.backend.routes.webhook
 
-import com.usadapekora.bot.application.guild.GuildPreferenceCreator
-import com.usadapekora.bot.application.guild.GuildPreferenceDeleter
+import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
+import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
 import com.usadapekora.bot.backend.HttpTestCase
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.testDiscordGuildId
@@ -12,7 +12,6 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random

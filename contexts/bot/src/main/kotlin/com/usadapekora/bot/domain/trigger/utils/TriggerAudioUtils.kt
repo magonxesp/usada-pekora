@@ -1,6 +1,6 @@
 package com.usadapekora.bot.domain.trigger.utils
 
-import com.usadapekora.bot.domain.guild.GuildId
+import com.usadapekora.bot.domain.guild.Guild.GuildId
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import com.usadapekora.bot.storageDirPath

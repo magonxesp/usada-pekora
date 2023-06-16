@@ -1,4 +1,4 @@
-package com.usadapekora.bot.application.guild
+package com.usadapekora.bot.application.guild.create
 
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesException

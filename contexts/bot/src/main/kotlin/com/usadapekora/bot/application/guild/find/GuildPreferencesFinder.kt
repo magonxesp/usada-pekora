@@ -1,4 +1,4 @@
-package com.usadapekora.bot.application.guild
+package com.usadapekora.bot.application.guild.find
 
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
