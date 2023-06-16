@@ -12,7 +12,6 @@ import com.usadapekora.shared.domain.bus.EventBus
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserRepository
 import kotlinx.datetime.Clock
-import java.util.UUID
 
 class OAuthAuthorizationProviderAuthorizationHandler(
     private val idCreator: IdCreator,
