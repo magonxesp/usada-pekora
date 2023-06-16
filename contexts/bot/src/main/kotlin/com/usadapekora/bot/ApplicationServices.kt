@@ -1,7 +1,9 @@
 package com.usadapekora.bot
 
+import com.usadapekora.bot.application.guild.create.GuildMemberCreator
 import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
+import com.usadapekora.bot.application.guild.find.GuildCreator
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
@@ -26,6 +28,8 @@ import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTr
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.application.video.VideoFeedSubscriber
+import com.usadapekora.bot.domain.guild.GuildMemberRepository
+import com.usadapekora.bot.domain.guild.GuildRepository
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.shared.domain.file.DomainFileReader
 import com.usadapekora.shared.domain.file.DomainFileWriter
@@ -36,6 +40,8 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
+import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
+import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
 import com.usadapekora.bot.infraestructure.video.discord.DiscordTextChannelVideoNotifier
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileDeleter
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileReader
@@ -78,7 +84,11 @@ val triggerModule = module {
 }
 
 val guildModule = module {
+    single { MongoDbGuildRepository() } bind GuildRepository::class
+    single { MongoDbGuildMemberRepository() } bind GuildMemberRepository::class
     single { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
+    single { GuildCreator(get()) }
+    single { GuildMemberCreator(get()) }
     single { GuildPreferenceCreator(get()) }
     single { GuildPreferenceDeleter(get()) }
     single { GuildPreferencesFinder(get()) }

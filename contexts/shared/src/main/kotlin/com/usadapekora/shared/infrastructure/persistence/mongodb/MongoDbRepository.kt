@@ -41,21 +41,21 @@ abstract class MongoDbRepository<E: Entity, D : MongoDbDocument>(
         return collectionCallback(collection)
     }
 
-    inline fun <reified T: Any> collectionQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> FindIterable<T>): FindIterable<T> {
+    inline fun <reified T: Any> collectionQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> FindIterable<T>): FindIterable<T> {
         val database = connect()
-        val collection = database.getCollectionOfName<T>(name)
+        val collection = database.getCollectionOfName<T>(collectionName)
 
         return collectionCallback(collection)
     }
 
-    inline fun <reified T: Any> writeQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> Unit) {
+    inline fun <reified T: Any> writeQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> Unit) {
         val database = connect()
-        val collection = database.getCollectionOfName<T>(name)
+        val collection = database.getCollectionOfName<T>(collectionName)
 
         collectionCallback(collection)
     }
 
-    fun save(entity: E) {
+    open fun performSave(entity: E) {
         writeQuery<Any>(collection) { collection ->
             collection.updateOne(documentIdProp eq entity.id(), documentCompanion.fromEntity(entity))
                 .takeUnless { updateResult -> updateResult.modifiedCount > 0L }
@@ -63,7 +63,7 @@ abstract class MongoDbRepository<E: Entity, D : MongoDbDocument>(
         }
     }
 
-    fun delete(entity: E) {
+    open fun performDelete(entity: E) {
         writeQuery<Any>(collection) { collection ->
             collection.deleteOne(documentIdProp eq entity.id())
         }

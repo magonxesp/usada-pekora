@@ -43,4 +43,11 @@ class MongoDbTriggerRepository : MongoDbRepository<Trigger, TriggerDocument>(
         return triggers.map { it.toEntity() }.toList().toTypedArray()
     }
 
+    override fun save(entity: Trigger) {
+        performSave(entity)
+    }
+
+    override fun delete(entity: Trigger) {
+        performDelete(entity)
+    }
 }

@@ -35,4 +35,11 @@ class MongoDbGuildPreferencesRepository : MongoDbRepository<GuildPreferences, Gu
         return guildPreferences.map { it.toEntity() }.toList().toTypedArray()
     }
 
+    override fun save(entity: GuildPreferences) {
+        performSave(entity)
+    }
+
+    override fun delete(entity: GuildPreferences) {
+        performDelete(entity)
+    }
 }

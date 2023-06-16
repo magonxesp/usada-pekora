@@ -27,4 +27,12 @@ class MongoDbTriggerTextRepository : MongoDbRepository<TriggerTextResponse, Trig
 
         return TriggerTextResponseException.NotFound("Trigger text response with id $id not found").left()
     }
+
+    override fun save(entity: TriggerTextResponse) {
+        performSave(entity)
+    }
+
+    override fun delete(entity: TriggerTextResponse) {
+        performDelete(entity)
+    }
 }

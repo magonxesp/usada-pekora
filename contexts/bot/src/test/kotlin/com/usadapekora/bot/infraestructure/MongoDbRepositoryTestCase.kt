@@ -19,13 +19,13 @@ open class MongoDbRepositoryTestCase<E : Entity, Repository : MongoDbRepository<
         test: (aggregate: E) -> Unit
     ) {
         if (save) {
-            repository.save(aggregate)
+            repository.performSave(aggregate)
         }
 
         test(aggregate)
 
         if (delete) {
-            repository.delete(aggregate)
+            repository.performDelete(aggregate)
         }
     }
 }

@@ -39,4 +39,11 @@ class MongoDbUserRepository : MongoDbRepository<User, UserDocument>(
         return UserException.NotFound("User with discord id $discordId not found").left()
     }
 
+    override fun save(entity: User) {
+        performSave(entity)
+    }
+
+    override fun delete(entity: User) {
+        performDelete(entity)
+    }
 }

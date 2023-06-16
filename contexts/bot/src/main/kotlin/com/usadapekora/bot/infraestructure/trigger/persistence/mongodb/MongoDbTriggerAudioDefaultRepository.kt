@@ -42,4 +42,11 @@ class MongoDbTriggerAudioDefaultRepository : MongoDbRepository<TriggerDefaultAud
         return TriggerAudioResponseException.NotFound("Trigger audio of trigger with id $id not found").left()
     }
 
+    override fun save(entity: TriggerDefaultAudioResponse) {
+        performSave(entity)
+    }
+
+    override fun delete(entity: TriggerDefaultAudioResponse) {
+        performDelete(entity)
+    }
 }

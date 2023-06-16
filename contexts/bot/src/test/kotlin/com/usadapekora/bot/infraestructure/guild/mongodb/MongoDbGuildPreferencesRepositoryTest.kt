@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class MongoDbGuildPreferencesTest : MongoDbRepositoryTestCase<GuildPreferences, MongoDbGuildPreferencesRepository>(
+class MongoDbGuildPreferencesRepositoryTest : MongoDbRepositoryTestCase<GuildPreferences, MongoDbGuildPreferencesRepository>(
     repository = MongoDbGuildPreferencesRepository(),
     mother = GuildPreferencesMother
 ) {

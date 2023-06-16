@@ -5,8 +5,8 @@ import com.usadapekora.shared.domain.valueobject.UuidValueObject
 
 data class Guild(
     val id: GuildId,
-    val name: GuildName,
-    val iconUrl: GuildIconUrl,
+    var name: GuildName,
+    var iconUrl: GuildIconUrl,
     val providerId: GuildProviderId,
     val provider: GuildProvider
 ) : Entity() {
