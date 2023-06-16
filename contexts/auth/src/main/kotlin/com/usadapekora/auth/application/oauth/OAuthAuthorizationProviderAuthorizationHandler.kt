@@ -6,16 +6,22 @@ import arrow.core.right
 import com.usadapekora.auth.domain.oauth.*
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
+import com.usadapekora.shared.domain.IdCreator
+import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
+import com.usadapekora.shared.domain.bus.EventBus
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserRepository
 import kotlinx.datetime.Clock
+import java.util.UUID
 
 class OAuthAuthorizationProviderAuthorizationHandler(
+    private val idCreator: IdCreator,
     private val providerFactory: OAuthProviderFactory,
     private val userRepository: UserRepository,
     private val grantCodeRepository: AuthorizationGrantRepository,
     private val grantCodeCreator: OAuthAuthorizationGrantCodeCreator,
-    private val clock: Clock
+    private val clock: Clock,
+    private val eventBus: EventBus
 ) {
 
     suspend fun handle(provider: String, code: String): Either<OAuthProviderError.CallbackError, AuthorizationGrant.AuthorizationGrantCode> {
@@ -55,6 +61,12 @@ class OAuthAuthorizationProviderAuthorizationHandler(
         )
 
         grantCodeRepository.save(grantCode)
+
+        eventBus.dispatch(AuthorizationGrantedEvent(
+            id = idCreator.create(),
+            occurredOn = clock.now().toString(),
+            userId = user.id.value
+        )).onLeft { return OAuthProviderError.CallbackError(it.message).left() }
 
         return grantCode.code.right()
     }
