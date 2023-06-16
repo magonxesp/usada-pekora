@@ -18,7 +18,7 @@ fun JWTAuthenticationProvider.Config.defaultConfiguration() {
         if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
     }
 
-    challenge { defaultScheme, realm ->
+    challenge { _, _ ->
         call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
     }
 }
