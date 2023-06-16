@@ -22,7 +22,7 @@ class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember, GuildMemberD
 
     override fun find(user: User.UserId, guild: Guild.GuildId): Either<GuildMemberError.NotFound, GuildMember> {
         val member = oneQuery<GuildMemberDocument>(collection) { collection ->
-            collection.findOne(GuildMemberDocument::userId eq user.value, GuildMemberDocument::guildId eq guild.value)
+            collection.findOne(and(GuildMemberDocument::userId eq user.value, GuildMemberDocument::guildId eq guild.value))
         } ?: return GuildMemberError.NotFound("guild member with user ${user.value} and guild ${guild.value} not found").left()
 
         return member.toEntity().right()
