@@ -1,6 +1,6 @@
-package com.usadapekora.bot.domain
+package com.usadapekora.bot.domain.guild
 
-import com.usadapekora.bot.domain.guild.GuildPreferences
+import com.usadapekora.bot.domain.ObjectMother
 import java.util.Random
 
 object GuildPreferencesMother : ObjectMother<GuildPreferences> {

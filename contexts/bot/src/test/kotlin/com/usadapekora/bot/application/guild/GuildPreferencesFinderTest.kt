@@ -4,7 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
-import com.usadapekora.bot.domain.GuildPreferencesMother
+import com.usadapekora.bot.domain.guild.GuildPreferencesMother
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import io.mockk.every
 import io.mockk.mockk

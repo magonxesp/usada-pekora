@@ -4,7 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.guild.find.GuildCreateRequest
 import com.usadapekora.bot.application.guild.find.GuildCreator
-import com.usadapekora.bot.domain.GuildMother
+import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildRepository
 import io.mockk.clearAllMocks

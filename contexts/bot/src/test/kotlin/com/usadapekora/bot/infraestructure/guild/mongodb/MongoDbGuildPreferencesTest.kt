@@ -1,6 +1,6 @@
 package com.usadapekora.bot.infraestructure.guild.mongodb
 
-import com.usadapekora.bot.domain.GuildPreferencesMother
+import com.usadapekora.bot.domain.guild.GuildPreferencesMother
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
