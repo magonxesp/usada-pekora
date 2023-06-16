@@ -18,12 +18,14 @@ class RabbitMqEventBus(private val serializerModule: SerializersModule) : EventB
     }
 
     private val exchangeName = "usadapekora"
-    private val queueName = "usadapekora.event"
-    private val routingKey = "event"
+    private val queueNamePrefix = "usadapekora.event"
+    private val routingKeyPrefix = "event"
 
     override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
         for (event in events) {
             val message = jsonEncoder.encodeToString(event)
+            val queueName = "$queueNamePrefix.${event.name}"
+            val routingKey = "$routingKeyPrefix.${event.name}"
             val connection = ConnectionFactory()
                 .apply { setUri(rabbitMqUrl) }
                 .newConnection()
