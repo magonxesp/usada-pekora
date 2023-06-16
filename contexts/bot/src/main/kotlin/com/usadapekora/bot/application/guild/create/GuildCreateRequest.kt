@@ -1,4 +1,4 @@
-package com.usadapekora.bot.application.guild.find
+package com.usadapekora.bot.application.guild.create
 
 import kotlinx.serialization.Serializable
 

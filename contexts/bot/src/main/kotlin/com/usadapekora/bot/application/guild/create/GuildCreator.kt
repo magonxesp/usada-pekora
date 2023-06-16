@@ -1,4 +1,4 @@
-package com.usadapekora.bot.application.guild.find
+package com.usadapekora.bot.application.guild.create
 
 import arrow.core.Either
 import arrow.core.left

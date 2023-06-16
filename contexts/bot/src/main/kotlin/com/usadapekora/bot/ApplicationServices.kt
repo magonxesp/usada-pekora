@@ -3,7 +3,7 @@ package com.usadapekora.bot
 import com.usadapekora.bot.application.guild.create.GuildMemberCreator
 import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
-import com.usadapekora.bot.application.guild.find.GuildCreator
+import com.usadapekora.bot.application.guild.create.GuildCreator
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.TriggerCreator

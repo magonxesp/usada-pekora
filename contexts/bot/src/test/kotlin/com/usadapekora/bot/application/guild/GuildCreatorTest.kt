@@ -2,8 +2,8 @@ package com.usadapekora.bot.application.guild
 
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.application.guild.find.GuildCreateRequest
-import com.usadapekora.bot.application.guild.find.GuildCreator
+import com.usadapekora.bot.application.guild.create.GuildCreateRequest
+import com.usadapekora.bot.application.guild.create.GuildCreator
 import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildRepository
