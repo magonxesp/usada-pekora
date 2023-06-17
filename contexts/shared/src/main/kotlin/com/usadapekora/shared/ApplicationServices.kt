@@ -1,6 +1,5 @@
 package com.usadapekora.shared
 
-import com.usadapekora.shared.domain.IdCreator
 import com.usadapekora.shared.domain.Logger
 import com.usadapekora.shared.domain.bus.EventBus
 import com.usadapekora.shared.domain.user.UserRepository
@@ -21,7 +20,6 @@ val sharedModule = module {
     single { Sfl4jLogger() } bind Logger::class
     single { MongoDbUserRepository() } bind UserRepository::class
     single { RabbitMqEventBus() } bind EventBus::class
-    single { IdCreator() }
 }
 
 fun enableDependencyInjection(modules: List<Module> = listOf()) {
