@@ -11,15 +11,13 @@ import com.usadapekora.shared.rabbitMqUrl
 class RabbitMqEventBus : EventBus {
 
     private val mapper = createJacksonObjectMapperInstance()
-    private val exchangeName = "usadapekora"
-    private val queueNamePrefix = "usadapekora.event"
-    private val routingKeyPrefix = "event"
+    private val exchangeName = RabbitMqNameFormatter.domainName
 
     override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
         for (event in events) {
             val message = mapper.writeValueAsString(event)
-            val queueName = "$queueNamePrefix.${event.name}"
-            val routingKey = "$routingKeyPrefix.${event.name}"
+            val queueName = RabbitMqNameFormatter.queueName(RabbitMqNameFormatter.QueueType.EVENT, event.name)
+            val routingKey = RabbitMqNameFormatter.routingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
             val connection = ConnectionFactory()
                 .apply { setUri(rabbitMqUrl) }
                 .newConnection()

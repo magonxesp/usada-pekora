@@ -1,7 +1,8 @@
 package com.usadapekora.shared.domain.bus.event
 
+import com.usadapekora.shared.domain.getAnnotation
 import kotlinx.datetime.Clock
-import java.util.UUID
+import java.util.*
 
 abstract class Event(
     /**
@@ -16,5 +17,5 @@ abstract class Event(
     /**
      * The event name
      */
-    abstract val name: String
+    val name: String = getAnnotation<EventName>(this::class).name
 }

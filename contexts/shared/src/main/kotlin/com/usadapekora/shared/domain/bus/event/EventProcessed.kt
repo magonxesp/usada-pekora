@@ -1,14 +1,21 @@
 package com.usadapekora.shared.domain.bus.event
 
+import com.usadapekora.shared.domain.valueobject.UuidValueObject
 import kotlinx.datetime.Instant
 
 data class EventProcessed(
-    val id: EventId,
-    val name: EventName,
-    val consumedBy: EventConsumedBy,
-    val consumedOn: EventConsumedOn,
-    val timeElapsedMilliseconds: EventTimeElapsedMilliseconds
+    val id: EventProcessedId,
+    val name: EventProcessedName,
+    val consumedBy: EventProcessedConsumedBy,
+    val consumedOn: EventProcessedConsumedOn,
+    val timeElapsedMilliseconds: EventProcessedEventTimeElapsedMilliseconds
 ) {
+    data class EventProcessedId(override val value: String) : UuidValueObject(value = value)
+    data class EventProcessedName(val value: String)
+    data class EventProcessedConsumedBy(val value: String)
+    data class EventProcessedConsumedOn(val value: Instant)
+    data class EventProcessedEventTimeElapsedMilliseconds(val value: Long)
+
     companion object {
         fun fromPrimitives(
             id: String,
@@ -17,11 +24,11 @@ data class EventProcessed(
             consumedOn: Instant,
             timeElapsedMilliseconds: Long
         ) = EventProcessed(
-            id = EventId(id),
-            name = EventName(name),
-            consumedBy = EventConsumedBy(consumedBy),
-            consumedOn = EventConsumedOn(consumedOn),
-            timeElapsedMilliseconds = EventTimeElapsedMilliseconds(timeElapsedMilliseconds)
+            id = EventProcessedId(id),
+            name = EventProcessedName(name),
+            consumedBy = EventProcessedConsumedBy(consumedBy),
+            consumedOn = EventProcessedConsumedOn(consumedOn),
+            timeElapsedMilliseconds = EventProcessedEventTimeElapsedMilliseconds(timeElapsedMilliseconds)
         )
     }
 }
