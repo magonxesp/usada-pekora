@@ -8,7 +8,7 @@ import com.usadapekora.auth.domain.Random
 import com.usadapekora.auth.domain.oauth.*
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
-import com.usadapekora.shared.domain.bus.EventBus
+import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository

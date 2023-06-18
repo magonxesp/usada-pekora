@@ -1,10 +1,10 @@
-package com.usadapekora.shared.infrastructure.bus
+package com.usadapekora.shared.infrastructure.bus.event
 
 import arrow.core.Either
 import com.rabbitmq.client.ConnectionFactory
-import com.usadapekora.shared.domain.bus.Event
-import com.usadapekora.shared.domain.bus.EventBus
-import com.usadapekora.shared.domain.bus.EventBusError
+import com.usadapekora.shared.domain.bus.event.Event
+import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.bus.event.EventBusError
 import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMapperInstance
 import com.usadapekora.shared.rabbitMqUrl
 

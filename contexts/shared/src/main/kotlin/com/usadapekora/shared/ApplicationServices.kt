@@ -1,10 +1,10 @@
 package com.usadapekora.shared
 
 import com.usadapekora.shared.domain.Logger
-import com.usadapekora.shared.domain.bus.EventBus
+import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.user.UserRepository
 import com.usadapekora.shared.infrastructure.Sfl4jLogger
-import com.usadapekora.shared.infrastructure.bus.RabbitMqEventBus
+import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventBus
 import com.usadapekora.shared.infrastructure.user.peristence.mongodb.MongoDbUserRepository
 import org.koin.core.Koin
 import org.koin.core.KoinApplication

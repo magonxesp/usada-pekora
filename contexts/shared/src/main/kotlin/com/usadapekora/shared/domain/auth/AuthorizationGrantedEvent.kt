@@ -1,6 +1,6 @@
 package com.usadapekora.shared.domain.auth
 
-import com.usadapekora.shared.domain.bus.Event
+import com.usadapekora.shared.domain.bus.event.Event
 import kotlinx.datetime.Clock
 import java.util.UUID
 

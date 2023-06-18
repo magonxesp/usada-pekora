@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.bus
+package com.usadapekora.shared.domain.bus.event
 
 import kotlinx.datetime.Clock
 import java.util.UUID

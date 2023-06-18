@@ -1,4 +1,4 @@
-package com.usadapekora.shared.domain.bus
+package com.usadapekora.shared.domain.bus.event
 
 import com.usadapekora.shared.domain.valueobject.UuidValueObject
 import kotlinx.datetime.Instant

@@ -15,8 +15,6 @@ import com.usadapekora.auth.infrastructure.oauth.discord.DiscordOAuthProvider
 import com.usadapekora.auth.infrastructure.oauth.jakarta.JakartaOAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.infrastructure.oauth.koin.KoinOAuthProviderFactory
 import com.usadapekora.auth.infrastructure.shared.persistence.redis.RedisAuthorizationGrantRepository
-import com.usadapekora.shared.domain.bus.EventBus
-import com.usadapekora.shared.infrastructure.bus.RabbitMqEventBus
 import kotlinx.datetime.Clock
 import org.koin.dsl.bind
 import org.koin.dsl.module
