@@ -1,5 +1,7 @@
 package com.usadapekora.shared.domain.bus.event
 
+import com.usadapekora.shared.EventSubscribers
+
 interface EventConsumer {
-    fun startConsume()
+    fun startConsume(subscribers: EventSubscribers)
 }

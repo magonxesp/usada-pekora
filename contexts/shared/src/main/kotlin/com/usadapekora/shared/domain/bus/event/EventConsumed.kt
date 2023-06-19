@@ -4,10 +4,10 @@ import com.usadapekora.shared.domain.valueobject.UuidValueObject
 
 data class EventConsumed(
     val id: EventConsumedId,
-    val consumedBy: EventConsumedConsumedBy,
+    val consumedBy: EventConsumedBy,
 ) {
     data class EventConsumedId(override val value: String) : UuidValueObject(value = value)
-    data class EventConsumedConsumedBy(val value: String)
+    data class EventConsumedBy(val value: String)
 
     companion object {
         fun fromPrimitives(
@@ -15,7 +15,7 @@ data class EventConsumed(
             consumedBy: String,
         ) = EventConsumed(
             id = EventConsumedId(id),
-            consumedBy = EventConsumedConsumedBy(consumedBy),
+            consumedBy = EventConsumedBy(consumedBy),
         )
     }
 }

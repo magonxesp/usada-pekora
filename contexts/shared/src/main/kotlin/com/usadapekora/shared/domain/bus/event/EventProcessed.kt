@@ -1,5 +1,6 @@
 package com.usadapekora.shared.domain.bus.event
 
+import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.domain.valueobject.UuidValueObject
 import kotlinx.datetime.Instant
 
@@ -9,7 +10,7 @@ data class EventProcessed(
     val consumedBy: EventProcessedConsumedBy,
     val consumedOn: EventProcessedConsumedOn,
     val timeElapsedMilliseconds: EventProcessedEventTimeElapsedMilliseconds
-) {
+) : Entity() {
     data class EventProcessedId(override val value: String) : UuidValueObject(value = value)
     data class EventProcessedName(val value: String)
     data class EventProcessedConsumedBy(val value: String)
@@ -31,4 +32,6 @@ data class EventProcessed(
             timeElapsedMilliseconds = EventProcessedEventTimeElapsedMilliseconds(timeElapsedMilliseconds)
         )
     }
+
+    override fun id(): String = id.value
 }
