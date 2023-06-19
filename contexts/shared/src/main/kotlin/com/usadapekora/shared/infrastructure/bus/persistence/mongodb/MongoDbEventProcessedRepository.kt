@@ -18,7 +18,7 @@ class MongoDbEventProcessedRepository : MongoDbRepository<EventProcessed, EventP
 ), EventProcessedRepository {
     override fun find(
         id: EventProcessed.EventProcessedId,
-        consumedBy: EventConsumed.EventConsumedBy
+        consumedBy: EventProcessed.EventProcessedConsumedBy
     ): Either<EventProcessedError.NotFound, EventProcessed> = Either.catch {
         val eventProcessed = oneQuery<EventProcessedDocument>(collection) { collection ->
             collection.findOne(and(EventProcessedDocument::id eq id.value, EventProcessedDocument::consumedBy eq consumedBy.value) )

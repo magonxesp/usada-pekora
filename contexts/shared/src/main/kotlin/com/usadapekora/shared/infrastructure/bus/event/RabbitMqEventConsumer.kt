@@ -45,7 +45,7 @@ class RabbitMqEventConsumer(
                 // second verification if the event is really processed
                 eventProcessedRepository.find(
                     id = EventProcessed.EventProcessedId(event.id),
-                    consumedBy = EventConsumed.EventConsumedBy(subscriberClass.toString())
+                    consumedBy = EventProcessed.EventProcessedConsumedBy(subscriberClass.toString())
                 ).onRight { return }
 
                 val timeElapsed = measureTimeMillis {
