@@ -9,7 +9,9 @@ import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMa
 import com.usadapekora.shared.rabbitMqUrl
 import kotlinx.datetime.Clock
 import org.koin.java.KoinJavaComponent.inject
+import java.util.logging.Logger
 import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
 import kotlin.system.measureTimeMillis
 
 class RabbitMqEventConsumer(
@@ -17,10 +19,12 @@ class RabbitMqEventConsumer(
     private val eventProcessedRepository: EventProcessedRepository,
     private val clock: Clock
 ) : EventConsumer {
+    private val logger = Logger.getLogger(this::class.toString())
+
     private inner class SubscriberConsumer(
         channel: Channel,
-        private val subscriberClass: KClass<EventSubscriber<Event>>,
-        private val eventClass: KClass<Event>
+        private val subscriberClass: KClass<*>,
+        private val eventClass: KClass<*>
     ) : DefaultConsumer(channel) {
         private val mapper = createJacksonObjectMapperInstance()
 
@@ -31,7 +35,11 @@ class RabbitMqEventConsumer(
             body: ByteArray?
         ) {
             try {
-                val event = mapper.readValue(body, eventClass.java)
+                if (!eventClass.isSubclassOf(Event::class)) {
+                    return
+                }
+
+                val event = mapper.readValue(body, eventClass.java) as Event
                 val subscriber: EventSubscriber<Event> by inject(subscriberClass.java)
                 var result: Either<EventSubscriberError, Unit>
 
@@ -53,7 +61,10 @@ class RabbitMqEventConsumer(
                 }
 
                 result
-                    .onLeft { channel.basicReject(envelope!!.deliveryTag, false) }
+                    .onLeft {
+                        logger.warning("Failed to consume event ${event.name} with id ${event.id}: ${it.message}")
+                        channel.basicReject(envelope!!.deliveryTag, false)
+                    }
                     .onRight {
                         eventProcessedRepository.save(
                             EventProcessed.fromPrimitives(
@@ -65,29 +76,32 @@ class RabbitMqEventConsumer(
                             )
                         )
                         channel.basicAck(envelope!!.deliveryTag, false)
+                        logger.info("Event ${event.name} with id ${event.id} successfully consumed")
                     }
-
             } catch (e: Exception) {
+                logger.warning("Failed to consume event: ${e.message}")
                 channel.basicReject(envelope!!.deliveryTag, false)
             }
         }
     }
 
-    override fun startConsume(subscribers: EventSubscribers) {
+    override fun startConsume(subscribers: EventSubscribers): Either<EventConsumerError, Unit> = Either.catch {
         val connection = ConnectionFactory()
             .apply { setUri(rabbitMqUrl) }
             .newConnection()
 
-        subscribers.forEach { subscriberClass ->
-            val subscribesTo = getAnnotation<SubscribesEvent>(subscriberClass)
-            val eventName = getAnnotation<EventName>(subscribesTo.event).name
-            val queue = RabbitMqNameFormatter.queueName(RabbitMqNameFormatter.QueueType.EVENT, eventName)
+        subscribers
+            .filter { it.isSubclassOf(EventSubscriber::class) }
+            .forEach { subscriberClass ->
+                val subscribesTo = getAnnotation<SubscribesEvent<*>>(subscriberClass)
+                val eventName = getAnnotation<EventName>(subscribesTo.eventClass).name
+                val queue = RabbitMqNameFormatter.queueName(RabbitMqNameFormatter.QueueType.EVENT, eventName)
 
-            connection.use {
-                it.createChannel().use { channel ->
-                    channel.basicConsume(queue, SubscriberConsumer(channel, subscriberClass, subscribesTo.event))
+                connection.use {
+                    it.createChannel().use { channel ->
+                        channel.basicConsume(queue, SubscriberConsumer(channel, subscriberClass, subscribesTo.eventClass))
+                    }
                 }
             }
-        }
-    }
+    }.mapLeft { EventConsumerError(it.message) }
 }

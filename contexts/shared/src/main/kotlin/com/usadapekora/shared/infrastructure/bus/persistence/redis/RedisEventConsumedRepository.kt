@@ -8,6 +8,7 @@ import com.usadapekora.shared.domain.bus.event.EventConsumedRepository
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisRepository
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import redis.clients.jedis.params.SetParams
 
 class RedisEventConsumedRepository : RedisRepository(), EventConsumedRepository {
 
@@ -35,7 +36,7 @@ class RedisEventConsumedRepository : RedisRepository(), EventConsumedRepository 
         redisConnection { connection ->
             val jsonObject = EventConsumedJson.fromEntity(entity)
             val jsonString = json.encodeToString(jsonObject)
-            connection.set(key(entity.id, entity.consumedBy), jsonString)
+            connection.set(key(entity.id, entity.consumedBy), jsonString, SetParams().ex(30 * 60))
         }
         Unit
     }.mapLeft { EventConsumedError.SaveError(it.message) }
