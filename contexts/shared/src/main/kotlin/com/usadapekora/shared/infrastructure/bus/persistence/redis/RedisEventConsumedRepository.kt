@@ -18,7 +18,7 @@ class RedisEventConsumedRepository : RedisRepository(), EventConsumedRepository 
         consumedBy: EventConsumed.EventConsumedBy
     ): Either<EventConsumedError.NotFound, EventConsumed> = Either.catch {
         val jsonString = redisConnection { connection ->
-            connection.get("event_processed_${id}_consumed_by_$consumedBy")
+            connection.get("event_consumed_${id}_consumed_by_$consumedBy")
         }
 
         if (jsonString.isNullOrBlank()) {
@@ -32,8 +32,8 @@ class RedisEventConsumedRepository : RedisRepository(), EventConsumedRepository 
         redisConnection { connection ->
             val jsonObject = EventConsumedJson.fromEntity(entity)
             val jsonString = json.encodeToString(jsonObject)
-            connection.set("event_processed_${entity.id.value}", jsonString)
-            connection.set("event_processed_${entity.id.value}_consumed_by_${entity.consumedBy.value}", jsonString)
+            connection.set("event_consumed_${entity.id.value}", jsonString)
+            connection.set("event_consumed_${entity.id.value}_consumed_by_${entity.consumedBy.value}", jsonString)
         }
         Unit
     }.mapLeft { EventConsumedError.SaveError(it.message) }
