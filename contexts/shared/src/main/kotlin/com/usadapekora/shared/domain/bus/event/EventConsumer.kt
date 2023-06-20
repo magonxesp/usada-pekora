@@ -4,5 +4,5 @@ import arrow.core.Either
 import com.usadapekora.shared.EventSubscribers
 
 interface EventConsumer {
-    fun startConsume(subscribers: EventSubscribers): Either<EventConsumerError, Unit>
+    fun consume(subscribers: EventSubscribers): Either<EventConsumerError, Unit>
 }

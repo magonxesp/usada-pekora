@@ -126,7 +126,7 @@ class RabbitMqEventConsumer(
         consumers.add(consumer)
     }
 
-    override fun startConsume(subscribers: EventSubscribers): Either<EventConsumerError, Unit> = Either.catch {
+    override fun consume(subscribers: EventSubscribers): Either<EventConsumerError, Unit> = Either.catch {
         val connection = getConnection()
         val channel = connection.createChannel()
 
