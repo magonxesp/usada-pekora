@@ -47,12 +47,13 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
     }
 
     @Test
-    fun `it should consume the test event`() {
+    fun `it should consume the test event`() = testSuspend {
         val result = bus.dispatch(TestEvent())
         assertIs<Unit>(result.getOrNull())
 
         val consumerResult = consumer.startConsume(arrayOf(TestSubscriber::class))
         assertIs<Unit>(consumerResult.getOrNull())
+        delay(1000)
         assertTrue(consumed)
     }
 

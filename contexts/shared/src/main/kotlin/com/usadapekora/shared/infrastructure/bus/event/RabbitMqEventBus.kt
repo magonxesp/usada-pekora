@@ -25,7 +25,7 @@ class RabbitMqEventBus : EventBus {
             connection.use {
                 it.createChannel().use { channel ->
                     channel.exchangeDeclare(exchangeName, "direct", true)
-                    channel.queueDeclare(queueName, true, false, true, null)
+                    channel.queueDeclare(queueName, true, false, false, null)
                     channel.queueBind(queueName, exchangeName, routingKey)
                     channel.basicPublish(exchangeName, routingKey, null, message.toByteArray())
                 }
