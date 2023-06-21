@@ -6,26 +6,23 @@ import com.usadapekora.shared.DependencyInjectionEnabledTest
 import com.usadapekora.shared.domain.bus.event.*
 import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
 import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
-import io.ktor.test.dispatcher.*
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import org.koin.dsl.module
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
+import java.util.UUID
+import kotlin.test.*
 
 class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
 
-    var consumed = false
+    var handledEvents = mutableListOf<String>()
 
     @EventName("test_event")
-    class TestEvent(val testValue: String = "example") : Event()
+    class TestEvent(val exampleId: String = UUID.randomUUID().toString()) : Event()
 
     @SubscribesEvent<TestEvent>(eventClass = TestEvent::class)
     inner class TestSubscriber : EventSubscriber<TestEvent> {
         override fun handle(event: TestEvent): Either<EventSubscriberError, Unit> {
-            consumed = true
+            handledEvents += event.exampleId
             return Unit.right()
         }
     }
@@ -42,18 +39,38 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
         setupTestModules {
             listOf(module { single { TestSubscriber() } })
         }
-        consumed = false
     }
 
     @Test
-    fun `it should consume the test event`() = testSuspend {
-        val result = bus.dispatch(TestEvent())
+    fun `it should consume the test event`() = runBlocking {
+        handledEvents = mutableListOf()
+        val event = TestEvent()
+        val result = bus.dispatch(event)
         assertIs<Unit>(result.getOrNull())
 
         val consumerResult = consumer.consume(arrayOf(TestSubscriber::class))
         assertIs<Unit>(consumerResult.getOrNull())
-        delay(1000)
-        assertTrue(consumed)
+        Thread.sleep(1000)
+        assertContentEquals(listOf(event.exampleId), handledEvents)
+    }
+
+    @Test
+    fun `it should consume the test event avoiding race conditions and duplicates`() = runBlocking {
+        handledEvents = mutableListOf()
+        val events = (1..1000).map { TestEvent() }
+
+        val result = bus.dispatch(*events.toTypedArray())
+        assertIs<Unit>(result.getOrNull())
+
+        (1..10).forEach { _ ->
+            consumer.consume(arrayOf(TestSubscriber::class)).run {
+                assertIs<Unit>(getOrNull())
+            }
+        }
+
+        Thread.sleep(10000)
+        val exampleIds = events.map { it.exampleId }.toMutableList()
+        assertContentEquals(exampleIds, handledEvents)
     }
 
 }
