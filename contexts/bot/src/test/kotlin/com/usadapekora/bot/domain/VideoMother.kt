@@ -1,9 +1,8 @@
 package com.usadapekora.bot.domain
 
-import com.usadapekora.shared.domain.DateTimeUtils
 import com.usadapekora.bot.domain.video.Video
+import com.usadapekora.shared.domain.DateTimeUtils
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.time.ZonedDateTime
 

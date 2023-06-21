@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Sidebar, SidebarHeading, SidebarBody, SidebarTitle } from '@usada-pekora/shared-ui'
+import { Sidebar, SidebarBody, SidebarHeading, SidebarTitle } from '@usada-pekora/shared-ui'
 import TriggerForm from '../TriggerForm/TriggerForm'
 import { TriggerFormData } from '../../../../modules/trigger/form'
 

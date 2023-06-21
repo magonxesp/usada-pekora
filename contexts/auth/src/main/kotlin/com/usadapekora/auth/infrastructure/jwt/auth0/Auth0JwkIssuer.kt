@@ -1,8 +1,6 @@
 package com.usadapekora.auth.infrastructure.jwt.auth0
 
 import arrow.core.Either
-import arrow.core.right
-import com.nimbusds.jose.Algorithm
 import com.nimbusds.jose.jwk.JWK
 import com.nimbusds.jose.jwk.KeyUse
 import com.nimbusds.jose.jwk.RSAKey

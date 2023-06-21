@@ -4,7 +4,7 @@ import { Validators } from '../../../../modules/shared/form/validator'
 import { isNotEmpty, isRegex } from '../../../../modules/shared/validations'
 import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
 import { FormGroupProps } from '../../../../modules/shared/form/props'
-import { TextInput, TextSelect, SelectOption } from '@usada-pekora/shared-ui'
+import { SelectOption, TextInput, TextSelect } from '@usada-pekora/shared-ui'
 import { triggerCompare } from '../../../../modules/trigger/trigger'
 import { emptyTriggerFormData, TriggerEntityFormData, TriggerFormGroupRef } from '../../../../modules/trigger/form'
 

@@ -4,9 +4,9 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
+import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
-import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne

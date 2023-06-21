@@ -2,13 +2,12 @@ package com.usadapekora.bot.application.video
 
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.bot.domain.VideoMother
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoException
-import com.usadapekora.bot.domain.VideoMother
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

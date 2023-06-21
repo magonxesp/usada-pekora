@@ -1,8 +1,8 @@
 package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
 import kotlin.test.Test
 import kotlin.test.assertEquals

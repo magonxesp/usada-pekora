@@ -1,14 +1,13 @@
 package com.usadapekora.bot.infraestructure.guild.mongodb
 
-import com.usadapekora.bot.domain.guild.*
+import com.usadapekora.bot.domain.guild.Guild
+import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
-import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
-import java.util.*
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertIs
-import kotlin.test.assertTrue
 
 class MongoDbGuildRepositoryTest : MongoDbRepositoryTestCase<Guild, MongoDbGuildRepository>(
     repository = MongoDbGuildRepository(),

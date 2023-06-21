@@ -10,7 +10,6 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

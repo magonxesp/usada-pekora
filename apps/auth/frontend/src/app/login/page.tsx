@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { Button, MainContainer } from '@usada-pekora/shared-ui'
 import { oAuthProviderAuthorize, oAuthProviders } from '../../helpers/backend'
 

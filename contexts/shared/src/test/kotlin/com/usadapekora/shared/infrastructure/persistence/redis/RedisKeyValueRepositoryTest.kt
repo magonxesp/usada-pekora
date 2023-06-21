@@ -1,7 +1,7 @@
 package com.usadapekora.shared.infrastructure.persistence.redis
 
 import org.junit.jupiter.api.Test
-import java.util.Random
+import java.util.*
 import kotlin.test.assertEquals
 
 class RedisKeyValueRepositoryTest {

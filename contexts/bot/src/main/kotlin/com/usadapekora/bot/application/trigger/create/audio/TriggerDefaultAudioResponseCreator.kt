@@ -3,13 +3,10 @@ package com.usadapekora.bot.application.trigger.create.audio
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
-import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
-import java.io.File
-import kotlin.io.path.Path
+import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.shared.domain.file.DomainFileWriter
 
 class TriggerDefaultAudioResponseCreator(private val repository: TriggerAudioDefaultRepository, private val writer: DomainFileWriter) {
 

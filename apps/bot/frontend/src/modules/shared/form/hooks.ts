@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FormErrors, Validator, Validators, FormData } from './validator'
+import { FormData, FormErrors, Validator, Validators } from './validator'
 import { FormGroupProps } from './props'
 
 export function useValidator<T extends FormData>(validators: Validators, formData: T) {

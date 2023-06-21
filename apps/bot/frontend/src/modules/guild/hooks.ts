@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppStore } from '../../store/app'
 
 export function useSelectedGuild() {

@@ -1,5 +1,5 @@
 import { useIntl } from 'react-intl'
-import { ConfirmModal } from '@usada-pekora/shared-ui'
+import { ConfirmModal, useModal } from '@usada-pekora/shared-ui'
 import { createElement } from 'react'
 import { alert, asyncAlert } from '../shared/alert'
 import { createTrigger } from './create'
@@ -16,7 +16,6 @@ import { deleteTriggerTextResponse } from './text-response/delete-default'
 import { deleteTriggerDefaultAudioResponse } from './audio-response/delete-default'
 import { updateTriggerDefaultAudioResponse } from './audio-response/update-default'
 import { useAppStore } from '../../store/app'
-import { useModal } from '@usada-pekora/shared-ui'
 
 export function useFetchTriggers() {
   const { selected } = useSelectedGuild()

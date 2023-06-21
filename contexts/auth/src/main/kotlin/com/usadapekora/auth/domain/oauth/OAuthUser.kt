@@ -1,6 +1,6 @@
 package com.usadapekora.auth.domain.oauth
 
-import java.util.UUID
+import java.util.*
 
 data class OAuthUser(
     val id: String,

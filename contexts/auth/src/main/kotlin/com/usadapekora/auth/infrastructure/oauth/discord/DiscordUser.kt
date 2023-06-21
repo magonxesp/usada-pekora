@@ -1,6 +1,5 @@
 package com.usadapekora.auth.infrastructure.oauth.discord
 
-import com.usadapekora.auth.domain.oauth.OAuthUser
 import kotlinx.serialization.Serializable
 
 @Serializable

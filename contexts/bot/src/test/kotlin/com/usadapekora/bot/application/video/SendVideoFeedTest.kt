@@ -1,12 +1,12 @@
 package com.usadapekora.bot.application.video
 
-import com.usadapekora.bot.domain.video.VideoFeedNotifier
 import com.usadapekora.bot.domain.VideoMother
+import com.usadapekora.bot.domain.video.VideoFeedNotifier
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import java.util.Random
+import java.util.*
 import kotlin.test.Test
 
 class SendVideoFeedTest {

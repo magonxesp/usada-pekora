@@ -3,7 +3,7 @@ package com.usadapekora.shared.domain.auth
 import com.usadapekora.shared.domain.bus.event.Event
 import com.usadapekora.shared.domain.bus.event.EventName
 import kotlinx.datetime.Clock
-import java.util.UUID
+import java.util.*
 
 @EventName("auth.authorization_granted")
 data class AuthorizationGrantedEvent(

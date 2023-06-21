@@ -1,4 +1,4 @@
-import styles from "./MainContainer.module.css"
+import styles from './MainContainer.module.css'
 import React from 'react'
 
 interface MainContainerProps {

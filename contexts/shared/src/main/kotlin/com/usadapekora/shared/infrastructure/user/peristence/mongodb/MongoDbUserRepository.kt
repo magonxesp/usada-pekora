@@ -3,11 +3,12 @@ package com.usadapekora.shared.infrastructure.user.peristence.mongodb
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
-import org.litote.kmongo.*
+import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
 
 class MongoDbUserRepository : MongoDbRepository<User, UserDocument>(
     collection = "user",

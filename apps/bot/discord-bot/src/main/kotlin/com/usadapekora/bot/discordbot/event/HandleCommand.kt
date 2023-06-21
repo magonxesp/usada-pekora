@@ -1,12 +1,12 @@
 package com.usadapekora.bot.discordbot.event
 
-import discord4j.core.event.domain.message.MessageCreateEvent
-import com.usadapekora.bot.discordbot.shared.annotation.Command
 import com.usadapekora.bot.discordbot.commands
 import com.usadapekora.bot.discordbot.defaultCommandPrefix
 import com.usadapekora.bot.discordbot.shared.CommandHandler
+import com.usadapekora.bot.discordbot.shared.annotation.Command
 import com.usadapekora.bot.discordbot.shared.exception.CommandException
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerCommandFired
+import discord4j.core.event.domain.message.MessageCreateEvent
 import kotlinx.coroutines.reactor.awaitSingle
 import java.util.logging.Level
 import java.util.logging.Logger

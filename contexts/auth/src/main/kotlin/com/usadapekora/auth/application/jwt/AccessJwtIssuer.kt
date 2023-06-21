@@ -2,9 +2,9 @@ package com.usadapekora.auth.application.jwt
 
 import arrow.core.Either
 import arrow.core.left
-import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.jwt.Jwt
 import com.usadapekora.auth.domain.jwt.JwtError
+import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 

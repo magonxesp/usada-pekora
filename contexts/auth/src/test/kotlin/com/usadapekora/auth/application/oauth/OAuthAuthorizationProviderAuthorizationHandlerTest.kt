@@ -5,7 +5,10 @@ import arrow.core.right
 import com.usadapekora.auth.domain.AuthorizationGrantMother
 import com.usadapekora.auth.domain.OAuthUserMother
 import com.usadapekora.auth.domain.Random
-import com.usadapekora.auth.domain.oauth.*
+import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
+import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
+import com.usadapekora.auth.domain.oauth.OAuthProvider
+import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
 import com.usadapekora.shared.domain.bus.event.EventBus

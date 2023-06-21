@@ -1,7 +1,7 @@
 package com.usadapekora.shared.domain.valueobject
 
 import com.usadapekora.shared.domain.exception.InvalidUuidException
-import java.util.UUID
+import java.util.*
 
 open class UuidValueObject(open val value: String?) {
     init {

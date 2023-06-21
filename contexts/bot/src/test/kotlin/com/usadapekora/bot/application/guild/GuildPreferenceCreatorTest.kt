@@ -10,7 +10,7 @@ import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.util.Random
+import java.util.*
 import kotlin.test.Test
 
 class GuildPreferenceCreatorTest {

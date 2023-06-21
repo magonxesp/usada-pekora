@@ -1,8 +1,8 @@
 package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 
+import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
-import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
 import org.litote.kmongo.eq

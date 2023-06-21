@@ -7,7 +7,10 @@ import com.mongodb.client.MongoDatabase
 import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.mongoConnectionUrl
 import com.usadapekora.shared.mongoDatabase
-import org.litote.kmongo.*
+import org.litote.kmongo.KMongo
+import org.litote.kmongo.eq
+import org.litote.kmongo.getCollectionOfName
+import org.litote.kmongo.updateOne
 import kotlin.concurrent.thread
 import kotlin.reflect.KProperty
 

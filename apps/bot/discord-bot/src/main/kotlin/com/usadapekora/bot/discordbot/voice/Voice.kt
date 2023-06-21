@@ -1,9 +1,9 @@
 package com.usadapekora.bot.discordbot.voice
 
-import discord4j.core.event.domain.message.MessageCreateEvent
 import com.usadapekora.bot.discordbot.audio.AudioScheduler
 import com.usadapekora.bot.discordbot.audio.audioProviderInstance
 import com.usadapekora.bot.discordbot.audio.playerManagerInstance
+import discord4j.core.event.domain.message.MessageCreateEvent
 
 private val playerManager = playerManagerInstance()
 private val player = playerManager.createPlayer()

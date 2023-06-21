@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
-import { env } from "../../../modules/shared/env";
+import { env } from '../../../modules/shared/env'
 
 export const authOptions: NextAuthOptions = {
   providers: [

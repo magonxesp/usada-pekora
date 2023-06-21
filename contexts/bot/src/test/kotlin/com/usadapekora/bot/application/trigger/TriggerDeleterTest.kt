@@ -3,13 +3,12 @@ package com.usadapekora.bot.application.trigger
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
-import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

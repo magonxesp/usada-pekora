@@ -1,10 +1,10 @@
 package com.usadapekora.bot.domain.trigger
 
-import com.usadapekora.shared.domain.Entity
-import com.usadapekora.shared.domain.valueobject.UuidValueObject
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
+import com.usadapekora.shared.domain.Entity
+import com.usadapekora.shared.domain.valueobject.UuidValueObject
 
 data class Trigger(
     val id: TriggerId,

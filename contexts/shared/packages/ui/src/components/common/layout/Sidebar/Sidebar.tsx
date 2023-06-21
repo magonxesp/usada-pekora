@@ -1,4 +1,4 @@
-import styles from "./Sidebar.module.css"
+import styles from './Sidebar.module.css'
 
 interface SidebarProps {
   children: JSX.Element

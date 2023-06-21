@@ -5,22 +5,19 @@ import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.domain.FileMother
-import com.usadapekora.shared.domain.file.DomainFileWriter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
+import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.storageDirPath
+import com.usadapekora.shared.domain.file.DomainFileWriter
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.assertThrows
 import java.io.File
-import java.util.UUID
+import java.util.*
 import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class TriggerDefaultAudioResponseCreatorTest {

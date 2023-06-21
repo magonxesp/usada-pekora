@@ -2,7 +2,6 @@ package com.usadapekora.bot.domain.trigger.audio
 
 import arrow.core.Either
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 
 
 interface TriggerAudioResponseRepository {

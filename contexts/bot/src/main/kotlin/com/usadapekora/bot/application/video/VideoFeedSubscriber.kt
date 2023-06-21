@@ -1,7 +1,6 @@
 package com.usadapekora.bot.application.video
 
 import arrow.core.Either
-import arrow.core.raise.IorRaise
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.VideoException
 import kotlinx.coroutines.runBlocking

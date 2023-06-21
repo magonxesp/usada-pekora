@@ -2,7 +2,7 @@ import styles from './IconSelect.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { Picture } from '../../image/Picture/Picture'
-import { Select, SelectProps, SelectOption } from '../Select/Select'
+import { Select, SelectOption, SelectProps } from '../Select/Select'
 
 export interface IconSelectOption extends SelectOption {
   icon: string

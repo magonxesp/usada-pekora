@@ -1,9 +1,9 @@
 package com.usadapekora.bot.discordbot.event
 
-import discord4j.core.event.domain.message.MessageCreateEvent
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerGuildCount
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerMessageRequest
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerProccesedMessageRequest
+import discord4j.core.event.domain.message.MessageCreateEvent
 import kotlinx.coroutines.reactor.awaitSingle
 import java.util.logging.Level
 import java.util.logging.Logger

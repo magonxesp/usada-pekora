@@ -6,8 +6,8 @@ import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.guild.Guild.GuildId
 import com.usadapekora.bot.domain.guild.Guild.GuildProviderId
-import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildRepository
 
 class GuildCreator(private val repository: GuildRepository) {

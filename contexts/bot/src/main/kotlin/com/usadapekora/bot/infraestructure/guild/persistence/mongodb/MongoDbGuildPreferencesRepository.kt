@@ -7,7 +7,10 @@ import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
-import org.litote.kmongo.*
+import org.litote.kmongo.eq
+import org.litote.kmongo.exists
+import org.litote.kmongo.findOne
+import org.litote.kmongo.keyProjection
 
 class MongoDbGuildPreferencesRepository : MongoDbRepository<GuildPreferences, GuildPreferencesDocument>(
     collection = "guildPreferences",

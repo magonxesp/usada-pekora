@@ -3,12 +3,10 @@ package com.usadapekora.bot.application.trigger.delete.audio
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
-import kotlin.io.path.Path
+import com.usadapekora.shared.domain.file.DomainFileDeleter
 
 class TriggerDefaultAudioDeleter(private val repository: TriggerAudioDefaultRepository, private val  fileDeleter: DomainFileDeleter) {
 

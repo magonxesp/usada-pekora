@@ -1,7 +1,10 @@
 package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 
-import com.usadapekora.bot.domain.trigger.*
-import com.usadapekora.bot.domain.trigger.audio.*
+import com.usadapekora.bot.domain.trigger.Trigger
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProviderRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 
 class MongoDbTriggerAudioRepository : TriggerAudioResponseRepository {
 

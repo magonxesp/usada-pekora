@@ -14,7 +14,6 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.plus
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.time.Duration
 
 class AccessJwtIssuerTest {
 

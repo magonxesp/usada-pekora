@@ -9,14 +9,12 @@ import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderError
 import com.usadapekora.auth.domain.oauth.OAuthUser
-import com.usadapekora.auth.domain.shared.AuthenticatedUser
 import com.usadapekora.auth.oAuthProviderRedirectUrl
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.net.URLEncoder
 

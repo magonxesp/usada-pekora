@@ -7,8 +7,8 @@ import com.usadapekora.auth.application.oauth.OAuthAuthorizationProviderAuthoriz
 import com.usadapekora.auth.domain.jwt.JwkIssuer
 import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
-import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
+import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.auth.infrastructure.jwt.auth0.Auth0JwkIssuer
 import com.usadapekora.auth.infrastructure.jwt.auth0.Auth0JwtIssuer
 import com.usadapekora.auth.infrastructure.oauth.discord.DiscordOAuthProvider

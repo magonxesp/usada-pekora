@@ -2,7 +2,6 @@ package com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb
 
 import arrow.core.Either
 import arrow.core.left
-import com.usadapekora.shared.domain.bus.event.EventConsumed
 import com.usadapekora.shared.domain.bus.event.EventProcessed
 import com.usadapekora.shared.domain.bus.event.EventProcessedError
 import com.usadapekora.shared.domain.bus.event.EventProcessedRepository

@@ -2,8 +2,8 @@ package com.usadapekora.shared.application.user
 
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.UserMother
+import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
 import io.mockk.every
 import io.mockk.mockk

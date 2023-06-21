@@ -1,5 +1,8 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
-import { MinusCircleIcon as SolidMinusCircleIcon, PlusCircleIcon as SolidPlusCircleIcon } from '@heroicons/react/24/solid'
+import {
+  MinusCircleIcon as SolidMinusCircleIcon,
+  PlusCircleIcon as SolidPlusCircleIcon
+} from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import styles from './CollapsibleFormGroup.module.css'
 import { Button } from '../Button/Button'

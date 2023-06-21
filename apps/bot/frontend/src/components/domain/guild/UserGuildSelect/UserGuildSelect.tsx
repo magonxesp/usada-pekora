@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Guild } from '../../../../modules/guild/guild'
 import styles from './UserGuildSelect.module.css'
-import { LoadingSkeletonElement, IconSelect, IconSelectOption } from '@usada-pekora/shared-ui'
+import { IconSelect, IconSelectOption, LoadingSkeletonElement } from '@usada-pekora/shared-ui'
 import { useGuilds, useSelectedGuild } from '../../../../modules/guild/hooks'
 
 export default function UserGuildSelect() {

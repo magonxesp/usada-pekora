@@ -5,7 +5,6 @@ import io.ktor.server.application.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.java.KoinJavaComponent.inject
 import java.util.logging.Level
 import java.util.logging.Logger

@@ -1,8 +1,8 @@
 package com.usadapekora.shared.infrastructure.file.metadata
 
 import org.apache.tika.io.TikaInputStream
-import org.apache.tika.mime.MediaType
 import org.apache.tika.metadata.Metadata
+import org.apache.tika.mime.MediaType
 import org.apache.tika.parser.AutoDetectParser
 import java.io.ByteArrayInputStream
 

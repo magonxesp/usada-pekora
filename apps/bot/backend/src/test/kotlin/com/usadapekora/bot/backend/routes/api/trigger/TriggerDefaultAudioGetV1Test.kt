@@ -5,7 +5,6 @@ import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.server.testing.*
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertContentEquals

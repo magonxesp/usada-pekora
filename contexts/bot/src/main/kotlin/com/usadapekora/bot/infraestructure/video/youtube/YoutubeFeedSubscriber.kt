@@ -3,11 +3,11 @@ package com.usadapekora.bot.infraestructure.video.youtube
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.backendBaseUrl
+import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.VideoException
 import com.usadapekora.bot.youtubeChannelId
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*

@@ -2,8 +2,6 @@ package com.usadapekora.shared.infrastructure.bus.event
 
 import com.usadapekora.shared.domain.bus.event.Event
 import com.usadapekora.shared.domain.bus.event.EventName
-import kotlinx.datetime.Clock
-import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertIs
 

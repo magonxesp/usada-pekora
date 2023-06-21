@@ -1,7 +1,6 @@
 package com.usadapekora.bot.infraestructure.guild.persistence.mongodb
 
 import com.usadapekora.bot.domain.guild.GuildMember
-import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDocument
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDomainEntityDocument
 import org.bson.types.ObjectId

@@ -2,7 +2,6 @@ package com.usadapekora.bot.backend.routes.api.trigger
 
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.server.testing.*
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals

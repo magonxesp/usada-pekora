@@ -3,15 +3,14 @@ package com.usadapekora.bot.application.trigger
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.shared.domain.file.DomainFileReader
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
+import com.usadapekora.shared.domain.file.DomainFileReader
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.assertThrows
 import kotlin.io.path.Path
 import kotlin.random.Random
 import kotlin.test.Test

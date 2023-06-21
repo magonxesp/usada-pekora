@@ -3,9 +3,8 @@ package com.usadapekora.auth.infrastructure.shared.persistence.redis
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 @Serializable
 data class AuthorizationGrantJson(

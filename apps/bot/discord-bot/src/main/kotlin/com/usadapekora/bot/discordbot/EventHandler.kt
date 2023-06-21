@@ -1,8 +1,8 @@
 package com.usadapekora.bot.discordbot
 
+import com.usadapekora.bot.discordbot.event.handleEvents
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.message.MessageCreateEvent
-import com.usadapekora.bot.discordbot.event.handleEvents
 import kotlinx.coroutines.reactive.asFlow
 
 suspend fun GatewayDiscordClient.handleEvents() {

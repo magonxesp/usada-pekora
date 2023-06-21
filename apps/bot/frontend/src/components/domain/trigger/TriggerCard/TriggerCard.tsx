@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useDeleteTrigger } from '../../../../modules/trigger/hooks'
 import { Trigger } from '../../../../modules/trigger/trigger'
-import { Card, Button } from '@usada-pekora/shared-ui'
+import { Button, Card } from '@usada-pekora/shared-ui'
 import styles from './TriggerCard.module.css'
 import TriggerResponseList from '../TriggerResponseList/TriggerResponseList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

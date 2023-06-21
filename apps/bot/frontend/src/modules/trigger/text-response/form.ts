@@ -1,6 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import { TriggerDefaultAudioFindResponse } from '../audio-response/fetch-default'
-import { TriggerAudioResponseFormData } from '../audio-response/form'
 import { TriggerTextResponseFindResponse } from './fetch-default'
 
 export interface TriggerTextResponseFormData {

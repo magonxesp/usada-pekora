@@ -2,14 +2,12 @@ package com.usadapekora.bot.application.trigger
 
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
 import com.usadapekora.shared.domain.file.DomainFileDeleter
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
-import com.usadapekora.bot.domain.trigger.utils.TriggerAudioUtils
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlin.io.path.Path
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

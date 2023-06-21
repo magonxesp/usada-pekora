@@ -1,7 +1,6 @@
 package com.usadapekora.shared.infrastructure.file.filesystem
 
 import com.usadapekora.shared.domain.Random
-import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileWriter
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals

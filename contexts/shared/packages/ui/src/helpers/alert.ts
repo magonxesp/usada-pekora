@@ -1,4 +1,4 @@
-import { toast, TypeOptions, ToastPromiseParams, ToastOptions } from 'react-toastify'
+import { toast, ToastOptions, ToastPromiseParams, TypeOptions } from 'react-toastify'
 
 const defaultToastOptions: ToastOptions = {
   hideProgressBar: true,
