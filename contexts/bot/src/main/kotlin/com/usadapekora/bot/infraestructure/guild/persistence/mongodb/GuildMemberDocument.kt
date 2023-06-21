@@ -11,7 +11,7 @@ class GuildMemberDocument(
     var guildId: String? = null,
     var userId: String? = null,
 ): MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<GuildMember, GuildMemberDocument>(GuildMemberDocument()) {
+    companion object : MongoDbDomainEntityDocument<GuildMember, GuildMemberDocument>({ GuildMemberDocument() }) {
         override fun fromEntity(
             entity: GuildMember,
             document: GuildMemberDocument

@@ -1,7 +1,7 @@
 package com.usadapekora.shared.infrastructure.bus.persistence
 
 import com.usadapekora.shared.domain.EventConsumedMother
-import com.usadapekora.shared.infrastructure.bus.event.persistence.redis.RedisEventConsumedRepository
+import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs

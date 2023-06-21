@@ -10,7 +10,7 @@ class GuildPreferencesDocument(
     var guildId: String? = null,
     var preferences: MutableMap<GuildPreferences.GuildPreference, String> = mutableMapOf()
 ): MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<GuildPreferences, GuildPreferencesDocument>(GuildPreferencesDocument()) {
+    companion object : MongoDbDomainEntityDocument<GuildPreferences, GuildPreferencesDocument>({ GuildPreferencesDocument() }) {
         override fun fromEntity(
             entity: GuildPreferences,
             document: GuildPreferencesDocument

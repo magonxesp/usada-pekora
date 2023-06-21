@@ -10,7 +10,7 @@ import com.usadapekora.shared.infrastructure.Sfl4jLogger
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventBus
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventConsumer
 import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
-import com.usadapekora.shared.infrastructure.bus.event.persistence.redis.RedisEventConsumedRepository
+import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
 import com.usadapekora.shared.infrastructure.user.peristence.mongodb.MongoDbUserRepository
 import org.koin.core.Koin
 import org.koin.core.KoinApplication

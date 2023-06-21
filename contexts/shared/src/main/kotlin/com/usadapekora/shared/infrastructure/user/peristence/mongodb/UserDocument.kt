@@ -12,7 +12,7 @@ class UserDocument(
     var avatar: String? = null,
     var discordId: String = "",
 ) : MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<User, UserDocument>(UserDocument()) {
+    companion object : MongoDbDomainEntityDocument<User, UserDocument>({ UserDocument() }) {
         override fun fromEntity(entity: User, document: UserDocument): UserDocument = document.apply {
             _id = document._id
             id = entity.id.value

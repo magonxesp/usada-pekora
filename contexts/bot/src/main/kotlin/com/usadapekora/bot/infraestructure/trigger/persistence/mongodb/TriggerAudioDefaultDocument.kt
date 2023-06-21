@@ -12,9 +12,7 @@ class TriggerAudioDefaultDocument(
     val guild: String = "",
     val file: String = "",
 ): MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<TriggerDefaultAudioResponse, TriggerAudioDefaultDocument>(
-        TriggerAudioDefaultDocument()
-    ) {
+    companion object : MongoDbDomainEntityDocument<TriggerDefaultAudioResponse, TriggerAudioDefaultDocument>({ TriggerAudioDefaultDocument() }) {
         override fun fromEntity(entity: TriggerDefaultAudioResponse, document: TriggerAudioDefaultDocument) = TriggerAudioDefaultDocument(
             _id = document._id,
             id = entity.id.value,

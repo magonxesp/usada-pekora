@@ -1,10 +1,11 @@
-package com.usadapekora.shared.infrastructure.bus.event.persistence.redis
+package com.usadapekora.shared.infrastructure.bus.persistence.redis
 
 import arrow.core.Either
 import arrow.core.left
 import com.usadapekora.shared.domain.bus.event.EventConsumed
 import com.usadapekora.shared.domain.bus.event.EventConsumedError
 import com.usadapekora.shared.domain.bus.event.EventConsumedRepository
+import com.usadapekora.shared.infrastructure.bus.event.persistence.redis.EventConsumedJson
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisRepository
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

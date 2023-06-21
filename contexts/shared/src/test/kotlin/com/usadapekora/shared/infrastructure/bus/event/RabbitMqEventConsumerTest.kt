@@ -5,7 +5,7 @@ import arrow.core.right
 import com.usadapekora.shared.DependencyInjectionEnabledTest
 import com.usadapekora.shared.domain.bus.event.*
 import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
-import com.usadapekora.shared.infrastructure.bus.event.persistence.redis.RedisEventConsumedRepository
+import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
 import io.ktor.test.dispatcher.*
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock

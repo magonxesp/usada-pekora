@@ -14,7 +14,7 @@ class EventProcessedDocument(
     var consumedOn: String = "",
     var timeElapsedMilliseconds: Long = 0
 ) : MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<EventProcessed, EventProcessedDocument>(EventProcessedDocument()) {
+    companion object : MongoDbDomainEntityDocument<EventProcessed, EventProcessedDocument>({ EventProcessedDocument() }) {
         override fun fromEntity(entity: EventProcessed, document: EventProcessedDocument): EventProcessedDocument {
             document.id = entity.id.value
             document.name = entity.name.value

@@ -16,7 +16,7 @@ class TriggerDocument(
     val responseAudioProvider: String? = null,
     val discordGuildId: String = ""
 ): MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>(TriggerDocument()) {
+    companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>({ TriggerDocument() }) {
         override fun fromEntity(entity: Trigger, document: TriggerDocument) = TriggerDocument(
             _id = document._id,
             id = entity.id.value,

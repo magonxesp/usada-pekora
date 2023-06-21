@@ -11,9 +11,7 @@ class TriggerTextResponseDocument(
     val content: String = "",
     val type: String = ""
 ) : MongoDbDocument() {
-    companion object : MongoDbDomainEntityDocument<TriggerTextResponse, TriggerTextResponseDocument>(
-        TriggerTextResponseDocument()
-    ) {
+    companion object : MongoDbDomainEntityDocument<TriggerTextResponse, TriggerTextResponseDocument>({ TriggerTextResponseDocument() }) {
         override fun fromEntity(entity: TriggerTextResponse, document: TriggerTextResponseDocument) = TriggerTextResponseDocument(
             _id = document._id,
             id = entity.id.value,
