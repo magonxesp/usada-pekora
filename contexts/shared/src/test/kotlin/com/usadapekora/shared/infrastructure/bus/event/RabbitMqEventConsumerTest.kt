@@ -46,10 +46,10 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
         handledEvents = mutableListOf()
         val event = TestEvent()
         val result = bus.dispatch(event)
-        assertIs<Unit>(result.getOrNull())
+        assertIs<Unit>(result.getOrNull(), result.leftOrNull()?.message)
 
         val consumerResult = consumer.consume(arrayOf(TestSubscriber::class))
-        assertIs<Unit>(consumerResult.getOrNull())
+        assertIs<Unit>(consumerResult.getOrNull(), result.leftOrNull()?.message)
         Thread.sleep(1000)
         assertContentEquals(listOf(event.exampleId), handledEvents)
     }
@@ -60,11 +60,11 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
         val events = (1..1000).map { TestEvent() }
 
         val result = bus.dispatch(*events.toTypedArray())
-        assertIs<Unit>(result.getOrNull())
+        assertIs<Unit>(result.getOrNull(), result.leftOrNull()?.message)
 
         (1..10).forEach { _ ->
             consumer.consume(arrayOf(TestSubscriber::class)).run {
-                assertIs<Unit>(getOrNull())
+                assertIs<Unit>(getOrNull(), leftOrNull()?.message)
             }
         }
 

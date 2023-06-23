@@ -15,7 +15,7 @@ class RabbitMqEventBusTest {
         val bus = RabbitMqEventBus()
         val result = bus.dispatch(TestEvent())
 
-        assertIs<Unit>(result.getOrNull())
+        assertIs<Unit>(result.getOrNull(), result.leftOrNull()?.message)
     }
 
 }

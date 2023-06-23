@@ -5,11 +5,17 @@ object RabbitMqNameFormatter {
         EVENT, COMMAND
     }
 
-    const val domainName = "usadapekora"
+    const val exchange = "usadapekora"
 
     fun routingKey(type: QueueType, eventName: String)
         = "${type.name.lowercase()}.$eventName"
 
+    fun deadLetterRoutingKey(type: QueueType, eventName: String)
+        = "${routingKey(type, eventName)}.dead_letter"
+
     fun queueName(type: QueueType, eventName: String)
-        = "$domainName.${type.name.lowercase()}.$eventName"
+        = "$exchange.${type.name.lowercase()}.$eventName"
+
+    fun deadLetterQueueName(type: QueueType, eventName: String)
+        = "${queueName(type, eventName)}.dead_letter"
 }

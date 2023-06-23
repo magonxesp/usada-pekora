@@ -118,7 +118,7 @@ class RabbitMqEventConsumer(
         val consumer = channel.basicConsume(
             queue,
             false,
-            subscriberClass.toString(),
+            subscriberClass.java.toString(),
             createSubscriberDeliverCallback(subscriberClass, subscribesTo.eventClass, channel),
             CancelCallback { logger.warning("Consume cancelled for $it") }
         )
