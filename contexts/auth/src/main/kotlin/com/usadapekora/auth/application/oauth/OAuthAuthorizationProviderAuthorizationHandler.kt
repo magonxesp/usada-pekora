@@ -44,7 +44,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
 
         if (user == null) {
             user = User.fromPrimitives(
-                id = providerUser.nextDomainUserId,
+                id = providerUser.userId,
                 name = providerUser.name ?: "unnamed",
                 avatar = providerUser.avatar,
                 discordId = providerUser.id

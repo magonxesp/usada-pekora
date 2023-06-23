@@ -23,6 +23,7 @@ import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.application.video.VideoFeedSubscriber
 import com.usadapekora.bot.domain.guild.GuildMemberRepository
 import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
+import com.usadapekora.bot.domain.guild.GuildProviderRepository
 import com.usadapekora.bot.domain.guild.GuildRepository
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
 import com.usadapekora.bot.domain.trigger.TriggerRepository
@@ -32,6 +33,7 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
+import com.usadapekora.bot.infraestructure.guild.persistence.discord.DiscordGuildProviderRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
@@ -88,6 +90,7 @@ val guildModule = module {
     single { MongoDbGuildRepository() } bind GuildRepository::class
     single { MongoDbGuildMemberRepository() } bind GuildMemberRepository::class
     single { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
+    single { DiscordGuildProviderRepository() } bind GuildProviderRepository::class
     single { GuildCreator(get()) }
     single { GuildMemberCreator(get()) }
     single { GuildPreferenceCreator(get()) }

@@ -16,6 +16,8 @@ import io.prometheus.client.hotspot.DefaultExports
 import kotlinx.coroutines.launch
 
 fun main(args: Array<String>) {
+    enableDependencyInjection(modules = modules)
+    DefaultExports.initialize()
     EngineMain.main(args)
 }
 
@@ -23,9 +25,6 @@ val ApplicationEnvironment.testMode: Boolean
     get() = (config.propertyOrNull("ktor.environment")?.getString() ?: "prod") == "test"
 
 fun Application.module() {
-    enableDependencyInjection(modules = modules)
-    DefaultExports.initialize()
-
     install(ContentNegotiation) {
         json()
     }

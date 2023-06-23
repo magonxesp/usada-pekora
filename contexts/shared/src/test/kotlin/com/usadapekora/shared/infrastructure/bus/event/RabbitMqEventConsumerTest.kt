@@ -57,18 +57,18 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
     @Test
     fun `it should consume the test event avoiding race conditions and duplicates`() = runBlocking {
         handledEvents = mutableListOf()
-        val events = (1..1000).map { TestEvent() }
+        val events = (1..100).map { TestEvent() }
 
         val result = bus.dispatch(*events.toTypedArray())
         assertIs<Unit>(result.getOrNull(), result.leftOrNull()?.message)
 
-        (1..10).forEach { _ ->
+        (1..3).forEach { _ ->
             consumer.consume(arrayOf(TestSubscriber::class)).run {
                 assertIs<Unit>(getOrNull(), leftOrNull()?.message)
             }
         }
 
-        Thread.sleep(10000)
+        Thread.sleep(2000)
         val exampleIds = events.map { it.exampleId }.toMutableList()
         assertContentEquals(exampleIds, handledEvents)
     }

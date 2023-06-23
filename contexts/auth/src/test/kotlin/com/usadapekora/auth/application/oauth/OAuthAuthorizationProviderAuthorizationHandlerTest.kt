@@ -57,14 +57,14 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         every { clock.now() } returns issuedAt
 
         val newUser = User.fromPrimitives(
-            id = oAuthUser.nextDomainUserId,
+            id = oAuthUser.userId,
             name = oAuthUser.name ?: "unnamed",
             avatar = oAuthUser.avatar,
             discordId = oAuthUser.id
         )
 
         val grantCode = AuthorizationGrantMother.create(user = newUser.id.value, issuedAt = issuedAt)
-        val event = AuthorizationGrantedEvent(userId = oAuthUser.nextDomainUserId, occurredOn = issuedAt.toString())
+        val event = AuthorizationGrantedEvent(userId = oAuthUser.userId, occurredOn = issuedAt.toString())
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, newUser.id) } returns grantCode.code
         every {
@@ -100,7 +100,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         val code = Random.instance().code.toString()
         val issuedAt = Clock.System.now()
         val user = User.fromPrimitives(
-            id = oAuthUser.nextDomainUserId,
+            id = oAuthUser.userId,
             name = oAuthUser.name ?: "unnamed",
             avatar = oAuthUser.avatar,
             discordId = oAuthUser.id
@@ -112,7 +112,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         every { clock.now() } returns issuedAt
 
         val grantCode = AuthorizationGrantMother.create(user = user.id.value, issuedAt = issuedAt)
-        val event = AuthorizationGrantedEvent(userId = oAuthUser.nextDomainUserId, occurredOn = issuedAt.toString())
+        val event = AuthorizationGrantedEvent(userId = oAuthUser.userId, occurredOn = issuedAt.toString())
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, user.id) } returns grantCode.code
         every {

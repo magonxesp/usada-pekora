@@ -1,7 +1,7 @@
 package com.usadapekora.auth.infrastructure.oauth.jakarta
 
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
-import com.usadapekora.auth.domain.oauth.OAuthUser
+import com.usadapekora.shared.domain.auth.OAuthUser
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.shared.domain.user.User
 import io.ktor.util.*

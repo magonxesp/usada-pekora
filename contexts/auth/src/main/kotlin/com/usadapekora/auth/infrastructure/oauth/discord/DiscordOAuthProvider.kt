@@ -8,7 +8,7 @@ import com.usadapekora.auth.discordClientSecret
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderError
-import com.usadapekora.auth.domain.oauth.OAuthUser
+import com.usadapekora.shared.domain.auth.OAuthUser
 import com.usadapekora.auth.oAuthProviderRedirectUrl
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -92,7 +92,8 @@ class DiscordOAuthProvider : OAuthAuthorizationProvider {
             id = user.id,
             avatar = user.avatarUrl,
             name = user.username,
-            token = token.accessToken
+            token = token.accessToken,
+            provider = "discord"
         ).right()
     }
 

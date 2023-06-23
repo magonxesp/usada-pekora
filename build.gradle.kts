@@ -65,6 +65,7 @@ allprojects {
         implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
         implementation("com.nimbusds:nimbus-jose-jwt:9.31")
         implementation("com.rabbitmq:amqp-client:5.17.0")
+        implementation("com.github.ajalt.clikt:clikt:3.5.4")
 
         testImplementation(kotlin("test"))
         testImplementation("io.github.serpro69:kotlin-faker:1.11.0")
