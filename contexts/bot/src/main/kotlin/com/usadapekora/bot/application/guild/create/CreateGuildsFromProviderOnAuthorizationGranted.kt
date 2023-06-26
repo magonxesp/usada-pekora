@@ -1,18 +1,62 @@
 package com.usadapekora.bot.application.guild.create
 
 import arrow.core.Either
+import arrow.core.left
+import com.usadapekora.bot.domain.guild.*
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
+import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.EventSubscriber
 import com.usadapekora.shared.domain.bus.event.EventSubscriberError
 import com.usadapekora.shared.domain.bus.event.SubscribesEvent
+import com.usadapekora.shared.domain.user.User
 
 @SubscribesEvent<AuthorizationGrantedEvent>(eventClass = AuthorizationGrantedEvent::class)
-class CreateGuildsFromProviderOnAuthorizationGranted : EventSubscriber<AuthorizationGrantedEvent> {
+class CreateGuildsFromProviderOnAuthorizationGranted(
+    private val oAuthUserRepository: OAuthUserRepository,
+    private val guildProviderRepositoryFactory: GuildProviderRepositoryFactory,
+    private val guildCreator: GuildCreator,
+    private val guildMemberCreator: GuildMemberCreator
+) : EventSubscriber<AuthorizationGrantedEvent> {
 
-    override fun handle(event: AuthorizationGrantedEvent): Either<EventSubscriberError, Unit> {
-        TODO("Not yet implemented")
-        // llamar a OAuthUserRepository y recoger el oauth user por user id que viene en el evento
-        // llamar a GuildProviderRepositoryFactory y pasarle el oauth user que contiene el token
-    }
+    override fun handle(event: AuthorizationGrantedEvent): Either<EventSubscriberError, Unit> = Either.catch {
+        val userId = User.UserId(event.userId)
+        val user = oAuthUserRepository.find(userId)
+            .onLeft { return EventSubscriberError(it.message).left() }
+            .getOrNull()!!
+
+        val provider = Either.catch { GuildProvider.fromValue(user.provider) }
+            .onLeft { return EventSubscriberError(it.message).left() }
+            .getOrNull()!!
+
+        val repository = guildProviderRepositoryFactory.getInstance(provider, user.token)
+            .onLeft { return EventSubscriberError(it.message).left() }
+            .getOrNull()!!
+
+        val guilds = repository.findAll(userId)
+
+        for (guild in guilds) {
+            val createRequest = GuildCreateRequest(
+                id = guild.id.value,
+                providerId = guild.providerId.value,
+                provider = guild.provider.value,
+                name = guild.name.value,
+                iconUrl = guild.iconUrl.value
+            )
+
+            val createMemberRequest = GuildMemberCreateRequest(
+                userId = userId.value,
+                guildId = guild.id.value
+            )
+
+            val createResult = guildCreator.create(createRequest).onRight {
+                guildMemberCreator.create(createMemberRequest)
+                    .onLeft { return EventSubscriberError(it.message).left() }
+            }
+
+            if (createResult.leftOrNull() is GuildError.AlreadyExists) {
+                TODO("update the guild if it exists")
+            }
+        }
+    }.mapLeft { EventSubscriberError(it.message) }
 
 }

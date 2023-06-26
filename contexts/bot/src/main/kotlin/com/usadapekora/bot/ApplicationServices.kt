@@ -90,7 +90,7 @@ val guildModule = module {
     single { MongoDbGuildRepository() } bind GuildRepository::class
     single { MongoDbGuildMemberRepository() } bind GuildMemberRepository::class
     single { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
-    single { DiscordGuildProviderRepository() } bind GuildProviderRepository::class
+    factory { (token: String) -> DiscordGuildProviderRepository(token) } bind GuildProviderRepository::class
     single { GuildCreator(get()) }
     single { GuildMemberCreator(get()) }
     single { GuildPreferenceCreator(get()) }

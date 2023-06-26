@@ -15,7 +15,7 @@ class KoinGuildProviderRepositoryFactoryTest : DependencyInjectionEnabledTest() 
     @Test
     fun `it should return an implementation of GuildProviderRepository by providing a guild provider`() {
         val factory = KoinGuildProviderRepositoryFactory()
-        val result = factory.getInstance(GuildProvider.DISCORD)
+        val result = factory.getInstance(GuildProvider.DISCORD, "exampletoken")
         assertIs<DiscordGuildProviderRepository>(result.getOrNull())
     }
 
