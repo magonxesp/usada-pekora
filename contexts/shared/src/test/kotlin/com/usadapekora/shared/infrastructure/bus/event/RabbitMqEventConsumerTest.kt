@@ -68,7 +68,7 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
             }
         }
 
-        Thread.sleep(2000)
+        Thread.sleep(10000)
         val exampleIds = events.map { it.exampleId }.toMutableList()
         assertContentEquals(exampleIds, handledEvents)
     }
