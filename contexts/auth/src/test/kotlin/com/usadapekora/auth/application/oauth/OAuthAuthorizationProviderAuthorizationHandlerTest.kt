@@ -3,7 +3,7 @@ package com.usadapekora.auth.application.oauth
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.auth.domain.AuthorizationGrantMother
-import com.usadapekora.auth.domain.OAuthUserMother
+import com.usadapekora.shared.domain.OAuthUserMother
 import com.usadapekora.auth.domain.Random
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
