@@ -3,6 +3,7 @@ package com.usadapekora.shared.infrastructure.bus.event
 import arrow.core.Either
 import com.rabbitmq.client.*
 import com.usadapekora.shared.EventSubscribers
+import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.domain.bus.event.*
 import com.usadapekora.shared.domain.getAnnotation
 import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMapperInstance
@@ -17,9 +18,10 @@ import kotlin.system.measureTimeMillis
 class RabbitMqEventConsumer(
     private val eventConsumedRepository: EventConsumedRepository,
     private val eventProcessedRepository: EventProcessedRepository,
-    private val clock: Clock
+    private val clock: Clock,
+    private val loggerFactory: LoggerFactory
 ) : EventConsumer {
-    private val logger = Logger.getLogger(this::class.toString())
+    private val logger = loggerFactory.getLogger(this::class.toString())
     private val mapper = createJacksonObjectMapperInstance()
     private val consumers = mutableListOf<String>()
 

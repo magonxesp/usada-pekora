@@ -68,7 +68,7 @@ allprojects {
             "jakarta.xml.bind:jakarta.xml.bind-api:4.0.0",
             "com.nimbusds:nimbus-jose-jwt:9.31",
             "com.rabbitmq:amqp-client:5.17.0",
-            "com.github.ajalt.clikt:clikt:3.5.4",
+            "org.jetbrains.kotlinx:kotlinx-cli:0.3.5"
         )
 
         val testDependencies = arrayOf(

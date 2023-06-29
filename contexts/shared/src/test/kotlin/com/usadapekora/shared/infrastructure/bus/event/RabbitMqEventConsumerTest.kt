@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.right
 import com.usadapekora.shared.DependencyInjectionEnabledTest
 import com.usadapekora.shared.domain.bus.event.*
+import com.usadapekora.shared.infrastructure.Slf4jLoggerFactory
 import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
 import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
 import kotlinx.coroutines.runBlocking
@@ -31,7 +32,8 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
     private val consumer = RabbitMqEventConsumer(
         eventConsumedRepository = RedisEventConsumedRepository(),
         eventProcessedRepository = MongoDbEventProcessedRepository(),
-        clock = Clock.System
+        clock = Clock.System,
+        loggerFactory = Slf4jLoggerFactory()
     )
 
     @BeforeTest

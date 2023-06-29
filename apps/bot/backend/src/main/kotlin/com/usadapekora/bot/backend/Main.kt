@@ -13,12 +13,23 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.prometheus.client.hotspot.DefaultExports
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
 import kotlinx.coroutines.launch
 
 fun main(args: Array<String>) {
+    val parser = ArgParser("usadapekora-bot-backend")
     enableDependencyInjection(modules = modules)
     DefaultExports.initialize()
-    EngineMain.main(args)
+
+    val consumer by parser.option(ArgType.Boolean, "consumer", "c", "Start the backend as consumer mode")
+    parser.parse(args)
+
+    if (consumer == true) {
+        startConsumers()
+    } else {
+        EngineMain.main(args)
+    }
 }
 
 val ApplicationEnvironment.testMode: Boolean

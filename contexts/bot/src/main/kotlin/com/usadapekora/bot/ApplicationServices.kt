@@ -49,7 +49,7 @@ import com.usadapekora.shared.domain.Logger
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.shared.domain.file.DomainFileReader
 import com.usadapekora.shared.domain.file.DomainFileWriter
-import com.usadapekora.shared.infrastructure.Sfl4jLogger
+import com.usadapekora.shared.infrastructure.Slf4jLogger
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileDeleter
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileReader
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileWriter
@@ -59,7 +59,6 @@ import org.koin.dsl.module
 
 val sharedModule = module {
     single { RedisKeyValueRepository() } bind KeyValueRepository::class
-    single { Sfl4jLogger() } bind Logger::class
     single { FileSystemDomainFileWriter() } bind DomainFileWriter::class
     single { FileSystemDomainFileDeleter() } bind DomainFileDeleter::class
     single { FileSystemDomainFileReader() } bind DomainFileReader::class

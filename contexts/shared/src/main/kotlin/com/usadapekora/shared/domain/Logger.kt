@@ -1,10 +1,10 @@
 package com.usadapekora.shared.domain
 
 interface Logger {
-    fun warning(logger: String, message: String, exception: Exception)
-    fun warning(logger: String, message: String)
-    fun info(logger: String, message: String, exception: Exception)
-    fun info(logger: String, message: String)
-    fun error(logger: String, message: String, exception: Exception)
-    fun error(logger: String, message: String)
+    fun warning(message: String, exception: Exception)
+    fun warning(message: String)
+    fun info(message: String, exception: Exception)
+    fun info(message: String)
+    fun error(message: String, exception: Exception)
+    fun error(message: String)
 }
