@@ -29,7 +29,7 @@ val authModule = module {
     single { Auth0JwkIssuer(get()) } bind JwkIssuer::class
     single { AccessJwtIssuer(get(), get()) }
     single { OAuthAuthorizationProviderAuthorizeUrlFactory(get()) }
-    single { OAuthAuthorizationProviderAuthorizationHandler(get(), get(), get(), get(), get(), get()) }
+    single { OAuthAuthorizationProviderAuthorizationHandler(get(), get(), get(), get(), get(), get(), get()) }
     single { SignatureJwkIssuer(get()) }
 }
 

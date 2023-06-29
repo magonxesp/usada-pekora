@@ -2,7 +2,7 @@ package com.usadapekora.shared.domain
 
 import com.usadapekora.shared.domain.auth.OAuthUser
 
-object OAuthUserMother {
+object OAuthUserMother : ObjectMother<OAuthUser> {
 
     fun create(
         id: String? = null,
@@ -20,4 +20,5 @@ object OAuthUserMother {
         userId = nextDomainUserId ?: Random.instance().random.nextUUID(),
     )
 
+    override fun random() = create()
 }

@@ -1,10 +1,12 @@
 package com.usadapekora.bot
 
+import com.usadapekora.bot.application.guild.create.CreateGuildsFromProviderOnAuthorizationGranted
 import com.usadapekora.bot.application.guild.create.GuildCreator
 import com.usadapekora.bot.application.guild.create.GuildMemberCreator
 import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
+import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdater
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
@@ -21,10 +23,7 @@ import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUp
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.application.video.VideoFeedSubscriber
-import com.usadapekora.bot.domain.guild.GuildMemberRepository
-import com.usadapekora.bot.domain.guild.GuildPreferencesRepository
-import com.usadapekora.bot.domain.guild.GuildProviderRepository
-import com.usadapekora.bot.domain.guild.GuildRepository
+import com.usadapekora.bot.domain.guild.*
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -33,6 +32,7 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
+import com.usadapekora.bot.infraestructure.guild.koin.KoinGuildProviderRepositoryFactory
 import com.usadapekora.bot.infraestructure.guild.persistence.discord.DiscordGuildProviderRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
@@ -56,6 +56,7 @@ import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFil
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueRepository
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import kotlin.math.sin
 
 val sharedModule = module {
     single { RedisKeyValueRepository() } bind KeyValueRepository::class
@@ -89,12 +90,15 @@ val guildModule = module {
     single { MongoDbGuildRepository() } bind GuildRepository::class
     single { MongoDbGuildMemberRepository() } bind GuildMemberRepository::class
     single { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
+    single { KoinGuildProviderRepositoryFactory() } bind GuildProviderRepositoryFactory::class
     factory { (token: String) -> DiscordGuildProviderRepository(token) } bind GuildProviderRepository::class
     single { GuildCreator(get()) }
     single { GuildMemberCreator(get()) }
     single { GuildPreferenceCreator(get()) }
     single { GuildPreferenceDeleter(get()) }
     single { GuildPreferencesFinder(get()) }
+    single { ProvidedGuildUpdater(get()) }
+    single { CreateGuildsFromProviderOnAuthorizationGranted(get(), get(), get(), get(), get()) }
 }
 
 val videoModule = module {

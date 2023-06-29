@@ -1,12 +1,14 @@
 package com.usadapekora.shared
 
 import com.usadapekora.shared.domain.LoggerFactory
+import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.bus.event.EventConsumedRepository
 import com.usadapekora.shared.domain.bus.event.EventConsumer
 import com.usadapekora.shared.domain.bus.event.EventProcessedRepository
 import com.usadapekora.shared.domain.user.UserRepository
 import com.usadapekora.shared.infrastructure.Slf4jLoggerFactory
+import com.usadapekora.shared.infrastructure.auth.persistence.mongodb.MongoDbOAuthUserRepository
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventBus
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventConsumer
 import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
@@ -27,6 +29,7 @@ val sharedModule = module {
     single { Clock.System } bind Clock::class
     single { Slf4jLoggerFactory() } bind LoggerFactory::class
     single { MongoDbUserRepository() } bind UserRepository::class
+    single { MongoDbOAuthUserRepository() } bind OAuthUserRepository::class
     single { MongoDbEventProcessedRepository() } bind EventProcessedRepository::class
     single { RedisEventConsumedRepository() } bind EventConsumedRepository::class
     single { RabbitMqEventBus() } bind EventBus::class

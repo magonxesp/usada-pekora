@@ -10,6 +10,7 @@ import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
+import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserRepository
@@ -21,7 +22,8 @@ class OAuthAuthorizationProviderAuthorizationHandler(
     private val grantCodeRepository: AuthorizationGrantRepository,
     private val grantCodeCreator: OAuthAuthorizationGrantCodeCreator,
     private val clock: Clock,
-    private val eventBus: EventBus
+    private val eventBus: EventBus,
+    private val oAuthUserRepository: OAuthUserRepository
 ) {
 
     suspend fun handle(provider: String, code: String): Either<OAuthProviderError.CallbackError, AuthorizationGrant.AuthorizationGrantCode> {
@@ -51,6 +53,10 @@ class OAuthAuthorizationProviderAuthorizationHandler(
             )
 
             userRepository.save(user)
+        }
+
+        oAuthUserRepository.save(providerUser.copy(userId = user.id.value)).onLeft {
+            return OAuthProviderError.CallbackError(it.message).left()
         }
 
         val grantCode = AuthorizationGrant.fromPrimitives(
