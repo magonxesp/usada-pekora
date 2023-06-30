@@ -42,14 +42,15 @@ class OAuthAuthorizationProviderAuthorizationHandler(
             it.getOrNull()!!
         }
 
-        var user = userRepository.findByDiscordId(User.DiscordUserId(providerUser.id)).getOrNull()
+        var user = userRepository.findByDiscordId(User.UserProviderId(providerUser.id)).getOrNull()
 
         if (user == null) {
             user = User.fromPrimitives(
                 id = providerUser.userId,
                 name = providerUser.name ?: "unnamed",
                 avatar = providerUser.avatar,
-                discordId = providerUser.id
+                providerId = providerUser.id,
+                provider = provider
             )
 
             userRepository.save(user)

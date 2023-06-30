@@ -2,6 +2,8 @@ package com.usadapekora.shared.application.user
 
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.shared.application.user.create.UserCreateRequest
+import com.usadapekora.shared.application.user.create.UserCreator
 import com.usadapekora.shared.domain.UserMother
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
@@ -21,7 +23,14 @@ class UserCreatorTest {
 
         every { repository.find(user.id) } returns UserException.NotFound().left()
 
-        val result = creator.create(user.id.value, user.name.value, user.avatar?.value, user.discordId.value)
+        val request = UserCreateRequest(
+            id = user.id.value,
+            name = user.name.value,
+            avatar = user.avatar?.value,
+            providerId = user.providerId.value,
+            provider = user.provider.value
+        )
+        val result = creator.create(request)
 
         assertTrue(result.isRight())
 
@@ -37,7 +46,14 @@ class UserCreatorTest {
 
         every { repository.find(user.id) } returns user.right()
 
-        val result = creator.create(user.id.value, user.name.value, user.avatar?.value, user.discordId.value)
+        val request = UserCreateRequest(
+            id = user.id.value,
+            name = user.name.value,
+            avatar = user.avatar?.value,
+            providerId = user.providerId.value,
+            provider = user.provider.value
+        )
+        val result = creator.create(request)
 
         assertTrue(result.leftOrNull() is UserException.AlreadyExists)
 

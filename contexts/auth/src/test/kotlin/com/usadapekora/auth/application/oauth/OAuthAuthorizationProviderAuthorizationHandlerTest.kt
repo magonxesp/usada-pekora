@@ -3,15 +3,14 @@ package com.usadapekora.auth.application.oauth
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.auth.domain.AuthorizationGrantMother
-import com.usadapekora.shared.domain.OAuthUserMother
 import com.usadapekora.auth.domain.Random
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
+import com.usadapekora.shared.domain.OAuthUserMother
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
-import com.usadapekora.shared.domain.auth.OAuthUserError
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.user.User
@@ -20,7 +19,7 @@ import com.usadapekora.shared.domain.user.UserRepository
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
-import java.util.UUID
+import java.util.*
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -58,7 +57,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         coEvery { provider.handleCallback(code) } returns oAuthUser.right()
-        every { userRepository.findByDiscordId(User.DiscordUserId(oAuthUser.id)) } returns UserException.NotFound().left()
+        every { userRepository.findByDiscordId(User.UserProviderId(oAuthUser.id)) } returns UserException.NotFound().left()
         every { oAuthUserRepository.save(oAuthUser) } returns Unit.right()
         every { clock.now() } returns issuedAt
 
@@ -66,7 +65,8 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             id = oAuthUser.userId,
             name = oAuthUser.name ?: "unnamed",
             avatar = oAuthUser.avatar,
-            discordId = oAuthUser.id
+            providerId = oAuthUser.id,
+            provider = oAuthUser.provider
         )
 
         val grantCode = AuthorizationGrantMother.create(user = newUser.id.value, issuedAt = issuedAt)
@@ -110,12 +110,13 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             id = oAuthUser.userId,
             name = oAuthUser.name ?: "unnamed",
             avatar = oAuthUser.avatar,
-            discordId = oAuthUser.id
+            providerId = oAuthUser.id,
+            provider = oAuthUser.provider
         )
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         coEvery { provider.handleCallback(code) } returns oAuthUser.right()
-        every { userRepository.findByDiscordId(User.DiscordUserId(oAuthUser.id)) } returns user.right()
+        every { userRepository.findByDiscordId(User.UserProviderId(oAuthUser.id)) } returns user.right()
         every { oAuthUserRepository.save(oAuthUser) } returns Unit.right()
         every { clock.now() } returns issuedAt
 
@@ -160,13 +161,14 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             id = UUID.randomUUID().toString(),
             name = oAuthUser.name ?: "unnamed",
             avatar = oAuthUser.avatar,
-            discordId = oAuthUser.id
+            providerId = oAuthUser.id,
+            provider = oAuthUser.provider
         )
         val oAuthUserToSave = oAuthUser.copy(userId = user.id.value)
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         coEvery { provider.handleCallback(code) } returns oAuthUser.right()
-        every { userRepository.findByDiscordId(User.DiscordUserId(oAuthUser.id)) } returns user.right()
+        every { userRepository.findByDiscordId(User.UserProviderId(oAuthUser.id)) } returns user.right()
         every { oAuthUserRepository.save(oAuthUserToSave) } returns Unit.right()
         every { clock.now() } returns issuedAt
 

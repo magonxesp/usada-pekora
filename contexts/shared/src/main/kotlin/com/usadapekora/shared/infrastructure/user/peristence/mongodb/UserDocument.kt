@@ -8,14 +8,16 @@ class UserDocument(
     var id: String = "",
     var name: String = "",
     var avatar: String? = null,
-    var discordId: String = "",
+    var providerId: String = "",
+    var provider: String = "",
 ) : MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<User, UserDocument>({ UserDocument() }) {
         override fun fromEntity(entity: User, document: UserDocument): UserDocument = document.apply {
             id = entity.id.value
             name = entity.name.value
             avatar = entity.avatar?.value
-            discordId = entity.discordId.value
+            providerId = entity.providerId.value
+            provider = entity.provider.value
         }
     }
 
@@ -23,6 +25,7 @@ class UserDocument(
         id = id,
         name = name,
         avatar = avatar,
-        discordId = discordId
+        providerId = providerId,
+        provider = provider
     )
 }

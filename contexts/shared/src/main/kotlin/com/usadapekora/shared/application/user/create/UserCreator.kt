@@ -1,4 +1,4 @@
-package com.usadapekora.shared.application.user
+package com.usadapekora.shared.application.user.create
 
 import arrow.core.Either
 import arrow.core.left
@@ -10,26 +10,24 @@ import com.usadapekora.shared.domain.user.UserRepository
 
 class UserCreator(private val repository: UserRepository) {
 
-    fun create(id: String, name: String, avatar: String?, discordId: String): Either<UserException, Unit> {
-        repository.find(User.UserId(id)).getOrNull()?.let {
-            return UserException.AlreadyExists("User with id $id already exists").left()
-        }
+    fun create(request: UserCreateRequest): Either<UserException, Unit> {
+        repository.find(User.UserId(request.id))
+            .onRight { return UserException.AlreadyExists("User with id ${request.id} already exists").left() }
 
         val user = Either.catch {
             User.fromPrimitives(
-                id = id,
-                name = name,
-                avatar = avatar,
-                discordId = discordId
+                id = request.id,
+                name = request.name,
+                avatar = request.avatar,
+                providerId = request.providerId,
+                provider = request.provider
             )
-        }.let {
-            if (it.leftOrNull() != null) return when(it.leftOrNull()!!) {
+        }.mapLeft {
+            when(it) {
                 is InvalidUuidException -> UserException.FailedToCreate("The id should be an uuid")
                 else -> UserException.FailedToCreate("An error ocurred creating the user")
-            }.left()
-
-            it.getOrNull()!!
-        }
+            }
+        }.onLeft { return it.left() }.getOrNull()!!
 
         return repository.save(user).right()
     }

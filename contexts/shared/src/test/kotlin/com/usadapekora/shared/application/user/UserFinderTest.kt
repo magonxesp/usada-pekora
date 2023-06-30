@@ -2,6 +2,7 @@ package com.usadapekora.shared.application.user
 
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.shared.application.user.find.UserFinder
 import com.usadapekora.shared.domain.UserMother
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
@@ -19,9 +20,9 @@ class UserFinderTest {
         val repository = mockk<UserRepository>()
         val finder = UserFinder(repository)
 
-        every { repository.findByDiscordId(user.discordId) } returns user.right()
+        every { repository.findByDiscordId(user.providerId) } returns user.right()
 
-        val existing = finder.findByDiscordId(user.discordId)
+        val existing = finder.findByDiscordId(user.providerId)
 
         assertEquals(user, existing.getOrNull())
     }
@@ -32,9 +33,9 @@ class UserFinderTest {
         val repository = mockk<UserRepository>()
         val finder = UserFinder(repository)
 
-        every { repository.findByDiscordId(user.discordId) } returns UserException.NotFound().left()
+        every { repository.findByDiscordId(user.providerId) } returns UserException.NotFound().left()
 
-        val result = finder.findByDiscordId(user.discordId)
+        val result = finder.findByDiscordId(user.providerId)
         assertTrue(result.leftOrNull() is UserException.NotFound)
     }
 

@@ -15,7 +15,6 @@ import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertIs
@@ -42,7 +41,7 @@ class CreateGuildsFromProviderOnAuthorizationGrantedTest {
             id = oAuthUser.userId,
             name = oAuthUser.name,
             avatar = oAuthUser.avatar,
-            discordId = oAuthUser.id
+            providerId = oAuthUser.id
         )
         val guilds = (1..5).map { GuildMother.create() }
         val event = AuthorizationGrantedEvent(
