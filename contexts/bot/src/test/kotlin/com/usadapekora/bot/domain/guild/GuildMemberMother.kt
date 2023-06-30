@@ -1,7 +1,7 @@
 package com.usadapekora.bot.domain.guild
 
-import com.usadapekora.bot.domain.ObjectMother
 import com.usadapekora.bot.domain.Random
+import com.usadapekora.shared.domain.ObjectMother
 
 
 object GuildMemberMother : ObjectMother<GuildMember> {

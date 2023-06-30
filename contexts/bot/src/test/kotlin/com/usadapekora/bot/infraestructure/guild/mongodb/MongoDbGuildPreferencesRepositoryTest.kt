@@ -3,8 +3,9 @@ package com.usadapekora.bot.infraestructure.guild.mongodb
 import com.usadapekora.bot.domain.guild.GuildPreferences
 import com.usadapekora.bot.domain.guild.GuildPreferencesException
 import com.usadapekora.bot.domain.guild.GuildPreferencesMother
-import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
+import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.GuildPreferencesDocument
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,7 +18,7 @@ class MongoDbGuildPreferencesRepositoryTest : MongoDbRepositoryTestCase<GuildPre
 
     @Test
     fun `should find guild preferences by guild discord id`() {
-        databaseTest {
+        runMongoDbRepositoryTest<GuildPreferencesDocument>(GuildPreferencesDocument.Companion) {
             val existing = repository.findByGuildId(it.guildId)
             assertEquals(it, existing.getOrNull())
         }
@@ -25,7 +26,7 @@ class MongoDbGuildPreferencesRepositoryTest : MongoDbRepositoryTestCase<GuildPre
 
     @Test
     fun `should not find guild preferences by guild discord id`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<GuildPreferencesDocument>(GuildPreferencesDocument.Companion, save = false) {
             val result = repository.findByGuildId(it.guildId)
             assertTrue(result.leftOrNull() is GuildPreferencesException.NotFound)
         }
@@ -33,7 +34,7 @@ class MongoDbGuildPreferencesRepositoryTest : MongoDbRepositoryTestCase<GuildPre
 
     @Test
     fun `should save guild preferences`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<GuildPreferencesDocument>(GuildPreferencesDocument.Companion, save = false) {
             repository.save(it)
 
             val existing = repository.findByGuildId(it.guildId)
@@ -43,7 +44,7 @@ class MongoDbGuildPreferencesRepositoryTest : MongoDbRepositoryTestCase<GuildPre
 
     @Test
     fun `should update guild preferences`() {
-        databaseTest {
+        runMongoDbRepositoryTest<GuildPreferencesDocument>(GuildPreferencesDocument.Companion) {
             it.preferences[GuildPreferences.GuildPreference.FeedChannelId] = Random().nextLong().toString()
 
             repository.save(it)
@@ -55,7 +56,7 @@ class MongoDbGuildPreferencesRepositoryTest : MongoDbRepositoryTestCase<GuildPre
 
     @Test
     fun `should delete guild preferences`() {
-        databaseTest(delete = false) {
+        runMongoDbRepositoryTest<GuildPreferencesDocument>(GuildPreferencesDocument.Companion, delete = false) {
             repository.delete(it)
             val result = repository.findByGuildId(it.guildId)
             assertTrue(result.leftOrNull() is GuildPreferencesException.NotFound)

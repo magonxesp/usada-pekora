@@ -3,10 +3,8 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDocument
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDomainEntityDocument
-import org.bson.types.ObjectId
 
 class TriggerDocument(
-    val _id: ObjectId? = null,
     val id: String = "",
     val title: String = "",
     val input: String = "",
@@ -18,7 +16,6 @@ class TriggerDocument(
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>({ TriggerDocument() }) {
         override fun fromEntity(entity: Trigger, document: TriggerDocument) = TriggerDocument(
-            _id = document._id,
             id = entity.id.value,
             title = entity.title.value,
             input = entity.input.value,

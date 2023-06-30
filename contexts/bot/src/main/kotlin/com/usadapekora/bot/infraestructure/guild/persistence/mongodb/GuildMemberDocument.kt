@@ -3,10 +3,8 @@ package com.usadapekora.bot.infraestructure.guild.persistence.mongodb
 import com.usadapekora.bot.domain.guild.GuildMember
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDocument
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDomainEntityDocument
-import org.bson.types.ObjectId
 
 class GuildMemberDocument(
-    val _id: ObjectId? = null,
     var guildId: String? = null,
     var userId: String? = null,
 ): MongoDbDocument() {

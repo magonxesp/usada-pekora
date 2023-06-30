@@ -3,8 +3,9 @@ package com.usadapekora.bot.infraestructure.guild.mongodb
 import com.usadapekora.bot.domain.guild.GuildMember
 import com.usadapekora.bot.domain.guild.GuildMemberError
 import com.usadapekora.bot.domain.guild.GuildMemberMother
-import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
+import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.GuildMemberDocument
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -16,7 +17,7 @@ class MongoDbGuildMemberRepositoryTest : MongoDbRepositoryTestCase<GuildMember, 
 
     @Test
     fun `should find guild member by user and guild`() {
-        databaseTest {
+        runMongoDbRepositoryTest<GuildMemberDocument>(GuildMemberDocument.Companion) {
             val existing = repository.find(it.user, it.guild)
             assertEquals(it, existing.getOrNull())
         }
@@ -24,7 +25,7 @@ class MongoDbGuildMemberRepositoryTest : MongoDbRepositoryTestCase<GuildMember, 
 
     @Test
     fun `should not find guild member by user and guild`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<GuildMemberDocument>(GuildMemberDocument.Companion, save = false) {
             val result = repository.find(it.user, it.guild)
             assertIs<GuildMemberError.NotFound>(result.leftOrNull())
         }
@@ -32,7 +33,7 @@ class MongoDbGuildMemberRepositoryTest : MongoDbRepositoryTestCase<GuildMember, 
 
     @Test
     fun `should save guild member`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<GuildMemberDocument>(GuildMemberDocument.Companion, save = false) {
             repository.save(it)
 
             val existing = repository.find(it.user, it.guild)
@@ -42,7 +43,7 @@ class MongoDbGuildMemberRepositoryTest : MongoDbRepositoryTestCase<GuildMember, 
 
     @Test
     fun `should delete guild preferences`() {
-        databaseTest(delete = false) {
+        runMongoDbRepositoryTest<GuildMemberDocument>(GuildMemberDocument.Companion, delete = false) {
             repository.delete(it)
             val result = repository.find(it.user, it.guild)
             assertIs<GuildMemberError.NotFound>(result.leftOrNull())

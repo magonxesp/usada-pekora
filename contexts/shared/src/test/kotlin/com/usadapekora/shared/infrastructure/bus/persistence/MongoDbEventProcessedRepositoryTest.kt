@@ -1,9 +1,10 @@
 package com.usadapekora.shared.infrastructure.bus.persistence
 
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import com.usadapekora.shared.domain.EventProcessedMother
 import com.usadapekora.shared.domain.bus.event.EventProcessed
-import com.usadapekora.shared.infrastructure.MongoDbRepositoryTestCase
-import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
+import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.EventProcessedDocument
+import com.usadapekora.shared.infrastructure.bus.persistence.mongodb.MongoDbEventProcessedRepository
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -15,7 +16,7 @@ class MongoDbEventProcessedRepositoryTest : MongoDbRepositoryTestCase<EventProce
 
     @Test
     fun `it should find a processed event`() {
-        databaseTest {
+        runMongoDbRepositoryTest<EventProcessedDocument>(EventProcessedDocument.Companion) {
             val result = repository.find(it.id, it.consumedBy)
             assertEquals(it, result.getOrNull())
         }
@@ -23,7 +24,7 @@ class MongoDbEventProcessedRepositoryTest : MongoDbRepositoryTestCase<EventProce
 
     @Test
     fun `it should save a processed event`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<EventProcessedDocument>(EventProcessedDocument.Companion, save = false) {
             repository.save(it).run {
                 assertIs<Unit>(getOrNull())
             }

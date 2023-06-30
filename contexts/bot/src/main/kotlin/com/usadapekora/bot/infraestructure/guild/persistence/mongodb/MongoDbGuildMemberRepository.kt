@@ -14,10 +14,9 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.updateOne
 
-class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember, GuildMemberDocument>(
+class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember>(
     collection = "guildMember",
     documentIdProp = GuildMemberDocument::userId,
-    documentCompanion = GuildMemberDocument.Companion
 ), GuildMemberRepository {
 
     override fun find(user: User.UserId, guild: Guild.GuildId): Either<GuildMemberError.NotFound, GuildMember> {

@@ -11,9 +11,8 @@ import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbReposito
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbOAuthUserRepository : MongoDbRepository<OAuthUser, OAuthUserDocument>(
+class MongoDbOAuthUserRepository : MongoDbRepository<OAuthUser>(
     documentIdProp = OAuthUserDocument::id,
-    documentCompanion = OAuthUserDocument.Companion,
     collection = "oAuthUser"
 ), OAuthUserRepository {
     override fun find(userId: User.UserId): Either<OAuthUserError.NotFound, OAuthUser> {
@@ -24,6 +23,6 @@ class MongoDbOAuthUserRepository : MongoDbRepository<OAuthUser, OAuthUserDocumen
     }
 
     override fun save(entity: OAuthUser): Either<OAuthUserError.SaveError, Unit> = Either.catch {
-        performSave(entity)
+        performSave<OAuthUserDocument>(entity, OAuthUserDocument.Companion)
     }.mapLeft { OAuthUserError.SaveError(it.message) }
 }

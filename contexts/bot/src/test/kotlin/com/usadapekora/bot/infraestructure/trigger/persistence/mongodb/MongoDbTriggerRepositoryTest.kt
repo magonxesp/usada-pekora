@@ -3,7 +3,7 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
-import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
 import org.litote.kmongo.eq
 import org.litote.kmongo.getCollectionOfName
@@ -19,7 +19,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
 
     @Test
     fun `should find all triggers`() {
-        databaseTest {
+        runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion) {
             val triggers = repository.all()
             assertTrue(triggers.isNotEmpty())
         }
@@ -29,7 +29,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
     fun `should find trigger by id`() {
         val trigger = TriggerMother.create()
         
-        databaseTest(aggregate = trigger) {
+        runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, aggregate = trigger) {
             val found = repository.find(it.id)
 
             assertTrue(found.isRight())
@@ -47,7 +47,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
     fun `should find trigger by discord server id`() {
         val trigger = TriggerMother.create()
 
-        databaseTest(aggregate = trigger) {
+        runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, aggregate = trigger) {
             val triggers = repository.findByDiscordServer(it.discordGuildId)
             assertContains(triggers, it)
         }
@@ -63,7 +63,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
     fun `should save`() {
         val trigger = TriggerMother.create()
 
-        databaseTest(aggregate = trigger, save = false) {
+        runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, aggregate = trigger, save = false) {
             repository.save(it)
             val found = repository.find(it.id)
 
@@ -77,7 +77,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
         val connection = MongoDbRepository.connect()
         val trigger = TriggerMother.create()
 
-        databaseTest(aggregate = trigger) {
+        runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, aggregate = trigger) {
             it.input = Trigger.TriggerInput("another input")
             repository.save(it)
 
@@ -92,7 +92,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
 
     @Test
     fun `should delete`() {
-        databaseTest(delete = false) {
+        runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, delete = false) {
             repository.delete(it)
 
             val result = repository.find(it.id)

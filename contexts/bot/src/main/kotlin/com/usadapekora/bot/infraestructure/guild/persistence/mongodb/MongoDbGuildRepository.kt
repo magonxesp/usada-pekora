@@ -12,10 +12,9 @@ import org.litote.kmongo.and
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbGuildRepository : MongoDbRepository<Guild, GuildDocument>(
+class MongoDbGuildRepository : MongoDbRepository<Guild>(
     collection = "guild",
     documentIdProp = GuildDocument::id,
-    documentCompanion = GuildDocument.Companion
 ), GuildRepository {
 
     override fun find(id: Guild.GuildId): Either<GuildError.NotFound, Guild> {
@@ -38,7 +37,7 @@ class MongoDbGuildRepository : MongoDbRepository<Guild, GuildDocument>(
     }
 
     override fun save(entity: Guild): Either<GuildError.SaveError, Unit> = Either.catch {
-        performSave(entity)
+        performSave<GuildDocument>(entity, GuildDocument.Companion)
     }.mapLeft { GuildError.SaveError(it.message) }
 
     override fun delete(entity: Guild): Either<GuildError.DeleteError, Unit> = Either.catch {

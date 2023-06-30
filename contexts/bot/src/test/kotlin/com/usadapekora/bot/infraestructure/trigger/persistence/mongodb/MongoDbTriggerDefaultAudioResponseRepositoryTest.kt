@@ -3,7 +3,7 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -15,7 +15,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTestCa
 
     @Test
     fun `should find trigger audio by id`() {
-        databaseTest {
+        runMongoDbRepositoryTest<TriggerAudioDefaultDocument>(TriggerAudioDefaultDocument.Companion) {
             val audio = repository.find(it.id).getOrNull()
 
             assertEquals(it, audio)
@@ -24,7 +24,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTestCa
 
     @Test
     fun `should not find trigger audio by id`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<TriggerAudioDefaultDocument>(TriggerAudioDefaultDocument.Companion, save = false) {
             val result = repository.find(it.id)
             assertTrue(result.leftOrNull() is TriggerAudioResponseException.NotFound)
         }
@@ -32,7 +32,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTestCa
 
     @Test
     fun `should find trigger audio by trigger id`() {
-        databaseTest {
+        runMongoDbRepositoryTest<TriggerAudioDefaultDocument>(TriggerAudioDefaultDocument.Companion) {
             val audio = repository.findByTrigger(it.trigger).getOrNull()
             assertEquals(it, audio)
         }
@@ -40,7 +40,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTestCa
 
     @Test
     fun `should not find trigger audio by trigger id`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<TriggerAudioDefaultDocument>(TriggerAudioDefaultDocument.Companion, save = false) {
             val result = repository.findByTrigger(it.trigger)
             assertTrue(result.leftOrNull() is TriggerAudioResponseException.NotFound)
         }
@@ -48,7 +48,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTestCa
 
     @Test
     fun `should save`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<TriggerAudioDefaultDocument>(TriggerAudioDefaultDocument.Companion, save = false) {
             repository.save(it)
             val audio = repository.find(it.id).getOrNull()
             assertEquals(it, audio)
@@ -57,7 +57,7 @@ class MongoDbTriggerDefaultAudioResponseRepositoryTest : MongoDbRepositoryTestCa
 
     @Test
     fun `should delete`() {
-        databaseTest(delete = false) {
+        runMongoDbRepositoryTest<TriggerAudioDefaultDocument>(TriggerAudioDefaultDocument.Companion, delete = false) {
             repository.delete(it)
 
             val result = repository.find(it.id)

@@ -10,10 +10,9 @@ import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbReposito
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbUserRepository : MongoDbRepository<User, UserDocument>(
+class MongoDbUserRepository : MongoDbRepository<User>(
     collection = "user",
     documentIdProp = UserDocument::id,
-    documentCompanion = UserDocument
 ), UserRepository {
 
     override fun find(id: User.UserId): Either<UserException.NotFound, User> {
@@ -41,7 +40,7 @@ class MongoDbUserRepository : MongoDbRepository<User, UserDocument>(
     }
 
     override fun save(entity: User) {
-        performSave(entity)
+        performSave<UserDocument>(entity, UserDocument.Companion)
     }
 
     override fun delete(entity: User) {

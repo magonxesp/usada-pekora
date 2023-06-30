@@ -11,10 +11,9 @@ import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbReposito
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbTriggerTextRepository : MongoDbRepository<TriggerTextResponse, TriggerTextResponseDocument>(
+class MongoDbTriggerTextRepository : MongoDbRepository<TriggerTextResponse>(
     collection = "triggerText",
     documentIdProp = TriggerTextResponseDocument::id,
-    documentCompanion = TriggerTextResponseDocument
 ), TriggerTextResponseRepository {
     override fun find(id: TriggerTextResponseId): Either<TriggerTextResponseException, TriggerTextResponse> {
         val text = oneQuery<TriggerTextResponseDocument>(collection) { collection ->
@@ -29,7 +28,7 @@ class MongoDbTriggerTextRepository : MongoDbRepository<TriggerTextResponse, Trig
     }
 
     override fun save(entity: TriggerTextResponse) {
-        performSave(entity)
+        performSave<TriggerTextResponseDocument>(entity, TriggerTextResponseDocument.Companion)
     }
 
     override fun delete(entity: TriggerTextResponse) {

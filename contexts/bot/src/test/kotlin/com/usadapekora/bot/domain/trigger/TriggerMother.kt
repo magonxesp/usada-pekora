@@ -1,8 +1,8 @@
 package com.usadapekora.bot.domain.trigger
 
-import com.usadapekora.bot.domain.ObjectMother
 import com.usadapekora.bot.domain.Random
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
+import com.usadapekora.shared.domain.ObjectMother
 
 object TriggerMother : ObjectMother<Trigger> {
     fun create(

@@ -4,10 +4,8 @@ import com.usadapekora.shared.domain.bus.event.EventProcessed
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDocument
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDomainEntityDocument
 import kotlinx.datetime.Instant
-import org.bson.types.ObjectId
 
 class EventProcessedDocument(
-    var _id: ObjectId? = null,
     var id: String = "",
     var name: String = "",
     var consumedBy: String = "",

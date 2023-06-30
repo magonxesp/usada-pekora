@@ -7,19 +7,14 @@ import com.mongodb.client.MongoDatabase
 import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.mongoConnectionUrl
 import com.usadapekora.shared.mongoDatabase
-import org.litote.kmongo.KMongo
-import org.litote.kmongo.eq
-import org.litote.kmongo.getCollectionOfName
-import org.litote.kmongo.updateOne
+import org.litote.kmongo.*
 import kotlin.concurrent.thread
 import kotlin.reflect.KProperty
 
-abstract class MongoDbRepository<E: Entity, D : MongoDbDocument>(
+abstract class MongoDbRepository<E: Entity>(
     val collection: String,
-    val documentIdProp: KProperty<*>,
-    val documentCompanion: MongoDbDomainEntityDocument<E, D>
+    val documentIdProp: KProperty<*>
 ) {
-
     companion object {
         private var client: MongoClient? = null
 
@@ -37,37 +32,41 @@ abstract class MongoDbRepository<E: Entity, D : MongoDbDocument>(
         }
     }
 
-    inline fun <reified T: Any> oneQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> T?): T? {
+    inline fun <reified T: MongoDbDocument> oneQuery(name: String, collectionCallback: (collection: MongoCollection<T>) -> T?): T? {
         val database = connect()
         val collection = database.getCollectionOfName<T>(name)
 
         return collectionCallback(collection)
     }
 
-    inline fun <reified T: Any> collectionQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> FindIterable<T>): FindIterable<T> {
+    inline fun <reified T: MongoDbDocument> collectionQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> FindIterable<T>): FindIterable<T> {
         val database = connect()
         val collection = database.getCollectionOfName<T>(collectionName)
 
         return collectionCallback(collection)
     }
 
-    inline fun <reified T: Any> writeQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> Unit) {
+    inline fun <reified T: MongoDbDocument> writeQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> Unit) {
         val database = connect()
         val collection = database.getCollectionOfName<T>(collectionName)
 
         collectionCallback(collection)
     }
 
-    open fun performSave(entity: E) {
-        writeQuery<Any>(collection) { collection ->
-            collection.updateOne(documentIdProp eq entity.id(), documentCompanion.fromEntity(entity))
-                .takeUnless { updateResult -> updateResult.modifiedCount > 0L }
-                ?.apply { collection.insertOne(documentCompanion.fromEntity(entity)) }
+    inline fun <reified T: MongoDbDocument> performSave(entity: E, documentCompanion: MongoDbDomainEntityDocument<E, T>) {
+        writeQuery<T>(collection) { collection ->
+            val document = collection.findOne(documentIdProp eq entity.id())
+
+            if (document != null) {
+                collection.updateOne(documentIdProp eq entity.id(), documentCompanion.fromEntity(entity, document))
+            } else {
+                collection.insertOne(documentCompanion.fromEntity(entity))
+            }
         }
     }
 
     open fun performDelete(entity: E) {
-        writeQuery<Any>(collection) { collection ->
+        writeQuery<MongoDbDocument>(collection) { collection ->
             collection.deleteOne(documentIdProp eq entity.id())
         }
     }

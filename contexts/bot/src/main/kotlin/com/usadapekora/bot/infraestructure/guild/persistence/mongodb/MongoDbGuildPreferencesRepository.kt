@@ -12,10 +12,9 @@ import org.litote.kmongo.exists
 import org.litote.kmongo.findOne
 import org.litote.kmongo.keyProjection
 
-class MongoDbGuildPreferencesRepository : MongoDbRepository<GuildPreferences, GuildPreferencesDocument>(
+class MongoDbGuildPreferencesRepository : MongoDbRepository<GuildPreferences>(
     collection = "guildPreferences",
     documentIdProp = GuildPreferencesDocument::guildId,
-    documentCompanion = GuildPreferencesDocument
 ), GuildPreferencesRepository {
 
     override fun findByGuildId(guildId: String): Either<GuildPreferencesException.NotFound, GuildPreferences> {
@@ -39,7 +38,7 @@ class MongoDbGuildPreferencesRepository : MongoDbRepository<GuildPreferences, Gu
     }
 
     override fun save(entity: GuildPreferences) {
-        performSave(entity)
+        performSave<GuildPreferencesDocument>(entity, GuildPreferencesDocument.Companion)
     }
 
     override fun delete(entity: GuildPreferences) {

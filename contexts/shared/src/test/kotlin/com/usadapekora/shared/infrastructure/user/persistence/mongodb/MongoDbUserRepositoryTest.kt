@@ -1,10 +1,11 @@
 package com.usadapekora.shared.infrastructure.user.persistence.mongodb
 
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import com.usadapekora.shared.domain.UserMother
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
-import com.usadapekora.shared.infrastructure.MongoDbRepositoryTestCase
 import com.usadapekora.shared.infrastructure.user.peristence.mongodb.MongoDbUserRepository
+import com.usadapekora.shared.infrastructure.user.peristence.mongodb.UserDocument
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -16,7 +17,7 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
 
     @Test
     fun `should find user by id`() {
-        databaseTest {
+        runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion)  {
             val existing = repository.find(it.id).getOrNull()
             assertEquals(it, existing)
         }
@@ -24,7 +25,7 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
 
     @Test
     fun `should find user by discord id`() {
-        databaseTest {
+        runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion) {
             val existing = repository.findByDiscordId(it.discordId).getOrNull()
             assertEquals(it, existing)
         }
@@ -32,7 +33,7 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
 
     @Test
     fun `should not find user by id`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion, save = false) {
             val result = repository.find(it.id)
             assertTrue(result.leftOrNull() is UserException.NotFound)
         }
@@ -40,7 +41,7 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
 
     @Test
     fun `should not find user by discord id`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion, save = false) {
             val result = repository.findByDiscordId(it.discordId)
             assertTrue(result.leftOrNull() is UserException.NotFound)
         }
@@ -48,7 +49,7 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
 
     @Test
     fun `should save user`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion, save = false) {
             repository.save(it)
             val existing = repository.find(it.id)
             assertEquals(it, existing.getOrNull())
@@ -57,7 +58,7 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
 
     @Test
     fun `should delete user`() {
-        databaseTest(delete = false) {
+        runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion, delete = false) {
             repository.delete(it)
 
             val result = repository.find(it.id)

@@ -12,10 +12,9 @@ import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbReposito
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbTriggerAudioDefaultRepository : MongoDbRepository<TriggerDefaultAudioResponse, TriggerAudioDefaultDocument>(
+class MongoDbTriggerAudioDefaultRepository : MongoDbRepository<TriggerDefaultAudioResponse>(
     collection = "triggerAudioDefault",
-    documentIdProp = TriggerAudioDefaultDocument::id,
-    documentCompanion = TriggerAudioDefaultDocument
+    documentIdProp = TriggerAudioDefaultDocument::id
 ), TriggerAudioDefaultRepository {
 
     override fun find(id: TriggerAudioResponseId): Either<TriggerAudioResponseException, TriggerDefaultAudioResponse> {
@@ -43,7 +42,7 @@ class MongoDbTriggerAudioDefaultRepository : MongoDbRepository<TriggerDefaultAud
     }
 
     override fun save(entity: TriggerDefaultAudioResponse) {
-        performSave(entity)
+        performSave<TriggerAudioDefaultDocument>(entity, TriggerAudioDefaultDocument.Companion)
     }
 
     override fun delete(entity: TriggerDefaultAudioResponse) {

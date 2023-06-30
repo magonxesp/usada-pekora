@@ -11,7 +11,7 @@ import com.usadapekora.shared.infrastructure.Slf4jLoggerFactory
 import com.usadapekora.shared.infrastructure.auth.persistence.mongodb.MongoDbOAuthUserRepository
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventBus
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventConsumer
-import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.MongoDbEventProcessedRepository
+import com.usadapekora.shared.infrastructure.bus.persistence.mongodb.MongoDbEventProcessedRepository
 import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
 import com.usadapekora.shared.infrastructure.user.peristence.mongodb.MongoDbUserRepository
 import kotlinx.datetime.Clock

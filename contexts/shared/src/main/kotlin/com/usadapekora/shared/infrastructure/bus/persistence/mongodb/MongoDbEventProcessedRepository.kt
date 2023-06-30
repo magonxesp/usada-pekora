@@ -1,19 +1,19 @@
-package com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb
+package com.usadapekora.shared.infrastructure.bus.persistence.mongodb
 
 import arrow.core.Either
 import arrow.core.left
 import com.usadapekora.shared.domain.bus.event.EventProcessed
 import com.usadapekora.shared.domain.bus.event.EventProcessedError
 import com.usadapekora.shared.domain.bus.event.EventProcessedRepository
+import com.usadapekora.shared.infrastructure.bus.event.persistence.mongodb.EventProcessedDocument
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
 import org.litote.kmongo.and
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbEventProcessedRepository : MongoDbRepository<EventProcessed, EventProcessedDocument>(
+class MongoDbEventProcessedRepository : MongoDbRepository<EventProcessed>(
     collection = "eventProcessed",
     documentIdProp = EventProcessedDocument::id,
-    documentCompanion = EventProcessedDocument.Companion
 ), EventProcessedRepository {
     override fun find(
         id: EventProcessed.EventProcessedId,
@@ -26,6 +26,6 @@ class MongoDbEventProcessedRepository : MongoDbRepository<EventProcessed, EventP
     }.mapLeft { EventProcessedError.NotFound(it.message) }
 
     override fun save(entity: EventProcessed): Either<EventProcessedError.SaveError, Unit> = Either.catch {
-        performSave(entity)
+        performSave<EventProcessedDocument>(entity, EventProcessedDocument)
     }.mapLeft { EventProcessedError.SaveError(it.message) }
 }

@@ -3,7 +3,7 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
-import com.usadapekora.bot.infraestructure.MongoDbRepositoryTestCase
+import com.usadapekora.shared.MongoDbRepositoryTestCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -15,7 +15,7 @@ class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTestCase<TriggerTextRe
 
     @Test
     fun `should find by id`() {
-        databaseTest {
+        runMongoDbRepositoryTest<TriggerTextResponseDocument>(TriggerTextResponseDocument.Companion) {
             val triggerText = repository.find(it.id).getOrNull()
             assertEquals(it, triggerText)
         }
@@ -23,7 +23,7 @@ class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTestCase<TriggerTextRe
 
     @Test
     fun `should save`() {
-        databaseTest(save = false) {
+        runMongoDbRepositoryTest<TriggerTextResponseDocument>(TriggerTextResponseDocument.Companion, save = false) {
             repository.save(it)
             val saved = repository.find(it.id).getOrNull()
             assertEquals(it, saved)
@@ -32,7 +32,7 @@ class MongoDbTriggerTextRepositoryTest : MongoDbRepositoryTestCase<TriggerTextRe
 
     @Test
     fun `should delete`() {
-        databaseTest(delete = false) {
+        runMongoDbRepositoryTest<TriggerTextResponseDocument>(TriggerTextResponseDocument.Companion, delete = false) {
             repository.delete(it)
 
             val result = repository.find(it.id)

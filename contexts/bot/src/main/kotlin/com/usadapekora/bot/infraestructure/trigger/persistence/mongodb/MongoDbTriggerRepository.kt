@@ -10,10 +10,9 @@ import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbReposito
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
-class MongoDbTriggerRepository : MongoDbRepository<Trigger, TriggerDocument>(
+class MongoDbTriggerRepository : MongoDbRepository<Trigger>(
     collection = "triggers",
     documentIdProp = TriggerDocument::id,
-    documentCompanion = TriggerDocument
 ), TriggerRepository {
 
     override fun all(): Array<Trigger> {
@@ -45,7 +44,7 @@ class MongoDbTriggerRepository : MongoDbRepository<Trigger, TriggerDocument>(
     }
 
     override fun save(entity: Trigger) {
-        performSave(entity)
+        performSave<TriggerDocument>(entity, TriggerDocument.Companion)
     }
 
     override fun delete(entity: Trigger) {
