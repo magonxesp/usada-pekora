@@ -1,0 +1,10 @@
+.ground {
+    background-color: #B9E186;
+    border: 1px black solid;
+    border-radius: 50%;
+    width: 100%;
+    height: 120%;
+    position: absolute;
+    top: 55%;
+    z-index: -1;
+}
