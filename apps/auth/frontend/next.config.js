@@ -1,5 +1,7 @@
+const nextTranslate = require('next-translate-plugin')
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = nextTranslate({
   swcMinify: true,
   async redirects() {
     return [
@@ -10,6 +12,6 @@ const nextConfig = {
       },
     ];
   }
-}
+})
 
 module.exports = nextConfig
