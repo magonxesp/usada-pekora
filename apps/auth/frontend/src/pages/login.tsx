@@ -10,6 +10,8 @@ export default function Login() {
     <>
       <Head>
         <title>{t('title')}</title>
+        <meta name="desription" content={t('description')} />
+        <meta name="robots" content="index, follow" />
       </Head>
       <LoginForm />
       <Ground />
