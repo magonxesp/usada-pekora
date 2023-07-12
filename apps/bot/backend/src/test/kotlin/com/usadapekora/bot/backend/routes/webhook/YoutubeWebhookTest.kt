@@ -4,8 +4,8 @@ import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
 import com.usadapekora.bot.backend.HttpTestCase
 import com.usadapekora.bot.domain.guild.GuildPreferences
-import com.usadapekora.bot.testDiscordGuildId
-import com.usadapekora.bot.testDiscordTextChannelId
+import com.usadapekora.shared.testDiscordGuildId
+import com.usadapekora.shared.testDiscordTextChannelId
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*

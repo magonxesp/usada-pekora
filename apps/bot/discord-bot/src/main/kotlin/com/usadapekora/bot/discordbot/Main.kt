@@ -1,7 +1,7 @@
 package com.usadapekora.bot.discordbot
 
-import com.usadapekora.bot.discordBotToken
 import com.usadapekora.bot.modules
+import com.usadapekora.shared.discordBotToken
 import com.usadapekora.shared.enableDependencyInjection
 import discord4j.core.DiscordClient
 import io.prometheus.client.exporter.HTTPServer

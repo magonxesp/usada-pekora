@@ -1,8 +1,8 @@
 package com.usadapekora.bot.infraestructure.video.discord
 
 import com.usadapekora.bot.domain.VideoMother
-import com.usadapekora.bot.testDiscordTextChannelId
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueRepository
+import com.usadapekora.shared.testDiscordTextChannelId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

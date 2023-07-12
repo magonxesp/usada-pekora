@@ -1,9 +1,9 @@
 package com.usadapekora.bot.infraestructure.video.discord
 
-import com.usadapekora.bot.discordBotToken
 import com.usadapekora.bot.domain.video.Video
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerVideoNotification
+import com.usadapekora.shared.discordBotToken
 import com.usadapekora.shared.domain.KeyValueRepository
 import discord4j.common.util.Snowflake
 import discord4j.core.DiscordClient

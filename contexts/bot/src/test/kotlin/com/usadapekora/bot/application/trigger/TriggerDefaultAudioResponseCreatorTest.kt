@@ -8,8 +8,8 @@ import com.usadapekora.bot.domain.FileMother
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
-import com.usadapekora.bot.storageDirPath
 import com.usadapekora.shared.domain.file.DomainFileWriter
+import com.usadapekora.shared.storageDirPath
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -12,9 +12,12 @@ secrets:
     if [ ! -f "secrets/mongodb_connection_url.txt" ]; then echo "mongodb://pekora:$(cat secrets/mongodb_password.txt)@mongodb:27017" > secrets/mongodb_connection_url.txt; fi
 
 env-files:
-	@if [ ! -f "apps/bot/backend/.env" ]; then cp apps/bot/backend/.env.example apps/bot/backend/.env; fi
-	@if [ ! -f "apps/bot/discord-bot/.env" ]; then cp apps/bot/discord-bot/.env.example apps/bot/discord-bot/.env; fi
-	@if [ ! -f "apps/bot/frontend/.env" ]; then cp apps/bot/frontend/.env.example apps/bot/frontend/.env; fi
+	@if [ ! -f ".env" ]; then cp .env.example .env; fi
+	@if [ ! -f "apps/bot/backend/.env" ]; then ln -s ../../../.env apps/bot/backend/.env; fi
+	@if [ ! -f "apps/bot/discord-bot/.env" ]; then ln -s ../../../.env apps/bot/discord-bot/.env; fi
+	@if [ ! -f "apps/bot/frontend/.env" ]; then ln -s ../../../.env apps/bot/frontend/.env; fi
+	@if [ ! -f "apps/auth/backend/.env" ]; then ln -s ../../../.env apps/auth/backend/.env; fi
+	@if [ ! -f "apps/auth/frontend/.env" ]; then ln -s ../../../.env apps/auth/frontend/.env; fi
 
 docker-backend-test:
 	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \

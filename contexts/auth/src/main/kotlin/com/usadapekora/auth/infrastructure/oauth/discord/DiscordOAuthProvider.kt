@@ -3,13 +3,13 @@ package com.usadapekora.auth.infrastructure.oauth.discord
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.auth.discordClientId
-import com.usadapekora.auth.discordClientSecret
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
 import com.usadapekora.auth.domain.oauth.OAuthProviderError
-import com.usadapekora.shared.domain.auth.OAuthUser
 import com.usadapekora.auth.oAuthProviderRedirectUrl
+import com.usadapekora.shared.discordClientId
+import com.usadapekora.shared.discordClientSecret
+import com.usadapekora.shared.domain.auth.OAuthUser
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
