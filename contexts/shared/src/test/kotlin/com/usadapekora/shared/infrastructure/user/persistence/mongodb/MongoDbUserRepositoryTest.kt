@@ -22,9 +22,9 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
     }
 
     @Test
-    fun `should find user by discord id`() {
+    fun `should find user by provider id`() {
         runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion) {
-            val existing = repository.findByDiscordId(it.providerId).getOrNull()
+            val existing = repository.findByProviderId(it.providerId).getOrNull()
             assertEquals(it, existing)
         }
     }
@@ -38,9 +38,9 @@ class MongoDbUserRepositoryTest : MongoDbRepositoryTestCase<User, MongoDbUserRep
     }
 
     @Test
-    fun `should not find user by discord id`() {
+    fun `should not find user by provider id`() {
         runMongoDbRepositoryTest<UserDocument>(UserDocument.Companion, save = false) {
-            val result = repository.findByDiscordId(it.providerId)
+            val result = repository.findByProviderId(it.providerId)
             assertTrue(result.leftOrNull() is UserException.NotFound)
         }
     }

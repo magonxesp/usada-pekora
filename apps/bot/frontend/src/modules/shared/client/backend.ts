@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 interface BackendOAuthResponse {
   access_token: string
@@ -13,11 +14,18 @@ export function backendUrl(url: string) {
 }
 
 export function headers(contentType: string = "application/json") {
-  return {
+  const token = Cookies.get(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string)
+  const headers: any = {
     "Content-Type": contentType,
     "Accept": "application/json",
-    //"Authorization": `Bearer ${this.accessToken}`,
   }
+  console.log(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME)
+  console.log(token)
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`
+  }
+
+  return headers
 }
 
 export async function auth() {

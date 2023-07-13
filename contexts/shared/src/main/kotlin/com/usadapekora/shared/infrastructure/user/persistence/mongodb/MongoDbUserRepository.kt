@@ -27,7 +27,7 @@ class MongoDbUserRepository : MongoDbRepository<User>(
         return UserException.NotFound("User with id $id not found").left()
     }
 
-    override fun findByDiscordId(discordId: User.UserProviderId): Either<UserException.NotFound, User> {
+    override fun findByProviderId(discordId: User.UserProviderId): Either<UserException.NotFound, User> {
         val user = oneQuery<UserDocument>("user") { collection ->
             collection.findOne(UserDocument::providerId eq discordId.value)
         }

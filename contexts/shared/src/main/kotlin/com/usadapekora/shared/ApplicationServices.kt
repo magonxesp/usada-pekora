@@ -1,5 +1,6 @@
 package com.usadapekora.shared
 
+import com.usadapekora.shared.application.user.find.UserFinder
 import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.EventBus
@@ -37,6 +38,7 @@ val sharedModule = module {
     single { RedisEventConsumedRepository() } bind EventConsumedRepository::class
     single { RabbitMqEventBus() } bind EventBus::class
     single { RabbitMqEventConsumer(get(), get(), get(), get()) } bind EventConsumer::class
+    single { UserFinder(get()) }
 }
 
 fun enableDependencyInjection(modules: List<Module> = listOf()) {

@@ -26,6 +26,10 @@ function MyApp({ Component, pageProps }: AppProps<AppRootProps>) {
   const router = useRouter()
   const locale = router.locale as string
 
+  // useEffect(() => {
+  //   fetchCurrentUser().then()
+  // }, [])
+
   return (
     <SessionProvider session={pageProps.session}>
       <IntlProvider locale={locale} messages={translations[locale]}>

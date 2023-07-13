@@ -57,7 +57,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         coEvery { provider.handleCallback(code) } returns oAuthUser.right()
-        every { userRepository.findByDiscordId(User.UserProviderId(oAuthUser.id)) } returns UserException.NotFound().left()
+        every { userRepository.findByProviderId(User.UserProviderId(oAuthUser.id)) } returns UserException.NotFound().left()
         every { oAuthUserRepository.save(oAuthUser) } returns Unit.right()
         every { clock.now() } returns issuedAt
 
@@ -116,7 +116,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         coEvery { provider.handleCallback(code) } returns oAuthUser.right()
-        every { userRepository.findByDiscordId(User.UserProviderId(oAuthUser.id)) } returns user.right()
+        every { userRepository.findByProviderId(User.UserProviderId(oAuthUser.id)) } returns user.right()
         every { oAuthUserRepository.save(oAuthUser) } returns Unit.right()
         every { clock.now() } returns issuedAt
 
@@ -168,7 +168,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
 
         every { factory.getInstance(OAuthProvider.DISCORD) } returns provider.right()
         coEvery { provider.handleCallback(code) } returns oAuthUser.right()
-        every { userRepository.findByDiscordId(User.UserProviderId(oAuthUser.id)) } returns user.right()
+        every { userRepository.findByProviderId(User.UserProviderId(oAuthUser.id)) } returns user.right()
         every { oAuthUserRepository.save(oAuthUserToSave) } returns Unit.right()
         every { clock.now() } returns issuedAt
 

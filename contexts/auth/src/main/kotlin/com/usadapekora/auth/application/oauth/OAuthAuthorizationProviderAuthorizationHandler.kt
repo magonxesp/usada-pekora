@@ -42,7 +42,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
             it.getOrNull()!!
         }
 
-        var user = userRepository.findByDiscordId(User.UserProviderId(providerUser.id)).getOrNull()
+        var user = userRepository.findByProviderId(User.UserProviderId(providerUser.id)).getOrNull()
 
         if (user == null) {
             user = User.fromPrimitives(

@@ -7,7 +7,18 @@ import com.usadapekora.shared.domain.user.UserRepository
 
 class UserFinder(private val repository: UserRepository) {
 
-    fun findByDiscordId(discordId: User.UserProviderId): Either<UserException, User>
-        = repository.findByDiscordId(discordId)
+    private fun mapResponse(user: User) = UserResponse(
+        id = user.id.value,
+        avatar = user.avatar?.value,
+        name = user.name.value,
+        providerId = user.providerId.value,
+        provider = user.provider.value
+    )
+
+    fun find(id: User.UserId): Either<UserException.NotFound, UserResponse>
+        = repository.find(id).map { mapResponse(it) }
+
+    fun findByProviderId(providerId: User.UserProviderId): Either<UserException.NotFound, UserResponse>
+        = repository.findByProviderId(providerId).map { mapResponse(it) }
 
 }

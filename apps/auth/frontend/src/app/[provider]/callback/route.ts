@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, { params }: Params) {
   const response = NextResponse.redirect(process.env.NEXT_PUBLIC_LOGIN_REDIRECT_URL);
 
   response.cookies.set({
-    name: 'usada-pekora-session',
+    name: process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string,
     value: token.accessToken,
     path: '/',
     httpOnly: true,
