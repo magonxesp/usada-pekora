@@ -1,4 +1,4 @@
-package com.usadapekora.shared.infrastructure.user.peristence.mongodb
+package com.usadapekora.shared.infrastructure.user.persistence.mongodb
 
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDocument

@@ -4,8 +4,6 @@ import com.usadapekora.shared.MongoDbRepositoryTestCase
 import com.usadapekora.shared.domain.UserMother
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
-import com.usadapekora.shared.infrastructure.user.peristence.mongodb.MongoDbUserRepository
-import com.usadapekora.shared.infrastructure.user.peristence.mongodb.UserDocument
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

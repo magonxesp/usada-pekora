@@ -1,4 +1,4 @@
-package com.usadapekora.shared.infrastructure.user.peristence.mongodb
+package com.usadapekora.shared.infrastructure.user.persistence.mongodb
 
 import arrow.core.Either
 import arrow.core.left
@@ -40,7 +40,7 @@ class MongoDbUserRepository : MongoDbRepository<User>(
     }
 
     override fun save(entity: User) {
-        performSave<UserDocument>(entity, UserDocument.Companion)
+        performSave<UserDocument>(entity, UserDocument)
     }
 
     override fun delete(entity: User) {
