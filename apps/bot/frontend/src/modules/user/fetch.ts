@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { backendUrl, headers } from '../shared/client/backend'
-import { User } from './user'
+import { User } from '@usada-pekora/shared-user'
 
 interface UserResponse {
   id: string

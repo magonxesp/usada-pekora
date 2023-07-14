@@ -27,7 +27,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     name: process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string,
     value: token.accessToken,
     path: '/',
-    httpOnly: true,
+    httpOnly: false,
     expires: new Date(token.expiresAt),
     maxAge: token.expiresAt
   })

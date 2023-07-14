@@ -1,8 +1,13 @@
 import styles from './Header.module.css'
 import logo from './logo.png'
 import Link from 'next/link'
+import { useContext } from 'react'
+import { UserContext } from '../../../helpers/contexts'
+import { Picture } from '../../common/image/Picture/Picture'
 
 export function Header() {
+  const user = useContext(UserContext)
+
   return (
     <header className={styles.header}>
       <div className={styles.innerContainer}>
@@ -12,15 +17,15 @@ export function Header() {
             alt="The header logo"
           />
         </Link>
-        {/*{(session) ? (
+        {(user) ? (
           <div className={styles.currentUser}>
             <Picture
-              src={session?.user?.image ?? ''}
+              src={user?.avatar ?? ''}
               alt="User avatar"
             />
-            <p>{session?.user?.name}</p>
+            <p>{user?.name}</p>
           </div>
-        ) : ''}*/}
+        ) : ''}
       </div>
     </header>
   )

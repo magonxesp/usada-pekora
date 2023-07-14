@@ -88,6 +88,9 @@ importers:
       '@usada-pekora/shared-ui':
         specifier: workspace:*
         version: link:../../../contexts/shared/packages/ui
+      '@usada-pekora/shared-user':
+        specifier: workspace:*
+        version: link:../../../contexts/shared/packages/user
       axios:
         specifier: ^1.3.2
         version: 1.4.0
@@ -173,6 +176,9 @@ importers:
       '@heroicons/react':
         specifier: ^2.0.11
         version: 2.0.18(react@18.2.0)
+      '@usada-pekora/shared-user':
+        specifier: workspace:*
+        version: link:../user
       next:
         specifier: 13.2.4
         version: 13.2.4(react-dom@18.2.0)(react@18.2.0)
@@ -207,6 +213,31 @@ importers:
       '@types/uuid':
         specifier: ^9.0.0
         version: 9.0.1
+      esbuild:
+        specifier: ^0.17.19
+        version: 0.17.19
+      esbuild-css-modules-plugin:
+        specifier: ^2.7.1
+        version: 2.7.1(esbuild@0.17.19)
+      tsup:
+        specifier: ^6.7.0
+        version: 6.7.0(postcss@8.4.23)(typescript@5.0.4)
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
+
+  contexts/shared/packages/user:
+    dependencies:
+      uuid:
+        specifier: 9.0.0
+        version: 9.0.0
+    devDependencies:
+      '@types/node':
+        specifier: ^20.1.5
+        version: 20.1.5
+      '@types/uuid':
+        specifier: ^9.0.0
+        version: 9.0.0
       esbuild:
         specifier: ^0.17.19
         version: 0.17.19
