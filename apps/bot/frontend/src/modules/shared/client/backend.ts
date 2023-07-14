@@ -19,8 +19,7 @@ export function headers(contentType: string = "application/json") {
     "Content-Type": contentType,
     "Accept": "application/json",
   }
-  console.log(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME)
-  console.log(token)
+
   if (token) {
     headers["Authorization"] = `Bearer ${token}`
   }
