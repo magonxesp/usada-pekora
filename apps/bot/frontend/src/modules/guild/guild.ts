@@ -1,7 +1,7 @@
 export interface Guild {
-  id: number
+  id: string
   name: string
-  icon: string|null
-  owner: string
-  permissions: string
+  iconUrl: string
+  providerId: string
+  provider: string
 }

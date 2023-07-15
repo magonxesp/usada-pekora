@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useAppStore } from '../../store/app'
+import { fetchCurrentUserGuilds } from './fetch'
 
 export function useSelectedGuild() {
   const selected = useAppStore(state => state.selectedGuild)
@@ -29,8 +30,7 @@ export function useGuilds() {
   const setGuilds = useAppStore(state => state.setGuilds)
 
   useEffect(() => {
-    fetch('/api/guild/user-guilds')
-      .then(response => response.json())
+    fetchCurrentUserGuilds()
       .then(guilds => setGuilds(guilds))
   }, [])
 

@@ -1,9 +1,9 @@
 package com.usadapekora.shared.infrastructure.persistence.mongodb
 
-import com.mongodb.client.FindIterable
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
+import com.mongodb.client.MongoIterable
 import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.mongoConnectionUrl
 import com.usadapekora.shared.mongoDatabase
@@ -39,7 +39,7 @@ abstract class MongoDbRepository<E: Entity>(
         return collectionCallback(collection)
     }
 
-    inline fun <reified T: MongoDbDocument> collectionQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> FindIterable<T>): FindIterable<T> {
+    inline fun <reified T: MongoDbDocument> collectionQuery(collectionName: String, collectionCallback: (collection: MongoCollection<T>) -> MongoIterable<T>): MongoIterable<T> {
         val database = connect()
         val collection = database.getCollectionOfName<T>(collectionName)
 

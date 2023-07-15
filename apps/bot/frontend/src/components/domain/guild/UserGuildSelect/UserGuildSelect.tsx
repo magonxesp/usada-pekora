@@ -13,7 +13,7 @@ export default function UserGuildSelect() {
     setOptions(userGuilds.map((item: Guild): IconSelectOption => ({
       label: item.name,
       value: item.id,
-      icon: item.icon ?? "",
+      icon: item.iconUrl ?? "",
     })))
   }, [userGuilds])
 

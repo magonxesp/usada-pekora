@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { NextRequest } from 'next/server'
 
 interface BackendOAuthResponse {
   access_token: string
@@ -10,12 +11,14 @@ interface BackendOAuthResponse {
 let accessToken: string = ""
 
 export function backendUrl(url: string) {
-  return `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}${url}`
+  return `${process.env.NEXT_PUBLIC_BOT_BACKEND_BASE_URL}${url}`
 }
 
-export function headers(contentType: string = "application/json") {
-  const token = Cookies.get(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string)
-  const headers: any = {
+export function headers(request: NextRequest|null = null, contentType: string = "application/json"): HeadersInit {
+  const token = (request) ? request.cookies.get(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string)?.value
+    : Cookies.get(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string)
+
+  const headers: HeadersInit = {
     "Content-Type": contentType,
     "Accept": "application/json",
   }

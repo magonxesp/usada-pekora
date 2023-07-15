@@ -7,7 +7,11 @@ import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildRepository
+import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
+import org.litote.kmongo.MongoOperator.lookup
+import org.litote.kmongo.MongoOperator.match
+import org.litote.kmongo.aggregate
 import org.litote.kmongo.and
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
@@ -34,6 +38,33 @@ class MongoDbGuildRepository : MongoDbRepository<Guild>(
         } ?: return GuildError.NotFound("guild with provider id ${providerId.value} of provider ${provider.value} not found").left()
 
         return guild.toEntity().right()
+    }
+
+    override fun findByUserId(userId: User.UserId): Array<Guild> {
+        return collectionQuery<GuildDocument>(collection) { collection ->
+            collection.aggregate<GuildDocument>("""
+                [
+                    {
+                        $lookup:
+                            {
+                                from: "guildMember",
+                                localField: "id",
+                                foreignField: "guildId",
+                                as: "members",
+                            },
+                    },
+                    {
+                        $match:
+                            {
+                                "members.userId": "${userId.value}",
+                            },
+                    },
+                ]
+            """)
+        }
+            .asIterable()
+            .map { it.toEntity() }
+            .toTypedArray()
     }
 
     override fun save(entity: Guild): Either<GuildError.SaveError, Unit> = Either.catch {

@@ -1,5 +1,6 @@
 package com.usadapekora.bot.backend.routes.api.user
 
+import com.usadapekora.bot.application.guild.find.GuildFinder
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.shared.application.user.find.UserFinder
 import com.usadapekora.shared.domain.user.User
@@ -14,6 +15,7 @@ import io.ktor.server.routing.*
 import org.koin.java.KoinJavaComponent.inject
 
 private val finder: UserFinder by inject(UserFinder::class.java)
+private val guildFinder: GuildFinder by inject(GuildFinder::class.java)
 
 private fun errorStatusCode(error: UserException) = when(error) {
     is UserException.NotFound -> HttpStatusCode.NotFound
@@ -31,6 +33,18 @@ fun Route.userV1() {
                     finder.find(User.UserId(userId))
                         .onRight { call.respond(it) }
                         .onLeft { call.respondError(errorStatusCode(it), it.message ?: "") }
+                } else {
+                    call.respondError(HttpStatusCode.Unauthorized, "The user is not authenticated")
+                }
+            }
+            get("/me/guilds") {
+                val principal = call.principal<JWTPrincipal>()
+                val userId = principal?.payload?.getClaim("userId")?.asString()
+
+                if (userId != null) {
+                    guildFinder
+                        .findUserGuilds(User.UserId(userId))
+                        .also { call.respond(it) }
                 } else {
                     call.respondError(HttpStatusCode.Unauthorized, "The user is not authenticated")
                 }

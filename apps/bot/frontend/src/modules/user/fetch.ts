@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { backendUrl, headers } from '../shared/client/backend'
 import { User } from '@usada-pekora/shared-user'
+import { NextRequest } from 'next/server'
 
 interface UserResponse {
   id: string
@@ -10,13 +10,14 @@ interface UserResponse {
   provider: string
 }
 
-export async function fetchCurrentUser(): Promise<User|null> {
+export async function fetchCurrentUser(request: NextRequest|null = null): Promise<User|null> {
   try {
-    const response = await axios.get<UserResponse>(backendUrl(`/api/v1/user/me`), {
-      headers: headers()
-    })
-
-    return response.data as User
+    const config: RequestInit = {
+      headers: headers(request)
+    }
+    console.log(config)
+    const response = await fetch(backendUrl(`/api/v1/user/me`), config)
+    return await response.json() as User
   } catch (exception) {
     return null
   }

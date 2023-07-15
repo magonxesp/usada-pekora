@@ -5,7 +5,6 @@ import arrow.core.right
 import com.usadapekora.shared.application.user.find.UserFinder
 import com.usadapekora.shared.application.user.find.UserResponse
 import com.usadapekora.shared.domain.UserMother
-import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
 import io.mockk.every
@@ -17,14 +16,6 @@ import kotlin.test.assertTrue
 
 class UserFinderTest {
 
-    private fun mapResponse(user: User) = UserResponse(
-        id = user.id.value,
-        avatar = user.avatar?.value,
-        name = user.name.value,
-        providerId = user.providerId.value,
-        provider = user.provider.value
-    )
-
     @Test
     fun `should find user by id`() {
         val user = UserMother.create()
@@ -35,7 +26,7 @@ class UserFinderTest {
 
         val existing = finder.find(user.id)
 
-        assertEquals(mapResponse(user), existing.getOrNull())
+        assertEquals(UserResponse.fromEntity(user), existing.getOrNull())
     }
 
     @Test
@@ -61,7 +52,7 @@ class UserFinderTest {
 
         val existing = finder.findByProviderId(user.providerId)
 
-        assertEquals(mapResponse(user), existing.getOrNull())
+        assertEquals(UserResponse.fromEntity(user), existing.getOrNull())
     }
 
     @Test

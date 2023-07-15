@@ -5,6 +5,7 @@ import com.usadapekora.bot.application.guild.create.GuildCreator
 import com.usadapekora.bot.application.guild.create.GuildMemberCreator
 import com.usadapekora.bot.application.guild.create.GuildPreferenceCreator
 import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
+import com.usadapekora.bot.application.guild.find.GuildFinder
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdater
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
@@ -45,18 +46,15 @@ import com.usadapekora.bot.infraestructure.video.discord.DiscordTextChannelVideo
 import com.usadapekora.bot.infraestructure.video.youtube.YoutubeFeedSubscriber
 import com.usadapekora.bot.infraestructure.video.youtube.YoutubeVideoParser
 import com.usadapekora.shared.domain.KeyValueRepository
-import com.usadapekora.shared.domain.Logger
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.shared.domain.file.DomainFileReader
 import com.usadapekora.shared.domain.file.DomainFileWriter
-import com.usadapekora.shared.infrastructure.Slf4jLogger
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileDeleter
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileReader
 import com.usadapekora.shared.infrastructure.file.filesystem.FileSystemDomainFileWriter
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisKeyValueRepository
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val sharedModule = module {
     single { RedisKeyValueRepository() } bind KeyValueRepository::class
@@ -99,6 +97,7 @@ val guildModule = module {
     single { GuildPreferencesFinder(get()) }
     single { ProvidedGuildUpdater(get()) }
     single { CreateGuildsFromProviderOnAuthorizationGranted(get(), get(), get(), get(), get()) }
+    single { GuildFinder(get()) }
 }
 
 val videoModule = module {
