@@ -12,11 +12,10 @@ interface UserResponse {
 
 export async function fetchCurrentUser(request: NextRequest|null = null): Promise<User|null> {
   try {
-    const config: RequestInit = {
+    const response = await fetch(backendUrl(`/api/v1/user/me`), {
       headers: headers(request)
-    }
-    console.log(config)
-    const response = await fetch(backendUrl(`/api/v1/user/me`), config)
+    })
+
     return await response.json() as User
   } catch (exception) {
     return null
