@@ -150,11 +150,11 @@ export async function fetchTriggerByIdWithResponses(id: string, accessToken: str
   const responses: TriggerResponses = {}
 
   if (trigger.responseTextId) {
-    responses.text = await fetchTriggerTextResponse(trigger.responseTextId) ?? undefined
+    responses.text = await fetchTriggerTextResponse(trigger.responseTextId, accessToken) ?? undefined
   }
 
   if (trigger.responseAudioId) {
-    responses.audio = await fetchTriggerDefaultAudioResponse(trigger.responseAudioId) ?? undefined
+    responses.audio = await fetchTriggerDefaultAudioResponse(trigger.responseAudioId, accessToken) ?? undefined
   }
 
   trigger.responses = responses
