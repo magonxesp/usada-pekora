@@ -1,15 +1,6 @@
-import { backendUrl, headers } from '../shared/client/backend'
+import { request } from '../shared/api'
 import { User } from '@usada-pekora/shared-user'
-import { NextRequest } from 'next/server'
 
-export async function fetchCurrentUser(request: NextRequest|null = null): Promise<User|null> {
-  try {
-    const response = await fetch(backendUrl(`/api/v1/user/me`), {
-      headers: headers(request)
-    })
-
-    return await response.json() as User
-  } catch (exception) {
-    return null
-  }
+export async function fetchCurrentUser(accessToken: string|undefined = undefined): Promise<User|null> {
+  return await request<User>('GET', `/api/v1/user/me`, { accessToken })
 }

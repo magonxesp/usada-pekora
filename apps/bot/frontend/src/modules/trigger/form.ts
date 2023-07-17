@@ -1,8 +1,8 @@
 import { FormErrors } from '../shared/form/validator'
 import { v4 as uuidv4 } from 'uuid'
 import { Trigger, triggerCompare } from './trigger'
-import { TriggerTextResponseFormData, triggerTextResponseToFormData } from './text-response/form'
-import { TriggerAudioResponseFormData, triggerDefaultAudioResponseToFormData } from './audio-response/form'
+import { TriggerTextResponseFormData, triggerTextResponseToFormData } from './trigger-text-response'
+import { TriggerAudioResponseFormData, triggerDefaultAudioResponseToFormData } from './trigger-audio-response'
 
 export interface TriggerFormGroupRef {
   validate: () => void

@@ -2,20 +2,22 @@ import { useIntl } from 'react-intl'
 import { ConfirmModal, useModal } from '@usada-pekora/shared-ui'
 import { createElement } from 'react'
 import { alert, asyncAlert } from '../shared/alert'
-import { createTrigger } from './create'
-import { createTriggerTextResponse } from './text-response/create-default'
-import { deleteTrigger } from './delete'
 import { Trigger } from './trigger'
-import { createTriggerAudio } from './audio-response/create-default'
 import { TriggerFormData } from './form'
 import { useSelectedGuild } from '../guild/hooks'
-import { fetchGuildTriggers } from './fetch'
-import { updateTrigger } from './update'
-import { updateTriggerTextResponse } from './text-response/update-default'
-import { deleteTriggerTextResponse } from './text-response/delete-default'
-import { deleteTriggerDefaultAudioResponse } from './audio-response/delete-default'
-import { updateTriggerDefaultAudioResponse } from './audio-response/update-default'
 import { useAppStore } from '../../store/app'
+import {
+  createTrigger,
+  createTriggerAudio,
+  createTriggerTextResponse,
+  deleteTrigger,
+  deleteTriggerDefaultAudioResponse,
+  deleteTriggerTextResponse,
+  fetchGuildTriggers,
+  updateTrigger,
+  updateTriggerDefaultAudioResponse,
+  updateTriggerTextResponse,
+} from './api'
 
 export function useFetchTriggers() {
   const { selected } = useSelectedGuild()
@@ -119,12 +121,9 @@ export function useUpdateTrigger(actualTrigger: Trigger) {
         content: data.responseText.content
       })
     } else if (data.responseText != null && actualTrigger.responseTextId != null) {
-      await updateTriggerTextResponse({
-        id: data.responseText.id,
-        values: {
-          content: data.responseText.content,
-          type: data.responseText.type,
-        }
+      await updateTriggerTextResponse(data.responseText.id, {
+        content: data.responseText.content,
+        type: data.responseText.type,
       })
     } else if (!data.responseText && actualTrigger.responseTextId != null) {
       await deleteTriggerTextResponse(actualTrigger.responseTextId)
@@ -138,29 +137,23 @@ export function useUpdateTrigger(actualTrigger: Trigger) {
         file: data.responseAudio.content as File
       })
     } else if (data.responseAudio != null && actualTrigger.responseAudioId != null) {
-      await updateTriggerDefaultAudioResponse({
-        id: data.responseAudio.id,
-        values: {
-          triggerId: data.id,
-          guildId: data.discordGuildId,
-          file: data.responseAudio.content ?? undefined,
-        },
+      await updateTriggerDefaultAudioResponse(data.responseAudio.id, {
+        triggerId: data.id,
+        guildId: data.discordGuildId,
+        file: data.responseAudio.content ?? undefined,
       })
     } if (!data.responseAudio && actualTrigger.responseAudioId != null) {
       await deleteTriggerDefaultAudioResponse(actualTrigger.responseAudioId)
     }
 
-    await updateTrigger({
-      id: data.id,
-      values: {
-        title: data.title,
-        compare: data.compare,
-        input: data.input,
-        discordGuildId: data.discordGuildId,
-        responseTextId: data.responseText?.id,
-        responseAudioId: data.responseAudio?.id,
-        responseAudioProvider: data.responseAudio?.provider
-      }
+    await updateTrigger(data.id, {
+      title: data.title,
+      compare: data.compare,
+      input: data.input,
+      discordGuildId: data.discordGuildId,
+      responseTextId: data.responseText?.id,
+      responseAudioId: data.responseAudio?.id,
+      responseAudioProvider: data.responseAudio?.provider
     })
   }
 

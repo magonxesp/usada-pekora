@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
-import { TriggerTextResponseFindResponse } from './fetch-default'
+
+export type TriggerTextResponse = {
+  id: string
+  content: string
+  type: string
+}
 
 export interface TriggerTextResponseFormData {
   id: string
@@ -13,7 +18,7 @@ export const emptyTriggerResponseTextFormData = (): TriggerTextResponseFormData 
   type: 'text'
 })
 
-export function triggerTextResponseToFormData(text: TriggerTextResponseFindResponse): TriggerTextResponseFormData {
+export function triggerTextResponseToFormData(text: TriggerTextResponse): TriggerTextResponseFormData {
   return {
     id: text.id,
     content: text.content,

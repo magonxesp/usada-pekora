@@ -4,13 +4,16 @@ import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import TriggerFormSidebar from '../../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
 import { Trigger } from '../../../modules/trigger/trigger'
-import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/fetch'
 import { triggerToFormData } from '../../../modules/trigger/form'
 import { useUpdateTrigger } from '../../../modules/trigger/hooks'
+import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/api'
+import { authorization } from '../../../modules/shared/api'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = async (context) => {
   const { id } = context.query
-  const trigger = await fetchTriggerByIdWithResponses(String(id))
+  console.log(context.req.cookies)
+  console.log(context.req.headers.cookie)
+  const trigger = await fetchTriggerByIdWithResponses(String(id), authorization(context.req) ?? undefined)
 
   if (!trigger) {
     return {

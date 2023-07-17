@@ -7,8 +7,8 @@ import { Validators } from '../../../../modules/shared/form/validator'
 import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
 import {
   emptyTriggerResponseAudioFormData,
-  TriggerAudioResponseFormData
-} from '../../../../modules/trigger/audio-response/form'
+  TriggerAudioResponseFormData,
+} from '../../../../modules/trigger/trigger-audio-response'
 
 export const TriggerAudioResponseFormGroup = forwardRef(
   function TriggerAudioResponseFormGroup(props: FormGroupProps<TriggerAudioResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) {

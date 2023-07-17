@@ -1,14 +1,24 @@
-import { TriggerResponse } from './fetch'
-import { TriggerTextResponseFindResponse } from './text-response/fetch-default'
-import { TriggerDefaultAudioFindResponse } from './audio-response/fetch-default'
+import { TriggerTextResponse } from './trigger-text-response'
+import { TriggerDefaultResponse } from './trigger-audio-response'
 
-export interface TriggerResponses {
-  text?: TriggerTextResponseFindResponse
-  audio?: TriggerDefaultAudioFindResponse
+export type Trigger = {
+  id: string
+  title: string
+  input: string
+  compare: string
+  responseTextId?: string
+  responseAudioId?: string
+  discordGuildId: string
+  responses?: TriggerResponses
 }
 
-export interface Trigger extends TriggerResponse {
-  responses?: TriggerResponses
+export type TriggerResponses = {
+  text?: TriggerTextResponse
+  audio?: TriggerDefaultResponse
+}
+
+export type TriggerCollection = {
+  triggers: Trigger[]
 }
 
 export const triggerCompare = {

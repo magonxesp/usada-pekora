@@ -51,7 +51,7 @@ fun Application.module() {
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
         allowCredentials = true
-        allowNonSimpleContentTypes
+        allowNonSimpleContentTypes = true
         anyHost()
     }
 

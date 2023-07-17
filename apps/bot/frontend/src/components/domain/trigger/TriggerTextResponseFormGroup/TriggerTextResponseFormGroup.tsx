@@ -8,8 +8,8 @@ import { TextAreaInput } from '@usada-pekora/shared-ui'
 import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
 import {
   emptyTriggerResponseTextFormData,
-  TriggerTextResponseFormData
-} from '../../../../modules/trigger/text-response/form'
+  TriggerTextResponseFormData,
+} from '../../../../modules/trigger/trigger-text-response'
 
 export const TriggerTextResponseFormGroup = forwardRef(
   function TriggerTextResponseFormGroup(props: FormGroupProps<TriggerTextResponseFormData>, ref: ForwardedRef<TriggerFormGroupRef>) {
