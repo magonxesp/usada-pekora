@@ -105,7 +105,7 @@ export async function createTriggerAudio(
   await request<void>('POST', '/api/v1/trigger/response/audio', {
     body: formData,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': undefined
     },
     accessToken
   })
@@ -130,7 +130,7 @@ export async function updateTriggerDefaultAudioResponse(
   await request<void>('PUT', `/api/v1/trigger/response/audio/${id}`, {
     body: formData,
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': undefined
     },
     accessToken
   })

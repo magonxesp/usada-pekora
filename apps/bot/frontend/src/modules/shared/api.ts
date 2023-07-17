@@ -3,7 +3,7 @@ import { IncomingMessage } from 'http'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 
 export type Headers = {
-  [key: string]: string
+  [key: string]: string|undefined
 }
 
 export type RequestConfig = {
@@ -20,11 +20,16 @@ export function backendUrl(url: string) {
 }
 
 export function defaultHeaders(extraHeaders: Headers = {}): HeadersInit {
-  return {
+  const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     ...extraHeaders
   }
+
+  return Object.fromEntries(
+    Object.entries(headers)
+      .filter(([_, value]) => typeof value !== 'undefined')
+  )
 }
 
 export function authorization(request: NextServerRequest|null = null): string|null {
