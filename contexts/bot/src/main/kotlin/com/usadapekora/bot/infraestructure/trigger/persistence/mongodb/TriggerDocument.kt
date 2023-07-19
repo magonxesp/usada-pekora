@@ -9,10 +9,11 @@ class TriggerDocument(
     val title: String = "",
     val input: String = "",
     val compare: String = "",
+    val kind: String = "",
     val responseTextId: String? = null,
     val responseAudioId: String? = null,
     val responseAudioProvider: String? = null,
-    val discordGuildId: String = ""
+    val guildId: String = ""
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>({ TriggerDocument() }) {
         override fun fromEntity(entity: Trigger, document: TriggerDocument) = TriggerDocument(
@@ -20,10 +21,11 @@ class TriggerDocument(
             title = entity.title.value,
             input = entity.input.value,
             compare = entity.compare.toString(),
+            kind = entity.kind.value,
             responseTextId = entity.responseText?.value,
             responseAudioId = entity.responseAudio?.value,
             responseAudioProvider = entity.responseAudioProvider?.value,
-            discordGuildId = entity.discordGuildId.value
+            guildId = entity.guildId.value
         )
     }
 
@@ -32,9 +34,10 @@ class TriggerDocument(
         title = title.ifBlank { "untitled" },
         input = input.ifBlank { "[empty]" },
         compare = compare,
+        kind = kind.ifBlank { "private" },
         responseTextId = responseTextId,
         responseAudioId = responseAudioId,
         responseAudioProvider = responseAudioProvider,
-        discordGuildId = discordGuildId
+        guildId = guildId
     )
 }

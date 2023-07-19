@@ -6,4 +6,5 @@ sealed class TriggerException(override val message: String? = null) : Exception(
     class AlreadyExists(override val message: String? = null) : TriggerException(message)
     class MissingResponse(override val message: String? = null) : TriggerException(message)
     class MissingAudioProvider(override val message: String? = null) : TriggerException(message)
+    class InvalidKind(override val message: String? = null) : TriggerException(message)
 }

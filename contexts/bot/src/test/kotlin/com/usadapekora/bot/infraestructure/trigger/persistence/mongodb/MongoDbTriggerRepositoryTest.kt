@@ -48,14 +48,14 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
         val trigger = TriggerMother.create()
 
         runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, aggregate = trigger) {
-            val triggers = repository.findByDiscordServer(it.discordGuildId)
+            val triggers = repository.findByGuild(it.guildId)
             assertContains(triggers, it)
         }
     }
 
     @Test
     fun `should not find trigger by discord server id`() {
-        val triggers = repository.findByDiscordServer(TriggerMother.create().discordGuildId)
+        val triggers = repository.findByGuild(TriggerMother.create().guildId)
         assertTrue(triggers.isEmpty())
     }
 

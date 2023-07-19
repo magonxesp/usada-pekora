@@ -1,5 +1,6 @@
 package com.usadapekora.bot.domain.trigger
 
+import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
@@ -11,10 +12,11 @@ data class Trigger(
     var title: TriggerTitle,
     var input: TriggerInput,
     var compare: TriggerCompare,
+    var kind: TriggerKind,
     var responseText: TriggerTextResponseId?,
     var responseAudio: TriggerAudioResponseId?,
     var responseAudioProvider: TriggerAudioResponseProvider?,
-    var discordGuildId: TriggerDiscordGuildId
+    var guildId: Guild.GuildId
 ) : Entity() {
     data class TriggerId(override val value: String) : UuidValueObject(value)
 
@@ -30,14 +32,6 @@ data class Trigger(
         init {
             if (value.isBlank()) {
                 throw TriggerException.InvalidValue("The input can't be a empty string")
-            }
-        }
-    }
-
-    data class TriggerDiscordGuildId(val value: String) {
-        init {
-            if (value.isBlank()) {
-                throw TriggerException.InvalidValue("The discordGuildId can't be a empty string")
             }
         }
     }
@@ -65,7 +59,8 @@ data class Trigger(
             title: String,
             input: String,
             compare: String,
-            discordGuildId: String,
+            kind: String,
+            guildId: String,
             responseTextId: String? = null,
             responseAudioId: String? = null,
             responseAudioProvider: String? = null,
@@ -74,10 +69,11 @@ data class Trigger(
             title = TriggerTitle(title),
             input = TriggerInput(input),
             compare = TriggerCompare.fromValue(compare),
+            kind = TriggerKind.fromValue(kind),
             responseText = responseTextId?.let { TriggerTextResponseId(it) },
             responseAudio = responseAudioId?.let { TriggerAudioResponseId(it) },
             responseAudioProvider = responseAudioProvider?.let { TriggerAudioResponseProvider.fromValue(it) },
-            discordGuildId = TriggerDiscordGuildId(discordGuildId)
+            guildId = Guild.GuildId(guildId)
         )
     }
 

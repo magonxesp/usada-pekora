@@ -38,10 +38,11 @@ class TriggerCreator(
                 title = request.title,
                 input = request.input,
                 compare = request.compare,
+                kind = "private",
                 responseTextId = textResponse?.id?.value,
                 responseAudioId = audioResponse?.id(),
                 responseAudioProvider = request.responseAudioProvider,
-                discordGuildId = request.discordGuildId,
+                guildId = request.discordGuildId,
             )
         }.let {
             if (it.isLeft() && it.leftOrNull() is TriggerException) return (it.leftOrNull()!! as TriggerException).left()

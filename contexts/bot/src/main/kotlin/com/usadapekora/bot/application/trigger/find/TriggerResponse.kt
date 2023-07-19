@@ -21,7 +21,7 @@ data class TriggerResponse(
             compare = entity.compare.value,
             responseTextId = entity.responseText?.value,
             responseAudioId = entity.responseAudio?.value,
-            discordGuildId = entity.discordGuildId.value
+            discordGuildId = entity.guildId.value
         )
     }
 }

@@ -3,6 +3,7 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
@@ -35,9 +36,9 @@ class MongoDbTriggerRepository : MongoDbRepository<Trigger>(
         return TriggerException.NotFound().left()
     }
 
-    override fun findByDiscordServer(id: Trigger.TriggerDiscordGuildId): Array<Trigger> {
+    override fun findByGuild(id: Guild.GuildId): Array<Trigger> {
         val triggers = collectionQuery<TriggerDocument>("triggers") { collection ->
-            collection.find(TriggerDocument::discordGuildId eq id.value)
+            collection.find(TriggerDocument::guildId eq id.value)
         }
 
         return triggers.map { it.toEntity() }.toList().toTypedArray()

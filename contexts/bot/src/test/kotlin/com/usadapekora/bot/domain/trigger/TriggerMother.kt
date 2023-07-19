@@ -10,6 +10,7 @@ object TriggerMother : ObjectMother<Trigger> {
         title: String? = null,
         input: String? = null,
         compare: String? = null,
+        kind: String? = null,
         responseTextId: String? = null,
         responseAudioId: String? = null,
         responseAudioProvider: TriggerAudioResponseProvider? = null,
@@ -19,11 +20,12 @@ object TriggerMother : ObjectMother<Trigger> {
         title = title ?: Random.instance().chiquito.terms(),
         input = input ?: Random.instance().chiquito.expressions(),
         compare = compare ?: Trigger.TriggerCompare.values().random().toString(),
+        kind = kind ?: Random.instance().random.nextEnum(TriggerKind::class.java).value,
         responseTextId = responseTextId ?: Random.instance().random.nextUUID(),
         responseAudioId = responseAudioId ?: Random.instance().random.nextUUID(),
         responseAudioProvider = responseAudioProvider?.value ?: Random.instance().random.nextEnum(
             TriggerAudioResponseProvider::class.java).value,
-        discordGuildId = guildId ?: java.util.Random().nextLong().toString()
+        guildId = guildId ?: java.util.Random().nextLong().toString()
     )
 
     override fun random(): Trigger = create()

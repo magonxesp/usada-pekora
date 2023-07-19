@@ -1,11 +1,12 @@
 package com.usadapekora.bot.domain.trigger
 
 import arrow.core.Either
+import com.usadapekora.bot.domain.guild.Guild
 
 interface TriggerRepository {
     fun all(): Array<Trigger>
     fun find(id: Trigger.TriggerId): Either<TriggerException.NotFound, Trigger>
-    fun findByDiscordServer(id: Trigger.TriggerDiscordGuildId): Array<Trigger>
+    fun findByGuild(id: Guild.GuildId): Array<Trigger>
     fun save(entity: Trigger)
     fun delete(entity: Trigger)
 }

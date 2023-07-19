@@ -45,7 +45,7 @@ class TriggerCreatorTest {
             responseTextId = trigger.responseText?.value,
             responseAudioId = trigger.responseAudio?.value,
             responseAudioProvider = trigger.responseAudioProvider?.value,
-            discordGuildId = trigger.discordGuildId.value
+            discordGuildId = trigger.guildId.value
         ))
 
         verify { audioResponseRepository.find(audioResponse.id) }
@@ -73,7 +73,7 @@ class TriggerCreatorTest {
             title = trigger.title.value,
             input = trigger.input.value,
             compare = trigger.compare.value,
-            discordGuildId = trigger.discordGuildId.value,
+            discordGuildId = trigger.guildId.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = trigger.responseAudio?.value,
             responseAudioProvider = trigger.responseAudioProvider?.value
@@ -105,7 +105,7 @@ class TriggerCreatorTest {
             title = trigger.title.value,
             input = trigger.input.value,
             compare = trigger.compare.value,
-            discordGuildId = trigger.discordGuildId.value,
+            discordGuildId = trigger.guildId.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = trigger.responseAudio?.value,
             responseAudioProvider = trigger.responseAudioProvider?.value,
@@ -131,7 +131,7 @@ class TriggerCreatorTest {
                 title = trigger.title.value,
                 input = trigger.input.value,
                 compare = trigger.compare.value,
-                discordGuildId = trigger.discordGuildId.value,
+                discordGuildId = trigger.guildId.value,
                 responseTextId = trigger.responseText?.value,
                 responseAudioId = trigger.responseAudio?.value,
                 responseAudioProvider = trigger.responseAudioProvider?.value,
@@ -155,7 +155,7 @@ class TriggerCreatorTest {
             title = trigger.title.value,
             input = trigger.input.value,
             compare = trigger.compare.value,
-            discordGuildId = trigger.discordGuildId.value,
+            discordGuildId = trigger.guildId.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = null,
             responseAudioProvider = trigger.responseAudioProvider?.value,
@@ -182,7 +182,7 @@ class TriggerCreatorTest {
             title = trigger.title.value,
             input = trigger.input.value,
             compare = trigger.compare.value,
-            discordGuildId = trigger.discordGuildId.value,
+            discordGuildId = trigger.guildId.value,
             responseTextId = null,
             responseAudioId = trigger.responseAudio?.value,
             responseAudioProvider = trigger.responseAudioProvider?.value,

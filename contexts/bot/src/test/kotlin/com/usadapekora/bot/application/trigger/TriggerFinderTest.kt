@@ -26,9 +26,9 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.findByDiscordServer(expected.discordGuildId) } returns arrayOf(expected)
+        every { repository.findByGuild(expected.guildId) } returns arrayOf(expected)
 
-        val actual = finder.findByInput("It's me pekora", expected.discordGuildId.value)
+        val actual = finder.findByInput("It's me pekora", expected.guildId.value)
 
         assertEquals(TriggerResponse.fromEntity(expected), actual)
     }
@@ -42,10 +42,10 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.findByDiscordServer(expected.discordGuildId) } returns arrayOf(expected)
+        every { repository.findByGuild(expected.guildId) } returns arrayOf(expected)
 
         assertThrows<TriggerException.NotFound> {
-            finder.findByInput("It's me pekora", expected.discordGuildId.value)
+            finder.findByInput("It's me pekora", expected.guildId.value)
         }
     }
 
@@ -59,9 +59,9 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.findByDiscordServer(expected.discordGuildId) } returns arrayOf(expected)
+        every { repository.findByGuild(expected.guildId) } returns arrayOf(expected)
 
-        val actual = finder.findByInput("jajajajajajaja", expected.discordGuildId.value)
+        val actual = finder.findByInput("jajajajajajaja", expected.guildId.value)
 
         assertEquals(TriggerResponse.fromEntity(expected), actual)
     }
@@ -77,10 +77,10 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.findByDiscordServer(expected.discordGuildId) } returns arrayOf(expected)
+        every { repository.findByGuild(expected.guildId) } returns arrayOf(expected)
 
         assertThrows<TriggerException.NotFound> {
-            finder.findByInput("jajajajajajaj", expected.discordGuildId.value)
+            finder.findByInput("jajajajajajaj", expected.guildId.value)
         }
     }
 
@@ -120,9 +120,9 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.findByDiscordServer(trigger.discordGuildId) } returns arrayOf(trigger)
+        every { repository.findByGuild(trigger.guildId) } returns arrayOf(trigger)
 
-        val response = finder.findByDiscordServer(trigger.discordGuildId.value)
+        val response = finder.findByDiscordServer(trigger.guildId.value)
         assertContentEquals(response.triggers, TriggersResponse.fromArray(arrayOf(trigger)).triggers)
     }
 
@@ -133,9 +133,9 @@ class TriggerFinderTest {
         val repository = mockk<TriggerRepository>()
         val finder = TriggerFinder(repository, TriggerMatcher())
 
-        every { repository.findByDiscordServer(expected.discordGuildId) } returns arrayOf()
+        every { repository.findByGuild(expected.guildId) } returns arrayOf()
 
-        val response = finder.findByDiscordServer(expected.discordGuildId.value)
+        val response = finder.findByDiscordServer(expected.guildId.value)
         assertContentEquals(response.triggers, TriggersResponse(arrayOf()).triggers)
     }
 }

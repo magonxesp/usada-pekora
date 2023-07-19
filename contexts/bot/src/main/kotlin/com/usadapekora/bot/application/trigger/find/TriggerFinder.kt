@@ -3,6 +3,7 @@ package com.usadapekora.bot.application.trigger.find
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
@@ -13,7 +14,7 @@ class TriggerFinder(
     private val matcher: TriggerMatcher
 ) {
     fun findByInput(input: String, discordServerId: String): TriggerResponse {
-        val triggers = repository.findByDiscordServer(Trigger.TriggerDiscordGuildId(discordServerId))
+        val triggers = repository.findByGuild(Guild.GuildId(discordServerId))
         return TriggerResponse.fromEntity(matcher.matchInput(input, triggers) ?: throw TriggerException.NotFound())
     }
 
@@ -28,7 +29,7 @@ class TriggerFinder(
     }
 
     fun findByDiscordServer(discordServerId: String): TriggersResponse
-        = repository.findByDiscordServer(Trigger.TriggerDiscordGuildId(discordServerId)).let {
+        = repository.findByGuild(Guild.GuildId(discordServerId)).let {
             TriggersResponse.fromArray(it)
         }
 }

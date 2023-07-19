@@ -3,6 +3,7 @@ package com.usadapekora.bot.application.trigger.update
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
@@ -81,7 +82,7 @@ class TriggerUpdater(
         updateAudioResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
 
         request.values.discordGuildId.takeUnless { it == null }?.let {
-            trigger.discordGuildId = Trigger.TriggerDiscordGuildId(it)
+            trigger.guildId = Guild.GuildId(it)
         }
 
         return repository.save(trigger).right()
