@@ -24,7 +24,7 @@ class TriggerPutV1Test : TriggerTest() {
                 "input": "pekopeko",
                 "compare": "in",
                 "responseTextId": "$textId",
-                "discordGuildId": "94101459"
+                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635"
             }
         """.uglifyJson()
 
@@ -44,7 +44,7 @@ class TriggerPutV1Test : TriggerTest() {
                 "compare": "in",
                 "responseTextId": "$textId",
                 "responseAudioId": null,
-                "discordGuildId": "94101459"
+                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635"
             }
         """.uglifyJson()
 

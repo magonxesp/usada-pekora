@@ -26,7 +26,7 @@ abstract class TriggerTest : HttpTestCase()  {
         responseTextId: String? = null,
         responseAudioId: String? = null,
         responseAudioProvider: String? = TriggerAudioResponseProvider.DEFAULT.value,
-        discordGuildId: String = "94101459"
+        guildId: String = "2fe3367b-61a8-402c-9df4-20561b058635"
     ) {
         creator.create(
             TriggerCreateRequest(
@@ -34,7 +34,7 @@ abstract class TriggerTest : HttpTestCase()  {
                 title = title,
                 input = input,
                 compare = compare,
-                discordGuildId = discordGuildId,
+                guildId = guildId,
                 responseTextId = responseTextId,
                 responseAudioId = responseAudioId,
                 responseAudioProvider = responseAudioProvider
@@ -45,7 +45,7 @@ abstract class TriggerTest : HttpTestCase()  {
     fun createAudioDummy(
         id: String = "b0fcce03-7137-406c-8397-05b4d595bae9",
         triggerId: String = "29da2a75-f5ba-4bff-99ee-3eb654716284",
-        guildId: String = "94101459"
+        guildId: String = "2fe3367b-61a8-402c-9df4-20561b058635"
     ) {
         audioCreator.create(
             TriggerDefaultAudioResponseCreateRequest(

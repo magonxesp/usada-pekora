@@ -13,7 +13,8 @@ class TriggerDocument(
     val responseTextId: String? = null,
     val responseAudioId: String? = null,
     val responseAudioProvider: String? = null,
-    val guildId: String = ""
+    val guildId: String? = null,
+    val overrides: String? = null
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>({ TriggerDocument() }) {
         override fun fromEntity(entity: Trigger, document: TriggerDocument) = TriggerDocument(
@@ -25,7 +26,8 @@ class TriggerDocument(
             responseTextId = entity.responseText?.value,
             responseAudioId = entity.responseAudio?.value,
             responseAudioProvider = entity.responseAudioProvider?.value,
-            guildId = entity.guildId.value
+            guildId = entity.guildId?.value,
+            overrides = entity.overrides?.value
         )
     }
 
@@ -38,6 +40,7 @@ class TriggerDocument(
         responseTextId = responseTextId,
         responseAudioId = responseAudioId,
         responseAudioProvider = responseAudioProvider,
-        guildId = guildId
+        guildId = guildId,
+        overrides = overrides
     )
 }

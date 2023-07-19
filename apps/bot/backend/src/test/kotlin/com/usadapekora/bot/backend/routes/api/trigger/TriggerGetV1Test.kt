@@ -27,7 +27,7 @@ class TriggerGetV1Test : TriggerTest() {
                 "compare": "in",
                 "responseTextId": null,
                 "responseAudioId": "$audioId",
-                "discordGuildId": "94101459"
+                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635"
             }
         """.uglifyJson()
 
@@ -57,7 +57,7 @@ class TriggerGetV1Test : TriggerTest() {
         val audioId = UUID.randomUUID().toString()
 
         createAudioDummy(id = audioId)
-        createDummy(id = id, discordGuildId = guildId, responseAudioId = audioId)
+        createDummy(id = id, guildId = guildId, responseAudioId = audioId)
 
         val expectedBody = """
             {
@@ -69,7 +69,7 @@ class TriggerGetV1Test : TriggerTest() {
                         "compare": "in",
                         "responseTextId": null,
                         "responseAudioId": "$audioId",
-                        "discordGuildId": "$guildId"
+                        "guildId": "$guildId"
                     }
                 ]
             }
@@ -114,7 +114,7 @@ class TriggerGetV1Test : TriggerTest() {
             {
                 "id": "$audioId",
                 "triggerId": "$id",
-                "guildId": "94101459",
+                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635",
                 "file": "assets_audio_Its_me_pekora.mp3"
             }
         """.uglifyJson()

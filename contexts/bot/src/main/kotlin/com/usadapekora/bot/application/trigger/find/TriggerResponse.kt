@@ -11,7 +11,7 @@ data class TriggerResponse(
     val compare: String,
     val responseTextId: String?,
     val responseAudioId: String?,
-    val discordGuildId: String
+    val guildId: String?
 ) {
     companion object {
         fun fromEntity(entity: Trigger) = TriggerResponse(
@@ -21,7 +21,7 @@ data class TriggerResponse(
             compare = entity.compare.value,
             responseTextId = entity.responseText?.value,
             responseAudioId = entity.responseAudio?.value,
-            discordGuildId = entity.guildId.value
+            guildId = entity.guildId?.value
         )
     }
 }

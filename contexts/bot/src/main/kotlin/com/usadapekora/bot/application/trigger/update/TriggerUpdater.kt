@@ -81,7 +81,7 @@ class TriggerUpdater(
         updateTextResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
         updateAudioResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
 
-        request.values.discordGuildId.takeUnless { it == null }?.let {
+        request.values.guildId.takeUnless { it == null }?.let {
             trigger.guildId = Guild.GuildId(it)
         }
 

@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "id": "84c6a7f1-1b1d-4f59-a3d3-13d0cb0db65d",
+      "title": "It’s a me, Pekora!",
+      "input": "peko",
+      "compare": "in",
+      "responseText": {
+        "id": "a1b5eb1e-fc9d-4d03-a732-291fd57599b6",
+        "content": "It’s a me, Pekora!",
+        "type": "text"
+      },
+      "responseAudio": {
+        "id": "cff9451d-6c73-4c79-8af3-52bc4102cceb",
+        "fileName": "its_me_pekora.mp3"
+      }
+    },
+    {
+      "id": "a2b1e1df-921d-49c3-9238-86cfafd0f47d",
+      "title": "HA↗HA↘HA↗HA↘HA↗HA↘",
+      "input": "( +)(([HhJj]+)([Aa]+)){3,}( +)?|^(([HhJj]+)([Aa]+)){3,}$",
+      "compare": "pattern",
+      "responseText": {
+        "id": "ce4c2b3d-51a2-4133-a127-3864b50fb471",
+        "content": "HA↗HA↘HA↗HA↘HA↗HA↘",
+        "type": "text"
+      },
+      "responseAudio": {
+        "id": "ed0166ac-b184-4439-b852-69a634e63245",
+        "fileName": "hahahahaha.mp3"
+      }
+    }
+  ]
+}

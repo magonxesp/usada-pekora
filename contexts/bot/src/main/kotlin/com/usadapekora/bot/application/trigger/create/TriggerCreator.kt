@@ -42,7 +42,7 @@ class TriggerCreator(
                 responseTextId = textResponse?.id?.value,
                 responseAudioId = audioResponse?.id(),
                 responseAudioProvider = request.responseAudioProvider,
-                guildId = request.discordGuildId,
+                guildId = request.guildId,
             )
         }.let {
             if (it.isLeft() && it.leftOrNull() is TriggerException) return (it.leftOrNull()!! as TriggerException).left()

@@ -4,7 +4,7 @@ import arrow.core.Either
 import com.usadapekora.bot.domain.guild.Guild
 
 interface TriggerRepository {
-    fun all(): Array<Trigger>
+    fun findAll(): Array<Trigger>
     fun find(id: Trigger.TriggerId): Either<TriggerException.NotFound, Trigger>
     fun findByGuild(id: Guild.GuildId): Array<Trigger>
     fun save(entity: Trigger)

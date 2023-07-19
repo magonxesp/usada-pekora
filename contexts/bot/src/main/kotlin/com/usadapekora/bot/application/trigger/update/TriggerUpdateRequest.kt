@@ -13,7 +13,7 @@ data class TriggerUpdateRequest(
         val compare: String? = null,
         val responseTextId: String? = null,
         val responseAudioId: String? = null,
-        val discordGuildId: String? = null,
+        val guildId: String? = null,
         val responseAudioProvider: String? = null
     )
 }

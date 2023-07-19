@@ -16,7 +16,7 @@ class MongoDbTriggerRepository : MongoDbRepository<Trigger>(
     documentIdProp = TriggerDocument::id,
 ), TriggerRepository {
 
-    override fun all(): Array<Trigger> {
+    override fun findAll(): Array<Trigger> {
         val triggers = collectionQuery<TriggerDocument>("triggers") { collection ->
             collection.find()
         }

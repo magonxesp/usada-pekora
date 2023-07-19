@@ -19,7 +19,7 @@ class TriggerPostV1Test : TriggerTest() {
                 "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
-                "discordGuildId": "94101459",
+                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635",
                 "responseAudioId": "$audioId",
                 "responseAudioProvider": "default"
             }
@@ -45,7 +45,7 @@ class TriggerPostV1Test : TriggerTest() {
                 "title": "Dummy trigger",
                 "input": "peko",
                 "compare": "in",
-                "discordGuildId": "94101459",
+                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635",
                 "responseAudioId": "$audioId",
                 "responseAudioProvider": "default"
             }
