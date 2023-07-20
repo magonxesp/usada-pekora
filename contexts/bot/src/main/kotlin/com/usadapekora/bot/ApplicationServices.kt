@@ -25,6 +25,7 @@ import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
 import com.usadapekora.bot.application.video.VideoFeedSubscriber
 import com.usadapekora.bot.domain.guild.*
+import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
@@ -38,6 +39,7 @@ import com.usadapekora.bot.infraestructure.guild.persistence.discord.DiscordGuil
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
+import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioDefaultRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerRepository
@@ -68,6 +70,7 @@ val triggerModule = module {
     single { MongoDbTriggerAudioRepository() } bind TriggerAudioResponseRepository::class
     single { MongoDbTriggerAudioDefaultRepository() } bind TriggerAudioDefaultRepository::class
     single { MongoDbTriggerRepository() } bind TriggerRepository::class
+    single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
     single { TriggerMatcher() }
     single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get(), get(), get()) }

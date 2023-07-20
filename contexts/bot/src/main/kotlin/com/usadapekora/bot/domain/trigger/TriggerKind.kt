@@ -1,7 +1,7 @@
 package com.usadapekora.bot.domain.trigger
 
 enum class TriggerKind(val value: String) {
-    BUILT_IN("build_in"),
+    BUILT_IN("built_in"),
     PRIVATE("private");
 
     companion object {
