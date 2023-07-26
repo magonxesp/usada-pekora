@@ -72,7 +72,7 @@ val triggerModule = module {
     single { MongoDbTriggerRepository() } bind TriggerRepository::class
     single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
     single { TriggerMatcher() }
-    single { TriggerFinder(get(), get()) }
+    single { TriggerFinder(get(), get(), get()) }
     single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get(), get(), get()) }

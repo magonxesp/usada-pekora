@@ -14,7 +14,8 @@ object TriggerMother : ObjectMother<Trigger> {
         responseTextId: String? = null,
         responseAudioId: String? = null,
         responseAudioProvider: TriggerAudioResponseProvider? = null,
-        guildId: String? = null
+        guildId: String? = null,
+        overrides: String? = null
     ) = Trigger.fromPrimitives(
         id = id ?: Random.instance().random.nextUUID(),
         title = title ?: Random.instance().chiquito.terms(),
@@ -25,7 +26,8 @@ object TriggerMother : ObjectMother<Trigger> {
         responseAudioId = responseAudioId ?: Random.instance().random.nextUUID(),
         responseAudioProvider = responseAudioProvider?.value ?: Random.instance().random.nextEnum(
             TriggerAudioResponseProvider::class.java).value,
-        guildId = guildId ?: java.util.Random().nextLong().toString()
+        guildId = guildId ?: java.util.Random().nextLong().toString(),
+        overrides = overrides
     )
 
     override fun random(): Trigger = create()

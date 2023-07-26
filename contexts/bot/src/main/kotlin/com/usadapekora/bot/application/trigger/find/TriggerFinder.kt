@@ -4,17 +4,27 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.TriggerException
-import com.usadapekora.bot.domain.trigger.TriggerMatcher
-import com.usadapekora.bot.domain.trigger.TriggerRepository
+import com.usadapekora.bot.domain.trigger.*
 
 class TriggerFinder(
     private val repository: TriggerRepository,
+    private val builtInRepository: BuiltInTriggerRepository,
     private val matcher: TriggerMatcher
 ) {
-    fun findByInput(input: String, discordServerId: String): TriggerResponse {
-        val triggers = repository.findByGuild(Guild.GuildId(discordServerId))
+    private fun findByGuildOverrideFiltered(guildId: String): Array<Trigger> {
+        val builtInTriggers = builtInRepository.findAll()
+        val triggers = repository.findByGuild(Guild.GuildId(guildId))
+
+        return arrayOf(
+            *builtInTriggers
+                .filter { builtIn -> triggers.none { it.overrides == builtIn.id } }
+                .toTypedArray(),
+            *triggers
+        )
+    }
+
+    fun findByInput(input: String, guildId: String): TriggerResponse {
+        val triggers = findByGuildOverrideFiltered(guildId)
         return TriggerResponse.fromEntity(matcher.matchInput(input, triggers) ?: throw TriggerException.NotFound())
     }
 
@@ -28,8 +38,8 @@ class TriggerFinder(
         return TriggerResponse.fromEntity(trigger.getOrNull()!!).right()
     }
 
-    fun findByDiscordServer(discordServerId: String): TriggersResponse
-        = repository.findByGuild(Guild.GuildId(discordServerId)).let {
+    fun findByGuild(guildId: String): TriggersResponse
+        = findByGuildOverrideFiltered(guildId).let {
             TriggersResponse.fromArray(it)
         }
 }

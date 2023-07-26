@@ -43,7 +43,7 @@ fun Route.triggerV1() {
                     .onRight { call.respond(it) }
             }
             get("/guild/{id}") {
-                call.respond(finder.findByDiscordServer(call.parameters["id"] ?: ""))
+                call.respond(finder.findByGuild(call.parameters["id"] ?: ""))
             }
             get("/{id}/audio") {
                 audioFinder.findByTriggerId(call.parameters["id"] ?: "")
