@@ -29,13 +29,13 @@ class TriggerFinder(
     }
 
     fun find(id: String): Either<TriggerException, TriggerResponse> {
-        val trigger = repository.find(Trigger.TriggerId(id))
+        val triggerId = Trigger.TriggerId(id)
+        val trigger = builtInRepository.find(triggerId).getOrNull()
+            ?: repository.find(triggerId)
+                .onLeft { return it.left() }
+                .getOrNull()!!
 
-        if (trigger.isLeft()) {
-            return trigger.leftOrNull()!!.left()
-        }
-
-        return TriggerResponse.fromEntity(trigger.getOrNull()!!).right()
+        return TriggerResponse.fromEntity(trigger).right()
     }
 
     fun findByGuild(guildId: String): TriggersResponse

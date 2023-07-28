@@ -104,9 +104,29 @@ class TriggerFinderTest {
     fun `it should find trigger by id`() {
         val expected = TriggerMother.create()
 
+        every { builtInRepository.find(expected.id) } returns TriggerException.NotFound().left()
         every { repository.find(expected.id) } returns expected.right()
 
         val actual = finder.find(expected.id.value)
+
+        verify { builtInRepository.find(expected.id) }
+        verify { repository.find(expected.id) }
+
+        assertTrue(actual.isRight())
+        assertEquals(TriggerResponse.fromEntity(expected), actual.getOrNull())
+    }
+
+    @Test
+    fun `it should find trigger by id including built-in`() {
+        val expected = TriggerMother.create()
+
+        every { builtInRepository.find(expected.id) } returns expected.right()
+        every { repository.find(expected.id) } returns TriggerException.NotFound().left()
+
+        val actual = finder.find(expected.id.value)
+
+        verify { builtInRepository.find(expected.id) }
+        verify(inverse = true) { repository.find(expected.id) }
 
         assertTrue(actual.isRight())
         assertEquals(TriggerResponse.fromEntity(expected), actual.getOrNull())
@@ -116,9 +136,13 @@ class TriggerFinderTest {
     fun `it should not find trigger by id`() {
         val expected = TriggerMother.create()
 
+        every { builtInRepository.find(expected.id) } returns TriggerException.NotFound().left()
         every { repository.find(expected.id) } returns TriggerException.NotFound().left()
 
         val result = finder.find(expected.id.value)
+
+        verify { builtInRepository.find(expected.id) }
+        verify { repository.find(expected.id) }
 
         assertTrue(result.leftOrNull() is TriggerException.NotFound)
     }

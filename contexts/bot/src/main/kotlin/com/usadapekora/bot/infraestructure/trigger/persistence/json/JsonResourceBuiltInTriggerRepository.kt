@@ -1,7 +1,11 @@
 package com.usadapekora.bot.infraestructure.trigger.persistence.json
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.Trigger
+import com.usadapekora.bot.domain.trigger.TriggerException
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -17,4 +21,8 @@ class JsonResourceBuiltInTriggerRepository : BuiltInTriggerRepository {
 
     override fun findAll(): Array<Trigger> =
         collection.data.map { it.toEntity() }.toTypedArray()
+
+    override fun find(id: Trigger.TriggerId): Either<TriggerException.NotFound, Trigger> =
+        collection.data.firstOrNull { it.id == id.value }?.toEntity()?.right()
+            ?: TriggerException.NotFound("Trigger with id ${id.value} not found").left()
 }

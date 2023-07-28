@@ -62,6 +62,29 @@ class TriggerGetV1Test : TriggerTest() {
     }
 
     @Test
+    fun `should find a built-in trigger by id`() = withTestApplication {
+        val expectedBody = """
+            {
+                "id": "84c6a7f1-1b1d-4f59-a3d3-13d0cb0db65d",
+                "title": "It’s a me, Pekora!",
+                "input": "peko",
+                "compare": "in",
+                "responseTextId": "a1b5eb1e-fc9d-4d03-a732-291fd57599b6",
+                "responseAudioId": "cff9451d-6c73-4c79-8af3-52bc4102cceb",
+                "guildId": null
+            }
+        """.uglifyJson()
+
+        val response = client.get("/api/v1/trigger/84c6a7f1-1b1d-4f59-a3d3-13d0cb0db65d") {
+            contentType(ContentType.Application.Json)
+            accept(ContentType.Application.Json)
+        }
+
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(expectedBody, response.bodyAsText())
+    }
+
+    @Test
     fun `should not find a trigger by id`() = withTestApplication {
         val response = client.get("/api/v1/trigger/e322b3ac-2d30-4eff-afdc-3504f66ac4ba") {
             contentType(ContentType.Application.Json)
