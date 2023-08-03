@@ -12,4 +12,5 @@ data class TriggerCreateRequest(
     val responseTextId: String? = null,
     val responseAudioId: String? = null,
     val responseAudioProvider: String? = null,
+    val overrides: String? = null
 )

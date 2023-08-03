@@ -5,6 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerKind
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
@@ -38,11 +39,12 @@ class TriggerCreator(
                 title = request.title,
                 input = request.input,
                 compare = request.compare,
-                kind = "private",
+                kind = TriggerKind.PRIVATE.value,
                 responseTextId = textResponse?.id?.value,
                 responseAudioId = audioResponse?.id(),
                 responseAudioProvider = request.responseAudioProvider,
                 guildId = request.guildId,
+                overrides = request.overrides
             )
         }
         .mapLeft { it as TriggerException }
