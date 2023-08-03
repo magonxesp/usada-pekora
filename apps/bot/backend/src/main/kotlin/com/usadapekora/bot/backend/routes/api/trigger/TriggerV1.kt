@@ -30,6 +30,7 @@ private fun errorStatusCode(error: Any) = when(error) {
     is TriggerException.AlreadyExists -> HttpStatusCode.BadRequest
     is TriggerException.InvalidValue -> HttpStatusCode.BadRequest
     is TriggerException.MissingAudioProvider -> HttpStatusCode.BadRequest
+    is TriggerException.UnsupportedKind -> HttpStatusCode.BadRequest
     is TriggerAudioResponseException.NotFound -> HttpStatusCode.NotFound
     else -> HttpStatusCode.InternalServerError
 }

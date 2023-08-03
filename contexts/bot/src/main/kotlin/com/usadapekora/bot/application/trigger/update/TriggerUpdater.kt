@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
+import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
@@ -16,7 +17,8 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 class TriggerUpdater(
     private val repository: TriggerRepository,
     private val textResponseRepository: TriggerTextResponseRepository,
-    private val audioResponseRepository: TriggerAudioResponseRepository
+    private val audioResponseRepository: TriggerAudioResponseRepository,
+    private val builtInTriggerRepository: BuiltInTriggerRepository
 ) {
 
     private fun updateTextResponse(request: TriggerUpdateRequest, trigger: Trigger): Either<TriggerException, Unit> {
@@ -25,10 +27,11 @@ class TriggerUpdater(
             return Unit.right()
         }
 
-        return textResponseRepository.find(TriggerTextResponseId(request.values.responseTextId)).let {
-            if (it.isLeft()) return TriggerException.MissingResponse("The new text response is missing").left()
-            trigger.responseText = it.getOrNull()!!.id
-        }.right()
+        textResponseRepository.find(TriggerTextResponseId(request.values.responseTextId))
+            .onLeft { return TriggerException.MissingResponse("The new text response is missing").left() }
+            .onRight { trigger.responseText = it.id }
+
+        return Unit.right()
     }
 
     private fun updateAudioResponse(request: TriggerUpdateRequest, trigger: Trigger): Either<TriggerException, Unit> {
@@ -42,14 +45,20 @@ class TriggerUpdater(
             return TriggerException.MissingAudioProvider("Missing audio provider for the new audio response").left()
         }
 
-        return audioResponseRepository.find(TriggerAudioResponseId(request.values.responseAudioId)).let {
-            if (it.isLeft()) return TriggerException.MissingResponse("The new audio response is missing").left()
-            trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId)
-            trigger.responseAudioProvider = TriggerAudioResponseProvider.fromValue(request.values.responseAudioProvider)
-        }.right()
+        audioResponseRepository.find(TriggerAudioResponseId(request.values.responseAudioId))
+            .onLeft { return TriggerException.MissingResponse("The new audio response is missing").left() }
+            .onRight {
+                trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId)
+                trigger.responseAudioProvider = TriggerAudioResponseProvider.fromValue(request.values.responseAudioProvider)
+            }
+
+        return Unit.right()
     }
 
     fun update(request: TriggerUpdateRequest): Either<TriggerException, Unit> {
+        builtInTriggerRepository.find(Trigger.TriggerId(request.id))
+            .onRight { return TriggerException.UnsupportedKind("The built-in triggers are not updatable").left() }
+
         if (request.values.responseAudioId == null && request.values.responseTextId == null) {
             return TriggerException.MissingResponse("The trigger should have at least one response").left()
         }
@@ -58,13 +67,9 @@ class TriggerUpdater(
             return TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response").left()
         }
 
-        val result = repository.find(Trigger.TriggerId(request.id))
-
-        if (result.isLeft()) {
-            return result.leftOrNull()!!.left()
-        }
-
-        val trigger = result.getOrNull()!!
+        val trigger = repository.find(Trigger.TriggerId(request.id))
+            .onLeft { it.left() }
+            .getOrNull()!!
 
         request.values.title.takeUnless { it == null }?.let {
             trigger.title = Trigger.TriggerTitle(it)
@@ -78,8 +83,8 @@ class TriggerUpdater(
             trigger.compare = Trigger.TriggerCompare.fromValue(it)
         }
 
-        updateTextResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
-        updateAudioResponse(request, trigger).let { if (it.isLeft()) return it.leftOrNull()!!.left() }
+        updateTextResponse(request, trigger).onLeft { return it.left() }
+        updateAudioResponse(request, trigger).onLeft { return it.left() }
 
         request.values.guildId.takeUnless { it == null }?.let {
             trigger.guildId = Guild.GuildId(it)

@@ -44,14 +44,12 @@ class TriggerCreator(
                 responseAudioProvider = request.responseAudioProvider,
                 guildId = request.guildId,
             )
-        }.let {
-            if (it.isLeft() && it.leftOrNull() is TriggerException) return (it.leftOrNull()!! as TriggerException).left()
-            it.getOrNull()!!
         }
+        .mapLeft { it as TriggerException }
+        .onLeft { return it.left() }
+        .getOrNull()!!
 
-        val existing = repository.find(trigger.id)
-
-        if (existing.getOrNull() != null) {
+        repository.find(trigger.id).onRight {
             return TriggerException.AlreadyExists("The trigger with id ${trigger.id.value} already exists").left()
         }
 
