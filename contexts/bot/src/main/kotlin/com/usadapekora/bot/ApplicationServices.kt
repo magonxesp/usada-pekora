@@ -72,10 +72,10 @@ val triggerModule = module {
     single { MongoDbTriggerRepository() } bind TriggerRepository::class
     single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
     single { TriggerMatcher() }
-    single { TriggerFinder(get(), get(), get()) }
+    single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
-    single { TriggerUpdater(get(), get(), get(), get()) }
+    single { TriggerUpdater(get(), get(), get()) }
     single { TriggerTextResponseCreator(get()) }
     single { TriggerTextResponseFinder(get()) }
     single { TriggerTextResponseDeleter(get()) }
@@ -93,7 +93,7 @@ val guildModule = module {
     single { MongoDbGuildPreferencesRepository() } bind GuildPreferencesRepository::class
     single { KoinGuildProviderRepositoryFactory() } bind GuildProviderRepositoryFactory::class
     factory { (token: String) -> DiscordGuildProviderRepository(token) } bind GuildProviderRepository::class
-    single { GuildCreator(get()) }
+    single { GuildCreator(get(), get(), get()) }
     single { GuildMemberCreator(get()) }
     single { GuildPreferenceCreator(get()) }
     single { GuildPreferenceDeleter(get()) }

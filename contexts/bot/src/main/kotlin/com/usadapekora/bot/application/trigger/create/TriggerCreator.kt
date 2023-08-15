@@ -43,8 +43,7 @@ class TriggerCreator(
                 responseTextId = textResponse?.id?.value,
                 responseAudioId = audioResponse?.id(),
                 responseAudioProvider = request.responseAudioProvider,
-                guildId = request.guildId,
-                overrides = request.overrides
+                guildId = request.guildId
             )
         }
         .mapLeft { it as TriggerException }

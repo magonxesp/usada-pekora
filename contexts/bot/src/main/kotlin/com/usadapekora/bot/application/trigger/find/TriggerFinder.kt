@@ -4,34 +4,23 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.trigger.*
+import com.usadapekora.bot.domain.trigger.Trigger
+import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerMatcher
+import com.usadapekora.bot.domain.trigger.TriggerRepository
 
 class TriggerFinder(
     private val repository: TriggerRepository,
-    private val builtInRepository: BuiltInTriggerRepository,
     private val matcher: TriggerMatcher
 ) {
-    private fun findByGuildOverrideFiltered(guildId: String): Array<Trigger> {
-        val builtInTriggers = builtInRepository.findAll()
-        val triggers = repository.findByGuild(Guild.GuildId(guildId))
-
-        return arrayOf(
-            *builtInTriggers
-                .filter { builtIn -> triggers.none { it.overrides == builtIn.id } }
-                .toTypedArray(),
-            *triggers
-        )
-    }
-
     fun findByInput(input: String, guildId: String): TriggerResponse {
-        val triggers = findByGuildOverrideFiltered(guildId)
+        val triggers = repository.findByGuild(Guild.GuildId(guildId))
         return TriggerResponse.fromEntity(matcher.matchInput(input, triggers) ?: throw TriggerException.NotFound())
     }
 
     fun find(id: String): Either<TriggerException, TriggerResponse> {
         val triggerId = Trigger.TriggerId(id)
-        val trigger = builtInRepository.find(triggerId).getOrNull()
-            ?: repository.find(triggerId)
+        val trigger = repository.find(triggerId)
                 .onLeft { return it.left() }
                 .getOrNull()!!
 
@@ -39,7 +28,7 @@ class TriggerFinder(
     }
 
     fun findByGuild(guildId: String): TriggersResponse
-        = findByGuildOverrideFiltered(guildId).let {
+        = repository.findByGuild(Guild.GuildId(guildId)).let {
             TriggersResponse.fromArray(it)
         }
 }

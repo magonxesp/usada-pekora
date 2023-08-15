@@ -4,7 +4,7 @@ import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.shared.MongoDbRepositoryTestCase
-import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
+import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbClientFactory
 import org.litote.kmongo.eq
 import org.litote.kmongo.getCollectionOfName
 import kotlin.test.Test
@@ -74,7 +74,7 @@ class MongoDbTriggerRepositoryTest : MongoDbRepositoryTestCase<Trigger, MongoDbT
 
     @Test
     fun `should update`() {
-        val connection = MongoDbRepository.connect()
+        val connection = MongoDbClientFactory.getDatabase()
         val trigger = TriggerMother.create()
 
         runMongoDbRepositoryTest<TriggerDocument>(TriggerDocument.Companion, aggregate = trigger) {

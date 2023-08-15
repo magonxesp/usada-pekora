@@ -9,8 +9,15 @@ import com.usadapekora.bot.domain.guild.Guild.GuildProviderId
 import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildRepository
+import com.usadapekora.shared.domain.PersistenceTransaction
+import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.guild.GuildCreatedEvent
 
-class GuildCreator(private val repository: GuildRepository) {
+class GuildCreator(
+    private val repository: GuildRepository,
+    private val persistenceTransaction: PersistenceTransaction,
+    private val eventBus: EventBus
+) {
     fun create(request: GuildCreateRequest): Either<GuildError, Unit> {
         repository.find(GuildId(request.id))
             .onRight { return GuildError.AlreadyExists("The guild with id ${request.id} already exists").left() }
@@ -26,9 +33,17 @@ class GuildCreator(private val repository: GuildRepository) {
             provider = request.provider
         )
 
-        return repository.save(guild)
-            .onLeft { return it.left() }
-            .getOrNull()!!.right()
+        persistenceTransaction.start()
+
+        repository.save(guild).onLeft { return it.left() }
+
+        eventBus.dispatch(GuildCreatedEvent(guild.id.value)).onLeft {
+            persistenceTransaction.rollback()
+            return GuildError.SaveError(it.message).left()
+        }
+
+        persistenceTransaction.commit()
+        return Unit.right()
     }
 
 }

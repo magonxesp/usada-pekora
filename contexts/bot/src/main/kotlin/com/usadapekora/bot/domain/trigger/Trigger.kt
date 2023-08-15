@@ -16,8 +16,7 @@ data class Trigger(
     var responseText: TriggerTextResponseId?,
     var responseAudio: TriggerAudioResponseId?,
     var responseAudioProvider: TriggerAudioResponseProvider?,
-    var guildId: Guild.GuildId?,
-    val overrides: TriggerId?
+    var guildId: Guild.GuildId?
 ) : Entity() {
     data class TriggerId(override val value: String) : UuidValueObject(value)
 
@@ -65,7 +64,6 @@ data class Trigger(
             responseTextId: String? = null,
             responseAudioId: String? = null,
             responseAudioProvider: String? = null,
-            overrides: String? = null,
         ) = Trigger(
             id = TriggerId(id),
             title = TriggerTitle(title),
@@ -75,8 +73,7 @@ data class Trigger(
             responseText = responseTextId?.let { TriggerTextResponseId(it) },
             responseAudio = responseAudioId?.let { TriggerAudioResponseId(it) },
             responseAudioProvider = responseAudioProvider?.let { TriggerAudioResponseProvider.fromValue(it) },
-            guildId = guildId?.let { Guild.GuildId(it) },
-            overrides = overrides?.let { TriggerId(it) }
+            guildId = guildId?.let { Guild.GuildId(it) }
         )
     }
 

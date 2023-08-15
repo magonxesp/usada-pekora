@@ -4,7 +4,10 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.TriggerUpdateRequest
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
-import com.usadapekora.bot.domain.trigger.*
+import com.usadapekora.bot.domain.trigger.Trigger
+import com.usadapekora.bot.domain.trigger.TriggerException
+import com.usadapekora.bot.domain.trigger.TriggerMother
+import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
@@ -17,7 +20,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class TriggerUpdaterTest {
@@ -25,8 +27,7 @@ class TriggerUpdaterTest {
     private val repository = mockk<TriggerRepository>(relaxed = true)
     private val textRepository = mockk<TriggerTextResponseRepository>(relaxed = true)
     private val audioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
-    private val builtInTriggerRepository = mockk<BuiltInTriggerRepository>()
-    private val updater = TriggerUpdater(repository, textRepository, audioRepository, builtInTriggerRepository)
+    private val updater = TriggerUpdater(repository, textRepository, audioRepository)
 
     @BeforeTest
     fun cleanMocks() = clearAllMocks()
@@ -36,7 +37,6 @@ class TriggerUpdaterTest {
         val trigger = TriggerMother.create()
         val responseText = TriggerTextResponseMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
         every { textRepository.find(responseText.id) } returns responseText.right()
         every { audioRepository.find(trigger.responseAudio!!) } returns TriggerAudioResponseException.NotFound().left()
@@ -60,7 +60,6 @@ class TriggerUpdaterTest {
     fun `it should update not update a trigger that deletes all responses`() {
         val trigger = TriggerMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
 
         trigger.input = Trigger.TriggerInput("New expected user input")
@@ -82,7 +81,6 @@ class TriggerUpdaterTest {
         val trigger = TriggerMother.create()
         val responseText = TriggerTextResponseMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
         every { textRepository.find(responseText.id) } returns responseText.right()
 
@@ -106,7 +104,6 @@ class TriggerUpdaterTest {
         val trigger = TriggerMother.create()
         val responseText = TriggerTextResponseMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
         every { textRepository.find(responseText.id) } returns TriggerTextResponseException.NotFound().left()
 
@@ -130,7 +127,6 @@ class TriggerUpdaterTest {
         val trigger = TriggerMother.create()
         val responseAudio = TriggerAudioDefaultMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
         every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
 
@@ -156,7 +152,6 @@ class TriggerUpdaterTest {
         val trigger = TriggerMother.create()
         val responseAudio = TriggerAudioDefaultMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
         every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns TriggerAudioResponseException.NotFound().left()
 
@@ -182,7 +177,6 @@ class TriggerUpdaterTest {
         val trigger = TriggerMother.create()
         val responseAudio = TriggerAudioDefaultMother.create()
 
-        every { builtInTriggerRepository.find(trigger.id) } returns TriggerException.NotFound().left()
         every { repository.find(trigger.id) } returns trigger.right()
         every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
 
@@ -197,30 +191,6 @@ class TriggerUpdaterTest {
         ))
 
         assertTrue(result.leftOrNull() is TriggerException.MissingAudioProvider)
-
-        verify(inverse = true) { repository.save(trigger) }
-    }
-
-    @Test
-    fun `it should not update a built-in trigger`() {
-        val trigger = TriggerMother.create()
-        val responseAudio = TriggerAudioDefaultMother.create()
-
-        every { builtInTriggerRepository.find(trigger.id) } returns trigger.right()
-        every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
-
-        trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider // updated audio response
-
-        val result = updater.update(TriggerUpdateRequest(
-            id = trigger.id.value,
-            values = TriggerUpdateRequest.NewValues(
-                responseAudioId = responseAudio.id.value,
-            )
-        ))
-
-        assertIs<TriggerException.UnsupportedKind>(result.leftOrNull())
 
         verify(inverse = true) { repository.save(trigger) }
     }

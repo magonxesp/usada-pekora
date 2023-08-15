@@ -7,6 +7,9 @@ import com.usadapekora.bot.application.guild.create.GuildCreator
 import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.domain.guild.GuildRepository
+import com.usadapekora.shared.domain.PersistenceTransaction
+import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.guild.GuildCreatedEvent
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +21,9 @@ import kotlin.test.assertIs
 class GuildCreatorTest {
 
     private val repository = mockk<GuildRepository>()
-    private val creator = GuildCreator(repository)
+    private val persistenceTransaction = mockk<PersistenceTransaction>(relaxUnitFun = true)
+    private val eventBus = mockk<EventBus>()
+    private val creator = GuildCreator(repository, persistenceTransaction, eventBus)
 
     @BeforeTest
     fun cleanMocks() = clearAllMocks()
@@ -30,6 +35,7 @@ class GuildCreatorTest {
         every { repository.find(guild.id) } returns GuildError.NotFound().left()
         every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildError.NotFound().left()
         every { repository.save(guild) } returns Unit.right()
+        every { eventBus.dispatch(any()) } returns Unit.right()
 
         val result = creator.create(
             GuildCreateRequest(
@@ -43,6 +49,9 @@ class GuildCreatorTest {
 
         verify { repository.find(guild.id) }
         verify { repository.save(guild) }
+        verify { eventBus.dispatch(match { (it as GuildCreatedEvent).guildId == guild.id.value }) }
+        verify { persistenceTransaction.start() }
+        verify { persistenceTransaction.commit() }
 
         assertIs<Unit>(result.getOrNull())
     }
@@ -54,6 +63,7 @@ class GuildCreatorTest {
         every { repository.find(guild.id) } returns guild.right()
         every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildError.NotFound().left()
         every { repository.save(guild) } returns Unit.right()
+        every { eventBus.dispatch(any()) } returns Unit.right()
 
         val result = creator.create(
             GuildCreateRequest(
@@ -66,8 +76,10 @@ class GuildCreatorTest {
         )
 
         verify { repository.find(guild.id) }
+        verify(inverse = true) { persistenceTransaction.start() }
         verify(inverse = true) { repository.findByProvider(guild.providerId, guild.provider) }
         verify(inverse = true) { repository.save(guild) }
+        verify(inverse = true) { eventBus.dispatch(match { (it as GuildCreatedEvent).guildId == guild.id.value }) }
 
         assertIs<GuildError.AlreadyExists>(result.leftOrNull())
     }
@@ -79,6 +91,7 @@ class GuildCreatorTest {
         every { repository.find(guild.id) } returns GuildError.NotFound().left()
         every { repository.findByProvider(guild.providerId, guild.provider) } returns guild.right()
         every { repository.save(guild) } returns Unit.right()
+        every { eventBus.dispatch(any()) } returns Unit.right()
 
         val result = creator.create(
             GuildCreateRequest(
@@ -92,7 +105,9 @@ class GuildCreatorTest {
 
         verify { repository.find(guild.id) }
         verify { repository.findByProvider(guild.providerId, guild.provider) }
+        verify(inverse = true) { persistenceTransaction.start() }
         verify(inverse = true) { repository.save(guild) }
+        verify(inverse = true) { eventBus.dispatch(match { (it as GuildCreatedEvent).guildId == guild.id.value }) }
 
         assertIs<GuildError.AlreadyExists>(result.leftOrNull())
     }

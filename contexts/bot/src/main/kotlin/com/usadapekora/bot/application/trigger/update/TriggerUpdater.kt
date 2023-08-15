@@ -4,7 +4,6 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
@@ -18,7 +17,6 @@ class TriggerUpdater(
     private val repository: TriggerRepository,
     private val textResponseRepository: TriggerTextResponseRepository,
     private val audioResponseRepository: TriggerAudioResponseRepository,
-    private val builtInTriggerRepository: BuiltInTriggerRepository
 ) {
 
     private fun updateTextResponse(request: TriggerUpdateRequest, trigger: Trigger): Either<TriggerException, Unit> {
@@ -56,9 +54,6 @@ class TriggerUpdater(
     }
 
     fun update(request: TriggerUpdateRequest): Either<TriggerException, Unit> {
-        builtInTriggerRepository.find(Trigger.TriggerId(request.id))
-            .onRight { return TriggerException.UnsupportedKind("The built-in triggers are not updatable").left() }
-
         if (request.values.responseAudioId == null && request.values.responseTextId == null) {
             return TriggerException.MissingResponse("The trigger should have at least one response").left()
         }

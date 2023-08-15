@@ -2,6 +2,7 @@ package com.usadapekora.shared
 
 import com.usadapekora.shared.application.user.find.UserFinder
 import com.usadapekora.shared.domain.LoggerFactory
+import com.usadapekora.shared.domain.PersistenceTransaction
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.bus.event.EventConsumedRepository
@@ -15,6 +16,7 @@ import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventBus
 import com.usadapekora.shared.infrastructure.bus.event.RabbitMqEventConsumer
 import com.usadapekora.shared.infrastructure.bus.persistence.mongodb.MongoDbEventProcessedRepository
 import com.usadapekora.shared.infrastructure.bus.persistence.redis.RedisEventConsumedRepository
+import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbPersistenceTransaction
 import com.usadapekora.shared.infrastructure.user.persistence.mongodb.MongoDbUserRepository
 import com.usadapekora.shared.infrastructure.user.persistence.mongodb.MongoDbUserSessionRepository
 import kotlinx.datetime.Clock
@@ -39,6 +41,7 @@ val sharedModule = module {
     single { RabbitMqEventBus() } bind EventBus::class
     single { RabbitMqEventConsumer(get(), get(), get(), get()) } bind EventConsumer::class
     single { UserFinder(get()) }
+    single { MongoDbPersistenceTransaction() } bind PersistenceTransaction::class
 }
 
 fun enableDependencyInjection(modules: List<Module> = listOf()) {
