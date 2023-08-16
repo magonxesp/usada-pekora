@@ -1,7 +1,7 @@
 package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
-import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -15,11 +15,11 @@ class TriggerDefaultAudioGetV1Test : TriggerTest() {
     @Test
     fun `should find a trigger audio`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
-        val audio = TriggerDefaultAudioResponse.fromPrimitives(
+        val audio = TriggerAudioResponse.fromPrimitives(
             id = audioId,
             trigger = "c2a05313-b765-4be0-bf92-0b77136d033b",
             guild = "47541556",
-            file = "assets_audio_Its_me_pekora.mp3"
+            sourceUri = "assets_audio_Its_me_pekora.mp3"
         )
 
         createAudioDummy(

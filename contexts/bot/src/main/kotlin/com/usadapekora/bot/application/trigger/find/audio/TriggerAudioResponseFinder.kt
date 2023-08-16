@@ -4,29 +4,29 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 
-class TriggerDefaultAudioFinder(private val repository: TriggerAudioDefaultRepository) {
+class TriggerAudioResponseFinder(private val repository: TriggerAudioResponseRepository) {
 
-    fun find(id: String): Either<TriggerAudioResponseException, TriggerDefaultAudioFindResponse> {
+    fun find(id: String): Either<TriggerAudioResponseException, TriggerAudioResponseFindResponse> {
         val result = repository.find(TriggerAudioResponseId(id))
 
         if (result.isLeft()) {
             return result.leftOrNull()!!.left()
         }
 
-        return TriggerDefaultAudioFindResponse.fromEntity(result.getOrNull()!!).right()
+        return TriggerAudioResponseFindResponse.fromEntity(result.getOrNull()!!).right()
     }
 
-    fun findByTriggerId(triggerId: String): Either<TriggerAudioResponseException, TriggerDefaultAudioFindResponse> {
+    fun findByTriggerId(triggerId: String): Either<TriggerAudioResponseException, TriggerAudioResponseFindResponse> {
         val result = repository.findByTrigger(Trigger.TriggerId(triggerId))
 
         if (result.isLeft()) {
             return result.leftOrNull()!!.left()
         }
 
-        return TriggerDefaultAudioFindResponse.fromEntity(result.getOrNull()!!).right()
+        return TriggerAudioResponseFindResponse.fromEntity(result.getOrNull()!!).right()
     }
 }

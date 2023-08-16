@@ -5,20 +5,17 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild.GuildId
 import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.*
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.shared.domain.file.DomainFileWriter
 
-class TriggerDefaultAudioResponseUpdater(
-    private val repository: TriggerAudioDefaultRepository,
+class TriggerAudioResponseUpdater(
+    private val repository: TriggerAudioResponseRepository,
     private val fileWriter: DomainFileWriter,
     private val fileDeleter: DomainFileDeleter
 ) {
 
-    fun update(request: TriggerDefaultAudioResponseUpdateRequest): Either<TriggerAudioResponseException, Unit> {
+    fun update(request: TriggerAudioResponseUpdateRequest): Either<TriggerAudioResponseException, Unit> {
         val result = repository.find(TriggerAudioResponseId(request.id))
 
         if (result.isLeft()) {
@@ -37,7 +34,7 @@ class TriggerDefaultAudioResponseUpdater(
         }
 
         request.values.fileName.takeUnless { it == null }?.let {
-            audioResponse.file = TriggerDefaultAudioResponse.TriggerAudioFile(it)
+            audioResponse.sourceUri = TriggerAudioResponse.TriggerAudioResponseSourceUri(it)
         }
 
         request.values.content.takeUnless { it == null }?.let {

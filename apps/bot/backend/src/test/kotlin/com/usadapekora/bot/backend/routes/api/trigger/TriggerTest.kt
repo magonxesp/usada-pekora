@@ -2,8 +2,8 @@ package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.backend.HttpTestCase
@@ -15,7 +15,7 @@ import org.koin.java.KoinJavaComponent.inject
 abstract class TriggerTest : HttpTestCase()  {
 
     private val creator: TriggerCreator by inject(TriggerCreator::class.java)
-    private val audioCreator: TriggerDefaultAudioResponseCreator by inject(TriggerDefaultAudioResponseCreator::class.java)
+    private val audioCreator: TriggerAudioResponseCreator by inject(TriggerAudioResponseCreator::class.java)
     private val textCreator: TriggerTextResponseCreator by inject(TriggerTextResponseCreator::class.java)
 
     fun createDummy(
@@ -48,7 +48,7 @@ abstract class TriggerTest : HttpTestCase()  {
         guildId: String = "2fe3367b-61a8-402c-9df4-20561b058635"
     ) {
         audioCreator.create(
-            TriggerDefaultAudioResponseCreateRequest(
+            TriggerAudioResponseCreateRequest(
                 content = readResource("/assets_audio_Its_me_pekora.mp3"),
                 fileName = "assets_audio_Its_me_pekora.mp3",
                 id = id,

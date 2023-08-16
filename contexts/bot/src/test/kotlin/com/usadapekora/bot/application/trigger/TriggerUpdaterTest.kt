@@ -10,7 +10,7 @@ import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioDefaultMother
+import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioResponseMother
 import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
@@ -125,10 +125,10 @@ class TriggerUpdaterTest {
     @Test
     fun `it should update the audio response of a trigger`() {
         val trigger = TriggerMother.create()
-        val responseAudio = TriggerAudioDefaultMother.create()
+        val responseAudio = TriggerAudioResponseMother.create()
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
+        every { audioRepository.find(responseAudio.id) } returns responseAudio.right()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
@@ -150,10 +150,10 @@ class TriggerUpdaterTest {
     @Test
     fun `it should not update not existing audio response of a trigger`() {
         val trigger = TriggerMother.create()
-        val responseAudio = TriggerAudioDefaultMother.create()
+        val responseAudio = TriggerAudioResponseMother.create()
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns TriggerAudioResponseException.NotFound().left()
+        every { audioRepository.find(responseAudio.id) } returns TriggerAudioResponseException.NotFound().left()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response
@@ -175,10 +175,10 @@ class TriggerUpdaterTest {
     @Test
     fun `it should not update audio response without audio provider of a trigger`() {
         val trigger = TriggerMother.create()
-        val responseAudio = TriggerAudioDefaultMother.create()
+        val responseAudio = TriggerAudioResponseMother.create()
 
         every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id, responseAudio.provider) } returns responseAudio.right()
+        every { audioRepository.find(responseAudio.id) } returns responseAudio.right()
 
         trigger.responseAudio = responseAudio.id // updated audio response
         trigger.responseAudioProvider = responseAudio.provider // updated audio response

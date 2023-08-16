@@ -1,12 +1,12 @@
 package com.usadapekora.bot.backend.routes.api.trigger
 
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreateRequest
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
-import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
-import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreateRequest
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
+import com.usadapekora.bot.application.trigger.delete.audio.TriggerAudioResponseDeleter
+import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFinder
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
-import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdateRequest
-import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
+import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdateRequest
+import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.shared.infrastructure.ktor.respondError
@@ -33,7 +33,7 @@ fun Route.triggerDefaultAudioV1() {
     authenticate(optional = environment?.testMode ?: false) {
         route("/api/v1/trigger/response/audio") {
             get("/{id}") {
-                val triggerAudioFinder: TriggerDefaultAudioFinder by inject(TriggerDefaultAudioFinder::class.java)
+                val triggerAudioFinder: TriggerAudioResponseFinder by inject(TriggerAudioResponseFinder::class.java)
 
                 triggerAudioFinder.find(call.parameters["id"] ?: "")
                     .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
@@ -47,8 +47,8 @@ fun Route.triggerDefaultAudioV1() {
                     .onRight { call.respondBytes(it) }
             }
             post {
-                val triggerDefaultAudioResponseCreator: TriggerDefaultAudioResponseCreator by inject(
-                    TriggerDefaultAudioResponseCreator::class.java
+                val triggerAudioResponseCreator: TriggerAudioResponseCreator by inject(
+                    TriggerAudioResponseCreator::class.java
                 )
                 val formData = call.receiveMultipart().toFormData()
                 val file = formData.getFile("file") ?: return@post call.respondError(
@@ -56,7 +56,7 @@ fun Route.triggerDefaultAudioV1() {
                     "The file parameter is missing"
                 )
 
-                val request = TriggerDefaultAudioResponseCreateRequest(
+                val request = TriggerAudioResponseCreateRequest(
                     id = formData.getString("id") ?: return@post call.respondError(
                         HttpStatusCode.BadRequest,
                         "The id parameter is missing"
@@ -73,20 +73,20 @@ fun Route.triggerDefaultAudioV1() {
                     content = file.content
                 )
 
-                triggerDefaultAudioResponseCreator.create(request)
+                triggerAudioResponseCreator.create(request)
                     .onLeft { return@post call.respondError(errorStatusCode(it), it.message ?: "") }
                     .onRight { call.respond(HttpStatusCode.Created) }
             }
             put("/{id}") {
-                val triggerDefaultAudioResponseUpdater: TriggerDefaultAudioResponseUpdater by inject(
-                    TriggerDefaultAudioResponseUpdater::class.java
+                val triggerAudioResponseUpdater: TriggerAudioResponseUpdater by inject(
+                    TriggerAudioResponseUpdater::class.java
                 )
                 val formData = call.receiveMultipart().toFormData()
                 val file = formData.getFile("file")
 
-                val request = TriggerDefaultAudioResponseUpdateRequest(
+                val request = TriggerAudioResponseUpdateRequest(
                     id = call.parameters["id"] ?: "",
-                    values = TriggerDefaultAudioResponseUpdateRequest.NewValues(
+                    values = TriggerAudioResponseUpdateRequest.NewValues(
                         fileName = file?.fileName,
                         triggerId = formData.getString("triggerId"),
                         guildId = formData.getString("guildId"),
@@ -94,14 +94,14 @@ fun Route.triggerDefaultAudioV1() {
                     )
                 )
 
-                triggerDefaultAudioResponseUpdater.update(request)
+                triggerAudioResponseUpdater.update(request)
                     .onLeft { return@put call.respondError(errorStatusCode(it), it.message ?: "") }
                     .onRight { call.respond(HttpStatusCode.OK) }
             }
             delete("/{id}") {
-                val triggerDefaultAudioDeleter: TriggerDefaultAudioDeleter by inject(TriggerDefaultAudioDeleter::class.java)
+                val triggerAudioResponseDeleter: TriggerAudioResponseDeleter by inject(TriggerAudioResponseDeleter::class.java)
 
-                triggerDefaultAudioDeleter.delete(call.parameters["id"] ?: "")
+                triggerAudioResponseDeleter.delete(call.parameters["id"] ?: "")
                     .onLeft { return@delete call.respondError(errorStatusCode(it), it.message ?: "") }
                     .onRight { call.respond(HttpStatusCode.OK) }
             }

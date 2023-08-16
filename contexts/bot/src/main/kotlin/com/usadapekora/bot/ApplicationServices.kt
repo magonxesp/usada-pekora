@@ -9,17 +9,17 @@ import com.usadapekora.bot.application.guild.find.GuildFinder
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdater
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
-import com.usadapekora.bot.application.trigger.create.audio.TriggerDefaultAudioResponseCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.application.trigger.delete.TriggerDeleter
-import com.usadapekora.bot.application.trigger.delete.audio.TriggerDefaultAudioDeleter
+import com.usadapekora.bot.application.trigger.delete.audio.TriggerAudioResponseDeleter
 import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDeleter
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
-import com.usadapekora.bot.application.trigger.find.audio.TriggerDefaultAudioFinder
+import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFinder
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
-import com.usadapekora.bot.application.trigger.update.audio.TriggerDefaultAudioResponseUpdater
+import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
 import com.usadapekora.bot.application.video.SendVideoFeed
 import com.usadapekora.bot.application.video.VideoFeedParser
@@ -28,7 +28,6 @@ import com.usadapekora.bot.domain.guild.*
 import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
 import com.usadapekora.bot.domain.trigger.TriggerRepository
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
@@ -40,8 +39,7 @@ import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuil
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerRepository
-import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioDefaultRepository
-import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioRepository
+import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioResponseRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerTextRepository
 import com.usadapekora.bot.infraestructure.video.discord.DiscordTextChannelVideoNotifier
@@ -67,8 +65,7 @@ val sharedModule = module {
 
 val triggerModule = module {
     single { MongoDbTriggerTextRepository() } bind TriggerTextResponseRepository::class
-    single { MongoDbTriggerAudioRepository() } bind TriggerAudioResponseRepository::class
-    single { MongoDbTriggerAudioDefaultRepository() } bind TriggerAudioDefaultRepository::class
+    single { MongoDbTriggerAudioResponseRepository() } bind TriggerAudioResponseRepository::class
     single { MongoDbTriggerRepository() } bind TriggerRepository::class
     single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
     single { TriggerMatcher() }
@@ -80,11 +77,11 @@ val triggerModule = module {
     single { TriggerTextResponseFinder(get()) }
     single { TriggerTextResponseDeleter(get()) }
     single { TriggerTextResponseUpdater(get()) }
-    single { TriggerDefaultAudioResponseCreator(get(), get()) }
-    single { TriggerDefaultAudioFinder(get()) }
-    single { TriggerDefaultAudioDeleter(get(), get()) }
+    single { TriggerAudioResponseCreator(get(), get()) }
+    single { TriggerAudioResponseFinder(get()) }
+    single { TriggerAudioResponseDeleter(get(), get()) }
     single { TriggerDefaultAudioReader(get(), get()) }
-    single { TriggerDefaultAudioResponseUpdater(get(), get(), get()) }
+    single { TriggerAudioResponseUpdater(get(), get(), get()) }
 }
 
 val guildModule = module {

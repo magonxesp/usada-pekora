@@ -26,12 +26,7 @@ class TriggerCreator(
 
         val audioResponse = request.responseAudioId
             .takeIf {it != null && request.responseAudioProvider != null }
-            ?.let {
-                audioResponseRepository.find(
-                    TriggerAudioResponseId(it),
-                    TriggerAudioResponseProvider.fromValue(request.responseAudioProvider!!)
-                ).getOrNull()
-            }
+            ?.let { audioResponseRepository.find(TriggerAudioResponseId(it)).getOrNull() }
 
         val trigger = Either.catch {
             Trigger.fromPrimitives(

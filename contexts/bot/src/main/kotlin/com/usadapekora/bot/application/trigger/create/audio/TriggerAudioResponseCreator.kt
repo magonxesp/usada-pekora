@@ -3,19 +3,19 @@ package com.usadapekora.bot.application.trigger.create.audio
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioDefaultRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.audio.TriggerDefaultAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.shared.domain.file.DomainFileWriter
 
-class TriggerDefaultAudioResponseCreator(private val repository: TriggerAudioDefaultRepository, private val writer: DomainFileWriter) {
+class TriggerAudioResponseCreator(private val repository: TriggerAudioResponseRepository, private val writer: DomainFileWriter) {
 
-    fun create(request: TriggerDefaultAudioResponseCreateRequest): Either<TriggerAudioResponseException, Unit> {
-        val audio = TriggerDefaultAudioResponse.fromPrimitives(
+    fun create(request: TriggerAudioResponseCreateRequest): Either<TriggerAudioResponseException, Unit> {
+        val audio = TriggerAudioResponse.fromPrimitives(
             id = request.id,
             trigger = request.triggerId,
             guild = request.guildId,
-            file = request.fileName
+            sourceUri = request.fileName
         )
 
         val existing = repository.find(audio.id)

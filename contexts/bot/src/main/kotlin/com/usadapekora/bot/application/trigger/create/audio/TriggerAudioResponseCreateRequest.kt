@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger.create.audio
 import kotlinx.serialization.Serializable
 
 @Serializable
-class TriggerDefaultAudioResponseCreateRequest(
+class TriggerAudioResponseCreateRequest(
     val content: ByteArray,
     val fileName: String,
     val id: String,

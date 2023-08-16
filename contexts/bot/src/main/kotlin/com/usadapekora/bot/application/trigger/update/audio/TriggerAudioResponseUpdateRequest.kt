@@ -2,7 +2,7 @@ package com.usadapekora.bot.application.trigger.update.audio
 
 import kotlinx.serialization.Serializable
 
-data class TriggerDefaultAudioResponseUpdateRequest(
+data class TriggerAudioResponseUpdateRequest(
     val id: String,
     val values: NewValues
 ) {
