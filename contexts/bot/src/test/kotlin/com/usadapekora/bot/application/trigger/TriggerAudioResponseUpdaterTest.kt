@@ -1,24 +1,26 @@
 package com.usadapekora.bot.application.trigger
 
 import arrow.core.right
+import com.usadapekora.bot.TriggerModuleUnitTestCase
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.domain.FileMother
 import com.usadapekora.bot.domain.trigger.TriggerMother
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.*
 import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioResponseMother
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseSourceUriFactory
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 import com.usadapekora.shared.domain.file.DomainFileWriter
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import java.io.File
 import kotlin.random.Random
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class TriggerAudioResponseUpdaterTest {
+class TriggerAudioResponseUpdaterTest : TriggerModuleUnitTestCase() {
 
     @Test
     fun `it should update a trigger default audio response`() {
@@ -111,6 +113,12 @@ class TriggerAudioResponseUpdaterTest {
         verify { fileDeleter.delete(audioResponseFilePath) }
         verify { fileWriter.write(newFileContent, newAudioResponseFilePath) }
         verify { repository.save(newAudioResponse) }
+    }
+
+    @Test
+    fun `it should update a existing audio response`() {
+        val responseAudio = TriggerAudioResponseMother.create()
+        TODO("update trigger audio response creating new one and replacing new values with the existing")
     }
 
 }
