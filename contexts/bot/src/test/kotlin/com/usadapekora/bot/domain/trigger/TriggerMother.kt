@@ -1,7 +1,6 @@
 package com.usadapekora.bot.domain.trigger
 
 import com.usadapekora.bot.domain.Random
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.shared.domain.ObjectMother
 
 object TriggerMother : ObjectMother<Trigger> {
@@ -13,7 +12,6 @@ object TriggerMother : ObjectMother<Trigger> {
         kind: String? = null,
         responseTextId: String? = null,
         responseAudioId: String? = null,
-        responseAudioProvider: TriggerAudioResponseProvider? = null,
         guildId: String? = null,
     ) = Trigger.fromPrimitives(
         id = id ?: Random.instance().random.nextUUID(),
@@ -23,9 +21,7 @@ object TriggerMother : ObjectMother<Trigger> {
         kind = kind ?: Random.instance().random.nextEnum(TriggerKind::class.java).value,
         responseTextId = responseTextId ?: Random.instance().random.nextUUID(),
         responseAudioId = responseAudioId ?: Random.instance().random.nextUUID(),
-        responseAudioProvider = responseAudioProvider?.value ?: Random.instance().random.nextEnum(
-            TriggerAudioResponseProvider::class.java).value,
-        guildId = guildId ?: java.util.Random().nextLong().toString(),
+        guildId = guildId ?: Random.instance().random.nextUUID(),
     )
 
     override fun random(): Trigger = create()

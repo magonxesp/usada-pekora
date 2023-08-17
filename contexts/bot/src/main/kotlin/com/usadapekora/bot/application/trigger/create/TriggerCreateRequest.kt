@@ -11,5 +11,4 @@ data class TriggerCreateRequest(
     val guildId: String,
     val responseTextId: String? = null,
     val responseAudioId: String? = null,
-    val responseAudioProvider: String? = null
 )

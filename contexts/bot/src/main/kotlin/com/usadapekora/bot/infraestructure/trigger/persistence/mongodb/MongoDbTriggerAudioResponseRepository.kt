@@ -14,7 +14,7 @@ class MongoDbTriggerAudioResponseRepository : MongoDbRepository<TriggerAudioResp
     documentIdProp = TriggerAudioResponseDocument::id
 ), TriggerAudioResponseRepository {
 
-    override fun find(id: TriggerAudioResponseId): Either<TriggerAudioResponseException, TriggerAudioResponse> {
+    override fun find(id: TriggerAudioResponseId): Either<TriggerAudioResponseException.NotFound, TriggerAudioResponse> {
         val audio = oneQuery<TriggerAudioResponseDocument>(collection) { collection ->
             collection.findOne(TriggerAudioResponseDocument::id eq id.value)
         }
@@ -26,7 +26,7 @@ class MongoDbTriggerAudioResponseRepository : MongoDbRepository<TriggerAudioResp
         return TriggerAudioResponseException.NotFound("Trigger audio with id $id not found").left()
     }
 
-    override fun findByTrigger(id: Trigger.TriggerId): Either<TriggerAudioResponseException, TriggerAudioResponse> {
+    override fun findByTrigger(id: Trigger.TriggerId): Either<TriggerAudioResponseException.NotFound, TriggerAudioResponse> {
         val audio = oneQuery<TriggerAudioResponseDocument>(collection) { collection ->
             collection.findOne(TriggerAudioResponseDocument::trigger eq id.value)
         }

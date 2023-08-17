@@ -20,7 +20,6 @@ class TriggerJson(
         kind = "built_in",
         responseTextId = responseText?.id,
         responseAudioId = responseAudio?.id,
-        responseAudioProvider = "default",
         guildId = null,
     )
 }

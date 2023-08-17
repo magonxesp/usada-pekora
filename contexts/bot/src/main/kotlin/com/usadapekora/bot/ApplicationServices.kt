@@ -28,7 +28,10 @@ import com.usadapekora.bot.domain.guild.*
 import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
 import com.usadapekora.bot.domain.trigger.TriggerRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseCreatorFactory
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseFileSourceCreator
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseWriterFactory
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
@@ -38,6 +41,10 @@ import com.usadapekora.bot.infraestructure.guild.persistence.discord.DiscordGuil
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
+import com.usadapekora.bot.infraestructure.trigger.fake.FakeTriggerAudioResponseWriter
+import com.usadapekora.bot.infraestructure.trigger.filesystem.FileSystemTriggerAudioResponseWriter
+import com.usadapekora.bot.infraestructure.trigger.koin.KoinTriggerAudioResponseCreatorFactory
+import com.usadapekora.bot.infraestructure.trigger.koin.KoinTriggerAudioResponseWriterFactory
 import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioResponseRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerRepository
@@ -68,6 +75,11 @@ val triggerModule = module {
     single { MongoDbTriggerAudioResponseRepository() } bind TriggerAudioResponseRepository::class
     single { MongoDbTriggerRepository() } bind TriggerRepository::class
     single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
+    single { KoinTriggerAudioResponseCreatorFactory() } bind TriggerAudioResponseCreatorFactory::class
+    single { KoinTriggerAudioResponseWriterFactory() } bind TriggerAudioResponseWriterFactory::class
+    single { TriggerAudioResponseFileSourceCreator() }
+    single { FakeTriggerAudioResponseWriter() }
+    single { FileSystemTriggerAudioResponseWriter(get()) }
     single { TriggerMatcher() }
     single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get(), get(), get()) }
@@ -77,7 +89,7 @@ val triggerModule = module {
     single { TriggerTextResponseFinder(get()) }
     single { TriggerTextResponseDeleter(get()) }
     single { TriggerTextResponseUpdater(get()) }
-    single { TriggerAudioResponseCreator(get(), get()) }
+    single { TriggerAudioResponseCreator(get(), get(), get()) }
     single { TriggerAudioResponseFinder(get()) }
     single { TriggerAudioResponseDeleter(get(), get()) }
     single { TriggerDefaultAudioReader(get(), get()) }

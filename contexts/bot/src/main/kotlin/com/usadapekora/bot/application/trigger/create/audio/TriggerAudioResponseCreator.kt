@@ -3,32 +3,39 @@ package com.usadapekora.bot.application.trigger.create.audio
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
-import com.usadapekora.shared.domain.file.DomainFileWriter
+import com.usadapekora.bot.domain.trigger.audio.*
 
-class TriggerAudioResponseCreator(private val repository: TriggerAudioResponseRepository, private val writer: DomainFileWriter) {
+class TriggerAudioResponseCreator(
+    private val creatorFactory: TriggerAudioResponseCreatorFactory,
+    private val writerFactory: TriggerAudioResponseWriterFactory,
+    private val repository: TriggerAudioResponseRepository
+) {
 
     fun create(request: TriggerAudioResponseCreateRequest): Either<TriggerAudioResponseException, Unit> {
-        val audio = TriggerAudioResponse.fromPrimitives(
-            id = request.id,
-            trigger = request.triggerId,
-            guild = request.guildId,
-            sourceUri = request.fileName
-        )
-
-        val existing = repository.find(audio.id)
-
-        if (existing.getOrNull() != null) {
-            return TriggerAudioResponseException.AlreadyExists("Trigger audio with id ${audio.id.value} already exists").left()
+        repository.find(TriggerAudioResponseId(request.id)).onRight {
+            return TriggerAudioResponseException.AlreadyExists("Trigger audio with id ${request.id} already exists").left()
         }
 
-        writer.write(request.content, audio.path).leftOrNull()?.let {
-            return TriggerAudioResponseException.FailedToSave("Failed writing the audio file of the trigger audio with id ${audio.id.value}").left()
+        val creator = creatorFactory.getInstance(request.content)
+            .onLeft { return it.left() }
+            .getOrNull()!!
+
+        val writer = writerFactory.getInstance(request.content)
+            .onLeft { return it.left() }
+            .getOrNull()!!
+
+        val responseAudio = creator.create(request.id, request.triggerId, request.guildId, request.content)
+            .onLeft { return it.left() }
+            .getOrNull()!!
+
+        writer.write(
+            responseAudio = responseAudio,
+            content = request.content,
+        ).onLeft {
+            return TriggerAudioResponseException.FailedToSave("Failed writing the audio file of the trigger audio with id ${request.id}").left()
         }
 
-        return repository.save(audio).right()
+        return repository.save(responseAudio).right()
     }
 
 }

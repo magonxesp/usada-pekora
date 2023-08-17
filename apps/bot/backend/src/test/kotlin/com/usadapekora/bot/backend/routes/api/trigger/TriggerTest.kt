@@ -7,7 +7,6 @@ import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponse
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.backend.HttpTestCase
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseContentType
 import org.koin.java.KoinJavaComponent.inject
 
@@ -25,7 +24,6 @@ abstract class TriggerTest : HttpTestCase()  {
         compare: String = "in",
         responseTextId: String? = null,
         responseAudioId: String? = null,
-        responseAudioProvider: String? = TriggerAudioResponseProvider.DEFAULT.value,
         guildId: String = "2fe3367b-61a8-402c-9df4-20561b058635"
     ) {
         creator.create(
@@ -37,7 +35,6 @@ abstract class TriggerTest : HttpTestCase()  {
                 guildId = guildId,
                 responseTextId = responseTextId,
                 responseAudioId = responseAudioId,
-                responseAudioProvider = responseAudioProvider
             )
         )
     }
@@ -49,7 +46,7 @@ abstract class TriggerTest : HttpTestCase()  {
     ) {
         audioCreator.create(
             TriggerAudioResponseCreateRequest(
-                content = readResource("/assets_audio_Its_me_pekora.mp3"),
+                fileContent = readResource("/assets_audio_Its_me_pekora.mp3"),
                 fileName = "assets_audio_Its_me_pekora.mp3",
                 id = id,
                 triggerId = triggerId,

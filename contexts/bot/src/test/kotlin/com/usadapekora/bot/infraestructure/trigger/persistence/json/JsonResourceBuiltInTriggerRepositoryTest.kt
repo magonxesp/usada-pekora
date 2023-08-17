@@ -2,7 +2,6 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.json
 
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerKind
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -26,7 +25,6 @@ class JsonResourceBuiltInTriggerRepositoryTest {
             compare = "in",
             responseTextId = "a1b5eb1e-fc9d-4d03-a732-291fd57599b6",
             responseAudioId = "cff9451d-6c73-4c79-8af3-52bc4102cceb",
-            responseAudioProvider = TriggerAudioResponseProvider.DEFAULT.value,
             kind = TriggerKind.BUILT_IN.value,
             guildId = null
         )

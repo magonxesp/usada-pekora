@@ -8,9 +8,9 @@ data class TriggerAudioResponseUpdateRequest(
 ) {
     @Serializable
     data class NewValues(
-        val triggerId: String? = null,
-        val guildId: String? = null,
-        val fileName: String? = null,
-        val content: ByteArray? = null
+        val triggerId: String,
+        val guildId: String,
+        val fileName: String,
+        val content: ByteArray
     )
 }

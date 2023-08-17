@@ -8,7 +8,6 @@ import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
@@ -35,20 +34,12 @@ class TriggerUpdater(
     private fun updateAudioResponse(request: TriggerUpdateRequest, trigger: Trigger): Either<TriggerException, Unit> {
         if (request.values.responseAudioId == null) {
             trigger.responseAudio = null
-            trigger.responseAudioProvider = null
             return Unit.right()
-        }
-
-        if (request.values.responseAudioProvider == null) {
-            return TriggerException.MissingAudioProvider("Missing audio provider for the new audio response").left()
         }
 
         audioResponseRepository.find(TriggerAudioResponseId(request.values.responseAudioId))
             .onLeft { return TriggerException.MissingResponse("The new audio response is missing").left() }
-            .onRight {
-                trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId)
-                trigger.responseAudioProvider = TriggerAudioResponseProvider.fromValue(request.values.responseAudioProvider)
-            }
+            .onRight { trigger.responseAudio = TriggerAudioResponseId(request.values.responseAudioId) }
 
         return Unit.right()
     }
@@ -56,10 +47,6 @@ class TriggerUpdater(
     fun update(request: TriggerUpdateRequest): Either<TriggerException, Unit> {
         if (request.values.responseAudioId == null && request.values.responseTextId == null) {
             return TriggerException.MissingResponse("The trigger should have at least one response").left()
-        }
-
-        if (request.values.responseAudioId != null && request.values.responseAudioProvider == null) {
-            return TriggerException.MissingAudioProvider("The trigger should have audio provider if it has audio response").left()
         }
 
         val trigger = repository.find(Trigger.TriggerId(request.id))

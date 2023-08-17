@@ -12,7 +12,6 @@ class TriggerDocument(
     val kind: String = "",
     val responseTextId: String? = null,
     val responseAudioId: String? = null,
-    val responseAudioProvider: String? = null,
     val guildId: String? = null
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<Trigger, TriggerDocument>({ TriggerDocument() }) {
@@ -24,7 +23,6 @@ class TriggerDocument(
             kind = entity.kind.value,
             responseTextId = entity.responseText?.value,
             responseAudioId = entity.responseAudio?.value,
-            responseAudioProvider = entity.responseAudioProvider?.value,
             guildId = entity.guildId?.value,
         )
     }
@@ -37,7 +35,6 @@ class TriggerDocument(
         kind = kind.ifBlank { "private" },
         responseTextId = responseTextId,
         responseAudioId = responseAudioId,
-        responseAudioProvider = responseAudioProvider,
         guildId = guildId,
     )
 }

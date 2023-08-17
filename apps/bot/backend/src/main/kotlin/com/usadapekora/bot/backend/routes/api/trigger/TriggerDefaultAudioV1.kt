@@ -9,6 +9,7 @@ import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponse
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseFileContent
 import com.usadapekora.shared.infrastructure.ktor.respondError
 import com.usadapekora.shared.infrastructure.ktor.toFormData
 import io.ktor.http.*
@@ -69,8 +70,10 @@ fun Route.triggerDefaultAudioV1() {
                         HttpStatusCode.BadRequest,
                         "The guildId parameter is missing"
                     ),
-                    fileName = file.fileName,
-                    content = file.content
+                    content = TriggerAudioResponseFileContent(
+                        fileName = file.fileName,
+                        fileContent = file.content
+                    )
                 )
 
                 triggerAudioResponseCreator.create(request)
@@ -83,14 +86,17 @@ fun Route.triggerDefaultAudioV1() {
                 )
                 val formData = call.receiveMultipart().toFormData()
                 val file = formData.getFile("file")
+                    ?: return@put call.respondError(HttpStatusCode.BadRequest, "The file is required")
 
                 val request = TriggerAudioResponseUpdateRequest(
                     id = call.parameters["id"] ?: "",
                     values = TriggerAudioResponseUpdateRequest.NewValues(
-                        fileName = file?.fileName,
-                        triggerId = formData.getString("triggerId"),
-                        guildId = formData.getString("guildId"),
-                        content = file?.content
+                        fileName = file.fileName,
+                        triggerId = formData.getString("triggerId")
+                            ?: return@put call.respondError(HttpStatusCode.BadRequest, "The triggerId is required"),
+                        guildId = formData.getString("guildId")
+                            ?: return@put call.respondError(HttpStatusCode.BadRequest, "The guildId is required"),
+                        content = file.content
                     )
                 )
 

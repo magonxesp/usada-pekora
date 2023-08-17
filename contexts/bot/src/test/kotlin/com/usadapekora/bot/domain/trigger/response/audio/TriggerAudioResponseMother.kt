@@ -8,14 +8,12 @@ import java.util.*
 object TriggerAudioResponseMother : ObjectMother<TriggerAudioResponse> {
     fun create(
         id: String? = null,
-        trigger: String? = null,
-        guild: String? = null,
-        file: String? = null,
+        source: String? = null,
+        sourceUri: String? = null,
     ): TriggerAudioResponse = TriggerAudioResponse.fromPrimitives(
         id = id ?: UUID.randomUUID().toString(),
-        trigger = trigger ?: UUID.randomUUID().toString(),
-        guild = guild ?: UUID.randomUUID().toString(),
-        sourceUri = file ?: "${Random.instance().internet.slug()}.mp4"
+        source = source ?: Random.instance().random.nextEnum(TriggerAudioResponse.TriggerAudioResponseSource::class.java).name.lowercase(),
+        sourceUri = sourceUri ?: "file://${Random.instance().internet.slug()}.mp4"
     )
 
     override fun random(): TriggerAudioResponse = create()

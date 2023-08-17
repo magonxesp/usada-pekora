@@ -131,13 +131,11 @@ class TriggerUpdaterTest {
         every { audioRepository.find(responseAudio.id) } returns responseAudio.right()
 
         trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
         val result = updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 responseAudioId = responseAudio.id.value,
-                responseAudioProvider = responseAudio.provider.value
             )
         ))
 
@@ -156,42 +154,17 @@ class TriggerUpdaterTest {
         every { audioRepository.find(responseAudio.id) } returns TriggerAudioResponseException.NotFound().left()
 
         trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider // updated audio response
 
         val result = updater.update(TriggerUpdateRequest(
             id = trigger.id.value,
             values = TriggerUpdateRequest.NewValues(
                 responseAudioId = responseAudio.id.value,
-                responseAudioProvider = responseAudio.provider.value
             )
         ))
 
         assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
 
         verify { audioRepository.find(responseAudio.id) }
-        verify(inverse = true) { repository.save(trigger) }
-    }
-
-    @Test
-    fun `it should not update audio response without audio provider of a trigger`() {
-        val trigger = TriggerMother.create()
-        val responseAudio = TriggerAudioResponseMother.create()
-
-        every { repository.find(trigger.id) } returns trigger.right()
-        every { audioRepository.find(responseAudio.id) } returns responseAudio.right()
-
-        trigger.responseAudio = responseAudio.id // updated audio response
-        trigger.responseAudioProvider = responseAudio.provider // updated audio response
-
-        val result = updater.update(TriggerUpdateRequest(
-            id = trigger.id.value,
-            values = TriggerUpdateRequest.NewValues(
-                responseAudioId = responseAudio.id.value,
-            )
-        ))
-
-        assertTrue(result.leftOrNull() is TriggerException.MissingAudioProvider)
-
         verify(inverse = true) { repository.save(trigger) }
     }
 

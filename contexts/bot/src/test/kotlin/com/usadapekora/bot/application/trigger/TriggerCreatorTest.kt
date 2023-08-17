@@ -45,7 +45,6 @@ class TriggerCreatorTest {
             compare = trigger.compare.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = trigger.responseAudio?.value,
-            responseAudioProvider = trigger.responseAudioProvider?.value,
             guildId = trigger.guildId!!.value
         ))
 
@@ -77,7 +76,6 @@ class TriggerCreatorTest {
             guildId = trigger.guildId!!.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = trigger.responseAudio?.value,
-            responseAudioProvider = trigger.responseAudioProvider?.value
         ))
 
         assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
@@ -109,7 +107,6 @@ class TriggerCreatorTest {
             guildId = trigger.guildId!!.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = trigger.responseAudio?.value,
-            responseAudioProvider = trigger.responseAudioProvider?.value,
         ))
 
         assertTrue(result.leftOrNull() is TriggerException.AlreadyExists)
@@ -135,7 +132,6 @@ class TriggerCreatorTest {
                 guildId = trigger.guildId!!.value,
                 responseTextId = trigger.responseText?.value,
                 responseAudioId = trigger.responseAudio?.value,
-                responseAudioProvider = trigger.responseAudioProvider?.value,
             ))
         }
     }
@@ -159,7 +155,6 @@ class TriggerCreatorTest {
             guildId = trigger.guildId!!.value,
             responseTextId = trigger.responseText?.value,
             responseAudioId = null,
-            responseAudioProvider = trigger.responseAudioProvider?.value,
         ))
 
         assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
@@ -186,7 +181,6 @@ class TriggerCreatorTest {
             guildId = trigger.guildId!!.value,
             responseTextId = null,
             responseAudioId = trigger.responseAudio?.value,
-            responseAudioProvider = trigger.responseAudioProvider?.value,
         ))
 
         assertTrue(result.leftOrNull() is TriggerException.MissingResponse)

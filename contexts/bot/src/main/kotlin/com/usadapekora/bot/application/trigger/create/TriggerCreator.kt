@@ -8,7 +8,6 @@ import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerKind
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseProvider
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
@@ -24,9 +23,9 @@ class TriggerCreator(
             textResponseRepository.find(TriggerTextResponseId(it)).getOrNull()
         }
 
-        val audioResponse = request.responseAudioId
-            .takeIf {it != null && request.responseAudioProvider != null }
-            ?.let { audioResponseRepository.find(TriggerAudioResponseId(it)).getOrNull() }
+        val audioResponse = request.responseAudioId?.let {
+            audioResponseRepository.find(TriggerAudioResponseId(it)).getOrNull()
+        }
 
         val trigger = Either.catch {
             Trigger.fromPrimitives(
@@ -37,7 +36,6 @@ class TriggerCreator(
                 kind = TriggerKind.PRIVATE.value,
                 responseTextId = textResponse?.id?.value,
                 responseAudioId = audioResponse?.id(),
-                responseAudioProvider = request.responseAudioProvider,
                 guildId = request.guildId
             )
         }

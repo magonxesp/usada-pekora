@@ -4,8 +4,8 @@ import arrow.core.Either
 import com.usadapekora.bot.domain.trigger.Trigger
 
 interface TriggerAudioResponseRepository {
-    fun find(id: TriggerAudioResponseId): Either<TriggerAudioResponseException, TriggerAudioResponse>
-    fun findByTrigger(id: Trigger.TriggerId): Either<TriggerAudioResponseException, TriggerAudioResponse>
+    fun find(id: TriggerAudioResponseId): Either<TriggerAudioResponseException.NotFound, TriggerAudioResponse>
+    fun findByTrigger(id: Trigger.TriggerId): Either<TriggerAudioResponseException.NotFound, TriggerAudioResponse>
     fun save(entity: TriggerAudioResponse)
     fun delete(entity: TriggerAudioResponse)
 }

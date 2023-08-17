@@ -14,6 +14,5 @@ data class TriggerUpdateRequest(
         val responseTextId: String? = null,
         val responseAudioId: String? = null,
         val guildId: String? = null,
-        val responseAudioProvider: String? = null
     )
 }
