@@ -12,4 +12,6 @@ sealed class TriggerAudioResponseException(override val message: String? = null)
     class FailedToWrite(override val message: String? = null) : TriggerAudioResponseException(message)
     class CreatorNotAvailable(override val message: String? = null) : TriggerAudioResponseException(message)
     class WriterNotAvailable(override val message: String? = null) : TriggerAudioResponseException(message)
+    class DeleterNotAvailable(override val message: String? = null) : TriggerAudioResponseException(message)
+    class UnsupportedAudioSource(override val message: String? = null) : TriggerAudioResponseException(message)
 }

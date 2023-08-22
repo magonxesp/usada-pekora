@@ -1,37 +1,22 @@
 package com.usadapekora.bot
 
-import arrow.core.right
-import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
+import com.usadapekora.bot.application.trigger.delete.audio.TriggerAudioResponseDeleter
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseCreator as TriggerAudioResponseCreatorDomainService
 import com.usadapekora.bot.domain.trigger.audio.*
-import io.mockk.every
+import com.usadapekora.shared.domain.file.DomainFileDeleter
+import com.usadapekora.shared.domain.file.DomainFileWriter
 import io.mockk.mockk
 
 abstract class TriggerModuleUnitTestCase : TestCase() {
 
     // Audio related services mocks
     protected val responseAudioRepository = mockk<TriggerAudioResponseRepository>(relaxed = true)
-    protected val writerFactory = mockk<TriggerAudioResponseWriterFactory>()
-    protected val creatorFactory = mockk<TriggerAudioResponseCreatorFactory>()
-    protected val writer = mockk<TriggerAudioResponseWriter>()
-    protected val creatorDomainService = mockk<TriggerAudioResponseCreatorDomainService>()
+    protected val domainFileWriter = mockk<DomainFileWriter>(relaxUnitFun = true)
+    protected val domainFileDeleter = mockk<DomainFileDeleter>(relaxUnitFun = true)
 
-    protected val creator = TriggerAudioResponseCreator(creatorFactory, writerFactory, responseAudioRepository)
-    protected val updater = TriggerAudioResponseUpdater(responseAudioRepository, creatorFactory, writerFactory)
+    protected val creator = TriggerAudioResponseCreator(responseAudioRepository, domainFileWriter)
+    protected val updater = TriggerAudioResponseUpdater(responseAudioRepository, domainFileWriter, domainFileDeleter)
+    protected val deleter = TriggerAudioResponseDeleter(responseAudioRepository, domainFileDeleter)
 
-    protected fun `should return writer and creator by content`(content: TriggerAudioResponseContent) {
-        every { creatorFactory.getInstance(content) } returns creatorDomainService.right()
-        every { writerFactory.getInstance(content) } returns writer.right()
-    }
-
-    protected fun `should return audio by request`(audioResponse: TriggerAudioResponse, request: TriggerAudioResponseCreateRequest) {
-        every { creatorDomainService.create(request.id, request.triggerId, request.guildId, request.content) } returns audioResponse.right()
-    }
-
-    protected fun `should write audio file`(audioResponse: TriggerAudioResponse, content: TriggerAudioResponseContent) {
-        every { writer.write(audioResponse, content) } returns Unit.right()
-    }
-    
 }

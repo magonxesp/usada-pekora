@@ -1,7 +1,7 @@
 package com.usadapekora.bot.domain.trigger
 
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 import com.usadapekora.shared.domain.Entity
 import com.usadapekora.shared.domain.valueobject.UuidValueObject

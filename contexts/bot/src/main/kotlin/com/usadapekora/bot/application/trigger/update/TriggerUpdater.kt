@@ -7,7 +7,7 @@ import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.TriggerException
 import com.usadapekora.bot.domain.trigger.TriggerRepository
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse.TriggerAudioResponseId
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseId
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository

@@ -3,10 +3,10 @@ package com.usadapekora.bot.application.trigger.delete.audio
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseId
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseSourceUriFactory
+import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse.TriggerAudioResponseId
 import com.usadapekora.shared.domain.file.DomainFileDeleter
 
 class TriggerAudioResponseDeleter(private val repository: TriggerAudioResponseRepository, private val  fileDeleter: DomainFileDeleter) {
@@ -16,12 +16,11 @@ class TriggerAudioResponseDeleter(private val repository: TriggerAudioResponseRe
             .onLeft { return it.left() }
             .getOrNull()!!
 
-        val audioFilePath = TriggerAudioResponseSourceUriFactory.getFilePathFromUri(audio.sourceUri.value)
-            .onLeft { return TriggerAudioResponseException.FailedToDelete(it.message).left() }
-            .getOrNull()!!
-
-        fileDeleter.delete(audioFilePath)
-            .onLeft { return TriggerAudioResponseException.FailedToDelete("Failed to delete the file of trigger audio with id ${audio.id.value}").left() }
+        if (audio.kind == TriggerAudioResponse.TriggerAudioResponseKind.FILE) {
+            fileDeleter.delete(audio.source.value).onLeft {
+                return TriggerAudioResponseException.FailedToDelete("Failed to delete the file of the trigger audio response").left()
+            }
+        }
 
         return repository.delete(audio).right()
     }

@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger.response.audio
+package com.usadapekora.bot.domain.trigger
 
 import com.usadapekora.bot.domain.Random
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
@@ -8,12 +8,12 @@ import java.util.*
 object TriggerAudioResponseMother : ObjectMother<TriggerAudioResponse> {
     fun create(
         id: String? = null,
+        kind: String? = null,
         source: String? = null,
-        sourceUri: String? = null,
     ): TriggerAudioResponse = TriggerAudioResponse.fromPrimitives(
         id = id ?: UUID.randomUUID().toString(),
-        source = source ?: Random.instance().random.nextEnum(TriggerAudioResponse.TriggerAudioResponseSource::class.java).name.lowercase(),
-        sourceUri = sourceUri ?: "file://${Random.instance().internet.slug()}.mp4"
+        kind = kind ?: Random.instance().random.nextEnum(TriggerAudioResponse.TriggerAudioResponseKind::class.java).name.lowercase(),
+        source = source ?: "${Random.instance().internet.slug()}.mp4"
     )
 
     override fun random(): TriggerAudioResponse = create()

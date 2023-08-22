@@ -2,7 +2,7 @@ package com.usadapekora.bot.infraestructure.trigger.persistence.mongodb
 
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerAudioResponseMother
 import com.usadapekora.shared.MongoDbRepositoryTestCase
 import kotlin.test.Test
 import kotlin.test.assertEquals

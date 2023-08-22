@@ -4,7 +4,7 @@ import arrow.core.right
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdateRequest
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
 import com.usadapekora.bot.domain.Random
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository

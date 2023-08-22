@@ -6,7 +6,7 @@ import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFi
 import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerAudioResponseMother
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.assertThrows

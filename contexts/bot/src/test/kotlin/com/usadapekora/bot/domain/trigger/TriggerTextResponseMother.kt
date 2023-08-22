@@ -1,4 +1,4 @@
-package com.usadapekora.bot.domain.trigger.response.text
+package com.usadapekora.bot.domain.trigger
 
 import com.usadapekora.bot.domain.Random
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponse

@@ -10,8 +10,8 @@ import com.usadapekora.bot.domain.trigger.TriggerMother
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioResponseMother
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerAudioResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.clearAllMocks

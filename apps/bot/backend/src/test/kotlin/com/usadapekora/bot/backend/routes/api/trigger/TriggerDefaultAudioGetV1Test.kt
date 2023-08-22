@@ -19,7 +19,7 @@ class TriggerDefaultAudioGetV1Test : TriggerTest() {
             id = audioId,
             trigger = "c2a05313-b765-4be0-bf92-0b77136d033b",
             guild = "47541556",
-            sourceUri = "assets_audio_Its_me_pekora.mp3"
+            source = "assets_audio_Its_me_pekora.mp3"
         )
 
         createAudioDummy(

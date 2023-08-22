@@ -5,8 +5,7 @@ import arrow.core.right
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
-import com.usadapekora.bot.domain.trigger.response.audio.TriggerAudioResponseMother
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseSourceUriFactory
+import com.usadapekora.bot.domain.trigger.TriggerAudioResponseMother
 import com.usadapekora.shared.domain.file.DomainFileReader
 import io.mockk.every
 import io.mockk.mockk
@@ -25,10 +24,9 @@ class TriggerAudioResponseReaderTest {
         val reader = TriggerDefaultAudioReader(repository, fileReader)
         val audio = TriggerAudioResponseMother.create()
         val expectedContent = Random.nextBytes(10)
-        val audioPath = TriggerAudioResponseSourceUriFactory.getFilePathFromUri(audio.sourceUri.value).getOrNull()!!
 
         every { repository.find(audio.id) } returns audio.right()
-        every { fileReader.read(audioPath) } returns expectedContent.right()
+        every { fileReader.read(audio.source.value) } returns expectedContent.right()
 
         val content = reader.read(audio.id.value).getOrNull()
 
@@ -41,14 +39,13 @@ class TriggerAudioResponseReaderTest {
         val repository = mockk<TriggerAudioResponseRepository>()
         val reader = TriggerDefaultAudioReader(repository, fileReader)
         val audio = TriggerAudioResponseMother.create()
-        val audioPath = TriggerAudioResponseSourceUriFactory.getFilePathFromUri(audio.sourceUri.value).getOrNull()!!
 
         every { repository.find(audio.id) } returns TriggerAudioResponseException.NotFound().left()
 
         val result = reader.read(audio.id.value)
 
         assertTrue(result.leftOrNull() is TriggerAudioResponseException.NotFound)
-        verify(inverse = true) { fileReader.read(audioPath) }
+        verify(inverse = true) { fileReader.read(audio.source.value) }
     }
 
 }

@@ -1,28 +1,30 @@
 package com.usadapekora.bot.domain.trigger.audio
 
 import com.usadapekora.shared.domain.Entity
+import com.usadapekora.shared.domain.valueobject.UuidValueObject
 
 data class TriggerAudioResponse(
     val id: TriggerAudioResponseId,
-    var source: TriggerAudioResponseSource,
-    var sourceUri: TriggerAudioResponseSourceUri
+    var kind: TriggerAudioResponseKind,
+    var source: TriggerAudioResponseSource
 ) : Entity() {
-    enum class TriggerAudioResponseSource {
+    enum class TriggerAudioResponseKind {
         FILE, RESOURCE
     }
-    data class TriggerAudioResponseSourceUri(val value: String)
+    data class TriggerAudioResponseId(override val value: String) : UuidValueObject(value)
+    data class TriggerAudioResponseSource(val value: String)
 
     // TODO: update trigger audio response creator and repositories
 
     companion object {
         fun fromPrimitives(
             id: String,
-            source: String,
-            sourceUri: String
+            kind: String,
+            source: String
         ): TriggerAudioResponse = TriggerAudioResponse(
             id = TriggerAudioResponseId(id),
-            source = TriggerAudioResponseSource.valueOf(source.uppercase()),
-            sourceUri = TriggerAudioResponseSourceUri(sourceUri)
+            kind = TriggerAudioResponseKind.valueOf(kind.uppercase()),
+            source = TriggerAudioResponseSource(source)
         )
     }
 

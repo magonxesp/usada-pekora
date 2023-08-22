@@ -3,7 +3,7 @@ package com.usadapekora.bot.application.trigger
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFindResponse
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.every
 import io.mockk.mockk

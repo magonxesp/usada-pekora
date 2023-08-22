@@ -2,7 +2,7 @@ package com.usadapekora.bot.application.trigger
 
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDeleter
-import com.usadapekora.bot.domain.trigger.response.text.TriggerTextResponseMother
+import com.usadapekora.bot.domain.trigger.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.every

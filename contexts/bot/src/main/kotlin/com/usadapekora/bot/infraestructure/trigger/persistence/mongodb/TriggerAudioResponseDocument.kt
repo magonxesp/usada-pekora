@@ -6,21 +6,20 @@ import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbDomainEn
 
 class TriggerAudioResponseDocument(
     val id: String = "",
-    val trigger: String = "",
+    val kind: String = "",
     val source: String = "",
-    val sourceUri: String = "",
 ): MongoDbDocument() {
     companion object : MongoDbDomainEntityDocument<TriggerAudioResponse, TriggerAudioResponseDocument>({ TriggerAudioResponseDocument() }) {
         override fun fromEntity(entity: TriggerAudioResponse, document: TriggerAudioResponseDocument) = TriggerAudioResponseDocument(
             id = entity.id.value,
-            source = entity.source.name,
-            sourceUri = entity.sourceUri.value
+            kind = entity.kind.name,
+            source = entity.source.value
         )
     }
 
     fun toEntity() = TriggerAudioResponse.fromPrimitives(
         id = id,
-        source = source,
-        sourceUri = sourceUri
+        kind = kind,
+        source = source
     )
 }
