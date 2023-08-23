@@ -20,8 +20,7 @@ class TriggerPostV1Test : TriggerTest() {
                 "input": "peko",
                 "compare": "in",
                 "guildId": "2fe3367b-61a8-402c-9df4-20561b058635",
-                "responseAudioId": "$audioId",
-                "responseAudioProvider": "default"
+                "responseAudioId": "$audioId"
             }
         """.trimIndent()
 
@@ -46,8 +45,7 @@ class TriggerPostV1Test : TriggerTest() {
                 "input": "peko",
                 "compare": "in",
                 "guildId": "2fe3367b-61a8-402c-9df4-20561b058635",
-                "responseAudioId": "$audioId",
-                "responseAudioProvider": "default"
+                "responseAudioId": "$audioId"
             }
         """.trimIndent()
 

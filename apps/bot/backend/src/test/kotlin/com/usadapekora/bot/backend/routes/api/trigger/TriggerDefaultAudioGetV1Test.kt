@@ -1,7 +1,10 @@
 package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
+import com.usadapekora.bot.domain.guild.Guild
+import com.usadapekora.bot.domain.trigger.Trigger
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
+import com.usadapekora.bot.domain.trigger.audio.triggerAudioFilePath
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -15,29 +18,27 @@ class TriggerDefaultAudioGetV1Test : TriggerTest() {
     @Test
     fun `should find a trigger audio`() = withTestApplication {
         val audioId = UUID.randomUUID().toString()
-        val audio = TriggerAudioResponse.fromPrimitives(
-            id = audioId,
-            trigger = "c2a05313-b765-4be0-bf92-0b77136d033b",
-            guild = "47541556",
-            source = "assets_audio_Its_me_pekora.mp3"
+        val destination = triggerAudioFilePath(
+            guildId = Guild.GuildId("d04c17e7-ff23-4c9d-ab29-1b19c1ed6f55"),
+            triggerId = Trigger.TriggerId("c2a05313-b765-4be0-bf92-0b77136d033b"),
+            fileName = "assets_audio_Its_me_pekora.mp3"
         )
 
         createAudioDummy(
-            id = audio.id.value,
-            triggerId = audio.trigger.value,
-            guildId = audio.guild.value,
+            id = audioId,
+            triggerId = "c2a05313-b765-4be0-bf92-0b77136d033b",
+            guildId = "d04c17e7-ff23-4c9d-ab29-1b19c1ed6f55",
         )
 
         val expectedBody = """
             {
                 "id": "$audioId",
-                "triggerId": "c2a05313-b765-4be0-bf92-0b77136d033b",
-                "guildId": "47541556",
-                "file": "assets_audio_Its_me_pekora.mp3"
+                "kind": "file",
+                "source": "${destination.replace("\\", "\\\\")}"
             }
         """.uglifyJson()
 
-        val response = client.get("/api/v1/trigger/response/audio/${audio.id.value}") {
+        val response = client.get("/api/v1/trigger/response/audio/$audioId") {
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
         }

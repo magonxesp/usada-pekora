@@ -17,7 +17,7 @@ import com.usadapekora.bot.application.trigger.delete.text.TriggerTextResponseDe
 import com.usadapekora.bot.application.trigger.find.TriggerFinder
 import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFinder
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
-import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
+import com.usadapekora.bot.application.trigger.read.TriggerAudioResponseReader
 import com.usadapekora.bot.application.trigger.update.TriggerUpdater
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.application.trigger.update.text.TriggerTextResponseUpdater
@@ -80,7 +80,7 @@ val triggerModule = module {
     single { TriggerAudioResponseCreator(get(), get()) }
     single { TriggerAudioResponseFinder(get()) }
     single { TriggerAudioResponseDeleter(get(), get()) }
-    single { TriggerDefaultAudioReader(get(), get()) }
+    single { TriggerAudioResponseReader(get(), get()) }
     single { TriggerAudioResponseUpdater(get(), get(), get()) }
 }
 

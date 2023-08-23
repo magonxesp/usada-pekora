@@ -4,7 +4,7 @@ import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponse
 import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseFileCreateRequest
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerAudioResponseDeleter
 import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFinder
-import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
+import com.usadapekora.bot.application.trigger.read.TriggerAudioResponseReader
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseFileUpdateRequest
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.backend.testMode
@@ -40,9 +40,9 @@ fun Route.triggerDefaultAudioV1() {
                     .onRight { call.respond(it) }
             }
             get("/{id}/content") {
-                val triggerDefaultAudioReader: TriggerDefaultAudioReader by inject(TriggerDefaultAudioReader::class.java)
+                val triggerAudioResponseReader: TriggerAudioResponseReader by inject(TriggerAudioResponseReader::class.java)
 
-                triggerDefaultAudioReader.read(call.parameters["id"] ?: "")
+                triggerAudioResponseReader.read(call.parameters["id"] ?: "")
                     .onLeft { return@get call.respondError(errorStatusCode(it), it.message ?: "") }
                     .onRight { call.respondBytes(it) }
             }

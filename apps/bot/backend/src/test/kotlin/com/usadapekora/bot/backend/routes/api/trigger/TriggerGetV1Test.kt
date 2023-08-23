@@ -1,6 +1,9 @@
 package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.backend.uglifyJson
+import com.usadapekora.bot.domain.guild.Guild
+import com.usadapekora.bot.domain.trigger.Trigger
+import com.usadapekora.bot.domain.trigger.audio.triggerAudioFilePath
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -126,17 +129,23 @@ class TriggerGetV1Test : TriggerTest() {
     @Test
     fun `should find trigger associated audio by trigger id`() = withTestApplication {
         val id = UUID.randomUUID().toString()
+        val guildId = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
 
-        createAudioDummy(id = audioId, triggerId = id)
-        createDummy(id = id, responseAudioId = audioId)
+        createAudioDummy(id = audioId, triggerId = id, guildId = guildId)
+        createDummy(id = id, responseAudioId = audioId, guildId = guildId)
+
+        val destination = triggerAudioFilePath(
+            guildId = Guild.GuildId(guildId),
+            triggerId = Trigger.TriggerId(id),
+            fileName = "assets_audio_Its_me_pekora.mp3"
+        )
 
         val expectedBody = """
             {
                 "id": "$audioId",
-                "triggerId": "$id",
-                "guildId": "2fe3367b-61a8-402c-9df4-20561b058635",
-                "file": "assets_audio_Its_me_pekora.mp3"
+                "kind": "file",
+                "source": "${destination.replace("\\", "\\\\")}"
             }
         """.uglifyJson()
 

@@ -2,8 +2,8 @@ package com.usadapekora.bot.backend.routes.api.trigger
 
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
-import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseFileCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
 import com.usadapekora.bot.backend.HttpTestCase
@@ -45,7 +45,7 @@ abstract class TriggerTest : HttpTestCase()  {
         guildId: String = "2fe3367b-61a8-402c-9df4-20561b058635"
     ) {
         audioCreator.create(
-            TriggerAudioResponseCreateRequest(
+            TriggerAudioResponseFileCreateRequest(
                 fileContent = readResource("/assets_audio_Its_me_pekora.mp3"),
                 fileName = "assets_audio_Its_me_pekora.mp3",
                 id = id,

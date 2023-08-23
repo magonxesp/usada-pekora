@@ -12,7 +12,7 @@ class TriggerAudioResponseDocument(
     companion object : MongoDbDomainEntityDocument<TriggerAudioResponse, TriggerAudioResponseDocument>({ TriggerAudioResponseDocument() }) {
         override fun fromEntity(entity: TriggerAudioResponse, document: TriggerAudioResponseDocument) = TriggerAudioResponseDocument(
             id = entity.id.value,
-            kind = entity.kind.name,
+            kind = entity.kind.name.lowercase(),
             source = entity.source.value
         )
     }
