@@ -10,7 +10,7 @@ class TriggerJson(
     val input: String,
     val compare: String,
     val responseText: TriggerTextResponseJson? = null,
-    val responseAudio: TriggerBuiltInAudioResponseJson? = null,
+    val responseAudio: TriggerAudioResponseJson? = null,
 ) {
     fun toEntity() = Trigger.fromPrimitives(
         id = id,

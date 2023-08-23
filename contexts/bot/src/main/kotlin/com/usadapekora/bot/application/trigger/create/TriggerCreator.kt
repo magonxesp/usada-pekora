@@ -35,7 +35,7 @@ class TriggerCreator(
                 compare = request.compare,
                 kind = TriggerKind.PRIVATE.value,
                 responseTextId = textResponse?.id?.value,
-                responseAudioId = audioResponse?.id(),
+                responseAudioId = audioResponse?.id?.value,
                 guildId = request.guildId
             )
         }

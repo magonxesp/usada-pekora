@@ -13,7 +13,7 @@ import org.litote.kmongo.MongoOperator.lookup
 import org.litote.kmongo.MongoOperator.match
 
 class MongoDbTriggerAudioResponseRepository : MongoDbRepository<TriggerAudioResponse>(
-    collection = "triggerAudioDefault",
+    collection = "triggerAudio",
     documentIdProp = TriggerAudioResponseDocument::id
 ), TriggerAudioResponseRepository {
 

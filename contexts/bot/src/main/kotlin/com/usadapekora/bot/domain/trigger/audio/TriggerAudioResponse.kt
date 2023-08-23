@@ -14,8 +14,6 @@ data class TriggerAudioResponse(
     data class TriggerAudioResponseId(override val value: String) : UuidValueObject(value)
     data class TriggerAudioResponseSource(val value: String)
 
-    // TODO: update trigger audio response creator and repositories
-
     companion object {
         fun fromPrimitives(
             id: String,

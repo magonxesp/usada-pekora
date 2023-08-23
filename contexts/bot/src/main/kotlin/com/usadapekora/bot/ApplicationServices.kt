@@ -8,6 +8,7 @@ import com.usadapekora.bot.application.guild.delete.GuildPreferenceDeleter
 import com.usadapekora.bot.application.guild.find.GuildFinder
 import com.usadapekora.bot.application.guild.find.GuildPreferencesFinder
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdater
+import com.usadapekora.bot.application.trigger.create.CreateTriggerOnGuildCreate
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
 import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
 import com.usadapekora.bot.application.trigger.create.text.TriggerTextResponseCreator
@@ -28,7 +29,9 @@ import com.usadapekora.bot.domain.guild.*
 import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
 import com.usadapekora.bot.domain.trigger.TriggerRepository
+import com.usadapekora.bot.domain.trigger.audio.BuiltInTriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
+import com.usadapekora.bot.domain.trigger.text.BuiltInTriggerTextResponseRepository
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
@@ -38,7 +41,9 @@ import com.usadapekora.bot.infraestructure.guild.persistence.discord.DiscordGuil
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
+import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerAudioRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerRepository
+import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerTextRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerAudioResponseRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerTextRepository
@@ -68,6 +73,9 @@ val triggerModule = module {
     single { MongoDbTriggerAudioResponseRepository() } bind TriggerAudioResponseRepository::class
     single { MongoDbTriggerRepository() } bind TriggerRepository::class
     single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
+    single { JsonResourceBuiltInTriggerTextRepository() } bind BuiltInTriggerTextResponseRepository::class
+    single { JsonResourceBuiltInTriggerAudioRepository() } bind BuiltInTriggerAudioResponseRepository::class
+    single { CreateTriggerOnGuildCreate(get(), get(), get(), get(), get(), get()) }
     single { TriggerMatcher() }
     single { TriggerFinder(get(), get()) }
     single { TriggerCreator(get(), get(), get()) }
