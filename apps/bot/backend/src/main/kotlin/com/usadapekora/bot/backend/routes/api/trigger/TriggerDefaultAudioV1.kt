@@ -1,15 +1,14 @@
 package com.usadapekora.bot.backend.routes.api.trigger
 
-import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreateRequest
 import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseCreator
+import com.usadapekora.bot.application.trigger.create.audio.TriggerAudioResponseFileCreateRequest
 import com.usadapekora.bot.application.trigger.delete.audio.TriggerAudioResponseDeleter
 import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFinder
 import com.usadapekora.bot.application.trigger.read.TriggerDefaultAudioReader
-import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdateRequest
+import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseFileUpdateRequest
 import com.usadapekora.bot.application.trigger.update.audio.TriggerAudioResponseUpdater
 import com.usadapekora.bot.backend.testMode
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
-import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseFileContent
 import com.usadapekora.shared.infrastructure.ktor.respondError
 import com.usadapekora.shared.infrastructure.ktor.toFormData
 import io.ktor.http.*
@@ -57,7 +56,7 @@ fun Route.triggerDefaultAudioV1() {
                     "The file parameter is missing"
                 )
 
-                val request = TriggerAudioResponseCreateRequest(
+                val request = TriggerAudioResponseFileCreateRequest(
                     id = formData.getString("id") ?: return@post call.respondError(
                         HttpStatusCode.BadRequest,
                         "The id parameter is missing"
@@ -70,10 +69,8 @@ fun Route.triggerDefaultAudioV1() {
                         HttpStatusCode.BadRequest,
                         "The guildId parameter is missing"
                     ),
-                    content = TriggerAudioResponseFileContent(
-                        fileName = file.fileName,
-                        fileContent = file.content
-                    )
+                    fileName = file.fileName,
+                    fileContent = file.content
                 )
 
                 triggerAudioResponseCreator.create(request)
@@ -88,15 +85,15 @@ fun Route.triggerDefaultAudioV1() {
                 val file = formData.getFile("file")
                     ?: return@put call.respondError(HttpStatusCode.BadRequest, "The file is required")
 
-                val request = TriggerAudioResponseUpdateRequest(
+                val request = TriggerAudioResponseFileUpdateRequest(
                     id = call.parameters["id"] ?: "",
-                    values = TriggerAudioResponseUpdateRequest.NewValues(
+                    values = TriggerAudioResponseFileUpdateRequest.NewValues(
                         fileName = file.fileName,
                         triggerId = formData.getString("triggerId")
                             ?: return@put call.respondError(HttpStatusCode.BadRequest, "The triggerId is required"),
                         guildId = formData.getString("guildId")
                             ?: return@put call.respondError(HttpStatusCode.BadRequest, "The guildId is required"),
-                        content = file.content
+                        fileContent = file.content
                     )
                 )
 
