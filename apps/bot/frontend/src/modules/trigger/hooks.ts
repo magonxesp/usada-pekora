@@ -69,7 +69,7 @@ export function useCreateTrigger() {
       await createTriggerAudio({
         id: data.responseAudio.id,
         triggerId: data.id,
-        guildId: data.discordGuildId,
+        guildId: data.guildId,
         file: data.responseAudio.content as File
       })
     }
@@ -87,10 +87,9 @@ export function useCreateTrigger() {
       title: data.title,
       compare: data.compare,
       input: data.input,
-      discordGuildId: data.discordGuildId,
+      guildId: data.guildId,
       responseTextId: data.responseText?.id,
       responseAudioId: data.responseAudio?.id,
-      responseAudioProvider: data.responseAudio?.provider
     })
   }
 
@@ -129,18 +128,26 @@ export function useUpdateTrigger(actualTrigger: Trigger) {
       await deleteTriggerTextResponse(actualTrigger.responseTextId)
     }
 
-    if (data.responseAudio != null && !actualTrigger.responseAudioId) {
+    if (data.responseAudio != null 
+      && data.responseAudio.content != null
+      && data.responseAudio.content.size > 0
+      && !actualTrigger.responseAudioId
+    ) {
       await createTriggerAudio({
         id: data.responseAudio.id,
         triggerId: data.id,
-        guildId: data.discordGuildId,
-        file: data.responseAudio.content as File
+        guildId: data.guildId,
+        file: data.responseAudio.content
       })
-    } else if (data.responseAudio != null && actualTrigger.responseAudioId != null) {
+    } else if (data.responseAudio != null 
+      && data.responseAudio.content != null
+      && data.responseAudio.content.size > 0
+      && actualTrigger.responseAudioId != null
+    ) {
       await updateTriggerDefaultAudioResponse(data.responseAudio.id, {
         triggerId: data.id,
-        guildId: data.discordGuildId,
-        file: data.responseAudio.content ?? undefined,
+        guildId: data.guildId,
+        file: data.responseAudio.content,
       })
     } if (!data.responseAudio && actualTrigger.responseAudioId != null) {
       await deleteTriggerDefaultAudioResponse(actualTrigger.responseAudioId)
@@ -150,10 +157,9 @@ export function useUpdateTrigger(actualTrigger: Trigger) {
       title: data.title,
       compare: data.compare,
       input: data.input,
-      discordGuildId: data.discordGuildId,
+      guildId: data.guildId,
       responseTextId: data.responseText?.id,
       responseAudioId: data.responseAudio?.id,
-      responseAudioProvider: data.responseAudio?.provider
     })
   }
 

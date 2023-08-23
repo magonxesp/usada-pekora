@@ -142,7 +142,7 @@ export function FileInput({ label, help, error, defaultValue, onChange, allowedM
           accept={allowedMimeTypes?.join('')}
           className={styles.input}
           ref={inputRef}
-          onChange={event => handleFile(event.target.files?.item(0) ?? null)}
+          onChange={event => handleFile(event.target.files && event.target.files[0])}
         />
       </>
     </Input>

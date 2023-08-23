@@ -20,7 +20,7 @@ export interface TriggerFormData extends TriggerEntityFormData {
   id: string,
   responseText?: TriggerTextResponseFormData,
   responseAudio?: TriggerAudioResponseFormData,
-  discordGuildId: string
+  guildId: string
 }
 
 export const emptyTriggerFormData = (): TriggerFormData => ({
@@ -28,7 +28,7 @@ export const emptyTriggerFormData = (): TriggerFormData => ({
   title: '',
   input: '',
   compare: triggerCompare.contains,
-  discordGuildId: ''
+  guildId: ''
 })
 
 export function triggerToFormData(trigger: Trigger): TriggerFormData {
@@ -37,7 +37,7 @@ export function triggerToFormData(trigger: Trigger): TriggerFormData {
     title: trigger.title,
     compare: trigger.compare,
     input: trigger.input,
-    discordGuildId: trigger.discordGuildId,
+    guildId: trigger.guildId,
   }
 
   if (typeof trigger.responses?.text !== 'undefined') {

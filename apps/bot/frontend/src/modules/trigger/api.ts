@@ -1,7 +1,7 @@
 import { Trigger, TriggerCollection, TriggerResponses } from './trigger'
 import { request } from '../shared/api'
 import { TriggerTextResponse } from './trigger-text-response'
-import { TriggerDefaultResponse } from './trigger-audio-response'
+import { TriggerAudioResponse } from './trigger-audio-response'
 
 export async function createTrigger(
   requestBody: {
@@ -9,10 +9,9 @@ export async function createTrigger(
     title: string
     input: string
     compare: string
-    discordGuildId: string
+    guildId: string
     responseTextId?: string
     responseAudioId?: string
-    responseAudioProvider?: string
   },
   accessToken: string|undefined = undefined
 ) {
@@ -34,8 +33,7 @@ export async function updateTrigger(
     compare?: string
     responseTextId?: string
     responseAudioId?: string
-    discordGuildId?: string
-    responseAudioProvider?: string
+    guildId?: string
   },
   accessToken: string|undefined = undefined
 ) {
@@ -118,9 +116,9 @@ export async function deleteTriggerDefaultAudioResponse(id: string, accessToken:
 export async function updateTriggerDefaultAudioResponse(
   id: string,
   requestBody: {
-    triggerId?: string;
-    guildId?: string;
-    file?: File;
+    triggerId: string;
+    guildId: string;
+    file: File;
   },
   accessToken: string|undefined = undefined
 ) {
@@ -136,8 +134,8 @@ export async function updateTriggerDefaultAudioResponse(
   })
 }
 
-export async function fetchTriggerDefaultAudioResponse(id: string, accessToken: string|undefined = undefined): Promise<TriggerDefaultResponse|null> {
-  return await request<TriggerDefaultResponse>('GET', `/api/v1/trigger/response/audio/${id}`, { accessToken })
+export async function fetchTriggerDefaultAudioResponse(id: string, accessToken: string|undefined = undefined): Promise<TriggerAudioResponse|null> {
+  return await request<TriggerAudioResponse>('GET', `/api/v1/trigger/response/audio/${id}`, { accessToken })
 }
 
 export async function fetchTriggerByIdWithResponses(id: string, accessToken: string|undefined = undefined): Promise<Trigger|null> {

@@ -1,5 +1,5 @@
 import { TriggerTextResponse } from './trigger-text-response'
-import { TriggerDefaultResponse } from './trigger-audio-response'
+import { TriggerAudioResponse } from './trigger-audio-response'
 
 export type Trigger = {
   id: string
@@ -8,13 +8,13 @@ export type Trigger = {
   compare: string
   responseTextId?: string
   responseAudioId?: string
-  discordGuildId: string
+  guildId: string
   responses?: TriggerResponses
 }
 
 export type TriggerResponses = {
   text?: TriggerTextResponse
-  audio?: TriggerDefaultResponse
+  audio?: TriggerAudioResponse
 }
 
 export type TriggerCollection = {

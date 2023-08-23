@@ -52,7 +52,7 @@ export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }
       const errors = validate()
 
       if (errors.length === 0) {
-        onSubmit({ ...formData, discordGuildId: selectedGuild })
+        onSubmit({ ...formData, guildId: selectedGuild })
       }
     }
   }
