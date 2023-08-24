@@ -28,6 +28,10 @@ export async function oAuthProviderAuthorizeCode(provider: string, code: string)
     { method: 'POST' }
   )
 
+  if (!response.ok) {
+    throw new Error(`failed fetching token with response code ${response.status} and body ${await response.text()}`)
+  }
+
   return response.text()
 }
 
@@ -36,6 +40,10 @@ export async function fetchAuthToken(code: string): Promise<AccessTokenResponse>
     backendUrl(`/oauth/token?code=${code}`),
     { method: 'POST' }
   )
+
+  if (!response.ok) {
+    throw new Error(`failed fetching token with response code ${response.status} and body ${await response.text()}`)
+  }
 
   return await response.json() as Promise<AccessTokenResponse>
 }
