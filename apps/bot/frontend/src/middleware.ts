@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
   const user = await fetchCurrentUser(request.cookies.get(process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME as string)?.value)
 
   if (!user) {
-    return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_AUTH_FRONTEND_BASE_URL))
+    return NextResponse.redirect(new URL('/login', process.env.NEXT_PUBLIC_AUTH_FRONTEND_BASE_URL))
   }
 
   return NextResponse.next();
