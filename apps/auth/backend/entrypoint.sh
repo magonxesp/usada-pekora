@@ -1,6 +1,6 @@
 #!/bin/sh
 # ... do some setup ...
-if [ "$APP_ENV" -eq "test" && ! -d ssl ]; then
+if [ "$APP_ENV" -eq "test" ] && [ ! -d ssl ]; then
     mkdir ssl
     openssl genrsa -out ssl/private_rsa.pem 2048
     openssl pkcs8 -topk8 -inform PEM -outform PEM -in ssl/private_rsa.pem -out ssl/private.pem -nocrypt
