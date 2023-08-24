@@ -10,20 +10,26 @@ env-files:
 	@if [ ! -f "apps/auth/backend/.env" ]; then ln -s ../../../.env apps/auth/backend/.env; fi
 	@if [ ! -f "apps/auth/frontend/.env" ]; then ln -s ../../../.env apps/auth/frontend/.env; fi
 
-docker-backend-test:
+docker-bot-backend-test:
 	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
-	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :contexts:bot:test :apps:bot:backend:test && \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build bot_backend gradle :contexts:shared:test :contexts:bot:test :apps:bot:backend:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
-docker-discord-bot-test:
+docker-bot-discord-bot-test:
 	@if [ ! -d "reports/discord-bot" ]; then mkdir -p "reports/discord-bot"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
-	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build backend gradle :contexts:bot:test :apps:bot:discord-bot:test && \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build bot_discord_bot gradle :contexts:shared:test :contexts:bot:test :apps:bot:discord-bot:test && \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
+
+docker-auth-backend-test:
+	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \
+	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
+	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build auth_backend gradle :contexts:shared:test :contexts:auth:test :apps:auth:backend:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 docker-up-infrastructure:
-	docker compose up -d mongodb redis rabbitmq
+	docker compose up -d shared_mongodb shared_redis shared_rabbitmq
 
 create-keys:
 	@if [ ! -d "ssl" ]; then mkdir ssl; fi; \
