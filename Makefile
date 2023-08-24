@@ -11,19 +11,25 @@ env-files:
 	@if [ ! -f "apps/auth/frontend/.env" ]; then ln -s ../../../.env apps/auth/frontend/.env; fi
 
 docker-bot-backend-test:
-	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \
+	@if [ ! -d "reports/bot/backend" ]; then mkdir -p "reports/bot/backend"; fi; \
+	if [ ! -d "reports/bot/context" ]; then mkdir -p "reports/bot/context"; fi; \
+	if [ ! -d "reports/shared" ]; then mkdir -p "reports/shared"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build bot_backend gradle :contexts:shared:test :contexts:bot:test :apps:bot:backend:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 docker-bot-discord-bot-test:
-	@if [ ! -d "reports/discord-bot" ]; then mkdir -p "reports/discord-bot"; fi; \
+	@if [ ! -d "reports/bot/discord-bot" ]; then mkdir -p "reports/bot/discord-bot"; fi; \
+    if [ ! -d "reports/bot/context" ]; then mkdir -p "reports/bot/context"; fi; \
+    if [ ! -d "reports/shared" ]; then mkdir -p "reports/shared"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build bot_discord_bot gradle :contexts:shared:test :contexts:bot:test :apps:bot:discord-bot:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v
 
 docker-auth-backend-test:
-	@if [ ! -d "reports/backend" ]; then mkdir -p "reports/backend"; fi; \
+	@if [ ! -d "reports/auth/backend" ]; then mkdir -p "reports/auth/backend"; fi; \
+    if [ ! -d "reports/auth/context" ]; then mkdir -p "reports/auth/context"; fi; \
+    if [ ! -d "reports/shared" ]; then mkdir -p "reports/shared"; fi; \
 	export COMPOSE_PROJECT_NAME="$$(basename $$(pwd))-test"; \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml run --build auth_backend gradle :contexts:shared:test :contexts:auth:test :apps:auth:backend:test && \
 	docker compose -f docker-compose.yml -f docker-compose.test.yml down -v

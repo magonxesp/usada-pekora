@@ -99,6 +99,10 @@ allprojects {
     tasks.test {
         useJUnitPlatform()
         setWorkingDir(System.getProperty("user.dir"))
+
+        testLogging {
+            showStandardStreams = true
+        }
     }
 
 }
