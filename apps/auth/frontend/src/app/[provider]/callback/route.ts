@@ -29,7 +29,8 @@ export async function GET(request: NextRequest, { params }: Params) {
     path: '/',
     httpOnly: false,
     expires: new Date(token.expiresAt),
-    maxAge: token.expiresAt
+    maxAge: token.expiresAt,
+    domain: process.env.NEXT_PUBLIC_SESSION_COOKIE_DOMAIN as string
   })
 
   return response
