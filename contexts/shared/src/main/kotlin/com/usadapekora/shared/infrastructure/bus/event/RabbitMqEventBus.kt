@@ -44,9 +44,7 @@ class RabbitMqEventBus : EventBus {
 
     override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
         var exception: Throwable? = null
-        val connection = ConnectionFactory()
-            .apply { setUri(rabbitMqUser) }
-            .newConnection()
+        val connection = RabbitMqConnectionFactory.getConnection()
 
         try {
             val channel = connection.createChannel()
@@ -60,8 +58,6 @@ class RabbitMqEventBus : EventBus {
         } catch (e: Throwable) {
             exception = e
         }
-
-        connection.close(500)
 
         if (exception != null) {
             throw exception

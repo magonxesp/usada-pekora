@@ -23,24 +23,6 @@ class RabbitMqEventConsumer(
     private val mapper = createJacksonObjectMapperInstance()
     private val consumers = mutableListOf<String>()
 
-    companion object {
-        private var connection: Connection? = null
-
-        fun getConnection(): Connection {
-            if (connection == null) {
-                val factory = ConnectionFactory()
-                factory.username = rabbitMqUser
-                factory.password = rabbitMqPassword
-                factory.host = rabbitMqHost
-                factory.port = rabbitMqPort.toInt()
-                factory.virtualHost = rabbitMqVirtualHost
-                connection = factory.newConnection()
-            }
-
-            return connection!!
-        }
-    }
-
     private fun saveConsumedEvent(event: Event, subscriberClass: KClass<*>) {
         eventConsumedRepository.save(
             EventConsumed.fromPrimitives(
@@ -133,7 +115,7 @@ class RabbitMqEventConsumer(
     }
 
     override fun consume(subscribers: EventSubscribers): Either<EventConsumerError, Unit> = Either.catch {
-        val connection = getConnection()
+        val connection = RabbitMqConnectionFactory.getConnection()
         val channel = connection.createChannel()
 
         subscribers

@@ -7,7 +7,9 @@ services:
       context: .
       dockerfile: apps/bot/backend/Dockerfile-test
     volumes:
-      - ./reports/backend:/test/apps/bot/backend/build/reports
+      - ./reports/bot/backend:/test/apps/bot/backend/build/reports
+      - ./reports/bot/context:/test/contexts/bot/build/reports
+      - ./reports/shared:/test/contexts/shared/build/reports
 
   auth_backend:
     restart: unless-stopped
@@ -15,7 +17,9 @@ services:
       context: .
       dockerfile: apps/auth/backend/Dockerfile-test
     volumes:
-      - ./reports/backend:/test/apps/auth/backend/build/reports
+      - ./reports/auth/backend:/test/apps/auth/backend/build/reports
+      - ./reports/auth/context:/test/contexts/auth/build/reports
+      - ./reports/shared:/test/contexts/shared/build/reports
 
   bot_discord_bot:
     build:
@@ -23,3 +27,4 @@ services:
       dockerfile: apps/bot/discord-bot/Dockerfile-test
     volumes:
       - ./reports/discord-bot:/test/apps/bot/discord-bot/build/reports
+      - ./reports/shared:/test/contexts/shared/build/reports
