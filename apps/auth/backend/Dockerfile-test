@@ -9,6 +9,6 @@ RUN apk upgrade --update-cache --available && \
     apk add openssl && \
     rm -rf /var/cache/apk/*
 
-RUN gradle clean :apps:auth:backend:build --no-daemon -x test && chmod -x apps/auth/backend/entrypoint.sh
+RUN gradle clean :apps:auth:backend:build --no-daemon -x test && chmod +x apps/auth/backend/entrypoint.sh
 
 ENTRYPOINT ["apps/auth/backend/entrypoint.sh"]
