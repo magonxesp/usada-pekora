@@ -20,7 +20,6 @@ services:
       - ./reports/auth/backend:/test/apps/auth/backend/build/reports
       - ./reports/auth/context:/test/contexts/auth/build/reports
       - ./reports/shared:/test/contexts/shared/build/reports
-      - ./ssl:/test/ssl
 
   bot_discord_bot:
     build:
