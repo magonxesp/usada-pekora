@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 val koinVersion = "3.2.0"
 
 plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     application
 }
 
@@ -15,4 +18,8 @@ dependencies {
 
 application {
     mainClass.set("com.usadapekora.bot.backend.MainKt")
+}
+
+tasks.withType<ShadowJar>() {
+    archiveBaseName.set("backend")
 }

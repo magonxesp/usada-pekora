@@ -1,128 +1,109 @@
 version: "3.9"
 
 services:
-  backend:
+  auth_backend:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: apps/auth/backend/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - shared_redis
+      - shared_mongodb
+      - shared_rabbitmq
+    volumes:
+      - ./ssl:/app/ssl
+    env_file:
+      - ./.env.docker
+
+  auth_frontend:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: apps/auth/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env.docker
+
+  bot_backend:
     restart: unless-stopped
     build:
       context: .
       dockerfile: apps/bot/backend/Dockerfile
     ports:
       - "8080:8080"
-    secrets:
-      - discord_bot_token
-      - mongodb_connection_url
-      - test_discord_channel_id
-      - test_discord_guild_id
     depends_on:
-      - redis
-      - mongodb
-      - rabbitmq
-    environment:
-      APP_ENV: local
-      DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
-      BACKEND_BASE_URL: http://localhost:8080
-      YOUTUBE_CHANNEL_ID: UC1DCedRgGHBdm81E1llLhOQ
-      MONGODB_URL_FILE: /run/secrets/mongodb_connection_url
-      MONGODB_DATABASE: usada_pekora
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      STORAGE_DIR_PATH: storage
-      TEST_DISCORD_CHANNEL_ID_FILE: /run/secrets/test_discord_channel_id
-      TEST_DISCORD_GUILD_ID_FILE: /run/secrets/test_discord_guild_id
+      - shared_redis
+      - shared_mongodb
+      - shared_rabbitmq
+    env_file:
+      - ./.env.docker
 
-  discord_bot:
+  bot_backend_consumer:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: apps/bot/backend/Dockerfile
+    command: ["java", "-jar", "backend.jar", "--consumer"]
+    depends_on:
+      - shared_redis
+      - shared_mongodb
+      - shared_rabbitmq
+    env_file:
+      - ./.env.docker
+
+  bot_discord_bot:
     build:
       context: .
       dockerfile: apps/bot/discord-bot/Dockerfile
     restart: unless-stopped
     ports:
-      - "8081:8081"
-    secrets:
-      - discord_bot_token
-      - mongodb_connection_url
-      - test_discord_channel_id
-      - test_discord_guild_id
+      - "8082:8082"
     depends_on:
-      - redis
-      - mongodb
-      - rabbitmq
-    environment:
-      APP_ENV: local
-      DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
-      BACKEND_BASE_URL: http://localhost:8080
-      YOUTUBE_CHANNEL_ID: UC1DCedRgGHBdm81E1llLhOQ
-      MONGODB_URL_FILE: /run/secrets/mongodb_connection_url
-      MONGODB_DATABASE: usada_pekora
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      STORAGE_DIR_PATH: storage
-      TEST_DISCORD_CHANNEL_ID_FILE: /run/secrets/test_discord_channel_id
-      TEST_DISCORD_GUILD_ID_FILE: /run/secrets/test_discord_guild_id
+      - shared_redis
+      - shared_mongodb
+      - shared_rabbitmq
+    env_file:
+      - ./.env.docker
 
-  frontend:
+  bot_frontend:
     restart: unless-stopped
     build:
       context: .
       dockerfile: apps/bot/frontend/Dockerfile
     ports:
-      - "3000:3000"
-    secrets:
-      - discord_client_id
-      - discord_client_secret
-    depends_on:
-      - backend
-    environment:
-      APP_ENV: local
-      DISCORD_CLIENT_ID_FILE: /run/secrets/discord_client_id
-      DISCORD_CLIENT_SECRET_FILE: /run/secrets/discord_client_secret
-      NEXTAUTH_URL: http://localhost:3000
-      NEXTAUTH_SECRET: secret
-      NEXT_PUBLIC_BACKEND_BASE_URL: http://localhost:8080
+      - "3001:3001"
+    env_file:
+      - ./.env.docker
 
-  mongodb:
+  shared_mongodb:
     image: mongo:4.2.22
     restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
       - mongodb:/data/db
-    secrets:
-      - mongodb_username
-      - mongodb_password
-    environment:
-      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/mongodb_username
-      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password
+    env_file:
+      - ./.env.infrastructure
 
-  redis:
+  shared_redis:
     image: redis:7.0.4
     restart: unless-stopped
     ports:
       - "6379:6379"
 
-  rabbitmq:
+  shared_rabbitmq:
     image: rabbitmq:3.12.0-management-alpine
     restart: unless-stopped
     ports:
       - "8000:15672"
       - "5672:5672"
-
-secrets:
-  discord_bot_token:
-    file: secrets/discord_bot_token.txt
-  discord_client_id:
-    file: secrets/discord_client_id.txt
-  discord_client_secret:
-    file: secrets/discord_client_secret.txt
-  test_discord_channel_id:
-    file: secrets/test_discord_channel_id.txt
-  test_discord_guild_id:
-    file: secrets/test_discord_guild_id.txt
-  mongodb_username:
-    file: secrets/mongodb_username.txt
-  mongodb_password:
-    file: secrets/mongodb_password.txt
-  mongodb_connection_url:
-    file: secrets/mongodb_connection_url.txt
+    volumes:
+      - ./etc/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    env_file:
+      - ./.env.infrastructure
 
 volumes:
   mongodb:

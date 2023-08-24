@@ -2,6 +2,7 @@
 .env
 .env.*
 !/.env.example
+!/.env.infrastructure.example
 !apps/bot/backend/.env.example
 !apps/bot/discord-bot/.env.example
 !apps/bot/frontend/.env.example

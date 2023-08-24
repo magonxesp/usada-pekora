@@ -1,4 +1,4 @@
-FROM gradle:7.5.0-jdk18-alpine AS build
+FROM gradle:7.5.0-jdk17-alpine AS build
 
 VOLUME "/build/.gradle"
 WORKDIR /build

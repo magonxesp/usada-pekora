@@ -2,15 +2,13 @@ package com.usadapekora.shared.infrastructure.bus.event
 
 import arrow.core.Either
 import com.rabbitmq.client.*
-import com.usadapekora.shared.EventSubscribers
+import com.usadapekora.shared.*
 import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.domain.bus.event.*
 import com.usadapekora.shared.domain.getAnnotation
 import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMapperInstance
-import com.usadapekora.shared.rabbitMqUrl
 import kotlinx.datetime.Clock
 import org.koin.java.KoinJavaComponent.inject
-import java.util.logging.Logger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 import kotlin.system.measureTimeMillis
@@ -29,9 +27,15 @@ class RabbitMqEventConsumer(
         private var connection: Connection? = null
 
         fun getConnection(): Connection {
-            connection = connection ?: ConnectionFactory()
-                .apply { setUri(rabbitMqUrl) }
-                .newConnection()
+            if (connection == null) {
+                val factory = ConnectionFactory()
+                factory.username = rabbitMqUser
+                factory.password = rabbitMqPassword
+                factory.host = rabbitMqHost
+                factory.port = rabbitMqPort.toInt()
+                factory.virtualHost = rabbitMqVirtualHost
+                connection = factory.newConnection()
+            }
 
             return connection!!
         }

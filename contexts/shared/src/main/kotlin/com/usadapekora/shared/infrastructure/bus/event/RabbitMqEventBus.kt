@@ -7,7 +7,7 @@ import com.usadapekora.shared.domain.bus.event.Event
 import com.usadapekora.shared.domain.bus.event.EventBus
 import com.usadapekora.shared.domain.bus.event.EventBusError
 import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMapperInstance
-import com.usadapekora.shared.rabbitMqUrl
+import com.usadapekora.shared.rabbitMqUser
 
 class RabbitMqEventBus : EventBus {
 
@@ -45,7 +45,7 @@ class RabbitMqEventBus : EventBus {
     override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
         var exception: Throwable? = null
         val connection = ConnectionFactory()
-            .apply { setUri(rabbitMqUrl) }
+            .apply { setUri(rabbitMqUser) }
             .newConnection()
 
         try {

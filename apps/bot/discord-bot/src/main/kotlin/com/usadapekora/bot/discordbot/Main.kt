@@ -12,7 +12,7 @@ import kotlinx.coroutines.reactor.mono
 fun main() {
     DefaultExports.initialize()
     enableDependencyInjection(modules = modules)
-    HTTPServer.Builder().withPort(8081).build()
+    HTTPServer.Builder().withPort(8082).build()
 
     DiscordClient.create(discordBotToken).withGateway {
         mono {

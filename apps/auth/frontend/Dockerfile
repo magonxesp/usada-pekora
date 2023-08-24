@@ -10,8 +10,8 @@ RUN npm install turbo --global
 
 COPY . .
 
-RUN pnpm install && chmod +x apps/bot/frontend/entrypoint.sh
+RUN pnpm install && chmod +x apps/auth/frontend/entrypoint.sh
 
-EXPOSE 3001
+EXPOSE 3000
 
-CMD ["apps/bot/frontend/entrypoint.sh"]
+CMD ["apps/auth/frontend/entrypoint.sh"]
