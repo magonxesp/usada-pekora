@@ -11,7 +11,7 @@ class Auth0JwkIssuerTest {
         val issuer = Auth0JwkIssuer(Clock.System)
         val result = issuer.issue()
 
-        assertNotNull(result.getOrNull())
+        assertNotNull(result.getOrNull(), result.leftOrNull()?.message)
     }
 
 }
