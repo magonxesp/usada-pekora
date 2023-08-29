@@ -48,6 +48,10 @@ export const TriggerAudioResponseFormGroup = forwardRef(
             setData({...data, content: file})
             validateSingle('content', file)
           }}
+          helpText={intl.$t({ id: 'input.file.help.intro' })}
+          allowedTypesText={intl.$t({ id: 'input.file.help.allowed_types' })}
+          changeText={intl.$t({ id: 'input.file.change' })}
+          deleteText={intl.$t({ id: 'input.file.delete' })}
         />
       </>
     )

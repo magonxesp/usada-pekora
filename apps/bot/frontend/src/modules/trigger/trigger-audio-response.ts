@@ -8,7 +8,7 @@ export type TriggerAudioResponse = {
 
 export interface TriggerAudioResponseFormData {
   id: string
-  content: File | null,
+  content: File | string | null,
 }
 
 export const emptyTriggerResponseAudioFormData = (): TriggerAudioResponseFormData => ({
@@ -17,8 +17,12 @@ export const emptyTriggerResponseAudioFormData = (): TriggerAudioResponseFormDat
 })
 
 export function triggerDefaultAudioResponseToFormData(audio: TriggerAudioResponse): TriggerAudioResponseFormData {
+  const audioFileName = audio.source.split(/\/|\\/).reverse()[0]
+
   return {
     id: audio.id,
-    content: new File([], audio.source.split(/\/|\\/).reverse()[0]),
+    content: (typeof File !== 'undefined') 
+      ? new File([], audioFileName)
+      : audioFileName,
   }
 }

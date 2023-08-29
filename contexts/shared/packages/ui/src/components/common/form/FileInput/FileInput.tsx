@@ -1,9 +1,8 @@
 import { Input, InputProps } from '../Input/Input'
 import styles from './FileInput.module.css'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useIntl } from 'react-intl'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
 import * as mimes from './FileInputMimeTypes.json'
 import { Button } from '../Button/Button'
@@ -72,15 +71,29 @@ export type MimeType = "text/html"
   | "video/x-msvideo"
   | "video/mp4"
 
-interface TextInputProps extends InputProps<File|null> {
+interface FileInputProps extends InputProps<File|string|null> {
   allowedMimeTypes?: MimeType[]
+  helpText?: string
+  allowedTypesText?: string
+  changeText?: string
+  deleteText?: string
 }
 
-export function FileInput({ label, help, error, defaultValue, onChange, allowedMimeTypes }: TextInputProps) {
+export function FileInput({ 
+  label, 
+  help, 
+  error, 
+  defaultValue,
+  onChange, 
+  allowedMimeTypes,
+  helpText,
+  allowedTypesText,
+  changeText,
+  deleteText
+}: FileInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dropping, setDropping] = useState(false)
   const [file, setFile] = useState(defaultValue ?? null)
-  const intl = useIntl()
 
   const extensions = (allowedMimeTypes ?? [])
     .map(mimeType => `.${mimes[mimeType][0]}`)
@@ -118,22 +131,22 @@ export function FileInput({ label, help, error, defaultValue, onChange, allowedM
           {(file) ? (
             <>
               <FontAwesomeIcon icon={faFile} />
-              <span>{file.name}</span>
+              <span>{(typeof File !== 'undefined' && file instanceof File) ? file.name : file as string}</span>
             </>
           ) : (
             <>
               <FontAwesomeIcon icon={faArrowUpFromBracket} />
               <span>
-                {intl.$t({ id: 'input.file.help.intro' })}
-                {(extensions != '') ? ` ${intl.$t({ id: 'input.file.help.allowed_types' })} ${extensions}` : ''}
+                {helpText ?? 'Select file or drop here'}
+                {(extensions != '') ? ` ${allowedTypesText ?? 'Allowed types:'} ${extensions}` : ''}
               </span>
             </>
           )}
         </div>
         {(file) ? (
           <div className={styles.actions}>
-            <Button onClick={() => inputRef.current?.click()}>{intl.$t({ id: 'input.file.change' })}</Button>
-            <Button style="danger" onClick={() => handleFile(null)}>{intl.$t({ id: 'input.file.delete' })}</Button>
+            <Button onClick={() => inputRef.current?.click()}>{changeText ?? 'Change'}</Button>
+            <Button style="danger" onClick={() => handleFile(null)}>{deleteText ?? 'Delete'}</Button>
           </div>
         ) : ''}
         <input
