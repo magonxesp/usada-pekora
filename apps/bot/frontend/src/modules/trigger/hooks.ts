@@ -129,7 +129,7 @@ export function useUpdateTrigger(actualTrigger: Trigger) {
     }
 
     if (data.responseAudio != null 
-      && data.responseAudio.content != null
+      && data.responseAudio.content instanceof File
       && data.responseAudio.content.size > 0
       && !actualTrigger.responseAudioId
     ) {
@@ -140,7 +140,7 @@ export function useUpdateTrigger(actualTrigger: Trigger) {
         file: data.responseAudio.content
       })
     } else if (data.responseAudio != null 
-      && data.responseAudio.content != null
+      && data.responseAudio.content instanceof File
       && data.responseAudio.content.size > 0
       && actualTrigger.responseAudioId != null
     ) {
