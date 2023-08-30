@@ -10,7 +10,11 @@ data class User(
     val providerId: UserProviderId,
     val provider: UserProvider
 ) : Entity() {
-    data class UserId(override val value: String) : UuidValueObject(value = value)
+    data class UserId(override val value: String) : UuidValueObject(value = value) {
+        init {
+            validate()
+        }
+    }
     data class UserAvatar(val value: String)
     data class UserName(val value: String)
     data class UserProviderId(val value: String)

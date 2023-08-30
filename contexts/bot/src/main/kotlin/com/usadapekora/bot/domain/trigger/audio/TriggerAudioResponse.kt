@@ -11,7 +11,11 @@ data class TriggerAudioResponse(
     enum class TriggerAudioResponseKind {
         FILE, RESOURCE
     }
-    data class TriggerAudioResponseId(override val value: String) : UuidValueObject(value)
+    data class TriggerAudioResponseId(override val value: String) : UuidValueObject(value) {
+        init {
+            validate()
+        }
+    }
     data class TriggerAudioResponseSource(val value: String)
 
     companion object {

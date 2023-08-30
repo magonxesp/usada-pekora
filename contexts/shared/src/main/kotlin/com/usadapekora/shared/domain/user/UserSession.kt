@@ -12,7 +12,11 @@ data class UserSession(
     val lastActiveAt: UserSessionLastActiveAt,
     val device: UserSessionDevice,
 ) : Entity() {
-    data class UserSessionId(override val value: String) : UuidValueObject(value = value)
+    data class UserSessionId(override val value: String) : UuidValueObject(value = value) {
+        init {
+            validate()
+        }
+    }
     enum class UserSessionState {
         OPEN, CLOSE
     }

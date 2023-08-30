@@ -7,7 +7,11 @@ class AuthenticatedUser(
     val avatarUrl: AuthenticatedUserAvatarUrl,
     val name: AuthenticatedUserName,
 ) {
-    data class AuthenticatedUserId(override val value: String?) : UuidValueObject(value)
+    data class AuthenticatedUserId(override val value: String?) : UuidValueObject(value) {
+        init {
+            validate()
+        }
+    }
     data class AuthenticatedUserAvatarUrl(val value: String)
     data class AuthenticatedUserName(val value: String)
 

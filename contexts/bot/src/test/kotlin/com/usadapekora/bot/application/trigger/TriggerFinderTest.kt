@@ -10,7 +10,6 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.*
 
 class TriggerFinderTest {
@@ -30,11 +29,11 @@ class TriggerFinderTest {
 
         every { repository.findByGuild(expected.guildId!!) } returns arrayOf(expected)
 
-        val actual = finder.findByInput("It's me pekora", expected.guildId!!.value)
+        val result = finder.findByInput("It's me pekora", expected.guildId!!.value)
 
         verify { repository.findByGuild(expected.guildId!!) }
 
-        assertEquals(TriggerResponse.fromEntity(expected), actual)
+        assertEquals(TriggerResponse.fromEntity(expected), result.getOrNull(), result.leftOrNull()?.message)
     }
 
     @Test
@@ -45,11 +44,11 @@ class TriggerFinderTest {
 
         every { repository.findByGuild(expected.guildId!!) } returns arrayOf(expected)
 
-        assertThrows<TriggerException.NotFound> {
-            finder.findByInput("It's me pekora", expected.guildId!!.value)
-        }
+        val result = finder.findByInput("It's me pekora", expected.guildId!!.value)
 
         verify { repository.findByGuild(expected.guildId!!) }
+
+        assertIs<TriggerException.NotFound>(result.leftOrNull())
     }
 
     @Test
@@ -61,11 +60,11 @@ class TriggerFinderTest {
 
         every { repository.findByGuild(expected.guildId!!) } returns arrayOf(expected)
 
-        val actual = finder.findByInput("jajajajajajaja", expected.guildId!!.value)
+        val result = finder.findByInput("jajajajajajaja", expected.guildId!!.value)
 
         verify { repository.findByGuild(expected.guildId!!) }
 
-        assertEquals(TriggerResponse.fromEntity(expected), actual)
+        assertEquals(TriggerResponse.fromEntity(expected), result.getOrNull(), result.leftOrNull()?.message)
     }
 
 
@@ -78,11 +77,11 @@ class TriggerFinderTest {
 
         every { repository.findByGuild(expected.guildId!!) } returns arrayOf(expected)
 
-        assertThrows<TriggerException.NotFound> {
-            finder.findByInput("jajajajajajaj", expected.guildId!!.value)
-        }
+        val result = finder.findByInput("jajajajajajaj", expected.guildId!!.value)
 
         verify { repository.findByGuild(expected.guildId!!) }
+
+        assertIs<TriggerException.NotFound>(result.leftOrNull())
     }
 
     @Test

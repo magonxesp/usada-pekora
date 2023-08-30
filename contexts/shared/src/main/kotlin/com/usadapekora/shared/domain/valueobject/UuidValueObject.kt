@@ -4,11 +4,7 @@ import com.usadapekora.shared.domain.exception.InvalidUuidException
 import java.util.*
 
 open class UuidValueObject(open val value: String?) {
-    init {
-        validate()
-    }
-
-    fun validate() {
+    protected fun validate() {
         try {
             if (value != null) {
                 UUID.fromString(value)

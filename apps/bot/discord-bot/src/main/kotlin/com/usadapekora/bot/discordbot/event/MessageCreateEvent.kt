@@ -3,12 +3,13 @@ package com.usadapekora.bot.discordbot.event
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerGuildCount
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerMessageRequest
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerProccesedMessageRequest
+import com.usadapekora.shared.domain.LoggerFactory
 import discord4j.core.event.domain.message.MessageCreateEvent
 import kotlinx.coroutines.reactor.awaitSingle
-import java.util.logging.Level
-import java.util.logging.Logger
+import org.koin.java.KoinJavaComponent
 
-private val logger = Logger.getLogger("com.pekorabot.discord.event.MessageCreateEvent")
+private val loggerFactory: LoggerFactory by KoinJavaComponent.inject(LoggerFactory::class.java)
+private val logger = loggerFactory.getLogger("com.pekorabot.discord.event.MessageCreateEvent")
 
 suspend fun MessageCreateEvent.beforeHandleMessage() {
     val author = message.author.get()
@@ -39,6 +40,6 @@ suspend fun MessageCreateEvent.handleEvents() {
         if (handleCommand()) return
         if (handleTrigger()) return
     } catch (exception: Exception) {
-        logger.log(Level.WARNING, "Failed handled events, exception ${exception::class} with message: ${exception.message}", exception)
+        logger.warning("Failed handled events, exception ${exception::class} with message: ${exception.message}", exception)
     }
 }

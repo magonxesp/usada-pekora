@@ -11,7 +11,11 @@ data class EventProcessed(
     val consumedOn: EventProcessedConsumedOn,
     val timeElapsedMilliseconds: EventProcessedEventTimeElapsedMilliseconds
 ) : Entity() {
-    data class EventProcessedId(override val value: String) : UuidValueObject(value = value)
+    data class EventProcessedId(override val value: String) : UuidValueObject(value = value) {
+        init {
+            validate()
+        }
+    }
     data class EventProcessedName(val value: String)
     data class EventProcessedConsumedBy(val value: String)
     data class EventProcessedConsumedOn(val value: Instant)

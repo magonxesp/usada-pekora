@@ -13,9 +13,10 @@ class TriggerFinder(
     private val repository: TriggerRepository,
     private val matcher: TriggerMatcher
 ) {
-    fun findByInput(input: String, guildId: String): TriggerResponse {
+    fun findByInput(input: String, guildId: String): Either<TriggerException.NotFound, TriggerResponse> {
         val triggers = repository.findByGuild(Guild.GuildId(guildId))
-        return TriggerResponse.fromEntity(matcher.matchInput(input, triggers) ?: throw TriggerException.NotFound())
+        val matchingTrigger = matcher.matchInput(input, triggers) ?: return TriggerException.NotFound("Trigger not found for input $input").left()
+        return TriggerResponse.fromEntity(matchingTrigger).right()
     }
 
     fun find(id: String): Either<TriggerException, TriggerResponse> {

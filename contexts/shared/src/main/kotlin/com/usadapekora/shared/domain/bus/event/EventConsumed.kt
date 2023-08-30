@@ -7,7 +7,11 @@ data class EventConsumed(
     val id: EventConsumedId,
     val consumedBy: EventConsumedBy,
 ) : Entity() {
-    data class EventConsumedId(override val value: String) : UuidValueObject(value = value)
+    data class EventConsumedId(override val value: String) : UuidValueObject(value = value) {
+        init {
+            validate()
+        }
+    }
     data class EventConsumedBy(val value: String)
 
     companion object {

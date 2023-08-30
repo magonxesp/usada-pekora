@@ -10,7 +10,11 @@ data class Guild(
     val providerId: GuildProviderId,
     val provider: GuildProvider
 ) : Entity() {
-    data class GuildId(override val value: String) : UuidValueObject(value = value)
+    data class GuildId(override val value: String) : UuidValueObject(value = value) {
+        init {
+            validate()
+        }
+    }
     data class GuildName(val value: String)
     data class GuildIconUrl(val value: String)
     data class GuildProviderId(val value: String)

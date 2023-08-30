@@ -7,10 +7,10 @@ import com.usadapekora.bot.discordbot.shared.CommandArgument
 import com.usadapekora.bot.discordbot.shared.CommandHandler
 import com.usadapekora.bot.discordbot.shared.annotation.Command
 import com.usadapekora.bot.domain.guild.GuildPreferences
+import com.usadapekora.shared.domain.LoggerFactory
 import discord4j.core.`object`.entity.Message
 import kotlinx.coroutines.reactor.awaitSingle
 import org.koin.java.KoinJavaComponent.inject
-import java.util.logging.Logger
 
 @Command(
     command = "feed",
@@ -18,7 +18,8 @@ import java.util.logging.Logger
 )
 class FeedCommand : CommandHandler() {
 
-    private val logger = Logger.getLogger(FeedCommand::class.toString())
+    private val loggerFactory: LoggerFactory by inject(LoggerFactory::class.java)
+    private val logger = loggerFactory.getLogger(FeedCommand::class)
     private val creator: GuildPreferenceCreator by inject(GuildPreferenceCreator::class.java)
     private val deleter: GuildPreferenceDeleter by inject(GuildPreferenceDeleter::class.java)
     private val finder: GuildPreferencesFinder by inject(GuildPreferencesFinder::class.java)
@@ -44,7 +45,7 @@ class FeedCommand : CommandHandler() {
 
         val feedChannelId = finder.find(guildId).let {
             if (it.isLeft()) {
-                logger.info(it.leftOrNull()!!.message)
+                logger.info(it.leftOrNull()!!.message ?: "")
                 return
             }
 

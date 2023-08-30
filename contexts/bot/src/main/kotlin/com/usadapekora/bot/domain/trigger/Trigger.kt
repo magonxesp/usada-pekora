@@ -16,7 +16,11 @@ data class Trigger(
     var responseAudio: TriggerAudioResponseId?,
     var guildId: Guild.GuildId?
 ) : Entity() {
-    data class TriggerId(override val value: String) : UuidValueObject(value)
+    data class TriggerId(override val value: String) : UuidValueObject(value) {
+        init {
+            validate()
+        }
+    }
 
     data class TriggerTitle(val value: String) {
         init {

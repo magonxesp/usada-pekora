@@ -6,15 +6,16 @@ import com.usadapekora.bot.discordbot.shared.CommandHandler
 import com.usadapekora.bot.discordbot.shared.annotation.Command
 import com.usadapekora.bot.discordbot.shared.exception.CommandException
 import com.usadapekora.bot.infraestructure.trigger.prometheus.registerCommandFired
+import com.usadapekora.shared.domain.LoggerFactory
 import discord4j.core.event.domain.message.MessageCreateEvent
 import kotlinx.coroutines.reactor.awaitSingle
-import java.util.logging.Level
-import java.util.logging.Logger
+import org.koin.java.KoinJavaComponent
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.full.createInstance
 
-private val logger = Logger.getLogger("com.pekorabot.discord.event.HandleCommandKt")
+private val loggerFactory: LoggerFactory by KoinJavaComponent.inject(LoggerFactory::class.java)
+private val logger = loggerFactory.getLogger("com.pekorabot.discord.event.HandleCommandKt")
 
 fun commandString(commandInfo: Command) = "$defaultCommandPrefix${commandInfo.command}"
 
@@ -77,7 +78,7 @@ suspend fun MessageCreateEvent.handleCommand(): Boolean {
             commandInstance.handle(message = message, args = args)
             registerCommandFired()
         } catch (exception: Exception) {
-            logger.log(Level.WARNING, exception.message, exception)
+            logger.warning(exception.message ?: "", exception)
             continue
         }
     }
