@@ -5,4 +5,4 @@ WORKDIR /build
 
 COPY . .
 
-RUN gradle clean :app:discord-bot:build --no-daemon -x test
+RUN gradle clean :apps:bot:discord-bot:build --no-daemon -x test
