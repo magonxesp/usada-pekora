@@ -16,7 +16,13 @@ export type RequestConfig = {
 type NextServerRequest = IncomingMessage & { cookies: NextApiRequestCookies }
 
 export function backendUrl(url: string) {
-  return `${process.env.NEXT_PUBLIC_BOT_BACKEND_BASE_URL}${url}`
+  let baseUrl = process.env.NEXT_PUBLIC_BOT_BACKEND_BASE_URL
+
+  if (typeof window === 'undefined' && process.env.BOT_BACKEND_INTERNAL_BASE_URL) {
+    baseUrl =  process.env.BOT_BACKEND_INTERNAL_BASE_URL
+  }
+
+  return `${baseUrl}${url}`
 }
 
 export function defaultHeaders(extraHeaders: Headers = {}): HeadersInit {
@@ -57,6 +63,7 @@ export async function request<T>(method: string, url: string, config?: Partial<R
     credentials: "include"
   }
 
+  console.log(`Attempting to fetch url ${fullUrl}`)
   const response = await fetch(fullUrl, requestConfig)
 
   if (response.status === 200) {

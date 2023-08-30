@@ -57,6 +57,7 @@ export const TriggerEntityFormGroup = forwardRef(
             value,
             label: intl.$t({id: `trigger.form.compare.option.${name}`})
           }))}
+          defaultValue={props.data?.compare}
           onChange={(value) => {
             setData({...data, compare: String(value)})
             validateSingle('compare', value)
