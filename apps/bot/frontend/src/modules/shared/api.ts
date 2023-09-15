@@ -14,6 +14,7 @@ export type RequestConfig = {
 }
 
 type NextServerRequest = IncomingMessage & { cookies: NextApiRequestCookies }
+export class UnauthorizedError extends Error {}
 
 export function backendUrl(url: string) {
   let baseUrl = process.env.NEXT_PUBLIC_BOT_BACKEND_BASE_URL
@@ -70,12 +71,17 @@ export async function request<T>(method: string, url: string, config?: Partial<R
     try {
       return await response.json() as T
     } catch (exception) {
-      console.log(exception)
+      console.warn(exception)
     }
   }
 
+  if (response.status === 401) {
+    console.warn(`Request to backend api ${fullUrl} respond with Unauthorized status`)
+    return null
+  }
+
   if (!response.ok) {
-    const errorMessage = `Request to backend api ${fullUrl} respond error with body: ${await response.text()}`
+    const errorMessage = `Request to backend api ${fullUrl} respond error with status code ${response.status} and body: ${await response.text()}`
     throw Error(errorMessage)
   }
 
