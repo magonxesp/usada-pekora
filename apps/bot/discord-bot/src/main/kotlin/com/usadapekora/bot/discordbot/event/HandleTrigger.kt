@@ -30,6 +30,12 @@ private val logger = loggerFactory.getLogger("com.usadapekora.bot.discordbot.eve
 fun prepareAudioSource(source: String, kind: String): String = when (kind.uppercase()) {
     TriggerAudioResponse.TriggerAudioResponseKind.RESOURCE.name -> {
         val stream = object {}::class.java.getResourceAsStream(source)!!
+        val cacheDirectory = Path(storageDirPath, "cache").toAbsolutePath()
+
+        if (Files.notExists(cacheDirectory)) {
+            Files.createDirectory(cacheDirectory)
+        }
+
         val destination = Path(storageDirPath, "cache", File(source).name).toAbsolutePath()
 
         if (!destination.toFile().exists()) {
