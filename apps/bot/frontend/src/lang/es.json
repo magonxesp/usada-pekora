@@ -1,4 +1,7 @@
 {
+  "index.page.title": "Usada pekora",
+  "trigger.edit.page.title": "Usada pekora | Editar disparador",
+  "trigger.create.page.title": "Usada pekora | Crear disparador",
   "trigger.guild_list.title": "Disparadores",
   "trigger.guild_list.empty": "Esto esta vacio y lo sabes",
   "trigger.guild_list.add": "Añadir",

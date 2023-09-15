@@ -8,6 +8,7 @@ import { triggerToFormData } from '../../../modules/trigger/form'
 import { useUpdateTrigger } from '../../../modules/trigger/hooks'
 import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/api'
 import { authorization } from '../../../modules/shared/api'
+import Head from 'next/head'
 
 export const getServerSideProps: GetServerSideProps<{ trigger: Trigger }> = async (context) => {
   const { id } = context.query
@@ -39,6 +40,9 @@ const TriggerEdit = ({ trigger }: InferGetServerSidePropsType<typeof getServerSi
 
   return (
     <>
+      <Head>
+        <title>{intl.$t({ id: 'trigger.edit.page.title' })}</title>
+      </Head>
       <GuildTriggersView />
       <TriggerFormSidebar
         title={intl.$t({ id: 'trigger.form.sidebar.edit.title' })}

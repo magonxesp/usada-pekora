@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import TriggerFormSidebar from '../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
 import { useCreateTrigger } from '../../modules/trigger/hooks'
+import Head from 'next/head'
 
 const NewTrigger: NextPage = () => {
   const router = useRouter()
@@ -16,6 +17,9 @@ const NewTrigger: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>{intl.$t({ id: 'trigger.create.page.title' })}</title>
+      </Head>
       <GuildTriggersView />
       <TriggerFormSidebar
         title={intl.$t({ id: 'trigger.form.sidebar.create.title' })}
