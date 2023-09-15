@@ -105,4 +105,8 @@ allprojects {
         }
     }
 
+    tasks.withType<JavaExec> {
+        System.getProperty("user.dir")?.also { workingDir = file(it) }
+    }
+
 }
