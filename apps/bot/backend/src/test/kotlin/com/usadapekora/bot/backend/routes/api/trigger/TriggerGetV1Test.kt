@@ -8,7 +8,6 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import java.util.*
-import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -77,7 +76,7 @@ class TriggerGetV1Test : TriggerTest() {
     @Test
     fun `should find a triggers by discord guild id`() = withTestApplication{
         val id = UUID.randomUUID().toString()
-        val guildId = Random.nextLong(100000000, 999999999).toString()
+        val guildId = UUID.randomUUID().toString()
         val audioId = UUID.randomUUID().toString()
 
         createAudioDummy(id = audioId)
@@ -110,7 +109,7 @@ class TriggerGetV1Test : TriggerTest() {
 
     @Test
     fun `should not find a triggers by discord guild id`() = withTestApplication {
-        val guildId = Random.nextLong(100000000, 999999999).toString()
+        val guildId = UUID.randomUUID().toString()
         val expectedBody = """
             {
                 "triggers": []

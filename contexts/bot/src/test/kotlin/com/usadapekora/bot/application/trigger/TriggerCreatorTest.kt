@@ -4,14 +4,9 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.trigger.create.TriggerCreateRequest
 import com.usadapekora.bot.application.trigger.create.TriggerCreator
-import com.usadapekora.bot.domain.trigger.TriggerException
-import com.usadapekora.bot.domain.trigger.TriggerKind
-import com.usadapekora.bot.domain.trigger.TriggerMother
-import com.usadapekora.bot.domain.trigger.TriggerRepository
+import com.usadapekora.bot.domain.trigger.*
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseException
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
-import com.usadapekora.bot.domain.trigger.TriggerAudioResponseMother
-import com.usadapekora.bot.domain.trigger.TriggerTextResponseMother
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseException
 import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import io.mockk.every
@@ -19,6 +14,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 class TriggerCreatorTest {
@@ -78,7 +74,7 @@ class TriggerCreatorTest {
             responseAudioId = trigger.responseAudio?.value,
         ))
 
-        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
+        assertIs<TriggerException.MissingResponse>(result.leftOrNull(), result.leftOrNull()?.message)
 
         verify { audioResponseRepository.find(audioResponse.id) }
         verify { textResponseRepository.find(textResponse.id) }
@@ -157,7 +153,7 @@ class TriggerCreatorTest {
             responseAudioId = null,
         ))
 
-        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
+        assertIs<TriggerException.MissingResponse>(result.leftOrNull(), result.leftOrNull()?.message)
 
         verify(inverse = true) { repository.save(trigger) }
     }
@@ -183,7 +179,7 @@ class TriggerCreatorTest {
             responseAudioId = trigger.responseAudio?.value,
         ))
 
-        assertTrue(result.leftOrNull() is TriggerException.MissingResponse)
+        assertIs<TriggerException.MissingResponse>(result.leftOrNull(), result.leftOrNull()?.message)
 
         verify(inverse = true) { repository.save(trigger) }
     }

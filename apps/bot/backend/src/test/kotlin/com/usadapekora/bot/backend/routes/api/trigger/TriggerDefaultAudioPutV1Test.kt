@@ -20,7 +20,7 @@ class TriggerDefaultAudioPutV1Test : TriggerTest() {
             setBody(MultiPartFormDataContent(
                 formData {
                     append("triggerId", UUID.randomUUID().toString())
-                    append("guildId", "94101459")
+                    append("guildId", UUID.randomUUID().toString())
                     append(
                         key = "file",
                         value = readResource("/assets_audio_Its_me_pekora.mp3"),

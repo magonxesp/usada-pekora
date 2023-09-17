@@ -39,7 +39,7 @@ class TriggerCreator(
                 guildId = request.guildId
             )
         }
-        .mapLeft { it as TriggerException }
+        .mapLeft { if (it !is TriggerException) TriggerException.FailedToCreate(it.message) else it }
         .onLeft { return it.left() }
         .getOrNull()!!
 

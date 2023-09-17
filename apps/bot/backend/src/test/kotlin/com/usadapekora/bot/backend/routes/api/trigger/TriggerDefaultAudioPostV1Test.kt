@@ -19,7 +19,7 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
                 formData {
                     append("id", UUID.randomUUID().toString())
                     append("triggerId", UUID.randomUUID().toString())
-                    append("guildId", "94101459")
+                    append("guildId", UUID.randomUUID().toString())
                     append(
                         key = "file",
                         value = readResource("/assets_audio_Its_me_pekora.mp3"),
@@ -47,7 +47,7 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
                 formData {
                     append("id", audioId)
                     append("triggerId", triggerId)
-                    append("guildId", "94101459")
+                    append("guildId", UUID.randomUUID().toString())
                     append(
                         key = "file",
                         value = readResource("/assets_audio_Its_me_pekora.mp3"),
@@ -69,7 +69,7 @@ class TriggerDefaultAudioPostV1Test : HttpTestCase() {
                 formData {
                     append("id", audioId)
                     append("triggerId", triggerId)
-                    append("guildId", "94101459")
+                    append("guildId", UUID.randomUUID().toString())
                     append(
                         key = "file",
                         value = readResource("/assets_audio_Its_me_pekora.mp3"),
