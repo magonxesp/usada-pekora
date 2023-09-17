@@ -15,4 +15,4 @@ COPY --from=build /build/apps/auth/backend/build/libs/backend-all.jar backend.ja
 
 EXPOSE 8081
 
-CMD ["java", "-jar", "backend.jar", "--add-opens java.base/jdk.internal.misc=ALL-UNNAMED", "-Dio.netty.tryReflectionSetAccessible=true"]
+CMD ["java", "-jar", "backend.jar"]
