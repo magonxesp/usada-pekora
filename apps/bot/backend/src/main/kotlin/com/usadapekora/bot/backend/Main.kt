@@ -9,9 +9,15 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.metrics.micrometer.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import io.prometheus.client.hotspot.DefaultExports
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
@@ -35,6 +41,8 @@ fun main(args: Array<String>) {
 val ApplicationEnvironment.testMode: Boolean
     get() = (config.propertyOrNull("ktor.environment")?.getString() ?: "prod") == "test"
 
+val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+
 fun Application.module() {
     install(ContentNegotiation) {
         json()
@@ -53,6 +61,15 @@ fun Application.module() {
         allowCredentials = true
         allowNonSimpleContentTypes = true
         anyHost()
+    }
+
+    install(MicrometerMetrics) {
+        registry = appMicrometerRegistry
+        meterBinders = listOf(
+            JvmMemoryMetrics(),
+            JvmGcMetrics(),
+            ProcessorMetrics()
+        )
     }
 
     authentication {

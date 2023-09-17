@@ -15,5 +15,6 @@ fun Application.configureRoutes() {
         triggerDefaultAudioV1()
         triggerTextV1()
         userV1()
+        prometheus()
     }
 }

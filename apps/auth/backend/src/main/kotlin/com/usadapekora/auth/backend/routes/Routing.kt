@@ -9,5 +9,6 @@ fun Application.configureRoutes() {
         wellKnown()
         oauthRoutes()
         authorizationProviderRoutesV1()
+        prometheus()
     }
 }

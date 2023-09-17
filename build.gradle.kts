@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val koinVersion = "3.2.0"
 val ktorVersion = "2.3.0"
+val prometheusVersion = "1.11.4"
 
 plugins {
     kotlin("jvm") version "1.8.20"
@@ -41,6 +42,8 @@ allprojects {
             "io.ktor:ktor-server-auth:$ktorVersion",
             "io.ktor:ktor-server-auth-jwt:$ktorVersion",
             "io.ktor:ktor-serialization-kotlinx-json:$ktorVersion",
+            "io.ktor:ktor-server-metrics-micrometer:$ktorVersion",
+            "io.micrometer:micrometer-registry-prometheus:$prometheusVersion",
             "org.litote.kmongo:kmongo:4.9.0",
             "io.projectreactor.kotlin:reactor-kotlin-extensions",
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4",
