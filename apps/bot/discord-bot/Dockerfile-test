@@ -1,8 +1,14 @@
-FROM gradle:7.5.0-jdk17-alpine AS build
+FROM gradle:8.3.0-jdk17-alpine AS build
 
 VOLUME "/build/.gradle"
 WORKDIR /build
 
+RUN apk update && \
+    apk add zip msmtp mutt curl
+
 COPY . .
 
 RUN gradle clean :apps:bot:discord-bot:build --no-daemon -x test
+RUN chmod +x apps/bot/discord-bot/test-entrypoint.sh
+
+ENTRYPOINT ["apps/bot/discord-bot/test-entrypoint.sh"]
