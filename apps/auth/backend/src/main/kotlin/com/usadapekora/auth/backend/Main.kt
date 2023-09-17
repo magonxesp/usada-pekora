@@ -12,6 +12,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
@@ -45,7 +46,8 @@ fun Application.module() {
         meterBinders = listOf(
             JvmMemoryMetrics(),
             JvmGcMetrics(),
-            ProcessorMetrics()
+            ProcessorMetrics(),
+            JvmThreadMetrics()
         )
     }
 
