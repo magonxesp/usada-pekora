@@ -15,7 +15,8 @@ import kotlin.test.*
 class TriggerFinderTest {
 
     private val repository = mockk<TriggerRepository>()
-    private val finder = TriggerFinder(repository, TriggerMatcher())
+    private val monitoring = mockk<TriggerMonitoring>(relaxUnitFun = true)
+    private val finder = TriggerFinder(repository, TriggerMatcher(), monitoring)
 
     @BeforeTest
     fun resetMocks() = clearAllMocks()
@@ -31,6 +32,7 @@ class TriggerFinderTest {
 
         val result = finder.findByInput("It's me pekora", expected.guildId!!.value)
 
+        verify { monitoring.triggerInputMatched() }
         verify { repository.findByGuild(expected.guildId!!) }
 
         assertEquals(TriggerResponse.fromEntity(expected), result.getOrNull(), result.leftOrNull()?.message)
@@ -46,6 +48,7 @@ class TriggerFinderTest {
 
         val result = finder.findByInput("It's me pekora", expected.guildId!!.value)
 
+        verify { monitoring.triggerInputNotMatched() }
         verify { repository.findByGuild(expected.guildId!!) }
 
         assertIs<TriggerException.NotFound>(result.leftOrNull())

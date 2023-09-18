@@ -28,6 +28,7 @@ import com.usadapekora.bot.application.video.VideoFeedSubscriber
 import com.usadapekora.bot.domain.guild.*
 import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.TriggerMatcher
+import com.usadapekora.bot.domain.trigger.TriggerMonitoring
 import com.usadapekora.bot.domain.trigger.TriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.BuiltInTriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponseRepository
@@ -36,11 +37,13 @@ import com.usadapekora.bot.domain.trigger.text.TriggerTextResponseRepository
 import com.usadapekora.bot.domain.video.ChannelSubscriber
 import com.usadapekora.bot.domain.video.FeedParser
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
+import com.usadapekora.bot.domain.video.VideoMonitoring
 import com.usadapekora.bot.infraestructure.guild.koin.KoinGuildProviderRepositoryFactory
 import com.usadapekora.bot.infraestructure.guild.persistence.discord.DiscordGuildProviderRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildPreferencesRepository
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildRepository
+import com.usadapekora.bot.infraestructure.trigger.monitoring.MicrometerTriggerMonitoring
 import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerAudioRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.json.JsonResourceBuiltInTriggerTextRepository
@@ -48,6 +51,7 @@ import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTr
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerRepository
 import com.usadapekora.bot.infraestructure.trigger.persistence.mongodb.MongoDbTriggerTextRepository
 import com.usadapekora.bot.infraestructure.video.discord.DiscordTextChannelVideoNotifier
+import com.usadapekora.bot.infraestructure.video.monitoring.MicrometerVideoMonitoring
 import com.usadapekora.bot.infraestructure.video.youtube.YoutubeFeedSubscriber
 import com.usadapekora.bot.infraestructure.video.youtube.YoutubeVideoParser
 import com.usadapekora.shared.domain.KeyValueRepository
@@ -75,9 +79,10 @@ val triggerModule = module {
     single { JsonResourceBuiltInTriggerRepository() } bind BuiltInTriggerRepository::class
     single { JsonResourceBuiltInTriggerTextRepository() } bind BuiltInTriggerTextResponseRepository::class
     single { JsonResourceBuiltInTriggerAudioRepository() } bind BuiltInTriggerAudioResponseRepository::class
+    single { MicrometerTriggerMonitoring() } bind TriggerMonitoring::class
     single { CreateTriggerOnGuildCreate(get(), get(), get(), get(), get(), get()) }
     single { TriggerMatcher() }
-    single { TriggerFinder(get(), get()) }
+    single { TriggerFinder(get(), get(), get()) }
     single { TriggerCreator(get(), get(), get()) }
     single { TriggerDeleter(get()) }
     single { TriggerUpdater(get(), get(), get()) }
@@ -112,9 +117,10 @@ val videoModule = module {
     single { DiscordTextChannelVideoNotifier(get()) } bind VideoFeedNotifier::class
     single { YoutubeVideoParser() } bind FeedParser::class
     single { YoutubeFeedSubscriber() } bind ChannelSubscriber::class
+    single { MicrometerVideoMonitoring() } bind VideoMonitoring::class
     single { VideoFeedParser(get()) }
     single { VideoFeedSubscriber(get()) }
-    single { SendVideoFeed(get()) }
+    single { SendVideoFeed(get(), get()) }
 }
 
 val modules = listOf(

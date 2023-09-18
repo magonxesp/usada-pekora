@@ -2,7 +2,6 @@ package com.usadapekora.bot.infraestructure.video.discord
 
 import com.usadapekora.bot.domain.video.Video
 import com.usadapekora.bot.domain.video.VideoFeedNotifier
-import com.usadapekora.bot.infraestructure.trigger.prometheus.registerVideoNotification
 import com.usadapekora.shared.discordBotToken
 import com.usadapekora.shared.domain.KeyValueRepository
 import discord4j.common.util.Snowflake
@@ -35,7 +34,5 @@ class DiscordTextChannelVideoNotifier(private val cache: KeyValueRepository) : V
             channel.getRestMessage(Snowflake.of(messageId)).edit(request).awaitSingle()
             logger.info("Notification message with id $messageId edited on channel id $target")
         }
-
-        registerVideoNotification()
     }
 }

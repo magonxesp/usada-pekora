@@ -1,8 +1,8 @@
 package com.usadapekora.bot.discordbot.event
 
-import com.usadapekora.bot.infraestructure.trigger.prometheus.registerGuildCount
-import com.usadapekora.bot.infraestructure.trigger.prometheus.registerMessageRequest
-import com.usadapekora.bot.infraestructure.trigger.prometheus.registerProccesedMessageRequest
+import com.usadapekora.bot.discordbot.registerDiscordGuildCount
+import com.usadapekora.bot.discordbot.registerProcessedMessage
+import com.usadapekora.bot.discordbot.registerReceivedMessage
 import com.usadapekora.shared.domain.LoggerFactory
 import discord4j.core.event.domain.message.MessageCreateEvent
 import kotlinx.coroutines.reactor.awaitSingle
@@ -16,13 +16,13 @@ suspend fun MessageCreateEvent.beforeHandleMessage() {
     val guild = message.guild.awaitSingle()
 
     logger.info("Message received from discord by ${author.username} on guild ${guild.name} (${guild.id.asString()}); message id ${message.id.asString()}")
-    registerMessageRequest()
-    registerGuildCount(client.guilds.count().awaitSingle())
+    registerReceivedMessage()
+    registerDiscordGuildCount(client.guilds.count().awaitSingle()) // TODO: use new registry
 }
 
 fun MessageCreateEvent.afterHandleMessage() {
     logger.info("Handling message events for message id ${message.id.asString()}")
-    registerProccesedMessageRequest()
+    registerProcessedMessage()
 }
 
 suspend fun MessageCreateEvent.handleEvents() {

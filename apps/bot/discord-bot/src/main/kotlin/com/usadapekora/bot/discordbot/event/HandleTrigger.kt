@@ -6,8 +6,8 @@ import com.usadapekora.bot.application.trigger.find.audio.TriggerAudioResponseFi
 import com.usadapekora.bot.application.trigger.find.text.TriggerTextResponseFinder
 import com.usadapekora.bot.discordbot.voice.playAudioOnSenderVoiceChannel
 import com.usadapekora.bot.domain.guild.GuildProvider
+import com.usadapekora.bot.domain.trigger.TriggerMonitoring
 import com.usadapekora.bot.domain.trigger.audio.TriggerAudioResponse
-import com.usadapekora.bot.infraestructure.trigger.prometheus.registerTriggerFired
 import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.storageDirPath
 import discord4j.core.event.domain.message.MessageCreateEvent
@@ -22,6 +22,7 @@ private val guildFinder: GuildFinder by inject(GuildFinder::class.java)
 private val triggerTextResponseFinder: TriggerTextResponseFinder by inject(TriggerTextResponseFinder::class.java)
 private val triggerAudioResponseFinder: TriggerAudioResponseFinder by inject(TriggerAudioResponseFinder::class.java)
 private val loggerFactory: LoggerFactory by inject(LoggerFactory::class.java)
+private val monitoring: TriggerMonitoring by inject(TriggerMonitoring::class.java)
 private val logger = loggerFactory.getLogger("com.usadapekora.bot.discordbot.event.HandleTriggerKt")
 
 /**
@@ -64,6 +65,7 @@ suspend fun MessageCreateEvent.handleTrigger(): Boolean {
         triggerTextResponseFinder.find(trigger.responseTextId!!).onLeft {
             logger.warning(it.message ?: "Not found trigger text response with id ${trigger.responseTextId}")
         }.onRight {
+            monitoring.triggerTextResponseSent()
             channel.createMessage(it.content).awaitSingle()
         }
     }
@@ -72,11 +74,11 @@ suspend fun MessageCreateEvent.handleTrigger(): Boolean {
         triggerAudioResponseFinder.find(trigger.responseAudioId!!).onLeft {
             logger.warning(it.message ?: "Not found trigger audio response with id ${trigger.responseAudioId}")
         }.onRight {
+            monitoring.triggerAudioResponseSent()
             val preparedSource = prepareAudioSource(it.source, it.kind)
             playAudioOnSenderVoiceChannel(preparedSource)
         }
     }
 
-    registerTriggerFired()
     return true
 }

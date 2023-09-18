@@ -4,22 +4,15 @@ import com.usadapekora.bot.backend.routes.configureRoutes
 import com.usadapekora.bot.modules
 import com.usadapekora.shared.enableDependencyInjection
 import com.usadapekora.shared.infrastructure.ktor.defaultConfiguration
+import com.usadapekora.shared.infrastructure.monitoring.MicrometerMonitoring.installMicrometer
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
-import io.ktor.server.metrics.micrometer.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
-import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
-import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
-import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
-import io.micrometer.core.instrument.binder.system.ProcessorMetrics
-import io.micrometer.prometheus.PrometheusConfig
-import io.micrometer.prometheus.PrometheusMeterRegistry
-import io.prometheus.client.hotspot.DefaultExports
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.coroutines.launch
@@ -27,7 +20,6 @@ import kotlinx.coroutines.launch
 fun main(args: Array<String>) {
     val parser = ArgParser("usadapekora-bot-backend")
     enableDependencyInjection(modules = modules)
-    DefaultExports.initialize()
 
     val consumer by parser.option(ArgType.Boolean, "consumer", "c", "Start the backend as consumer mode")
     parser.parse(args)
@@ -41,8 +33,6 @@ fun main(args: Array<String>) {
 
 val ApplicationEnvironment.testMode: Boolean
     get() = (config.propertyOrNull("ktor.environment")?.getString() ?: "prod") == "test"
-
-val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
 
 fun Application.module() {
     install(ContentNegotiation) {
@@ -64,15 +54,7 @@ fun Application.module() {
         anyHost()
     }
 
-    install(MicrometerMetrics) {
-        registry = appMicrometerRegistry
-        meterBinders = listOf(
-            JvmMemoryMetrics(),
-            JvmGcMetrics(),
-            ProcessorMetrics(),
-            JvmThreadMetrics(),
-        )
-    }
+    installMicrometer()
 
     authentication {
         jwt {

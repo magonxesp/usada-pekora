@@ -4,18 +4,23 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.trigger.Trigger
-import com.usadapekora.bot.domain.trigger.TriggerException
-import com.usadapekora.bot.domain.trigger.TriggerMatcher
-import com.usadapekora.bot.domain.trigger.TriggerRepository
+import com.usadapekora.bot.domain.trigger.*
 
 class TriggerFinder(
     private val repository: TriggerRepository,
-    private val matcher: TriggerMatcher
+    private val matcher: TriggerMatcher,
+    private val triggerMonitoring: TriggerMonitoring
 ) {
     fun findByInput(input: String, guildId: String): Either<TriggerException.NotFound, TriggerResponse> {
         val triggers = repository.findByGuild(Guild.GuildId(guildId))
-        val matchingTrigger = matcher.matchInput(input, triggers) ?: return TriggerException.NotFound("Trigger not found for input $input").left()
+        val matchingTrigger = matcher.matchInput(input, triggers)
+
+        if (matchingTrigger == null) {
+            triggerMonitoring.triggerInputNotMatched()
+            return TriggerException.NotFound("Trigger not found for input $input").left()
+        }
+
+        triggerMonitoring.triggerInputMatched()
         return TriggerResponse.fromEntity(matchingTrigger).right()
     }
 
