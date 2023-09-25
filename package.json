@@ -2,9 +2,13 @@
   "name": "@usada-pekora/app",
   "version": "1.0.0",
   "description": "Notify new videos from usada pekora youtube channel and reacts to text messages on discord",
-  "main": "index.js",
   "repository": "git@github.com:MagonxESP/usada-pekora.git",
   "author": "MagonxESP <janma.360@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "./apps/bot/frontend",
+    "./apps/auth/frontend",
+    "./packages/**"
+  ]
 }

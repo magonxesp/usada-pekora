@@ -1,4 +1,0 @@
-packages:
-    - 'apps/bot/frontend'
-    - 'apps/auth/frontend'
-    - 'contexts/shared/packages/**'
