@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 RUN npm run -w packages/ui build \
-    && chmod +x apps/bot/frontend/entrypoint.sh
+    && chmod +x apps/auth/frontend/entrypoint.sh
 
 EXPOSE 3000
 
