@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import TriggerList from '../../domain/trigger/TriggerList/TriggerList'
-import { Button, EmptyState, Section, SectionHeading } from '@usada-pekora/shared-ui'
+import { Button, EmptyState, Section, SectionHeading } from '@usada-pekora/ui/components'
 import Link from 'next/link'
 import UserGuildSelect from '../../domain/guild/UserGuildSelect/UserGuildSelect'
 import TriggerListSkeleton from '../../domain/trigger/TriggerListSkeleton/TriggerListSkeleton'

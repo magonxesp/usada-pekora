@@ -10,13 +10,16 @@ export default defineConfig({
         './src/index.js', 
         './src/components.js',
         './src/helpers.js',
-        './src/store.js'
+        './src/store.js',
+        './src/hooks.js',
       ],
     },
     minify: false,
+    sourcemap: true,
     rollupOptions: {
       external: [
-        /node_modules/
+        'react', 
+        'react/jsx-runtime'
       ]
     }
   },

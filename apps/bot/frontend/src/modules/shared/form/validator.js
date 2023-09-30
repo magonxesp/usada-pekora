@@ -8,9 +8,9 @@ export class Validator {
   }
 
   #addError(name, errorMessage) {
-    const errors = this.errors[name] || []
+    const errors = this.#errors[name] || []
     errors.push(errorMessage)
-    this.errors[name] = errors
+    this.#errors[name] = errors
   }
 
   validate(inputName, value) {

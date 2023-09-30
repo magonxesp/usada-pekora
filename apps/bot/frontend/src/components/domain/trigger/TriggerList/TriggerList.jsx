@@ -1,4 +1,4 @@
-import { CardList } from '@usada-pekora/shared-ui'
+import { CardList } from '@usada-pekora/ui/components'
 import TriggerCard from '../TriggerCard/TriggerCard'
 
 export default function TriggerList({ items }) {

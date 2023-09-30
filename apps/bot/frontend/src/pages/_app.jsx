@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 import es from '../lang/es.json'
 import { DefaultLayout } from '@usada-pekora/ui/components'
-import { UserContext } from '@usada-pekora/ui/helpers'
+import { UserContext } from '@usada-pekora/ui/hooks'
 import { useEffect, useState } from 'react'
 import { fetchCurrentUser } from '../modules/user/fetch'
 

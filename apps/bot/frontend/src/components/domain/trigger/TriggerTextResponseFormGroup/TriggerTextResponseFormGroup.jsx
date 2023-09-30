@@ -1,15 +1,9 @@
 import { useIntl } from 'react-intl'
 import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
-import { Validators } from '../../../../modules/shared/form/validator'
 import { isNotEmpty } from '../../../../modules/shared/validations'
-import { ForwardedRef, forwardRef, useImperativeHandle, useState } from 'react'
-import { FormGroupProps } from '../../../../modules/shared/form/props'
-import { TextAreaInput } from '@usada-pekora/shared-ui'
-import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
-import {
-  emptyTriggerResponseTextFormData,
-  TriggerTextResponseFormData,
-} from '../../../../modules/trigger/trigger-text-response'
+import { forwardRef, useImperativeHandle, useState } from 'react'
+import { TextAreaInput } from '@usada-pekora/ui/components'
+import { emptyTriggerResponseTextFormData } from '../../../../modules/trigger/trigger-text-response'
 
 export const TriggerTextResponseFormGroup = forwardRef(
   function TriggerTextResponseFormGroup(props, ref) {

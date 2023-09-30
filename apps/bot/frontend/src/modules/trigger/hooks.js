@@ -1,9 +1,8 @@
 import { useIntl } from 'react-intl'
-import { ConfirmModal, useModal } from '@usada-pekora/shared-ui'
+import { ConfirmModal } from '@usada-pekora/ui/components'
+import { useModal } from '@usada-pekora/ui/hooks'
 import { createElement } from 'react'
 import { alert, asyncAlert } from '../shared/alert'
-import { Trigger } from './trigger'
-import { TriggerFormData } from './form'
 import { useSelectedGuild } from '../guild/hooks'
 import { useAppStore } from '../../store/app'
 import {

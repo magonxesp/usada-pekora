@@ -1,7 +1,4 @@
-import { Trigger, TriggerCollection, TriggerResponses } from './trigger'
 import { request } from '../shared/api'
-import { TriggerTextResponse } from './trigger-text-response'
-import { TriggerAudioResponse } from './trigger-audio-response'
 
 /**
  * Create trigger
@@ -73,7 +70,7 @@ export async function updateTrigger(
  * @returns {Promise<object | null>}
  */
 export async function fetchTriggerById(id, accessToken = undefined) {
-  return await request<Trigger>('GET', `/api/v1/trigger/${id}`, { accessToken })
+  return await request('GET', `/api/v1/trigger/${id}`, { accessToken })
 }
 
 /**
@@ -148,7 +145,7 @@ export async function updateTriggerTextResponse(id, requestBody, accessToken = u
  * @returns {Promise<object|null>}
  */
 export async function fetchTriggerTextResponse(id , accessToken = undefined) {
-  return await request<TriggerTextResponse>('GET', `/api/v1/trigger/response/text/${id}`, { accessToken })
+  return await request('GET', `/api/v1/trigger/response/text/${id}`, { accessToken })
 }
 
 /**
@@ -236,7 +233,7 @@ export async function fetchTriggerDefaultAudioResponse(id, accessToken = undefin
  * @returns {Promise<object|null>} 
  */
 export async function fetchTriggerByIdWithResponses(id, accessToken = undefined) {
-  const trigger = await request<Trigger>('GET', `/api/v1/trigger/${id}`, { accessToken })
+  const trigger = await request('GET', `/api/v1/trigger/${id}`, { accessToken })
 
   if (!trigger) {
     return null

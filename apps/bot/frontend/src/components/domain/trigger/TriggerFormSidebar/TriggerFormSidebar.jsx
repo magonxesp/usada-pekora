@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Sidebar, SidebarBody, SidebarHeading, SidebarTitle } from '@usada-pekora/shared-ui'
+import { Sidebar, SidebarBody, SidebarHeading, SidebarTitle } from '@usada-pekora/ui/components'
 import TriggerForm from '../TriggerForm/TriggerForm'
-import { TriggerFormData } from '../../../../modules/trigger/form'
 
 export default function TriggerFormSidebar({ onSidebarClose, onSubmit, title, initialFormData }) {
   const [isOpened, setIsOpened] = useState(false)

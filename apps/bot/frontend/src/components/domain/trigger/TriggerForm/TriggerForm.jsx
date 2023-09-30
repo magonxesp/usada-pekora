@@ -4,16 +4,16 @@ import { alert } from '../../../../modules/shared/alert'
 import { useSelectedGuild } from '../../../../modules/guild/hooks'
 import { TriggerEntityFormGroup } from '../TriggerEntityFormGroup/TriggerEntityFormGroup'
 import { TriggerTextResponseFormGroup } from '../TriggerTextResponseFormGroup/TriggerTextResponseFormGroup'
-import { Button, CollapsibleFormGroup, Form } from '@usada-pekora/shared-ui'
+import { Button, CollapsibleFormGroup, Form } from '@usada-pekora/ui/components'
 import { TriggerAudioResponseFormGroup } from '../TriggerAudioResponseFormGroup/TriggerAudioResponseFormGroup'
 import styles from './TriggerForm.module.css'
-import { emptyTriggerFormData, TriggerFormData, TriggerFormGroupRef } from '../../../../modules/trigger/form'
+import { emptyTriggerFormData } from '../../../../modules/trigger/form'
 
 export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }) {
   // form group refs
-  const entityFormRef = useRef<TriggerFormGroupRef>(null)
-  const responseTextFormRef = useRef<TriggerFormGroupRef>(null)
-  const responseAudioFormRef = useRef<TriggerFormGroupRef>(null)
+  const entityFormRef = useRef(null)
+  const responseTextFormRef = useRef(null)
+  const responseAudioFormRef = useRef(null)
 
   // form specific states
   const [formData, setFormData] = useState(triggerFormData ?? emptyTriggerFormData())

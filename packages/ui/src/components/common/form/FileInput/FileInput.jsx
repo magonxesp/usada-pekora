@@ -1,10 +1,10 @@
-import { Input, InputProps } from '../Input/Input'
+import { Input } from '../Input/Input'
 import styles from './FileInput.module.css'
 import { useRef, useState } from 'react'
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
-import * as mimes from './FileInputMimeTypes.json'
+import mimes from './FileInputMimeTypes.json'
 import { Button } from '../Button/Button'
 
 export function FileInput({ 

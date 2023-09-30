@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 export function Tooltip({ content, className }) {
   const [show, setShow] = useState(false)
   const [id, setId] = useState("")
-  const ref = useRef<HTMLSpanElement>(null)
+  const ref = useRef(null)
 
   useEffect(() => {
     setId(uuidv4())

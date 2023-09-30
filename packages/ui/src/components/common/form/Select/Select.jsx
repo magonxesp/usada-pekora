@@ -32,7 +32,7 @@ export function Select({
   const initialSelectedState = options.filter(option => option.value === (defaultValue ?? firstOptionValue)).shift()
   const [selectedOption, setSelectedOption] = useState(initialSelectedState)
   const [showOptions, setShowOptions] = useState(false)
-  const selectRef = useRef<HTMLDivElement>(null)
+  const selectRef = useRef(null)
 
   useEffect(() => {
     document.addEventListener('mousedown', (event) => {

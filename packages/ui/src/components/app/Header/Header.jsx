@@ -2,7 +2,7 @@ import styles from './Header.module.css'
 import logo from './logo.png'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { UserContext } from '../../../helpers/contexts'
+import { UserContext } from '../../../hooks/contexts'
 import { Picture } from '../../common/image/Picture/Picture'
 
 export function Header() {
