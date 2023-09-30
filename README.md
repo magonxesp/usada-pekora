@@ -18,7 +18,7 @@ Requeriments
 * Openjdk 17
 * Gradle
 
-### Gradle and Pnpm
+### Gradle and npm
 
 Create the ```.env``` file from the ```.env.example``` files on the directories under ```apps``` directory.
 
@@ -26,7 +26,9 @@ Create the ```.env``` file from the ```.env.example``` files on the directories 
 $ make env-files
 ```
 
-For build the applications run the ```gradle build``` command and ```pnpm install && turbo build``` for JavaScript based applications.
+For build backend applications run the ```gradle build``` command.
+For build frontend applications run the ```npm install``` command for install dependencies and develop with
+```npm run dev``` 
 
 You need a running instance of MongoDB, Redis and RabbitMQ. You can run this instances with the provided `docker-compose.yml`
 
