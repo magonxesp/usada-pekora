@@ -1,7 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { triggerCompare } from './trigger'
-import { triggerTextResponseToFormData } from './trigger-text-response'
-import { triggerDefaultAudioResponseToFormData } from './trigger-audio-response'
+import { triggerCompare } from './trigger-api'
 
 export const emptyTriggerFormData = () => ({
   id: uuidv4(),
@@ -10,6 +8,36 @@ export const emptyTriggerFormData = () => ({
   compare: triggerCompare.contains,
   guildId: ''
 })
+
+export const emptyTriggerResponseAudioFormData = () => ({
+  id: uuidv4(),
+  content: null,
+})
+
+export function triggerDefaultAudioResponseToFormData(audio) {
+  const audioFileName = audio.source.split(/\/|\\/).reverse()[0]
+
+  return {
+    id: audio.id,
+    content: (typeof File !== 'undefined') 
+      ? new File([], audioFileName)
+      : audioFileName,
+  }
+}
+
+export const emptyTriggerResponseTextFormData = () => ({
+  id: uuidv4(),
+  content: '',
+  type: 'text'
+})
+
+export function triggerTextResponseToFormData(text) {
+  return {
+    id: text.id,
+    content: text.content,
+    type: text.type
+  }
+}
 
 export function triggerToFormData(trigger) {
   const data = {

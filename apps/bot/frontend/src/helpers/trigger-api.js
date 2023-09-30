@@ -1,4 +1,9 @@
-import { request } from '../shared/api'
+import { request } from './api'
+
+export const triggerCompare = {
+  contains: 'in',
+  pattern: 'pattern'
+}
 
 /**
  * Create trigger

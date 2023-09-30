@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './UserGuildSelect.module.css'
 import { IconSelect, LoadingSkeletonElement } from '@usada-pekora/ui/components'
-import { useGuilds, useSelectedGuild } from '../../../../modules/guild/hooks'
+import { useGuilds, useSelectedGuild } from '../../../../hooks/guild'
 
 export default function UserGuildSelect() {
   const [options, setOptions] = useState([])

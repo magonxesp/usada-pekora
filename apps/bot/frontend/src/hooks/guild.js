@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { useAppStore } from '../../store/app'
-import { fetchCurrentUserGuilds } from './api'
+import { useAppStore } from '../store/app'
+import { fetchCurrentUserGuilds } from '../helpers/guild-api'
 
 export function useSelectedGuild() {
   const selected = useAppStore(state => state.selectedGuild)

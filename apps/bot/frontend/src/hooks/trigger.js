@@ -2,9 +2,9 @@ import { useIntl } from 'react-intl'
 import { ConfirmModal } from '@usada-pekora/ui/components'
 import { useModal } from '@usada-pekora/ui/hooks'
 import { createElement } from 'react'
-import { alert, asyncAlert } from '../shared/alert'
-import { useSelectedGuild } from '../guild/hooks'
-import { useAppStore } from '../../store/app'
+import { alert, asyncAlert } from '../helpers/alert'
+import { useSelectedGuild } from './guild'
+import { useAppStore } from '../store/app'
 import {
   createTrigger,
   createTriggerAudio,
@@ -16,7 +16,7 @@ import {
   updateTrigger,
   updateTriggerDefaultAudioResponse,
   updateTriggerTextResponse,
-} from './api'
+} from '../helpers/trigger-api'
 
 export function useFetchTriggers() {
   const { selected } = useSelectedGuild()

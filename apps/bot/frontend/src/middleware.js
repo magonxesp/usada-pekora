@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { fetchCurrentUser } from './modules/user/fetch'
+import { fetchCurrentUser } from './helpers/user-api'
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {

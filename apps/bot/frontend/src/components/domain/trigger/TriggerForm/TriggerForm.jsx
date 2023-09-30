@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react'
 import { useIntl } from 'react-intl'
-import { alert } from '../../../../modules/shared/alert'
-import { useSelectedGuild } from '../../../../modules/guild/hooks'
+import { alert } from '../../../../helpers/alert'
+import { useSelectedGuild } from '../../../../hooks/guild'
 import { TriggerEntityFormGroup } from '../TriggerEntityFormGroup/TriggerEntityFormGroup'
 import { TriggerTextResponseFormGroup } from '../TriggerTextResponseFormGroup/TriggerTextResponseFormGroup'
 import { Button, CollapsibleFormGroup, Form } from '@usada-pekora/ui/components'
 import { TriggerAudioResponseFormGroup } from '../TriggerAudioResponseFormGroup/TriggerAudioResponseFormGroup'
 import styles from './TriggerForm.module.css'
-import { emptyTriggerFormData } from '../../../../modules/trigger/form'
+import { emptyTriggerFormData } from '../../../../helpers/trigger-form'
 
 export default function TriggerForm({ triggerFormData, onSubmit, disableSubmit }) {
   // form group refs

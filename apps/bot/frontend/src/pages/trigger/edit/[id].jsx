@@ -2,16 +2,14 @@ import GuildTriggersView from '../../../components/views/GuildTriggersView/Guild
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import TriggerFormSidebar from '../../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
-import { triggerToFormData } from '../../../modules/trigger/form'
-import { useUpdateTrigger } from '../../../modules/trigger/hooks'
-import { fetchTriggerByIdWithResponses } from '../../../modules/trigger/api'
-import { authorization } from '../../../modules/shared/api'
+import { triggerToFormData } from '../../../helpers/trigger-form'
+import { useUpdateTrigger } from '../../../hooks/trigger'
+import { fetchTriggerByIdWithResponses } from '../../../helpers/trigger-api'
+import { authorization } from '../../../helpers/api'
 import Head from 'next/head'
 
 export const getServerSideProps = async (context) => {
   const { id } = context.query
-  console.log(context.req.cookies)
-  console.log(context.req.headers.cookie)
   const trigger = await fetchTriggerByIdWithResponses(String(id), authorization(context.req) ?? undefined)
 
   if (!trigger) {

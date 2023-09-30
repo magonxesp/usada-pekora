@@ -2,7 +2,7 @@ import GuildTriggersView from '../../components/views/GuildTriggersView/GuildTri
 import { useRouter } from 'next/router'
 import { useIntl } from 'react-intl'
 import TriggerFormSidebar from '../../components/domain/trigger/TriggerFormSidebar/TriggerFormSidebar'
-import { useCreateTrigger } from '../../modules/trigger/hooks'
+import { useCreateTrigger } from '../../hooks/trigger'
 import Head from 'next/head'
 
 const NewTrigger = () => {

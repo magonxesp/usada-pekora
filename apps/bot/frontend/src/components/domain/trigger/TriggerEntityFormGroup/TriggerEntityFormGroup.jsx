@@ -1,10 +1,10 @@
 import { useIntl } from 'react-intl'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { isNotEmpty, isRegex } from '../../../../modules/shared/validations'
-import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
+import { isNotEmpty, isRegex } from '../../../../helpers/validations'
+import { useEmitOnChange, useValidator } from '../../../../hooks/form'
 import { TextInput, TextSelect } from '@usada-pekora/ui/components'
-import { triggerCompare } from '../../../../modules/trigger/trigger'
-import { emptyTriggerFormData } from '../../../../modules/trigger/form'
+import { triggerCompare } from '../../../../helpers/trigger-api'
+import { emptyTriggerFormData } from '../../../../helpers/trigger-form'
 
 export const TriggerEntityFormGroup = forwardRef(
   function TriggerEntityFormGroup(props, ref) {

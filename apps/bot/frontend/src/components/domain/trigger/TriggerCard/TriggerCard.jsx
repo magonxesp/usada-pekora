@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useDeleteTrigger } from '../../../../modules/trigger/hooks'
+import { useDeleteTrigger } from '../../../../hooks/trigger'
 import { Button, Card } from '@usada-pekora/ui/components'
 import styles from './TriggerCard.module.css'
 import TriggerResponseList from '../TriggerResponseList/TriggerResponseList'

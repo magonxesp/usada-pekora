@@ -1,9 +1,8 @@
 import { useIntl } from 'react-intl'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { useEmitOnChange, useValidator } from '../../../../modules/shared/form/hooks'
+import { useEmitOnChange, useValidator } from '../../../../hooks/form'
 import { FileInput } from '@usada-pekora/ui/components'
-import { TriggerFormGroupRef } from '../../../../modules/trigger/form'
-import { emptyTriggerResponseAudioFormData } from '../../../../modules/trigger/trigger-audio-response'
+import { emptyTriggerResponseAudioFormData } from '../../../../helpers/trigger-form'
 
 export const TriggerAudioResponseFormGroup = forwardRef(
   function TriggerAudioResponseFormGroup(props, ref) {

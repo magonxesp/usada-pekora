@@ -4,9 +4,9 @@ import { Button, EmptyState, Section, SectionHeading } from '@usada-pekora/ui/co
 import Link from 'next/link'
 import UserGuildSelect from '../../domain/guild/UserGuildSelect/UserGuildSelect'
 import TriggerListSkeleton from '../../domain/trigger/TriggerListSkeleton/TriggerListSkeleton'
-import { useSelectedGuild } from '../../../modules/guild/hooks'
+import { useSelectedGuild } from '../../../hooks/guild'
 import { useIntl } from 'react-intl'
-import { useFetchTriggers, useGetTriggers } from '../../../modules/trigger/hooks'
+import { useFetchTriggers, useGetTriggers } from '../../../hooks/trigger'
 
 export default function GuildTriggersView() {
   const triggers = useGetTriggers()

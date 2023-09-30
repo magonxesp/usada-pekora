@@ -1,4 +1,4 @@
-import { request } from '../shared/api'
+import { request } from './api'
 
 /**
  * Fetch user current guilds

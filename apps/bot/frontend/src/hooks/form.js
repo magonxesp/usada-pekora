@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FormData, FormErrors, Validator, Validators } from './validator'
+import { Validator } from '../helpers/form-validator'
 
 /**
  * Validate the form data object
