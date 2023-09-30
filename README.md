@@ -15,8 +15,6 @@ So I plan to release some day a stable release with basic features but the devel
 Requeriments
 * Make
 * NodeJS >= 18
-* pnpm
-* Turborepo
 * Openjdk 17
 * Gradle
 
