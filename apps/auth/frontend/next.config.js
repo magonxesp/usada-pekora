@@ -1,7 +1,5 @@
-const nextTranslate = require('next-translate-plugin')
-
 /** @type {import('next').NextConfig} */
-const nextConfig = nextTranslate({
+const nextConfig = {
   swcMinify: true,
   async redirects() {
     return [
@@ -11,7 +9,11 @@ const nextConfig = nextTranslate({
         permanent: true,
       },
     ];
+  },
+  i18n: {
+    locales: ['es'],
+    defaultLocale: 'es'
   }
-})
+}
 
 module.exports = nextConfig

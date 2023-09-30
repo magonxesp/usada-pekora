@@ -1,16 +1,16 @@
 import { LoginForm } from '../components/LoginForm/LoginForm'
 import { Ground } from '../components/Ground/Ground'
 import Head from 'next/head'
-import useTranslation from 'next-translate/useTranslation'
+import { useIntl } from 'react-intl'
 
 export default function Login() {
-  const { t } = useTranslation('login')
+  const { $t } = useIntl()
 
   return (
     <>
       <Head>
-        <title>{t('title')}</title>
-        <meta name="desription" content={t('description')} />
+        <title>{$t({ id: 'title' })}</title>
+        <meta name="desription" content={$t({ id: 'description' })} />
         <meta name="robots" content="index, follow" />
       </Head>
       <LoginForm />

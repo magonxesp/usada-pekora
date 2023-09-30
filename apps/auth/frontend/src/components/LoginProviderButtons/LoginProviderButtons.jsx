@@ -1,12 +1,12 @@
 import { oAuthProviderAuthorize, oAuthProviders } from '../../helpers/backend'
 import { Button } from '@usada-pekora/ui/components'
-import useTranslation from 'next-translate/useTranslation'
+import { useIntl } from 'react-intl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import styles from './LoginProviderButtons.module.css'
 
 export function LoginProviderButtons() {
-  const { t } = useTranslation('login')
+  const { $t } = useIntl()
 
   return (
     <div>
@@ -16,7 +16,7 @@ export function LoginProviderButtons() {
       >
         <>
           <FontAwesomeIcon icon={faDiscord} className={styles.icon} />
-          {t('login-discord')}
+          {$t({ id: 'login-discord' })}
         </>
       </Button>
     </div>
