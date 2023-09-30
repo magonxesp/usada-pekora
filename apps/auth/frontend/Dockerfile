@@ -4,13 +4,20 @@ WORKDIR /APP
 
 ENV APP_ENV=prod
 
-RUN corepack prepare pnpm@latest --activate
-RUN corepack enable
-RUN npm install turbo --global
+RUN mkdir -p apps/auth/frontend \
+    && mkdir -p packages/ui
+
+COPY package.json .
+COPY package-lock.json .
+COPY apps/auth/frontend/package.json apps/auth/frontend/package.json
+COPY packages/ui/package.json packages/ui/package.json
+
+RUN npm install
 
 COPY . .
 
-RUN pnpm install && chmod +x apps/auth/frontend/entrypoint.sh
+RUN npm run -w packages/ui build \
+    && chmod +x apps/bot/frontend/entrypoint.sh
 
 EXPOSE 3000
 

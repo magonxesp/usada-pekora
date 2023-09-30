@@ -1,3 +1,3 @@
 #!/bin/sh
 
-turbo build && cd apps/bot/frontend && npm run start
+npm run -w apps/bot/frontend build && npm run -w apps/bot/frontend start

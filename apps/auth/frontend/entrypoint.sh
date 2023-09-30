@@ -1,3 +1,3 @@
 #!/bin/sh
 
-turbo build && cd apps/auth/frontend && npm run start
+npm run -w apps/auth/frontend build && npm run -w apps/auth/frontend start
