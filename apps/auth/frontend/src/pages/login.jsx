@@ -13,8 +13,10 @@ export default function Login() {
         <meta name="desription" content={$t({ id: 'description' })} />
         <meta name="robots" content="index, follow" />
       </Head>
-      <LoginForm />
-      <Ground />
+      <div className="login-page">
+        <LoginForm />
+        <Ground />
+      </div>
     </>
   )
 }

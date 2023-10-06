@@ -49,5 +49,8 @@
   "input.file.help.intro": "Selecciona un fichero o arrastralo aqui.",
   "input.file.help.allowed_types": "Tipos permitidos:",
   "input.file.change": "Sustituir archivo",
-  "input.file.delete": "Eliminar"
+  "input.file.delete": "Eliminar",
+  "error.not_found": "No encontrado",
+  "error.not_found.action": "Ir a al inicio",
+  "error.internal_server_error": "Algo ha salido mal"
 }

@@ -1,4 +1,9 @@
 .loginForm {
     display: flex;
     align-items: center;
+    z-index: 1;
+    margin: 0 auto;
+    width: fit-content;
+    margin-top: 20%;
+    position: relative;
 }

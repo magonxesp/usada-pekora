@@ -1,5 +1,8 @@
 {
   "title": "Iniciar sesión | Usada pekora",
   "description": "Usada pekora es un bot que configurable para crear reacciones a mensages en discord y emitir notificaciones del canal de YouTube de Usada Pekora",
-  "login-discord": "Iniciar sesión con Discord"
+  "login-discord": "Iniciar sesión con Discord",
+  "error.not_found": "No encontrado",
+  "error.not_found.action": "Ir a al inicio",
+  "error.internal_server_error": "Algo ha salido mal"
 }
