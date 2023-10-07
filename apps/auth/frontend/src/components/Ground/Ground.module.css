@@ -1,9 +1,14 @@
 .ground {
-    background-color: #B9E186;
+    background: #B9E186 url(./grass.svg);
+    background-repeat: repeat;
+    background-size: 2%;
+    background-position: center top;
     border: 1px black solid;
-    border-radius: 50%;
-    width: 100%;
-    height: 120%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    width: 120%;
+    height: 45vh;
     position: absolute;
-    bottom: -80%;
+    bottom: 0;
+    left: -10%;
 }

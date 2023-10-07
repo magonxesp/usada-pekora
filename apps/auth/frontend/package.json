@@ -9,13 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@usada-pekora/ui": "*",
     "@fortawesome/fontawesome-svg-core": "6.4.2",
+    "@fortawesome/free-brands-svg-icons": "6.4.2",
     "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
-    "@fortawesome/free-brands-svg-icons": "6.4.2",
     "@heroicons/react": "2.0.18",
+    "@usada-pekora/ui": "*",
+    "cookies-next": "^4.0.0",
     "next": "13.5.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -25,12 +26,12 @@
     "@types/node": "18.7.20",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
-    "postcss": "^8.1.0",
     "autoprefixer": "^10.4.12",
     "eslint": "8.24.0",
     "eslint-config-next": "^13.2.4",
+    "next-translate-plugin": "2.4.4",
+    "postcss": "^8.1.0",
     "prettier": "2.7.1",
-    "typescript": "4.8.3",
-    "next-translate-plugin": "2.4.4"
+    "typescript": "4.8.3"
   }
 }
