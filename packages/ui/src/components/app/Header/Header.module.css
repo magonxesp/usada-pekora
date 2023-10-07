@@ -26,23 +26,3 @@
     width: 15rem;
     height: auto;
 }
-
-.currentUser {
-    display: flex;
-    align-items: center;
-}
-
-.currentUser picture {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    margin-right: 1rem;
-}
-
-.currentUser picture img {
-    height: 100%;
-}

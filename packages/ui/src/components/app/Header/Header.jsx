@@ -3,7 +3,7 @@ import logo from './logo.png'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { UserContext } from '../../../hooks/contexts'
-import { Picture } from '../../common/image/Picture/Picture'
+import { CurrentUser } from '../CurrentUser/CurrentUser'
 
 export function Header() {
   const user = useContext(UserContext)
@@ -18,13 +18,7 @@ export function Header() {
           />
         </Link>
         {(user) ? (
-          <div className={styles.currentUser}>
-            <Picture
-              src={user?.avatar ?? ''}
-              alt="User avatar"
-            />
-            <p>{user?.name}</p>
-          </div>
+          <CurrentUser user={user} />
         ) : ''}
       </div>
     </header>
