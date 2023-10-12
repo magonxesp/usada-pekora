@@ -30,7 +30,9 @@ class RabbitMqEventConsumer(
                 this::class.toString(),
                 DeliverCallback { _, message ->
                     val event = eventDeserializer.deserialize(message.body.decodeToString())
-                    eventSubscriberDispatcher.dispatch(event).onLeft {
+                    eventSubscriberDispatcher.dispatch(event).onRight {
+                        channel.basicAck(message.envelope.deliveryTag, false)
+                    }.onLeft {
                         channel.basicReject(message.envelope.deliveryTag, false)
                     }
                 },
