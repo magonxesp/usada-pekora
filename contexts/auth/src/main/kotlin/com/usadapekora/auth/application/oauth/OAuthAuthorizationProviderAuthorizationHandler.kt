@@ -11,7 +11,7 @@ import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
-import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.bus.event.DomainEventBus
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserRepository
 import kotlinx.datetime.Clock
@@ -22,7 +22,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
     private val grantCodeRepository: AuthorizationGrantRepository,
     private val grantCodeCreator: OAuthAuthorizationGrantCodeCreator,
     private val clock: Clock,
-    private val eventBus: EventBus,
+    private val eventBus: DomainEventBus,
     private val oAuthUserRepository: OAuthUserRepository
 ) {
 
@@ -70,7 +70,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
         grantCodeRepository.save(grantCode)
 
         eventBus.dispatch(AuthorizationGrantedEvent(
-            occurredOn = grantCode.issuedAt.value.toString(),
+            occurredOn = grantCode.issuedAt.value,
             userId = user.id.value
         )).onLeft { return OAuthProviderError.CallbackError(it.message).left() }
 

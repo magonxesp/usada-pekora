@@ -12,7 +12,7 @@ import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.domain.OAuthUserMother
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
-import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.bus.event.DomainEventBus
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.domain.user.UserException
 import com.usadapekora.shared.domain.user.UserRepository
@@ -33,7 +33,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
     private val authorizationCodeRepository = mockk<AuthorizationGrantRepository>(relaxUnitFun = true)
     private val authorizationCodeCreator = mockk<OAuthAuthorizationGrantCodeCreator>()
     private val clock = mockk<Clock>()
-    private val eventBus = mockk<EventBus>(relaxUnitFun = true)
+    private val eventBus = mockk<DomainEventBus>(relaxUnitFun = true)
     private val handler = OAuthAuthorizationProviderAuthorizationHandler(
         providerFactory = factory,
         userRepository = userRepository,
@@ -70,7 +70,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         )
 
         val grantCode = AuthorizationGrantMother.create(user = newUser.id.value, issuedAt = issuedAt)
-        val event = AuthorizationGrantedEvent(userId = oAuthUser.userId, occurredOn = issuedAt.toString())
+        val event = AuthorizationGrantedEvent(userId = oAuthUser.userId, occurredOn = issuedAt)
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, newUser.id) } returns grantCode.code
         every {
@@ -121,7 +121,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         every { clock.now() } returns issuedAt
 
         val grantCode = AuthorizationGrantMother.create(user = user.id.value, issuedAt = issuedAt)
-        val event = AuthorizationGrantedEvent(userId = oAuthUser.userId, occurredOn = issuedAt.toString())
+        val event = AuthorizationGrantedEvent(userId = oAuthUser.userId, occurredOn = issuedAt)
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, user.id) } returns grantCode.code
         every {
@@ -173,7 +173,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
         every { clock.now() } returns issuedAt
 
         val grantCode = AuthorizationGrantMother.create(user = user.id.value, issuedAt = issuedAt)
-        val event = AuthorizationGrantedEvent(userId = oAuthUserToSave.userId, occurredOn = issuedAt.toString())
+        val event = AuthorizationGrantedEvent(userId = oAuthUserToSave.userId, occurredOn = issuedAt)
 
         every { authorizationCodeCreator.fromOAuthUser(oAuthUser, user.id) } returns grantCode.code
         every {

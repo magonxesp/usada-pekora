@@ -10,13 +10,13 @@ import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildRepository
 import com.usadapekora.shared.domain.PersistenceTransaction
-import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.bus.event.DomainEventBus
 import com.usadapekora.shared.domain.guild.GuildCreatedEvent
 
 class GuildCreator(
     private val repository: GuildRepository,
     private val persistenceTransaction: PersistenceTransaction,
-    private val eventBus: EventBus
+    private val eventBus: DomainEventBus
 ) {
     fun create(request: GuildCreateRequest): Either<GuildError, Unit> {
         repository.find(GuildId(request.id))
@@ -37,7 +37,7 @@ class GuildCreator(
 
         repository.save(guild).onLeft { return it.left() }
 
-        eventBus.dispatch(GuildCreatedEvent(guild.id.value)).onLeft {
+        eventBus.dispatch(GuildCreatedEvent(guildId = guild.id.value)).onLeft {
             persistenceTransaction.rollback()
             return GuildError.SaveError(it.message).left()
         }

@@ -2,19 +2,19 @@ package com.usadapekora.shared.infrastructure.bus.event
 
 import arrow.core.Either
 import com.rabbitmq.client.Channel
-import com.rabbitmq.client.ConnectionFactory
-import com.usadapekora.shared.domain.bus.event.Event
-import com.usadapekora.shared.domain.bus.event.EventBus
-import com.usadapekora.shared.domain.bus.event.EventBusError
+import com.usadapekora.shared.domain.bus.event.DomainEvent
+import com.usadapekora.shared.domain.bus.event.DomainEventBus
+import com.usadapekora.shared.domain.bus.event.DomainEventBusError
 import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMapperInstance
-import com.usadapekora.shared.rabbitMqUser
 
-class RabbitMqEventBus : EventBus {
+class RabbitMqEventBus(
+    private val eventSerializer: DomainEventSerializer
+) : DomainEventBus {
 
     private val mapper = createJacksonObjectMapperInstance()
     private val exchangeName = RabbitMqNameFormatter.exchange
 
-    private fun createDeadLetterQueue(event: Event, channel: Channel) {
+    private fun createDeadLetterQueue(event: DomainEvent, channel: Channel) {
         val queueName = RabbitMqNameFormatter.deadLetterQueueName(RabbitMqNameFormatter.QueueType.EVENT, event.name)
         val routingKey = RabbitMqNameFormatter.deadLetterRoutingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
 
@@ -26,7 +26,7 @@ class RabbitMqEventBus : EventBus {
     /**
      * Returns the routing key when created
      */
-    private fun createQueue(event: Event, channel: Channel): String {
+    private fun createQueue(event: DomainEvent, channel: Channel): String {
         val queueName = RabbitMqNameFormatter.queueName(RabbitMqNameFormatter.QueueType.EVENT, event.name)
         val routingKey = RabbitMqNameFormatter.routingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
         val deadLetterRoutingKey = RabbitMqNameFormatter.deadLetterRoutingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
@@ -42,7 +42,7 @@ class RabbitMqEventBus : EventBus {
         return routingKey
     }
 
-    override fun dispatch(vararg events: Event): Either<EventBusError, Unit> = Either.catch {
+    override fun dispatch(vararg events: DomainEvent): Either<DomainEventBusError, Unit> = Either.catch {
         var exception: Throwable? = null
         val connection = RabbitMqConnectionFactory.getConnection()
 
@@ -50,7 +50,7 @@ class RabbitMqEventBus : EventBus {
             val channel = connection.createChannel()
 
             for (event in events) {
-                val message = mapper.writeValueAsString(event)
+                val message = eventSerializer.serialize(event)
                 //createDeadLetterQueue(event, channel)
                 val routingKey = createQueue(event, channel)
                 channel.basicPublish(exchangeName, routingKey, null, message.toByteArray())
@@ -62,6 +62,6 @@ class RabbitMqEventBus : EventBus {
         if (exception != null) {
             throw exception
         }
-    }.mapLeft { EventBusError(message = it.message) }
+    }.mapLeft { DomainEventBusError(message = it.message) }
 
 }

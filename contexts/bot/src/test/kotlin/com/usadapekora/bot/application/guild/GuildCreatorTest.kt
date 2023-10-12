@@ -8,7 +8,7 @@ import com.usadapekora.bot.domain.guild.GuildError
 import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.domain.guild.GuildRepository
 import com.usadapekora.shared.domain.PersistenceTransaction
-import com.usadapekora.shared.domain.bus.event.EventBus
+import com.usadapekora.shared.domain.bus.event.DomainEventBus
 import com.usadapekora.shared.domain.guild.GuildCreatedEvent
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -22,7 +22,7 @@ class GuildCreatorTest {
 
     private val repository = mockk<GuildRepository>()
     private val persistenceTransaction = mockk<PersistenceTransaction>(relaxUnitFun = true)
-    private val eventBus = mockk<EventBus>()
+    private val eventBus = mockk<DomainEventBus>()
     private val creator = GuildCreator(repository, persistenceTransaction, eventBus)
 
     @BeforeTest
