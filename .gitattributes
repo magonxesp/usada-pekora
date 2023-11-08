@@ -7,3 +7,9 @@
 # These are Windows script files and should use crlf
 *.bat           text eol=crlf
 
+* linguist-vendored
+*.kt linguist-vendored=false
+*.js linguist-vendored=false
+*.jsx linguist-vendored=false
+*.ts linguist-vendored=false
+*.tsx linguist-vendored=false
