@@ -4,7 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.guild.create.GuildMemberCreateRequest
 import com.usadapekora.bot.application.guild.create.GuildMemberCreator
-import com.usadapekora.bot.domain.guild.GuildMemberError
+import com.usadapekora.bot.domain.guild.GuildMemberException
 import com.usadapekora.bot.domain.guild.GuildMemberMother
 import com.usadapekora.bot.domain.guild.GuildMemberRepository
 import io.mockk.clearAllMocks
@@ -27,7 +27,7 @@ class GuildMemberCreatorTest {
     fun `it should create guild member`() {
         val member = GuildMemberMother.create()
 
-        every { repository.find(member.user, member.guild) } returns GuildMemberError.NotFound().left()
+        every { repository.find(member.user, member.guild) } returns GuildMemberException.NotFound().left()
         every { repository.save(member) } returns Unit.right()
 
         val result = creator.create(GuildMemberCreateRequest(userId = member.user.value, guildId = member.guild.value))
@@ -50,7 +50,7 @@ class GuildMemberCreatorTest {
         verify { repository.find(member.user, member.guild) }
         verify(inverse = true) { repository.save(member) }
 
-        assertIs<GuildMemberError.AlreadyExists>(result.leftOrNull())
+        assertIs<GuildMemberException.AlreadyExists>(result.leftOrNull())
     }
 
 }

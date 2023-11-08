@@ -5,7 +5,7 @@ import arrow.core.right
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdateRequest
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdater
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildException
 import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.domain.guild.GuildRepository
 import io.mockk.clearAllMocks
@@ -67,7 +67,7 @@ class ProvidedGuildUpdaterTest {
             )
         )
 
-        every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildError.NotFound().left()
+        every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildException.NotFound().left()
         every { repository.save(guildUpdated) } returns Unit.right()
 
         val result = updater.update(request)
@@ -75,7 +75,7 @@ class ProvidedGuildUpdaterTest {
         verify { repository.findByProvider(guild.providerId, guild.provider) }
         verify(inverse = true) { repository.save(guildUpdated) }
 
-        assertIs<GuildError.NotFound>(result.leftOrNull())
+        assertIs<GuildException.NotFound>(result.leftOrNull())
     }
 
 }

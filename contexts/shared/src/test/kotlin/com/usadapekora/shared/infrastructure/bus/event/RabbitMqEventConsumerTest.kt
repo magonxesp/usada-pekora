@@ -6,7 +6,7 @@ import com.usadapekora.shared.DependencyInjectionEnabledTest
 import com.usadapekora.shared.DomainEventSubscribers
 import com.usadapekora.shared.DomainEvents
 import com.usadapekora.shared.domain.bus.event.DomainEventSubscriber
-import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberError
+import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberException
 import com.usadapekora.shared.domain.bus.event.ExampleDomainEvent
 import com.usadapekora.shared.domain.bus.event.SubscribesDomainEvent
 import com.usadapekora.shared.infrastructure.Slf4jLoggerFactory
@@ -24,7 +24,7 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
 
     @SubscribesDomainEvent(eventClass = ExampleDomainEvent::class)
     inner class TestSubscriber : DomainEventSubscriber<ExampleDomainEvent> {
-        override fun handle(event: ExampleDomainEvent): Either<DomainEventSubscriberError, Unit> {
+        override fun handle(event: ExampleDomainEvent): Either<DomainEventSubscriberException, Unit> {
             handledEvents += event.id
             return Unit.right()
         }

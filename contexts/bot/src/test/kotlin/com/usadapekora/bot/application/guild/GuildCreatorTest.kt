@@ -4,7 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.application.guild.create.GuildCreateRequest
 import com.usadapekora.bot.application.guild.create.GuildCreator
-import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildException
 import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.domain.guild.GuildRepository
 import com.usadapekora.shared.domain.PersistenceTransaction
@@ -32,8 +32,8 @@ class GuildCreatorTest {
     fun `it should create a guild`() {
         val guild = GuildMother.create()
 
-        every { repository.find(guild.id) } returns GuildError.NotFound().left()
-        every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildError.NotFound().left()
+        every { repository.find(guild.id) } returns GuildException.NotFound().left()
+        every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildException.NotFound().left()
         every { repository.save(guild) } returns Unit.right()
         every { eventBus.dispatch(any()) } returns Unit.right()
 
@@ -61,7 +61,7 @@ class GuildCreatorTest {
         val guild = GuildMother.create()
 
         every { repository.find(guild.id) } returns guild.right()
-        every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildError.NotFound().left()
+        every { repository.findByProvider(guild.providerId, guild.provider) } returns GuildException.NotFound().left()
         every { repository.save(guild) } returns Unit.right()
         every { eventBus.dispatch(any()) } returns Unit.right()
 
@@ -81,14 +81,14 @@ class GuildCreatorTest {
         verify(inverse = true) { repository.save(guild) }
         verify(inverse = true) { eventBus.dispatch(match { (it as GuildCreatedEvent).guildId == guild.id.value }) }
 
-        assertIs<GuildError.AlreadyExists>(result.leftOrNull())
+        assertIs<GuildException.AlreadyExists>(result.leftOrNull())
     }
 
     @Test
     fun `it not should create a existing guild that contains the same provider id`() {
         val guild = GuildMother.create()
 
-        every { repository.find(guild.id) } returns GuildError.NotFound().left()
+        every { repository.find(guild.id) } returns GuildException.NotFound().left()
         every { repository.findByProvider(guild.providerId, guild.provider) } returns guild.right()
         every { repository.save(guild) } returns Unit.right()
         every { eventBus.dispatch(any()) } returns Unit.right()
@@ -109,7 +109,7 @@ class GuildCreatorTest {
         verify(inverse = true) { repository.save(guild) }
         verify(inverse = true) { eventBus.dispatch(match { (it as GuildCreatedEvent).guildId == guild.id.value }) }
 
-        assertIs<GuildError.AlreadyExists>(result.leftOrNull())
+        assertIs<GuildException.AlreadyExists>(result.leftOrNull())
     }
 
 }

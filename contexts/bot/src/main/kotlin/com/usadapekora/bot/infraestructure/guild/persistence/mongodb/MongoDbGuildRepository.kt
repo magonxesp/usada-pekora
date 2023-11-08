@@ -4,7 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildException
 import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildRepository
 import com.usadapekora.shared.domain.user.User
@@ -21,10 +21,10 @@ class MongoDbGuildRepository : MongoDbRepository<Guild>(
     documentIdProp = GuildDocument::id,
 ), GuildRepository {
 
-    override fun find(id: Guild.GuildId): Either<GuildError.NotFound, Guild> {
+    override fun find(id: Guild.GuildId): Either<GuildException.NotFound, Guild> {
         val guild = oneQuery<GuildDocument>(collection) { collection ->
             collection.findOne(GuildDocument::id eq id.value)
-        } ?: return GuildError.NotFound("guild with id ${id.value} not found").left()
+        } ?: return GuildException.NotFound("guild with id ${id.value} not found").left()
 
         return guild.toEntity().right()
     }
@@ -32,10 +32,11 @@ class MongoDbGuildRepository : MongoDbRepository<Guild>(
     override fun findByProvider(
         providerId: Guild.GuildProviderId,
         provider: GuildProvider
-    ): Either<GuildError.NotFound, Guild> {
+    ): Either<GuildException.NotFound, Guild> {
         val guild = oneQuery<GuildDocument>(collection) { collection ->
             collection.findOne(and(GuildDocument::providerId eq providerId.value, GuildDocument::provider eq provider.value))
-        } ?: return GuildError.NotFound("guild with provider id ${providerId.value} of provider ${provider.value} not found").left()
+        } ?: return GuildException.NotFound("guild with provider id ${providerId.value} of provider ${provider.value} not found")
+            .left()
 
         return guild.toEntity().right()
     }
@@ -67,11 +68,11 @@ class MongoDbGuildRepository : MongoDbRepository<Guild>(
             .toTypedArray()
     }
 
-    override fun save(entity: Guild): Either<GuildError.SaveError, Unit> = Either.catch {
+    override fun save(entity: Guild): Either<GuildException.SaveError, Unit> = Either.catch {
         performSave<GuildDocument>(entity, GuildDocument.Companion)
-    }.mapLeft { GuildError.SaveError(it.message) }
+    }.mapLeft { GuildException.SaveError(it.message) }
 
-    override fun delete(entity: Guild): Either<GuildError.DeleteError, Unit> = Either.catch {
+    override fun delete(entity: Guild): Either<GuildException.DeleteError, Unit> = Either.catch {
        performDelete(entity)
-    }.mapLeft { GuildError.DeleteError(it.message) }
+    }.mapLeft { GuildException.DeleteError(it.message) }
 }

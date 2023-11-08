@@ -6,7 +6,7 @@ import arrow.core.right
 import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.domain.bus.event.DomainEvent
 import com.usadapekora.shared.domain.bus.event.DomainEventSubscriber
-import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberError
+import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberException
 import com.usadapekora.shared.domain.bus.event.SubscribesDomainEvent
 import com.usadapekora.shared.domain.getAnnotation
 import org.koin.java.KoinJavaComponent
@@ -31,7 +31,7 @@ class DomainEventSubscriberDispatcher(
         return subscribers
     }
 
-    private fun executeSubscriber(event: DomainEvent, subscribeClass: KClass<*>): Either<DomainEventSubscriberError, Unit> {
+    private fun executeSubscriber(event: DomainEvent, subscribeClass: KClass<*>): Either<DomainEventSubscriberException, Unit> {
         val subscribesTo = getAnnotation<SubscribesDomainEvent>(subscribeClass)
 
         if (!subscribesTo.eventClass.isInstance(event)) {
@@ -47,7 +47,7 @@ class DomainEventSubscriberDispatcher(
         }
     }
 
-    fun dispatch(event: DomainEvent): Either<DomainEventSubscriberError, Unit> {
+    fun dispatch(event: DomainEvent): Either<DomainEventSubscriberException, Unit> {
         getSubscribersOfEvent(event.name).forEach { subscriberClass ->
             executeSubscriber(event, subscriberClass).onLeft {
                 return it.left()

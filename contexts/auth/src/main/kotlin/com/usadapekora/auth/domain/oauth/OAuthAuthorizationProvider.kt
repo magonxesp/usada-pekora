@@ -5,5 +5,5 @@ import com.usadapekora.shared.domain.auth.OAuthUser
 
 interface OAuthAuthorizationProvider {
     fun authorizeUrl(): String
-    suspend fun handleCallback(code: String): Either<OAuthProviderError.CallbackError, OAuthUser>
+    suspend fun handleCallback(code: String): Either<OAuthProviderException.CallbackError, OAuthUser>
 }

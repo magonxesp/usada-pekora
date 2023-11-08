@@ -4,13 +4,13 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildException
 import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildRepository
 
 class ProvidedGuildUpdater(private val repository: GuildRepository) {
 
-    fun update(request: ProvidedGuildUpdateRequest): Either<GuildError, Unit> {
+    fun update(request: ProvidedGuildUpdateRequest): Either<GuildException, Unit> {
         val provider = GuildProvider.fromValue(request.provider)
         val providerId = Guild.GuildProviderId(request.providerId)
 

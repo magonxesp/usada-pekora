@@ -5,7 +5,7 @@ import arrow.core.right
 import com.usadapekora.shared.application.user.create.UserSessionCreateRequest
 import com.usadapekora.shared.application.user.create.UserSessionCreator
 import com.usadapekora.shared.domain.UserSessionMother
-import com.usadapekora.shared.domain.user.UserSessionError
+import com.usadapekora.shared.domain.user.UserSessionException
 import com.usadapekora.shared.domain.user.UserSessionRepository
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -27,7 +27,7 @@ class UserSessionCreatorTest {
     fun `it should create a user session`() {
         val session = UserSessionMother.create()
 
-        every { userSessionRepository.find(session.id) } returns UserSessionError.NotFound().left()
+        every { userSessionRepository.find(session.id) } returns UserSessionException.NotFound().left()
         every { userSessionRepository.save(session) } returns Unit.right()
 
         val result = userSessionCreator.create(UserSessionCreateRequest(
@@ -64,7 +64,7 @@ class UserSessionCreatorTest {
         verify { userSessionRepository.find(session.id) }
         verify(inverse = true) { userSessionRepository.save(session) }
 
-        assertIs<UserSessionError.AlreadyExists>(result.leftOrNull())
+        assertIs<UserSessionException.AlreadyExists>(result.leftOrNull())
     }
 
 }

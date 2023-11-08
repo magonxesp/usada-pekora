@@ -1,7 +1,7 @@
 package com.usadapekora.bot.infraestructure.guild.mongodb
 
 import com.usadapekora.bot.domain.guild.Guild
-import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildException
 import com.usadapekora.bot.domain.guild.GuildMemberMother
 import com.usadapekora.bot.domain.guild.GuildMother
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.GuildDocument
@@ -31,7 +31,7 @@ class MongoDbGuildRepositoryTest : MongoDbRepositoryTestCase<Guild, MongoDbGuild
     fun `it should not find by id`() {
         runMongoDbRepositoryTest<GuildDocument>(GuildDocument.Companion, save = false) {
             val result = repository.find(it.id)
-            assertIs<GuildError.NotFound>(result.leftOrNull())
+            assertIs<GuildException.NotFound>(result.leftOrNull())
         }
     }
 
@@ -47,7 +47,7 @@ class MongoDbGuildRepositoryTest : MongoDbRepositoryTestCase<Guild, MongoDbGuild
     fun `it should not find guild by provider id`() {
         runMongoDbRepositoryTest<GuildDocument>(GuildDocument.Companion, save = false) {
             val result = repository.findByProvider(it.providerId, it.provider)
-            assertIs<GuildError.NotFound>(result.leftOrNull())
+            assertIs<GuildException.NotFound>(result.leftOrNull())
         }
     }
 
@@ -93,7 +93,7 @@ class MongoDbGuildRepositoryTest : MongoDbRepositoryTestCase<Guild, MongoDbGuild
         runMongoDbRepositoryTest<GuildDocument>(GuildDocument.Companion, delete = false) {
             repository.delete(it)
             val result = repository.find(it.id)
-            assertIs<GuildError.NotFound>(result.leftOrNull())
+            assertIs<GuildException.NotFound>(result.leftOrNull())
         }
     }
     

@@ -3,7 +3,7 @@ package com.usadapekora.shared.infrastructure.user.persistence.mongodb
 import com.usadapekora.shared.MongoDbRepositoryTestCase
 import com.usadapekora.shared.domain.UserSessionMother
 import com.usadapekora.shared.domain.user.UserSession
-import com.usadapekora.shared.domain.user.UserSessionError
+import com.usadapekora.shared.domain.user.UserSessionException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -25,7 +25,7 @@ class MongoDbUserSessionRepositoryTest : MongoDbRepositoryTestCase<UserSession, 
     fun `it should not find a user session`() {
         runMongoDbRepositoryTest(UserSessionDocument.Companion, save = false) {
             val result = repository.find(it.id)
-            assertIs<UserSessionError.NotFound>(result.leftOrNull())
+            assertIs<UserSessionException.NotFound>(result.leftOrNull())
         }
     }
 

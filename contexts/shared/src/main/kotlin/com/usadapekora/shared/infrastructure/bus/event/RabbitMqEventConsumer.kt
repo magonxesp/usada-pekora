@@ -5,7 +5,7 @@ import com.rabbitmq.client.CancelCallback
 import com.rabbitmq.client.DeliverCallback
 import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.domain.bus.event.DomainEventConsumer
-import com.usadapekora.shared.domain.bus.event.DomainEventConsumerError
+import com.usadapekora.shared.domain.bus.event.DomainEventConsumerException
 
 class RabbitMqEventConsumer(
     private val registry: DomainEventRegistry,
@@ -16,7 +16,7 @@ class RabbitMqEventConsumer(
     private val logger = loggerFactory.getLogger(this::class.toString())
     private val consumers = mutableListOf<String>()
 
-    override fun consume(): Either<DomainEventConsumerError, Unit> = Either.catch {
+    override fun consume(): Either<DomainEventConsumerException, Unit> = Either.catch {
         val connection = RabbitMqConnectionFactory.getConnection()
         val channel = connection.createChannel()
 
@@ -41,5 +41,5 @@ class RabbitMqEventConsumer(
 
             consumers.add(consumer)
         }
-    }.mapLeft { DomainEventConsumerError(it.message) }
+    }.mapLeft { DomainEventConsumerException(it.message) }
 }

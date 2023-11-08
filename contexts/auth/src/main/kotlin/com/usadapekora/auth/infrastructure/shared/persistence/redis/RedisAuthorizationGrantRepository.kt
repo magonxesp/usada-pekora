@@ -4,21 +4,21 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
-import com.usadapekora.auth.domain.shared.AuthorizationGrantError
+import com.usadapekora.auth.domain.shared.AuthorizationGrantException
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
 import com.usadapekora.shared.infrastructure.persistence.redis.RedisRepository
 import redis.clients.jedis.params.SetParams
 
 class RedisAuthorizationGrantRepository : RedisRepository(), AuthorizationGrantRepository {
 
-    override fun find(code: AuthorizationGrant.AuthorizationGrantCode): Either<AuthorizationGrantError.NotFound, AuthorizationGrant> {
+    override fun find(code: AuthorizationGrant.AuthorizationGrantCode): Either<AuthorizationGrantException.NotFound, AuthorizationGrant> {
         val authorizationCode = redisConnection {
             it.get(code.value)?.let {
                 AuthorizationGrantJson.fromJsonString(it).toEntity()
             }
         }
 
-        return authorizationCode?.right() ?: AuthorizationGrantError.NotFound("The authorization with code ${code.value} not exists").left()
+        return authorizationCode?.right() ?: AuthorizationGrantException.NotFound("The authorization with code ${code.value} not exists").left()
     }
 
     override fun save(entity: AuthorizationGrant) {

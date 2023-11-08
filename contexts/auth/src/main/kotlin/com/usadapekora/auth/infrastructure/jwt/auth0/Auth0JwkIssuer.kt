@@ -4,7 +4,7 @@ import arrow.core.Either
 import com.nimbusds.jose.jwk.JWK
 import com.nimbusds.jose.jwk.KeyUse
 import com.nimbusds.jose.jwk.RSAKey
-import com.usadapekora.auth.domain.jwt.JwkError
+import com.usadapekora.auth.domain.jwt.JwkException
 import com.usadapekora.auth.domain.jwt.JwkIssuer
 import com.usadapekora.auth.jwkKeyId
 import com.usadapekora.auth.privateKeyPath
@@ -23,7 +23,7 @@ import java.util.*
 
 class Auth0JwkIssuer(private val clock: Clock) : JwkIssuer {
 
-    override fun issue(): Either<JwkError, String> = Either.catch {
+    override fun issue(): Either<JwkException, String> = Either.catch {
         val privateKeyContent = Files.readString(Paths.get(privateKeyPath)).trimKey()
         val publicKeyContent = Files.readString(Paths.get(publicKeyPath)).trimKey()
 
@@ -43,7 +43,7 @@ class Auth0JwkIssuer(private val clock: Clock) : JwkIssuer {
 
         jwk.toJSONString()
     }.mapLeft {
-        JwkError(message = it.message)
+        JwkException(message = it.message)
     }
 
 }

@@ -4,13 +4,13 @@ import arrow.core.Either
 import arrow.core.left
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdateRequest
 import com.usadapekora.bot.application.guild.update.ProvidedGuildUpdater
-import com.usadapekora.bot.domain.guild.GuildError
+import com.usadapekora.bot.domain.guild.GuildException
 import com.usadapekora.bot.domain.guild.GuildProvider
 import com.usadapekora.bot.domain.guild.GuildProviderRepositoryFactory
 import com.usadapekora.shared.domain.auth.AuthorizationGrantedEvent
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
 import com.usadapekora.shared.domain.bus.event.DomainEventSubscriber
-import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberError
+import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberException
 import com.usadapekora.shared.domain.bus.event.SubscribesDomainEvent
 import com.usadapekora.shared.domain.user.User
 
@@ -23,18 +23,18 @@ class CreateGuildsFromProviderOnAuthorizationGranted(
     private val providedGuildUpdater: ProvidedGuildUpdater
 ) : DomainEventSubscriber<AuthorizationGrantedEvent> {
 
-    override fun handle(event: AuthorizationGrantedEvent): Either<DomainEventSubscriberError, Unit> = Either.catch {
+    override fun handle(event: AuthorizationGrantedEvent): Either<DomainEventSubscriberException, Unit> = Either.catch {
         val userId = User.UserId(event.userId)
         val user = oAuthUserRepository.find(userId)
-            .onLeft { return DomainEventSubscriberError(it.message).left() }
+            .onLeft { return DomainEventSubscriberException(it.message).left() }
             .getOrNull()!!
 
         val provider = Either.catch { GuildProvider.fromValue(user.provider) }
-            .onLeft { return DomainEventSubscriberError(it.message).left() }
+            .onLeft { return DomainEventSubscriberException(it.message).left() }
             .getOrNull()!!
 
         val repository = guildProviderRepositoryFactory.getInstance(provider, user.token)
-            .onLeft { return DomainEventSubscriberError(it.message).left() }
+            .onLeft { return DomainEventSubscriberException(it.message).left() }
             .getOrNull()!!
 
         val guilds = repository.findAll(userId)
@@ -55,10 +55,10 @@ class CreateGuildsFromProviderOnAuthorizationGranted(
 
             val createResult = guildCreator.create(createRequest).onRight {
                 guildMemberCreator.create(createMemberRequest)
-                    .onLeft { return DomainEventSubscriberError(it.message).left() }
+                    .onLeft { return DomainEventSubscriberException(it.message).left() }
             }
 
-            if (createResult.leftOrNull() is GuildError.AlreadyExists) {
+            if (createResult.leftOrNull() is GuildException.AlreadyExists) {
                 providedGuildUpdater.update(ProvidedGuildUpdateRequest(
                     provider = guild.provider.value,
                     providerId = guild.providerId.value,
@@ -66,9 +66,9 @@ class CreateGuildsFromProviderOnAuthorizationGranted(
                         name = guild.name.value,
                         iconUrl = guild.iconUrl.value
                     )
-                )).onLeft { return DomainEventSubscriberError(it.message).left() }
+                )).onLeft { return DomainEventSubscriberException(it.message).left() }
             }
         }
-    }.mapLeft { DomainEventSubscriberError(it.message) }
+    }.mapLeft { DomainEventSubscriberException(it.message) }
 
 }

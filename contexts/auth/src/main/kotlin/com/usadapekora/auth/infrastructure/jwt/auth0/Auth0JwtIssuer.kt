@@ -5,7 +5,7 @@ import arrow.core.right
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.usadapekora.auth.domain.jwt.Jwt
-import com.usadapekora.auth.domain.jwt.JwtError
+import com.usadapekora.auth.domain.jwt.JwtException
 import com.usadapekora.auth.domain.jwt.JwtIssuer
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.jwkKeyId
@@ -28,7 +28,7 @@ import java.util.*
 
 class Auth0JwtIssuer(private val clock: Clock) : JwtIssuer {
 
-    override fun issue(authorization: AuthorizationGrant, expirationTimeInSeconds: Int): Either<JwtError, Jwt> {
+    override fun issue(authorization: AuthorizationGrant, expirationTimeInSeconds: Int): Either<JwtException, Jwt> {
         val privateKeyContent = Files.readString(Paths.get(privateKeyPath)).trimKey()
         val publicKeyContent = Files.readString(Paths.get(publicKeyPath)).trimKey()
 

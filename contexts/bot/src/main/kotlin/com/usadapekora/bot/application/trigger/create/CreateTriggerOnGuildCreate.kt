@@ -11,7 +11,7 @@ import com.usadapekora.bot.domain.trigger.BuiltInTriggerRepository
 import com.usadapekora.bot.domain.trigger.audio.BuiltInTriggerAudioResponseRepository
 import com.usadapekora.bot.domain.trigger.text.BuiltInTriggerTextResponseRepository
 import com.usadapekora.shared.domain.bus.event.DomainEventSubscriber
-import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberError
+import com.usadapekora.shared.domain.bus.event.DomainEventSubscriberException
 import com.usadapekora.shared.domain.bus.event.SubscribesDomainEvent
 import com.usadapekora.shared.domain.guild.GuildCreatedEvent
 import java.util.*
@@ -25,13 +25,13 @@ class CreateTriggerOnGuildCreate(
     private val builtInTriggerTextResponseRepository: BuiltInTriggerTextResponseRepository,
     private val builtInTriggerAudioResponseRepository: BuiltInTriggerAudioResponseRepository
 ) : DomainEventSubscriber<GuildCreatedEvent> {
-    override fun handle(event: GuildCreatedEvent): Either<DomainEventSubscriberError, Unit> {
+    override fun handle(event: GuildCreatedEvent): Either<DomainEventSubscriberException, Unit> {
         builtInTriggerRepository.findAll().forEach { trigger ->
             val responseText = builtInTriggerTextResponseRepository.find(trigger.responseText!!)
-                .onLeft { return DomainEventSubscriberError(it.message).left() }
+                .onLeft { return DomainEventSubscriberException(it.message).left() }
                 .getOrNull()!!
             val responseAudio = builtInTriggerAudioResponseRepository.find(trigger.responseAudio!!)
-                .onLeft { return DomainEventSubscriberError(it.message).left() }
+                .onLeft { return DomainEventSubscriberException(it.message).left() }
                 .getOrNull()!!
 
             val nextResponseTextId = UUID.randomUUID().toString()
@@ -41,13 +41,13 @@ class CreateTriggerOnGuildCreate(
                 id = nextResponseTextId,
                 type = responseText.type.value,
                 content = responseText.content.value
-            )).onLeft { return DomainEventSubscriberError(it.message).left() }
+            )).onLeft { return DomainEventSubscriberException(it.message).left() }
 
             triggerAudioResponseCreator.create(TriggerAudioResponseUrlCreateRequest(
                 id = nextResponseAudioId,
                 type = responseAudio.kind.name,
                 source = responseAudio.source.value
-            )).onLeft { return DomainEventSubscriberError(it.message).left() }
+            )).onLeft { return DomainEventSubscriberException(it.message).left() }
 
             triggerCreator.create(TriggerCreateRequest(
                 id = UUID.randomUUID().toString(),
@@ -57,7 +57,7 @@ class CreateTriggerOnGuildCreate(
                 guildId = event.guildId,
                 responseAudioId = nextResponseAudioId,
                 responseTextId = nextResponseTextId
-            )).onLeft { return DomainEventSubscriberError(it.message).left() }
+            )).onLeft { return DomainEventSubscriberException(it.message).left() }
         }
 
         return Unit.right()

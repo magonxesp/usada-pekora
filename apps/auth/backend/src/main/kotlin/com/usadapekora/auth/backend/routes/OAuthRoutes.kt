@@ -1,7 +1,7 @@
 package com.usadapekora.auth.backend.routes
 
 import com.usadapekora.auth.application.jwt.AccessJwtIssuer
-import com.usadapekora.auth.domain.jwt.JwtError
+import com.usadapekora.auth.domain.jwt.JwtException
 import com.usadapekora.shared.infrastructure.ktor.respondError
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -21,7 +21,7 @@ fun Route.oauthRoutes() {
                 .onLeft {
                     call.respondError(
                         httpStatusCode = when(it) {
-                            is JwtError.CodeNotFound -> HttpStatusCode.BadRequest
+                            is JwtException.CodeNotFound -> HttpStatusCode.BadRequest
                             else -> HttpStatusCode.InternalServerError
                         },
                         message = it.message ?: ""

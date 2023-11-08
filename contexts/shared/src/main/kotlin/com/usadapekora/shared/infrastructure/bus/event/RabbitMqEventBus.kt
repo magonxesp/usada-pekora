@@ -4,7 +4,7 @@ import arrow.core.Either
 import com.rabbitmq.client.Channel
 import com.usadapekora.shared.domain.bus.event.DomainEvent
 import com.usadapekora.shared.domain.bus.event.DomainEventBus
-import com.usadapekora.shared.domain.bus.event.DomainEventBusError
+import com.usadapekora.shared.domain.bus.event.DomainEventBusException
 import com.usadapekora.shared.infrastructure.serialization.createJacksonObjectMapperInstance
 
 class RabbitMqEventBus(
@@ -42,7 +42,7 @@ class RabbitMqEventBus(
         return routingKey
     }
 
-    override fun dispatch(vararg events: DomainEvent): Either<DomainEventBusError, Unit> = Either.catch {
+    override fun dispatch(vararg events: DomainEvent): Either<DomainEventBusException, Unit> = Either.catch {
         var exception: Throwable? = null
         val connection = RabbitMqConnectionFactory.getConnection()
 
@@ -62,6 +62,6 @@ class RabbitMqEventBus(
         if (exception != null) {
             throw exception
         }
-    }.mapLeft { DomainEventBusError(message = it.message) }
+    }.mapLeft { DomainEventBusException(message = it.message) }
 
 }

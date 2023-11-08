@@ -1,7 +1,7 @@
 package com.usadapekora.bot.infraestructure.guild.mongodb
 
 import com.usadapekora.bot.domain.guild.GuildMember
-import com.usadapekora.bot.domain.guild.GuildMemberError
+import com.usadapekora.bot.domain.guild.GuildMemberException
 import com.usadapekora.bot.domain.guild.GuildMemberMother
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.GuildMemberDocument
 import com.usadapekora.bot.infraestructure.guild.persistence.mongodb.MongoDbGuildMemberRepository
@@ -27,7 +27,7 @@ class MongoDbGuildMemberRepositoryTest : MongoDbRepositoryTestCase<GuildMember, 
     fun `should not find guild member by user and guild`() {
         runMongoDbRepositoryTest<GuildMemberDocument>(GuildMemberDocument.Companion, save = false) {
             val result = repository.find(it.user, it.guild)
-            assertIs<GuildMemberError.NotFound>(result.leftOrNull())
+            assertIs<GuildMemberException.NotFound>(result.leftOrNull())
         }
     }
 
@@ -46,7 +46,7 @@ class MongoDbGuildMemberRepositoryTest : MongoDbRepositoryTestCase<GuildMember, 
         runMongoDbRepositoryTest<GuildMemberDocument>(GuildMemberDocument.Companion, delete = false) {
             repository.delete(it)
             val result = repository.find(it.user, it.guild)
-            assertIs<GuildMemberError.NotFound>(result.leftOrNull())
+            assertIs<GuildMemberException.NotFound>(result.leftOrNull())
         }
     }
     

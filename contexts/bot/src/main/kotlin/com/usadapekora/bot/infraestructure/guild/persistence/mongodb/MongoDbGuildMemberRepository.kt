@@ -5,7 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.bot.domain.guild.Guild
 import com.usadapekora.bot.domain.guild.GuildMember
-import com.usadapekora.bot.domain.guild.GuildMemberError
+import com.usadapekora.bot.domain.guild.GuildMemberException
 import com.usadapekora.bot.domain.guild.GuildMemberRepository
 import com.usadapekora.shared.domain.user.User
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbRepository
@@ -19,10 +19,10 @@ class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember>(
     documentIdProp = GuildMemberDocument::userId,
 ), GuildMemberRepository {
 
-    override fun find(user: User.UserId, guild: Guild.GuildId): Either<GuildMemberError.NotFound, GuildMember> {
+    override fun find(user: User.UserId, guild: Guild.GuildId): Either<GuildMemberException.NotFound, GuildMember> {
         val member = oneQuery<GuildMemberDocument>(collection) { collection ->
             collection.findOne(and(GuildMemberDocument::userId eq user.value, GuildMemberDocument::guildId eq guild.value))
-        } ?: return GuildMemberError.NotFound("guild member with user ${user.value} and guild ${guild.value} not found").left()
+        } ?: return GuildMemberException.NotFound("guild member with user ${user.value} and guild ${guild.value} not found").left()
 
         return member.toEntity().right()
     }
@@ -35,7 +35,7 @@ class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember>(
         return members.map { it.toEntity() }.toList().toTypedArray()
     }
 
-    override fun save(entity: GuildMember): Either<GuildMemberError.SaveError, Unit> = Either.catch {
+    override fun save(entity: GuildMember): Either<GuildMemberException.SaveError, Unit> = Either.catch {
         writeQuery<GuildMemberDocument>(collection) { collection ->
             collection.updateOne(
                 and(
@@ -46,9 +46,9 @@ class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember>(
                 .takeUnless { updateResult -> updateResult.modifiedCount > 0L }
                 ?.apply { collection.insertOne(GuildMemberDocument.fromEntity(entity)) }
         }
-    }.mapLeft { GuildMemberError.SaveError(it.message) }
+    }.mapLeft { GuildMemberException.SaveError(it.message) }
 
-    override fun delete(entity: GuildMember): Either<GuildMemberError.DeleteError, Unit> = Either.catch {
+    override fun delete(entity: GuildMember): Either<GuildMemberException.DeleteError, Unit> = Either.catch {
         writeQuery<GuildMemberDocument>(collection) { collection ->
             collection.deleteOne(
                 and(
@@ -57,5 +57,5 @@ class MongoDbGuildMemberRepository : MongoDbRepository<GuildMember>(
                 )
             )
         }
-    }.mapLeft { GuildMemberError.DeleteError(it.message) }
+    }.mapLeft { GuildMemberException.DeleteError(it.message) }
 }

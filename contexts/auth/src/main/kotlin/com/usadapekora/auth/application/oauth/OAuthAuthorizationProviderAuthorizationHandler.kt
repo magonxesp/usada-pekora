@@ -5,7 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationGrantCodeCreator
 import com.usadapekora.auth.domain.oauth.OAuthProvider
-import com.usadapekora.auth.domain.oauth.OAuthProviderError
+import com.usadapekora.auth.domain.oauth.OAuthProviderException
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 import com.usadapekora.auth.domain.shared.AuthorizationGrant
 import com.usadapekora.auth.domain.shared.AuthorizationGrantRepository
@@ -26,14 +26,14 @@ class OAuthAuthorizationProviderAuthorizationHandler(
     private val oAuthUserRepository: OAuthUserRepository
 ) {
 
-    suspend fun handle(provider: String, code: String): Either<OAuthProviderError.CallbackError, AuthorizationGrant.AuthorizationGrantCode> {
+    suspend fun handle(provider: String, code: String): Either<OAuthProviderException.CallbackError, AuthorizationGrant.AuthorizationGrantCode> {
         val providerEnum = Either.catch { OAuthProvider.fromValue(provider) }.let {
-            if (it.isLeft()) return OAuthProviderError.CallbackError("The $provider provider is not available").left()
+            if (it.isLeft()) return OAuthProviderException.CallbackError("The $provider provider is not available").left()
             it.getOrNull()!!
         }
 
         val providerInstance = providerFactory.getInstance(providerEnum).let {
-            if (it.isLeft()) return OAuthProviderError.CallbackError("The $provider provider is not available").left()
+            if (it.isLeft()) return OAuthProviderException.CallbackError("The $provider provider is not available").left()
             it.getOrNull()!!
         }
 
@@ -57,7 +57,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
         }
 
         oAuthUserRepository.save(providerUser.copy(userId = user.id.value)).onLeft {
-            return OAuthProviderError.CallbackError(it.message).left()
+            return OAuthProviderException.CallbackError(it.message).left()
         }
 
         val grantCode = AuthorizationGrant.fromPrimitives(
@@ -72,7 +72,7 @@ class OAuthAuthorizationProviderAuthorizationHandler(
         eventBus.dispatch(AuthorizationGrantedEvent(
             occurredOn = grantCode.issuedAt.value,
             userId = user.id.value
-        )).onLeft { return OAuthProviderError.CallbackError(it.message).left() }
+        )).onLeft { return OAuthProviderException.CallbackError(it.message).left() }
 
         return grantCode.code.right()
     }

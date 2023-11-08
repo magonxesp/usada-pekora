@@ -5,7 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
-import com.usadapekora.auth.domain.oauth.OAuthProviderError
+import com.usadapekora.auth.domain.oauth.OAuthProviderException
 import com.usadapekora.auth.oAuthProviderRedirectUrl
 import com.usadapekora.shared.discordClientId
 import com.usadapekora.shared.discordClientSecret
@@ -77,14 +77,14 @@ class DiscordOAuthProvider : OAuthAuthorizationProvider {
         return user
     }
 
-    override suspend fun handleCallback(code: String): Either<OAuthProviderError.CallbackError, OAuthUser> {
+    override suspend fun handleCallback(code: String): Either<OAuthProviderException.CallbackError, OAuthUser> {
         val token = fetchAccessToken(code).let {
-            if (it.isLeft()) return OAuthProviderError.CallbackError(it.leftOrNull()!!.message).left()
+            if (it.isLeft()) return OAuthProviderException.CallbackError(it.leftOrNull()!!.message).left()
             it.getOrNull()!!
         }
 
         val user = fetchUser(token).let {
-            if (it.isLeft()) return OAuthProviderError.CallbackError(it.leftOrNull()!!.message).left()
+            if (it.isLeft()) return OAuthProviderException.CallbackError(it.leftOrNull()!!.message).left()
             it.getOrNull()!!
         }
 

@@ -4,7 +4,7 @@ import arrow.core.right
 import com.usadapekora.auth.domain.Random
 import com.usadapekora.auth.domain.oauth.OAuthAuthorizationProvider
 import com.usadapekora.auth.domain.oauth.OAuthProvider
-import com.usadapekora.auth.domain.oauth.OAuthProviderError
+import com.usadapekora.auth.domain.oauth.OAuthProviderException
 import com.usadapekora.auth.domain.oauth.OAuthProviderFactory
 import io.mockk.every
 import io.mockk.mockk
@@ -38,7 +38,7 @@ class OAuthAuthorizationProviderAuthorizeUrlFactoryTest {
 
         val result = urlProvider.getUrl("unknown")
 
-        assertIs<OAuthProviderError.NotAvailable>(result.leftOrNull())
+        assertIs<OAuthProviderException.NotAvailable>(result.leftOrNull())
     }
 
 }
