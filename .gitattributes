@@ -9,7 +9,3 @@
 
 * linguist-vendored
 *.kt linguist-vendored=false
-*.js linguist-vendored=false
-*.jsx linguist-vendored=false
-*.ts linguist-vendored=false
-*.tsx linguist-vendored=false
