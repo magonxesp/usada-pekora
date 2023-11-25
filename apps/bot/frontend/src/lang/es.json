@@ -53,5 +53,6 @@
   "error.not_found": "No encontrado",
   "error.not_found.action": "Ir a al inicio",
   "error.internal_server_error": "Algo ha salido mal",
+  "error.internal_server_error.action": "Recargar la pagina",
   "current_user.logout": "Cerrar sesión"
 }

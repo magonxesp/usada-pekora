@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useAppStore } from '../store/app'
-import { fetchCurrentUserGuilds } from '../helpers/guild-api'
+import { fetchCurrentUserGuildsRetryingUntilHaveGuilds } from '../helpers/guild-api'
+import { useIntl } from 'react-intl'
 
 export function useSelectedGuild() {
   const selected = useAppStore(state => state.selectedGuild)
@@ -28,10 +29,12 @@ export function useSelectedGuild() {
 export function useGuilds() {
   const guilds = useAppStore(state => state.guilds)
   const setGuilds = useAppStore(state => state.setGuilds)
+  const setError = useAppStore(state => state.setError)
 
   useEffect(() => {
-    fetchCurrentUserGuilds()
+    fetchCurrentUserGuildsRetryingUntilHaveGuilds()
       .then(guilds => setGuilds(guilds))
+      .catch(error => setError(error))
   }, [])
 
   return guilds
