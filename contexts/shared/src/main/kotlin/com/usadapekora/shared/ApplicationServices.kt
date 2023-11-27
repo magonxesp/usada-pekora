@@ -4,12 +4,14 @@ import com.usadapekora.shared.application.user.find.UserFinder
 import com.usadapekora.shared.domain.LoggerFactory
 import com.usadapekora.shared.domain.PersistenceTransaction
 import com.usadapekora.shared.domain.auth.OAuthUserRepository
+import com.usadapekora.shared.domain.bus.command.CommandBus
 import com.usadapekora.shared.domain.bus.event.DomainEventBus
 import com.usadapekora.shared.domain.bus.event.DomainEventConsumer
 import com.usadapekora.shared.domain.user.UserRepository
 import com.usadapekora.shared.domain.user.UserSessionRepository
 import com.usadapekora.shared.infrastructure.Slf4jLoggerFactory
 import com.usadapekora.shared.infrastructure.auth.persistence.mongodb.MongoDbOAuthUserRepository
+import com.usadapekora.shared.infrastructure.bus.command.*
 import com.usadapekora.shared.infrastructure.bus.event.*
 import com.usadapekora.shared.infrastructure.persistence.mongodb.MongoDbPersistenceTransaction
 import com.usadapekora.shared.infrastructure.user.persistence.mongodb.MongoDbUserRepository
@@ -39,6 +41,11 @@ val sharedModule = module {
     single { RabbitMqEventConsumer(get(), get(), get(), get()) } bind DomainEventConsumer::class
     single { UserFinder(get()) }
     single { MongoDbPersistenceTransaction() } bind PersistenceTransaction::class
+    single { CommandRegistry() }
+    single { CommandSerializer() }
+    single { CommandDeserializer(get()) }
+    single { CommandDispatcher(get(), get()) }
+    single { InMemoryCommandBus(get()) } bind CommandBus::class
 }
 
 fun enableDependencyInjection(modules: List<Module> = listOf()) {
