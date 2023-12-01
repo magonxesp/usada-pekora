@@ -11,7 +11,7 @@ class CommandSerializer {
     fun serialize(command: Command) = Either.catch {
         objectMapper.writeValueAsString(
             CommandJson(
-                name = command::class.simpleName!!.camelToSnakeCase(),
+                commandName = command::class.simpleName!!.camelToSnakeCase(),
                 attributes = command
             )
         )

@@ -5,10 +5,10 @@ import com.usadapekora.shared.domain.bus.command.Command
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 open class CommandName(
-	open val name: String
+	open val commandName: String
 )
 
 data class CommandJson<T : Command>(
-	override val name: String,
-	val attributes: T
-) : CommandName(name)
+    override val commandName: String,
+    val attributes: T
+) : CommandName(commandName)
