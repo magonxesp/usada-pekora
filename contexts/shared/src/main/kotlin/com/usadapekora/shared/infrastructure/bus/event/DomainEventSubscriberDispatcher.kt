@@ -31,7 +31,7 @@ class DomainEventSubscriberDispatcher(
         return subscribers
     }
 
-    private fun executeSubscriber(event: DomainEvent, subscribeClass: KClass<*>): Either<DomainEventSubscriberException, Unit> {
+    fun executeSubscriber(event: DomainEvent, subscribeClass: KClass<*>): Either<DomainEventSubscriberException, Unit> {
         val subscribesTo = getAnnotation<SubscribesDomainEvent>(subscribeClass)
 
         if (!subscribesTo.eventClass.isInstance(event)) {

@@ -37,7 +37,7 @@ val sharedModule = module {
     single { DomainEventSerializer() }
     single { DomainEventDeserializer(get()) }
     single { DomainEventSubscriberDispatcher(get(), get()) }
-    single { RabbitMqEventBus(get()) } bind DomainEventBus::class
+    single { RabbitMqEventBus(get(), get()) } bind DomainEventBus::class
     single { RabbitMqEventConsumer(get(), get(), get(), get()) } bind DomainEventConsumer::class
     single { UserFinder(get()) }
     single { MongoDbPersistenceTransaction() } bind PersistenceTransaction::class

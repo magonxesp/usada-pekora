@@ -43,7 +43,7 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
     private val loggerFactory = Slf4jLoggerFactory()
     private val serializer = DomainEventSerializer()
     private val deserializer = DomainEventDeserializer(registry)
-    private val bus = RabbitMqEventBus(serializer)
+    private val bus = RabbitMqEventBus(serializer, loggerFactory)
     private val dispatcher = DomainEventSubscriberDispatcher(registry, loggerFactory)
     private val consumer = RabbitMqEventConsumer(
         loggerFactory = loggerFactory,

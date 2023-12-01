@@ -1,4 +1,4 @@
-package com.usadapekora.shared.infrastructure.bus.event
+package com.usadapekora.shared.infrastructure.bus
 
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
