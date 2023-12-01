@@ -77,7 +77,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             eventBus.dispatch(
                 match {
                     it.occurredOn == event.occurredOn
-                        && it.name == event.name
+                        && it.eventName == event.eventName
                         && (it as AuthorizationGrantedEvent).userId == event.userId
                 }
             )
@@ -92,7 +92,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             eventBus.dispatch(
                 match {
                     it.occurredOn == event.occurredOn
-                        && it.name == event.name
+                        && it.eventName == event.eventName
                         && (it as AuthorizationGrantedEvent).userId == event.userId
                 }
             )
@@ -128,7 +128,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             eventBus.dispatch(
                 match {
                     it.occurredOn == event.occurredOn
-                        && it.name == event.name
+                        && it.eventName == event.eventName
                         && (it as AuthorizationGrantedEvent).userId == event.userId
                 }
             )
@@ -143,7 +143,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             eventBus.dispatch(
                 match {
                     it.occurredOn == event.occurredOn
-                        && it.name == event.name
+                        && it.eventName == event.eventName
                         && (it as AuthorizationGrantedEvent).userId == event.userId
                 }
             )
@@ -180,7 +180,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             eventBus.dispatch(
                 match {
                     it.occurredOn == event.occurredOn
-                        && it.name == event.name
+                        && it.eventName == event.eventName
                         && (it as AuthorizationGrantedEvent).userId == event.userId
                 }
             )
@@ -195,7 +195,7 @@ class OAuthAuthorizationProviderAuthorizationHandlerTest {
             eventBus.dispatch(
                 match {
                     it.occurredOn == event.occurredOn
-                        && it.name == event.name
+                        && it.eventName == event.eventName
                         && (it as AuthorizationGrantedEvent).userId == event.userId
                 }
             )

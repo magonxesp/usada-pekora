@@ -6,9 +6,9 @@ import java.io.Serializable
 import java.util.*
 
 abstract class DomainEvent(
-    open val id: String = UUID.randomUUID().toString(),
+    open val eventId: String = UUID.randomUUID().toString(),
     open val occurredOn: Instant = Clock.System.now()
 ) {
-    abstract val name: String
+    abstract val eventName: String
     abstract fun attributes(): Map<String, Serializable>
 }

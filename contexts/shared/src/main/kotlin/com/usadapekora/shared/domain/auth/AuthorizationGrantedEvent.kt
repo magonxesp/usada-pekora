@@ -8,11 +8,11 @@ import java.io.Serializable
 import java.util.*
 
 data class AuthorizationGrantedEvent(
-    override val id: String = UUID.randomUUID().toString(),
+    override val eventId: String = UUID.randomUUID().toString(),
     override val occurredOn: Instant = Clock.System.now(),
     val userId: String
-) : DomainEvent(id, occurredOn) {
-    override val name: String = "auth.authorization_granted"
+) : DomainEvent(eventId, occurredOn) {
+    override val eventName: String = "auth.authorization_granted"
 
     override fun attributes(): Map<String, Serializable> = mapOf(
         "userId" to userId
@@ -25,7 +25,7 @@ data class AuthorizationGrantedEvent(
             name: String,
             attributes: Map<String, Serializable>
         ): AuthorizationGrantedEvent = AuthorizationGrantedEvent(
-            id = id,
+            eventId = id,
             occurredOn = occurredOn,
             userId = attributes["userId"]!! as String
         )

@@ -25,7 +25,7 @@ class RabbitMqEventConsumerTest : DependencyInjectionEnabledTest() {
     @SubscribesDomainEvent(eventClass = ExampleDomainEvent::class)
     inner class TestSubscriber : DomainEventSubscriber<ExampleDomainEvent> {
         override fun handle(event: ExampleDomainEvent): Either<DomainEventSubscriberException, Unit> {
-            handledEvents += event.id
+            handledEvents += event.eventId
             return Unit.right()
         }
     }

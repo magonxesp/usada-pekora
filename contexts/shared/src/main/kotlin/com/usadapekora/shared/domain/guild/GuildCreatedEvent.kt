@@ -8,11 +8,11 @@ import java.io.Serializable
 import java.util.*
 
 class GuildCreatedEvent(
-    override val id: String = UUID.randomUUID().toString(),
+    override val eventId: String = UUID.randomUUID().toString(),
     override val occurredOn: Instant = Clock.System.now(),
     val guildId: String
-) : DomainEvent(id, occurredOn) {
-    override val name: String = "guild.created"
+) : DomainEvent(eventId, occurredOn) {
+    override val eventName: String = "guild.created"
 
     override fun attributes(): Map<String, Serializable> = mapOf(
         "guildId" to guildId
@@ -25,7 +25,7 @@ class GuildCreatedEvent(
             name: String,
             attributes: Map<String, Serializable>
         ): GuildCreatedEvent = GuildCreatedEvent(
-            id = id,
+            eventId = id,
             occurredOn = occurredOn,
             guildId = attributes["guildId"]!! as String
         )

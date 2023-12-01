@@ -12,9 +12,9 @@ data class DomainEventJson(
 ) {
     companion object {
         fun fromDomainEvent(event: DomainEvent) = DomainEventJson(
-            id = event.id,
+            id = event.eventId,
             occurredOn = event.occurredOn.toString(),
-            name = event.name,
+            name = event.eventName,
             attributes = event.attributes()
         )
     }

@@ -15,8 +15,8 @@ class RabbitMqEventBus(
     private val exchangeName = RabbitMqNameFormatter.exchange
 
     private fun createDeadLetterQueue(event: DomainEvent, channel: Channel) {
-        val queueName = RabbitMqNameFormatter.deadLetterQueueName(RabbitMqNameFormatter.QueueType.EVENT, event.name)
-        val routingKey = RabbitMqNameFormatter.deadLetterRoutingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
+        val queueName = RabbitMqNameFormatter.deadLetterQueueName(RabbitMqNameFormatter.QueueType.EVENT, event.eventName)
+        val routingKey = RabbitMqNameFormatter.deadLetterRoutingKey(RabbitMqNameFormatter.QueueType.EVENT, event.eventName)
 
         channel.exchangeDeclare(exchangeName, "direct", true)
         channel.queueDeclare(queueName, true, false, false, null)
@@ -27,9 +27,9 @@ class RabbitMqEventBus(
      * Returns the routing key when created
      */
     private fun createQueue(event: DomainEvent, channel: Channel): String {
-        val queueName = RabbitMqNameFormatter.queueName(RabbitMqNameFormatter.QueueType.EVENT, event.name)
-        val routingKey = RabbitMqNameFormatter.routingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
-        val deadLetterRoutingKey = RabbitMqNameFormatter.deadLetterRoutingKey(RabbitMqNameFormatter.QueueType.EVENT, event.name)
+        val queueName = RabbitMqNameFormatter.queueName(RabbitMqNameFormatter.QueueType.EVENT, event.eventName)
+        val routingKey = RabbitMqNameFormatter.routingKey(RabbitMqNameFormatter.QueueType.EVENT, event.eventName)
+        val deadLetterRoutingKey = RabbitMqNameFormatter.deadLetterRoutingKey(RabbitMqNameFormatter.QueueType.EVENT, event.eventName)
 //        val args = mapOf(
 //            "x-dead-letter-exchange" to exchangeName,
 //            "x-dead-letter-routing-key" to deadLetterRoutingKey

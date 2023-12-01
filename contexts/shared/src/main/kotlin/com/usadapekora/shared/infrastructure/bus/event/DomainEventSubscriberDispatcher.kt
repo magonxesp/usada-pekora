@@ -41,14 +41,14 @@ class DomainEventSubscriberDispatcher(
         val subscriber: DomainEventSubscriber<DomainEvent> by KoinJavaComponent.inject(subscribeClass.java)
 
         return subscriber.handle(event).onRight {
-            logger.info("Domain event ${event.name} with id ${event.id} successfully handled")
+            logger.info("Domain event ${event.eventName} with id ${event.eventId} successfully handled")
         }.onLeft {
-            logger.warning("Failed to handle event ${event.name} with id ${event.id}: ${it.message}")
+            logger.warning("Failed to handle event ${event.eventName} with id ${event.eventId}: ${it.message}")
         }
     }
 
     fun dispatch(event: DomainEvent): Either<DomainEventSubscriberException, Unit> {
-        getSubscribersOfEvent(event.name).forEach { subscriberClass ->
+        getSubscribersOfEvent(event.eventName).forEach { subscriberClass ->
             executeSubscriber(event, subscriberClass).onLeft {
                 return it.left()
             }
